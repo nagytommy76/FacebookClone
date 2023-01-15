@@ -1,13 +1,23 @@
+import Head from 'next/head'
+
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
 
 const Layout: React.FC<{ children: React.ReactNode; className: string }> = ({ children, className }) => {
    return (
-      <main className={className}>
-         <Navbar />
-         {children}
-         <Footer />
-      </main>
+      <>
+         <Head>
+            <title>Facebook Clone</title>
+            <meta name='description' content='Hobby project, cloning facebook' />
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+            <link rel='icon' href='/favicon.ico' />
+         </Head>
+         <main className={className}>
+            <Navbar />
+            {children}
+            <Footer />
+         </main>
+      </>
    )
 }
 
