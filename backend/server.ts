@@ -17,3 +17,5 @@ connectDB().then(() => {
 })
 
 app.use(morgan('combined', { stream: accessLogStream }))
+
+app.use('/api/user', require('./api/user/user'))
