@@ -12,7 +12,7 @@ export const work_sans = Work_Sans({
 // Create a theme instance.
 const theme = createTheme({
    palette: {
-      mode: 'dark',
+      mode: 'light',
       primary: {
          main: '#556cd6',
       },
