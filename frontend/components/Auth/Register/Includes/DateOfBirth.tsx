@@ -1,3 +1,5 @@
+import useGetYears from './Hook/useGetYears'
+
 import Stack from '@mui/material/Stack'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -5,6 +7,7 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
 const DateOfBirth = () => {
+   const years = useGetYears()
    return (
       <Stack direction='row' spacing={1} width='100%'>
          <FormControl fullWidth>
@@ -16,9 +19,11 @@ const DateOfBirth = () => {
                label='Születési év'
                // onChange={handleChange}
             >
-               <MenuItem value={10}>Ten</MenuItem>
-               <MenuItem value={20}>Twenty</MenuItem>
-               <MenuItem value={30}>Thirty</MenuItem>
+               {years.map((year, index) => (
+                  <MenuItem key={index} value={year}>
+                     {year}
+                  </MenuItem>
+               ))}
             </Select>
          </FormControl>
          <FormControl fullWidth>
