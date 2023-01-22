@@ -1,18 +1,18 @@
 const useGetMonth = () => {
-   return {
-      january: 'Január',
-      february: 'Február',
-      march: 'Március',
-      april: 'Április',
-      may: 'Május',
-      june: 'Június',
-      july: 'Július',
-      august: 'Augusztus',
-      september: 'Szeptember',
-      october: 'Október',
-      november: 'November',
-      december: 'December',
-   }
+   return [
+      'Január',
+      'Február',
+      'Március',
+      'Április',
+      'Május',
+      'Június',
+      'Július',
+      'Augusztus',
+      'Szeptember',
+      'Október',
+      'November',
+      'December',
+   ]
 }
 
 export default useGetMonth
