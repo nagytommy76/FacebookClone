@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import { StyledAuthContainer, StyledRegisterPaper } from '../Styles'
 import Stack from '@mui/material/Stack'
@@ -12,6 +12,7 @@ const Register = () => {
    const firstNameRef = useRef<HTMLInputElement>(null)
    const emailRef = useRef<HTMLInputElement>(null)
    const passwordRef = useRef<HTMLInputElement>(null)
+   const [dateOfBirth, setDateOfBirth] = useState<{}>()
 
    const handleRegisterSend = () => {
       console.log(sureNameRef.current?.value)

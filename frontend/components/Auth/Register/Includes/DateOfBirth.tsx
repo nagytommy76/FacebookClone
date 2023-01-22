@@ -1,5 +1,6 @@
 import useGetYears from './Hook/useGetYears'
 import useGetMonth from './Hook/useGetMonth'
+import useGetDays from './Hook/useGetDays'
 
 import Stack from '@mui/material/Stack'
 import InputLabel from '@mui/material/InputLabel'
@@ -10,13 +11,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 const DateOfBirth = () => {
    const years = useGetYears()
    const months = useGetMonth()
+   const days = useGetDays()
    return (
       <Stack direction='row' spacing={1} width='100%'>
          <FormControl fullWidth>
             <InputLabel id='demo-simple-select-label'>Születési év</InputLabel>
             <Select
                labelId='demo-simple-select-label'
-               id='demo-simple-select'
+               id='year'
                // value={age}
                label='Születési év'
                MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
@@ -33,14 +35,14 @@ const DateOfBirth = () => {
             <InputLabel id='demo-simple-select-label'>Hónap</InputLabel>
             <Select
                labelId='demo-simple-select-label'
-               id='demo-simple-select'
+               id='month'
                // value={age}
-               label='Születési év'
+               label='Hónap'
                // onChange={handleChange}
             >
-               {Object.entries(months).map((month) => (
-                  <MenuItem key={month[0]} value={month[0]}>
-                     {month[1]}
+               {months.map((month, index) => (
+                  <MenuItem key={index} value={index}>
+                     {month}
                   </MenuItem>
                ))}
             </Select>
@@ -49,14 +51,17 @@ const DateOfBirth = () => {
             <InputLabel id='demo-simple-select-label'>Nap</InputLabel>
             <Select
                labelId='demo-simple-select-label'
-               id='demo-simple-select'
+               id='days'
                // value={age}
-               label='Születési év'
+               label='Nap'
+               MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
                // onChange={handleChange}
             >
-               <MenuItem value={10}>Ten</MenuItem>
-               <MenuItem value={20}>Twenty</MenuItem>
-               <MenuItem value={30}>Thirty</MenuItem>
+               {days.map((day) => (
+                  <MenuItem key={day} value={day}>
+                     {day}
+                  </MenuItem>
+               ))}
             </Select>
          </FormControl>
       </Stack>
