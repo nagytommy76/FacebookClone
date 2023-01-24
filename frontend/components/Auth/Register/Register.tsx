@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { GenderTypes, IDateOfBirth } from './Includes/Types'
 
 import { StyledAuthContainer, StyledRegisterPaper } from '../Styles'
 import Stack from '@mui/material/Stack'
@@ -6,13 +7,19 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
 import DateOfBirth from './Includes/DateOfBirth'
+import GenderRadio from './Includes/GenderRadio'
 
 const Register = () => {
    const sureNameRef = useRef<HTMLInputElement>(null)
    const firstNameRef = useRef<HTMLInputElement>(null)
    const emailRef = useRef<HTMLInputElement>(null)
    const passwordRef = useRef<HTMLInputElement>(null)
-   const [dateOfBirth, setDateOfBirth] = useState<{}>()
+   const [dateOfBirth, setDateOfBirth] = useState<IDateOfBirth>({
+      day: '',
+      month: '',
+      year: '',
+   })
+   const [gender, setGender] = useState<GenderTypes>('male')
 
    const handleRegisterSend = () => {
       console.log(sureNameRef.current?.value)
@@ -38,7 +45,8 @@ const Register = () => {
                variant='outlined'
                fullWidth
             />
-            <DateOfBirth />
+            <DateOfBirth dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} />
+            <GenderRadio gender={gender} setGender={setGender} />
             <Button onClick={handleRegisterSend} variant='contained' color='success' fullWidth>
                Regisztráció
             </Button>
