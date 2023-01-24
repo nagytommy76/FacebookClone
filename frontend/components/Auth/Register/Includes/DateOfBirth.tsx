@@ -1,17 +1,25 @@
+import React from 'react'
 import useGetYears from './Hook/useGetYears'
 import useGetMonth from './Hook/useGetMonth'
 import useGetDays from './Hook/useGetDays'
+import { IDateOfBirth } from './Types'
 
 import Stack from '@mui/material/Stack'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
+import useDateOfBirth from './Hook/useDateOfBirth'
 
-const DateOfBirth = () => {
+const DateOfBirth: React.FC<{
+   dateOfBirth: IDateOfBirth
+   setDateOfBirth: React.Dispatch<React.SetStateAction<IDateOfBirth>>
+}> = ({ dateOfBirth, setDateOfBirth }) => {
    const years = useGetYears()
    const months = useGetMonth()
    const days = useGetDays()
+   const { handleDayChange, handleMontChange, handleYearChange } = useDateOfBirth(setDateOfBirth)
+
    return (
       <Stack direction='row' spacing={1} width='100%'>
          <FormControl fullWidth>
@@ -19,11 +27,10 @@ const DateOfBirth = () => {
             <Select
                labelId='demo-simple-select-label'
                id='year'
-               // value={age}
+               value={dateOfBirth.year}
                label='Születési év'
                MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
-               // onChange={handleChange}
-            >
+               onChange={handleYearChange}>
                {years.map((year, index) => (
                   <MenuItem key={index} value={year}>
                      {year}
@@ -36,10 +43,9 @@ const DateOfBirth = () => {
             <Select
                labelId='demo-simple-select-label'
                id='month'
-               // value={age}
+               value={dateOfBirth.month}
                label='Hónap'
-               // onChange={handleChange}
-            >
+               onChange={handleMontChange}>
                {months.map((month, index) => (
                   <MenuItem key={index} value={index}>
                      {month}
@@ -52,11 +58,10 @@ const DateOfBirth = () => {
             <Select
                labelId='demo-simple-select-label'
                id='days'
-               // value={age}
+               value={dateOfBirth.day}
                label='Nap'
                MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
-               // onChange={handleChange}
-            >
+               onChange={handleDayChange}>
                {days.map((day) => (
                   <MenuItem key={day} value={day}>
                      {day}
