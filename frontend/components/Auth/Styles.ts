@@ -13,7 +13,6 @@ const BaseStyledPaper: any = {
    padding: 25,
    display: 'flex',
    flexDirection: 'column',
-   alignItems: 'center',
    justifyContent: 'space-between',
 }
 
