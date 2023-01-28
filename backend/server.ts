@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import { config } from 'dotenv'
 import connectDB from './config/connectDB'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 
 import morgan from 'morgan'
 import path from 'path'
@@ -18,6 +19,7 @@ connectDB().then(() => {
 })
 
 app.use(cors())
+app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use('/api/user', require('./api/user/user'))
