@@ -1,9 +1,10 @@
-import { Request, Response, Router } from 'express'
+import { Router } from 'express'
+import { ValidateRegister } from './validators/registerValidator'
+
+import { registerUserController } from '../../controllers/users/users'
 
 const router = Router()
 
-router.post('/register', (request: Request, response: Response) => {
-   return response.json({ msg: 'Felhasználók oldal' })
-})
+router.post('/register', ValidateRegister, registerUserController)
 
 module.exports = router
