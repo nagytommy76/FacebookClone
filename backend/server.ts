@@ -18,8 +18,13 @@ connectDB().then(() => {
    })
 })
 
-app.use(cors())
+app.use(
+   cors({
+      credentials: true,
+      origin: ['http://localhost:3000'],
+   })
+)
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
-app.use('/api/user', require('./api/user/user'))
+app.use('/api/auth', require('./api/user/user'))
