@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import axios from 'axios'
+import { AxiosError, axiosInstance as axios } from '../../../axiosSetup/AxiosInstance'
 import { GenderTypes, IDateOfBirth } from './Includes/Types'
 
 import { useMutation } from '@tanstack/react-query'
@@ -25,7 +25,7 @@ const Register = () => {
    const [gender, setGender] = useState<GenderTypes>('male')
 
    const handleRegisterSend = async () => {
-      return await axios.post('http://localhost:5050/api/user/register', {
+      return await axios.post('/auth/register', {
          sureName: sureNameRef.current?.value,
          firstName: firstNameRef.current?.value,
          email: emailRef.current?.value,
@@ -35,10 +35,13 @@ const Register = () => {
       })
    }
 
-   const registerUserMutation = useMutation({
+   const { mutate, error, isError } = useMutation({
       mutationKey: ['register'],
       mutationFn: handleRegisterSend,
    })
+   if (isError) {
+      // console.log((error as AxiosError).response.data.errors)
+   }
 
    return (
       <StyledAuthContainer>
@@ -59,11 +62,7 @@ const Register = () => {
             />
             <DateOfBirth dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} />
             <GenderRadio gender={gender} setGender={setGender} />
-            <Button
-               onClick={() => registerUserMutation.mutate()}
-               variant='contained'
-               color='success'
-               fullWidth>
+            <Button onClick={() => mutate()} variant='contained' color='success' fullWidth>
                Regisztráció
             </Button>
          </StyledRegisterPaper>
