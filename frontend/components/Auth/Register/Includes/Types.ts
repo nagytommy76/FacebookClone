@@ -6,15 +6,16 @@ export interface IDateOfBirth {
 
 export type GenderTypes = 'female' | 'male'
 
-export const InputValues: IInputValues = {
-   location: '',
-   msg: '',
-   param: '',
-   value: '',
-}
 export interface IInputValues {
-   location: string
+   isError: boolean
    msg: string
    param: string
    value: string
+}
+
+export const InputValues: IInputValues = {
+   isError: false,
+   msg: '',
+   param: '',
+   value: '',
 }
