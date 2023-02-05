@@ -16,15 +16,17 @@ const useRegisterMutate = () => {
       setGender,
       setAnyTextStateValues,
       setAnyErrorMsg,
+      resetAllErrors,
    } = useRegisterState()
 
    const handleRegisterSend = async () => {
+      resetAllErrors()
       return await axios.post('/auth/register', {
          sureName: sureName.value,
          firstName: firstName.value,
          email: email.value,
          password: password.value,
-         dateOfBirth,
+         dateOfBirth: { day: dateOfBirth.day, month: dateOfBirth.month, year: dateOfBirth.year },
          gender,
       })
    }

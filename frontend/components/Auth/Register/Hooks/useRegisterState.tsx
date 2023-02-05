@@ -15,67 +15,70 @@ const useRegisterState = () => {
    })
    const [gender, setGender] = useState<GenderTypes>('male')
 
+   const setValueCallback = (prevValue: IInputValues, value: string) => {
+      return { ...prevValue, value }
+   }
+
+   const setErrorValueCallback = (prevValue: IInputValues, isError: boolean, param: string, msg: string) => {
+      return { ...prevValue, isError, msg, param }
+   }
+
    const setAnyTextStateValues = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
       setStateName: ParameterType
    ) => {
       switch (setStateName) {
          case 'surename':
-            setSureName((prevValue) => {
-               return { ...prevValue, value: event.target.value }
-            })
+            setSureName((prevValue) => setValueCallback(prevValue, event.target.value))
             break
          case 'firstname':
-            setFirstName((prevValue) => {
-               return { ...prevValue, value: event.target.value }
-            })
+            setFirstName((prevValue) => setValueCallback(prevValue, event.target.value))
             break
          case 'email':
-            setEmail((prevValue) => {
-               return { ...prevValue, value: event.target.value }
-            })
+            setEmail((prevValue) => setValueCallback(prevValue, event.target.value))
             break
          case 'password':
-            setPassword((prevValue) => {
-               return { ...prevValue, value: event.target.value }
+            setPassword((prevValue) => setValueCallback(prevValue, event.target.value))
+            break
+      }
+   }
+
+   const setAnyErrorMsg = (value: IInputValues, isError: boolean = true) => {
+      switch (value.param) {
+         case 'email':
+            setEmail((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
+            break
+         case 'firstName':
+            setFirstName((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
+            break
+         case 'sureName':
+            setSureName((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
+            break
+         case 'password':
+            setPassword((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
+            break
+         case 'dateOfBirth':
+            setDateOfBirth((prevValue) => {
+               return { ...prevValue, isError, msg: value.msg, param: value.param }
             })
             break
       }
    }
 
-   const setAnyErrorMsg = (value: IInputValues) => {
-      switch (value.param) {
-         case 'email':
-            setEmail((prevValue) => {
-               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
-            })
-            break
-         case 'firstName':
-            setFirstName((prevValue) => {
-               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
-            })
-            break
-         case 'sureName':
-            setSureName((prevValue) => {
-               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
-            })
-            break
-         case 'password':
-            setPassword((prevValue) => {
-               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
-            })
-            break
-         case 'dateOfBirth':
-            setDateOfBirth((prevValue) => {
-               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
-            })
-            break
-      }
+   const resetAllErrors = () => {
+      const params = ['email', 'firstName', 'sureName', 'password', 'dateOfBirth']
+      params.map((param) => {
+         setAnyErrorMsg({ msg: '', isError: false, param, value: '' }, false)
+      })
+      setDateOfBirth((prevValue) => {
+         return { ...prevValue, isError: false, msg: '', param: '' }
+      })
    }
 
    return {
       setAnyTextStateValues,
       setAnyErrorMsg,
+      resetAllErrors,
       sureName,
       firstName,
       email,
