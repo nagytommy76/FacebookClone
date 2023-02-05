@@ -10,12 +10,14 @@ const useRegisterState = () => {
       day: '',
       month: '',
       year: '',
+      isError: false,
+      msg: '',
    })
    const [gender, setGender] = useState<GenderTypes>('male')
 
    const setAnyTextStateValues = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-      setStateName: 'surename' | 'firstname' | 'email' | 'password'
+      setStateName: ParameterType
    ) => {
       switch (setStateName) {
          case 'surename':
@@ -41,8 +43,39 @@ const useRegisterState = () => {
       }
    }
 
+   const setAnyErrorMsg = (value: IInputValues) => {
+      switch (value.param) {
+         case 'email':
+            setEmail((prevValue) => {
+               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
+            })
+            break
+         case 'firstName':
+            setFirstName((prevValue) => {
+               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
+            })
+            break
+         case 'sureName':
+            setSureName((prevValue) => {
+               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
+            })
+            break
+         case 'password':
+            setPassword((prevValue) => {
+               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
+            })
+            break
+         case 'dateOfBirth':
+            setDateOfBirth((prevValue) => {
+               return { ...prevValue, isError: true, msg: value.msg, param: value.param }
+            })
+            break
+      }
+   }
+
    return {
       setAnyTextStateValues,
+      setAnyErrorMsg,
       sureName,
       firstName,
       email,
@@ -55,3 +88,5 @@ const useRegisterState = () => {
 }
 
 export default useRegisterState
+
+type ParameterType = 'surename' | 'firstname' | 'email' | 'password'
