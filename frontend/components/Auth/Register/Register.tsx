@@ -4,6 +4,7 @@ import { StyledAuthContainer, StyledRegisterPaper } from '../Styles'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 import DateOfBirth from './Includes/DateOfBirth'
 import GenderRadio from './Includes/GenderRadio'
@@ -25,7 +26,9 @@ const Register = () => {
    return (
       <StyledAuthContainer>
          <StyledRegisterPaper elevation={3}>
-            <h1>Regisztráció</h1>
+            <Typography variant='h4' mb={2}>
+               Regisztráció
+            </Typography>
             <Stack direction='row' spacing={1}>
                <TextField
                   value={sureName.value}
