@@ -2,6 +2,8 @@ export interface IDateOfBirth {
    year: string
    month: string
    day: string
+   isError: boolean
+   msg: string
 }
 
 export type GenderTypes = 'female' | 'male'

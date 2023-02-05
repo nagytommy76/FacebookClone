@@ -30,6 +30,8 @@ const Register = () => {
                <TextField
                   value={sureName.value}
                   onChange={(e) => setAnyTextStateValues(e, 'surename')}
+                  error={sureName.isError}
+                  helperText={sureName.msg}
                   id='surname'
                   label='Vezetéknév'
                   variant='outlined'
@@ -37,6 +39,8 @@ const Register = () => {
                <TextField
                   value={firstName.value}
                   onChange={(e) => setAnyTextStateValues(e, 'firstname')}
+                  error={firstName.isError}
+                  helperText={firstName.msg}
                   id='firstName'
                   label='Keresztnév'
                   variant='outlined'
@@ -55,6 +59,8 @@ const Register = () => {
             <TextField
                value={password.value}
                onChange={(e) => setAnyTextStateValues(e, 'password')}
+               error={password.isError}
+               helperText={password.msg}
                id='password'
                label='Jelszó'
                type='password'
