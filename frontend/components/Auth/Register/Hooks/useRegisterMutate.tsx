@@ -15,14 +15,15 @@ const useRegisterMutate = () => {
       setDateOfBirth,
       setGender,
       setAnyTextStateValues,
+      setAnyErrorMsg,
    } = useRegisterState()
 
    const handleRegisterSend = async () => {
       return await axios.post('/auth/register', {
-         sureName,
-         firstName,
-         email,
-         password,
+         sureName: sureName.value,
+         firstName: firstName.value,
+         email: email.value,
+         password: password.value,
          dateOfBirth,
          gender,
       })
@@ -34,16 +35,7 @@ const useRegisterMutate = () => {
       onError(error) {
          if (isAxiosError(error)) {
             const errorResponse = error.response?.data.errors as IInputValues[]
-            console.log(errorResponse)
-            errorResponse.map((value) => {
-               switch (value.param) {
-                  case 'email':
-                  //  setEmail((prevValue) => {
-                  //     return { ...prevValue, isError: true, msg: value.msg, param: value.param }
-                  //  })
-                  //  break
-               }
-            })
+            errorResponse.map((value) => setAnyErrorMsg(value))
          }
       },
    })
