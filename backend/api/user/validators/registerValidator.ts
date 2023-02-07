@@ -1,4 +1,4 @@
-import { body, CustomValidator } from 'express-validator'
+import { body } from 'express-validator'
 
 export const ValidateRegister = [
    body('email')
@@ -12,5 +12,6 @@ export const ValidateRegister = [
       if (value.day === '' || value.month === '' || value.year === '') {
          throw new Error('Kérlek töltsd ki a születési időt!')
       }
+      return true
    }),
 ]
