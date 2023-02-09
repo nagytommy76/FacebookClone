@@ -1,8 +1,13 @@
 import { Schema, model } from 'mongoose'
+import { UserModel, UserTypes } from '../../controllers/users/Types'
 
 const Userschema = new Schema({
    firstName: String,
    sureName: String,
+   isEmailConfirmed: {
+      type: Boolean,
+      default: false,
+   },
    email: {
       type: String,
       required: [true, 'Kérek egy email címet!'],
@@ -23,4 +28,11 @@ const Userschema = new Schema({
    },
 })
 
-export const User = model('User', Userschema)
+Userschema.statics.register = async function (email: string) {
+   const checkUserRegisteredWithEmail = await this.findOne({ email })
+   if (checkUserRegisteredWithEmail !== null) {
+      throw Error('Ezzel az email címmel már regisztráltak!')
+   }
+}
+
+export const User = model<UserTypes, UserModel>('User', Userschema)
