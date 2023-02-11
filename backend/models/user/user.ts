@@ -1,6 +1,8 @@
 import { Schema, model } from 'mongoose'
 import { UserModel, UserTypes } from '../../controllers/users/Types'
 
+import { hash } from 'bcrypt'
+
 const Userschema = new Schema({
    firstName: String,
    sureName: String,
@@ -28,11 +30,15 @@ const Userschema = new Schema({
    },
 })
 
-Userschema.statics.register = async function (email: string) {
+Userschema.statics.checkRegisterEmail = async function (email: string) {
    const checkUserRegisteredWithEmail = await this.findOne({ email })
-   if (checkUserRegisteredWithEmail !== null) {
-      throw Error('Ezzel az email címmel már regisztráltak!')
+   console.log(checkUserRegisteredWithEmail)
+   if (checkUserRegisteredWithEmail != null) {
+      throw new Error('Ezzel az email címmel már regisztráltak!')
    }
+}
+Userschema.statics.encryptPassword = async function (nativePass: string) {
+   return await hash(nativePass, 10)
 }
 
 export const User = model<UserTypes, UserModel>('User', Userschema)
