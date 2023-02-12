@@ -11,6 +11,13 @@ export interface IRegisterRequest extends Request {
    }
 }
 
+export interface ILoginRequest extends Request {
+   body: {
+      email: string
+      password: string
+   }
+}
+
 export interface UserTypes {
    _id: ObjectId
    email: string
