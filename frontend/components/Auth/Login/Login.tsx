@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react'
 import Link from 'next/link'
 
 import styled from '@emotion/styled'
@@ -8,19 +9,42 @@ import Divider from '@mui/material/Divider'
 import TextField from '@mui/material/TextField'
 
 const Login = () => {
+   const [email, setEmail] = useState<string>('')
+   const [password, setPassword] = useState<string>('')
+
+   const handleSetEmail = (event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)
+   const handleSetPassword = (event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)
+
    return (
       <StyledLoginContainer>
          <StyledPaper elevation={3}>
-            <TextField id='email' label='E-mail vagy felhasználó' variant='outlined' fullWidth />
-            <TextField id='password' label='Jelszó' type='password' variant='outlined' fullWidth />
+            <TextField
+               value={email}
+               onChange={handleSetEmail}
+               id='email'
+               label='E-mail vagy felhasználó'
+               variant='outlined'
+               fullWidth
+            />
+            <TextField
+               value={password}
+               onChange={handleSetPassword}
+               id='password'
+               label='Jelszó'
+               type='password'
+               variant='outlined'
+               fullWidth
+            />
             <Button variant='contained' fullWidth>
                Bejelentkezés
             </Button>
             <p>Elfelejtetted a jelszavad?</p>
             <Divider />
-            <Button variant='contained' color='success' fullWidth>
-               <Link href='/register'>Új fiók létrehozása</Link>
-            </Button>
+            <StyledLink href='/register'>
+               <Button variant='contained' color='success' fullWidth>
+                  Új fiók létrehozása
+               </Button>
+            </StyledLink>
          </StyledPaper>
       </StyledLoginContainer>
    )
@@ -44,4 +68,8 @@ const StyledPaper = styled(Paper)({
    flexDirection: 'column',
    alignItems: 'center',
    justifyContent: 'space-between',
+})
+
+export const StyledLink = styled(Link)({
+   width: '100%',
 })
