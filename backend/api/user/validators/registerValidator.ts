@@ -1,6 +1,12 @@
 import { body } from 'express-validator'
+import { User } from '../../../models/user/user'
 
 export const ValidateRegister = [
+   body('email').custom(async (email: string) => {
+      const checkUserRegisteredWithEmail = await User.findOne({ email })
+      if (checkUserRegisteredWithEmail !== null) throw new Error('Ezzel az email címmel már regisztráltak!')
+      return true
+   }),
    body('email')
       .isEmail()
       .normalizeEmail()
