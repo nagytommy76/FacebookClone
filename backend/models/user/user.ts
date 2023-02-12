@@ -30,13 +30,6 @@ const Userschema = new Schema({
    },
 })
 
-Userschema.statics.checkRegisterEmail = async function (email: string) {
-   const checkUserRegisteredWithEmail = await this.findOne({ email })
-   console.log(checkUserRegisteredWithEmail)
-   if (checkUserRegisteredWithEmail != null) {
-      throw new Error('Ezzel az email címmel már regisztráltak!')
-   }
-}
 Userschema.statics.encryptPassword = async function (nativePass: string) {
    return await hash(nativePass, 10)
 }
