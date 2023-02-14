@@ -34,4 +34,6 @@ Userschema.statics.encryptPassword = async function (nativePass: string) {
    return await hash(nativePass, 10)
 }
 
+Userschema.statics.jwtSign = async function () {}
+
 export const User = model<UserTypes, UserModel>('User', Userschema)
