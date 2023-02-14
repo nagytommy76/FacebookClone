@@ -1,7 +1,8 @@
 import useRegisterState from './useRegisterState'
+import { useRouter } from 'next/router'
 
 import { useMutation } from '@tanstack/react-query'
-import { isAxiosError, axiosInstance as axios } from '../../../../axiosSetup/AxiosInstance'
+import { isAxiosError, axiosInstance as axios, AxiosResponse } from '../../../../axiosSetup/AxiosInstance'
 import { IInputValues } from '../Includes/Types'
 
 const useRegisterMutate = () => {
@@ -18,6 +19,7 @@ const useRegisterMutate = () => {
       setAnyErrorMsg,
       resetAllErrors,
    } = useRegisterState()
+   const router = useRouter()
 
    const handleRegisterSend = async () => {
       resetAllErrors()
@@ -31,6 +33,11 @@ const useRegisterMutate = () => {
       })
    }
 
+   const onSuccess = (data: AxiosResponse<any, any>) => {
+      if (data.status === 201)
+         router.push({ pathname: '/login', query: { msg: 'Sikeres regisztráció', isRegisterSuccess: true } })
+   }
+
    const { mutate } = useMutation({
       mutationKey: ['register'],
       mutationFn: handleRegisterSend,
@@ -40,6 +47,7 @@ const useRegisterMutate = () => {
             errorResponse.map((value) => setAnyErrorMsg(value))
          }
       },
+      onSuccess,
    })
 
    return {
