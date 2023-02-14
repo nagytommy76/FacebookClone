@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import styled from '@emotion/styled'
@@ -6,11 +7,22 @@ import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 
+import Fade from '@mui/material/Fade'
+import Snackbar from '@mui/material/Snackbar'
+
 import TextField from '@mui/material/TextField'
 
 const Login = () => {
    const [email, setEmail] = useState<string>('')
    const [password, setPassword] = useState<string>('')
+   const [isRegister, setIsRegister] = useState<boolean>(false)
+   const router = useRouter()
+
+   useEffect(() => {
+      const { isRegisterSuccess, msg } = router.query
+      const t = Boolean(isRegisterSuccess)
+      if (isRegisterSuccess) setIsRegister(t)
+   }, [router.query.isRegisterSuccess])
 
    const handleSetEmail = (event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)
    const handleSetPassword = (event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)
@@ -46,6 +58,7 @@ const Login = () => {
                </Button>
             </StyledLink>
          </StyledPaper>
+         <Snackbar open={isRegister} onClose={() => {}} TransitionComponent={Fade} message='test' />
       </StyledLoginContainer>
    )
 }
