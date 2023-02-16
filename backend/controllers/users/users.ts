@@ -30,4 +30,6 @@ export const registerUserController = async (req: IRegisterRequest, res: Respons
    }
 }
 
-export const loginUserController = async (req: ILoginRequest, res: Response) => {}
+export const loginUserController = async (req: ILoginRequest, res: Response) => {
+   return res.status(200).json({ msg: 'Sikeres belépés!!!' })
+}
