@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Paper from '@mui/material/Paper'
+import Link from 'next/link'
 
 export const StyledAuthContainer = styled('section')({
    height: '100%',
@@ -22,8 +23,14 @@ export const StyledRegisterPaper = styled(Paper)({
    minHeight: '550px',
 })
 
-export const StyledPaper = styled(Paper)({
+// Login
+export const StyledLoginPaper = styled(Paper)({
    ...BaseStyledPaper,
-   width: '450px',
-   height: '360px',
+   width: '400px',
+   height: '340px',
+   alignItems: 'center',
+})
+
+export const StyledLink = styled(Link)({
+   width: '100%',
 })

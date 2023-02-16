@@ -35,7 +35,10 @@ const useRegisterMutate = () => {
 
    const onSuccess = (data: AxiosResponse<any, any>) => {
       if (data.status === 201)
-         router.push({ pathname: '/login', query: { msg: 'Sikeres regisztráció', isRegisterSuccess: true } })
+         router.push({
+            pathname: '/login',
+            query: { msg: `Sikeres regisztráció a(z) ${email.value} email címmel`, isRegisterSuccess: true },
+         })
    }
 
    const { mutate } = useMutation({
