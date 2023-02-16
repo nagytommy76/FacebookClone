@@ -1,37 +1,35 @@
-import { ChangeEvent, useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { ChangeEvent, useState } from 'react'
+import dynamic from 'next/dynamic'
+import useLoginMutate from './Hooks/useLoginMutate'
+import { IInputValues, InputValues } from '../Register/Includes/Types'
 
-import styled from '@emotion/styled'
-import Paper from '@mui/material/Paper'
+import { StyledLoginPaper, StyledAuthContainer, StyledLink } from '../Styles'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 
-import Fade from '@mui/material/Fade'
-import Snackbar from '@mui/material/Snackbar'
-
 import TextField from '@mui/material/TextField'
 
+const LoginSnackbar = dynamic(() => import('./Includes/LoginSnackbar'))
+
 const Login = () => {
-   const [email, setEmail] = useState<string>('')
-   const [password, setPassword] = useState<string>('')
-   const [isRegister, setIsRegister] = useState<boolean>(false)
-   const router = useRouter()
+   const [email, setEmail] = useState<IInputValues>(InputValues)
+   const [password, setPassword] = useState<IInputValues>(InputValues)
+   const { loginMutate } = useLoginMutate(email, password)
 
-   useEffect(() => {
-      const { isRegisterSuccess, msg } = router.query
-      const t = Boolean(isRegisterSuccess)
-      if (isRegisterSuccess) setIsRegister(t)
-   }, [router.query.isRegisterSuccess])
-
-   const handleSetEmail = (event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)
-   const handleSetPassword = (event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)
+   const handleSetEmail = (event: ChangeEvent<HTMLInputElement>) =>
+      setEmail((prevValue) => {
+         return { ...prevValue, value: event.target.value }
+      })
+   const handleSetPassword = (event: ChangeEvent<HTMLInputElement>) =>
+      setPassword((prevValue) => {
+         return { ...prevValue, value: event.target.value }
+      })
 
    return (
-      <StyledLoginContainer>
-         <StyledPaper elevation={3}>
+      <StyledAuthContainer>
+         <StyledLoginPaper elevation={3}>
             <TextField
-               value={email}
+               value={email.value}
                onChange={handleSetEmail}
                id='email'
                label='E-mail vagy felhasználó'
@@ -39,7 +37,7 @@ const Login = () => {
                fullWidth
             />
             <TextField
-               value={password}
+               value={password.value}
                onChange={handleSetPassword}
                id='password'
                label='Jelszó'
@@ -47,7 +45,7 @@ const Login = () => {
                variant='outlined'
                fullWidth
             />
-            <Button variant='contained' fullWidth>
+            <Button variant='contained' onClick={(event) => loginMutate(event)} fullWidth>
                Bejelentkezés
             </Button>
             <p>Elfelejtetted a jelszavad?</p>
@@ -57,32 +55,10 @@ const Login = () => {
                   Új fiók létrehozása
                </Button>
             </StyledLink>
-         </StyledPaper>
-         <Snackbar open={isRegister} onClose={() => {}} TransitionComponent={Fade} message='test' />
-      </StyledLoginContainer>
+         </StyledLoginPaper>
+         <LoginSnackbar />
+      </StyledAuthContainer>
    )
 }
 
 export default Login
-
-const StyledLoginContainer = styled('section')({
-   height: '100%',
-   display: 'flex',
-   flexDirection: 'row',
-   justifyContent: 'center',
-   alignItems: 'center',
-})
-
-const StyledPaper = styled(Paper)({
-   padding: 25,
-   width: '400px',
-   height: '340px',
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-   justifyContent: 'space-between',
-})
-
-export const StyledLink = styled(Link)({
-   width: '100%',
-})
