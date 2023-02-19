@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { ValidateRegister, ValidateLogin } from './validators/registerValidator'
+import { ValidateRegister, ValidateLogin } from './validators/authValidator'
 import { authValidationMiddleware } from '../../middlewares/authValidationMiddleware'
 
 import { registerUserController, loginUserController } from '../../controllers/users/users'
