@@ -31,5 +31,13 @@ export const registerUserController = async (req: IRegisterRequest, res: Respons
 }
 
 export const loginUserController = async (req: ILoginRequest, res: Response) => {
-   return res.status(200).json({ msg: 'Sikeres belépés!!!' })
+   const { email, password } = req.body
+   try {
+      const { foundUser, isPasswordCorrect } = await UserModel.comparePassword(email, password)
+
+      // console.log(foundUser.email)
+      return res.status(200).json({ msg: 'Sikeres belépés!!!' })
+   } catch (error) {
+      res.status(500).json(error)
+   }
 }
