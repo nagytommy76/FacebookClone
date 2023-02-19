@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
-import { UserModel, UserTypes } from '../../controllers/users/Types'
+import { UserModel, IUserTypes } from '../../controllers/users/Types'
 
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 
-const Userschema = new Schema({
+const UserSchema = new Schema<IUserTypes, UserModel>({
    firstName: String,
    sureName: String,
    isEmailConfirmed: {
@@ -30,10 +30,16 @@ const Userschema = new Schema({
    },
 })
 
-Userschema.statics.encryptPassword = async function (nativePass: string) {
+UserSchema.statics.encryptPassword = async function (nativePass: string) {
    return await hash(nativePass, 10)
 }
+UserSchema.statics.comparePassword = async function (email: string, plainPass: string) {
+   const foundUser = await this.findOne({ email })
+   if (!foundUser) throw new Error('Nincs regisztrálva felhasználó ilyen email címmel!')
+   const isPasswordCorrect = await compare(plainPass, foundUser.password)
+   return { isPasswordCorrect, foundUser }
+}
 
-Userschema.statics.jwtSign = async function () {}
+UserSchema.statics.jwtSign = async function () {}
 
-export const User = model<UserTypes, UserModel>('User', Userschema)
+export const User = model<IUserTypes, UserModel>('User', UserSchema)
