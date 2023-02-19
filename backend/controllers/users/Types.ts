@@ -1,4 +1,4 @@
-import { Model, ObjectId } from 'mongoose'
+import { Model, ObjectId, Document } from 'mongoose'
 import { Request } from 'express'
 export interface IRegisterRequest extends Request {
    body: {
@@ -18,7 +18,7 @@ export interface ILoginRequest extends Request {
    }
 }
 
-export interface UserTypes {
+export interface IUserTypes {
    _id: ObjectId
    email: string
    firstName: string
@@ -31,7 +31,11 @@ export interface UserTypes {
    exp?: number
 }
 
-export interface UserModel extends Model<UserTypes> {
+export interface UserModel extends Model<IUserTypes> {
    checkRegisterEmail(email: string): Promise<void>
    encryptPassword(nativePass: string): Promise<string>
+   comparePassword(
+      email: string,
+      plainPass: string
+   ): Promise<{ isPasswordCorrect: boolean; foundUser: IUserTypes }>
 }
