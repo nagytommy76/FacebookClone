@@ -4,6 +4,7 @@ import useLoginMutate from './Hooks/useLoginMutate'
 import { IInputValues, InputValues } from '../Register/Includes/Types'
 
 import { StyledLoginPaper, StyledAuthContainer, StyledLink } from '../Styles'
+import LoadingButton from '@mui/lab/LoadingButton'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 
@@ -12,18 +13,7 @@ import TextField from '@mui/material/TextField'
 const LoginSnackbar = dynamic(() => import('./Includes/LoginSnackbar'))
 
 const Login = () => {
-   const [email, setEmail] = useState<IInputValues>(InputValues)
-   const [password, setPassword] = useState<IInputValues>(InputValues)
-   const { loginMutate } = useLoginMutate(email, password)
-
-   const handleSetEmail = (event: ChangeEvent<HTMLInputElement>) =>
-      setEmail((prevValue) => {
-         return { ...prevValue, value: event.target.value }
-      })
-   const handleSetPassword = (event: ChangeEvent<HTMLInputElement>) =>
-      setPassword((prevValue) => {
-         return { ...prevValue, value: event.target.value }
-      })
+   const { email, password, handleSetEmail, handleSetPassword, loginMutate, isLoading } = useLoginMutate()
 
    return (
       <StyledAuthContainer>
@@ -31,6 +21,8 @@ const Login = () => {
             <TextField
                value={email.value}
                onChange={handleSetEmail}
+               error={email.isError}
+               helperText={email.msg}
                id='email'
                label='E-mail vagy felhasználó'
                variant='outlined'
@@ -39,15 +31,22 @@ const Login = () => {
             <TextField
                value={password.value}
                onChange={handleSetPassword}
+               error={password.isError}
+               helperText={password.msg}
                id='password'
                label='Jelszó'
                type='password'
                variant='outlined'
                fullWidth
             />
-            <Button variant='contained' onClick={(event) => loginMutate(event)} fullWidth>
+            <LoadingButton
+               loading={isLoading}
+               loadingPosition='end'
+               variant='contained'
+               onClick={(event) => loginMutate(event)}
+               fullWidth>
                Bejelentkezés
-            </Button>
+            </LoadingButton>
             <p>Elfelejtetted a jelszavad?</p>
             <Divider />
             <StyledLink href='/register'>
