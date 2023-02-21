@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose'
-import { UserModel, IUserTypes } from '../../controllers/users/Types'
-
+import { Schema, model, ObjectId } from 'mongoose'
 import { hash, compare } from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+import { UserModel, IUserTypes } from '../../controllers/users/Types'
 
 const UserSchema = new Schema<IUserTypes, UserModel>({
    firstName: String,
@@ -40,6 +41,13 @@ UserSchema.statics.comparePassword = async function (email: string, plainPass: s
    return { isPasswordCorrect, foundUser }
 }
 
-UserSchema.statics.jwtSign = async function () {}
+UserSchema.statics.jwtSign = function (
+   userId: string | ObjectId,
+   email: string,
+   TOKEN_SECRET: string,
+   expiresIn: string = '15min'
+) {
+   return jwt.sign({ userId, email }, TOKEN_SECRET, { expiresIn })
+}
 
 export const User = model<IUserTypes, UserModel>('User', UserSchema)
