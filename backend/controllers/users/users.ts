@@ -1,7 +1,7 @@
 import { Response } from 'express'
-import { IRegisterRequest, ILoginRequest } from './Types'
-
 import { User as UserModel } from '../../models/user/user'
+
+import { IRegisterRequest, ILoginRequest } from './Types'
 
 export const registerUserController = async (req: IRegisterRequest, res: Response) => {
    const sureName = req.body.sureName
@@ -36,7 +36,14 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
       const { foundUser, isPasswordCorrect } = await UserModel.comparePassword(email, password)
       if (!isPasswordCorrect)
          return res.status(403).json(errorResponse(true, 'Helytelen jelszó!', 'password'))
-      // console.log(foundUser.email)
+
+      const accessToken = UserModel.jwtSign(
+         foundUser._id,
+         foundUser.email,
+         process.env.ACCESS_TOKEN_SECRET,
+         '1min'
+      )
+
       return res.status(200).json({ msg: 'Sikeres belépés!!!', isPasswordCorrect })
    } catch (error) {
       res.status(500).json(error)
