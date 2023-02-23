@@ -5,10 +5,10 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 
 import morgan from 'morgan'
-import path from 'path'
+import path, { resolve } from 'path'
 import fs from 'fs'
 
-config()
+config({ path: resolve(__dirname, './.env') })
 const app: Application = express()
 const PORT = process.env.PORT || 5050
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
