@@ -41,13 +41,16 @@ UserSchema.statics.comparePassword = async function (email: string, plainPass: s
    return { isPasswordCorrect, foundUser }
 }
 
-UserSchema.statics.jwtSign = function (
+UserSchema.statics.jwtAccessRefreshTokenSign = function (
    userId: string | ObjectId,
    email: string,
-   TOKEN_SECRET: string,
+   ACCESS_TOKEN_SECRET: string,
+   REFRESH_TOKEN_SECRET: string,
    expiresIn: string = '15min'
 ) {
-   return jwt.sign({ userId, email }, TOKEN_SECRET, { expiresIn })
+   const accessToken = jwt.sign({ userId, email }, ACCESS_TOKEN_SECRET, { expiresIn })
+   const refreshToken = jwt.sign({ userId, email }, REFRESH_TOKEN_SECRET, { expiresIn })
+   return { accessToken, refreshToken }
 }
 
 export const User = model<IUserTypes, UserModel>('User', UserSchema)
