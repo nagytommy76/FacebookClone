@@ -1,5 +1,6 @@
 import { Response } from 'express'
 import { User as UserModel } from '../../models/user/user'
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '../../config/endpoints.config'
 
 import { IRegisterRequest, ILoginRequest } from './Types'
 
@@ -37,14 +38,21 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
       if (!isPasswordCorrect)
          return res.status(403).json(errorResponse(true, 'Helytelen jelszó!', 'password'))
 
-      const accessToken = UserModel.jwtSign(
+      const { accessToken, refreshToken } = UserModel.jwtAccessRefreshTokenSign(
          foundUser._id,
          foundUser.email,
-         process.env.ACCESS_TOKEN_SECRET,
+         ACCESS_TOKEN_SECRET,
+         REFRESH_TOKEN_SECRET,
          '1min'
       )
+      res.cookie('refreshToken', refreshToken, {
+         httpOnly: true,
+         secure: true,
+         sameSite: 'none',
+         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 nap * 24 óra * 1óra * 1 perc
+      })
 
-      return res.status(200).json({ msg: 'Sikeres belépés!!!', isPasswordCorrect })
+      return res.status(200).json({ isPasswordCorrect, accessToken })
    } catch (error) {
       res.status(500).json(error)
    }

@@ -1,4 +1,4 @@
-import { Model, ObjectId, Document } from 'mongoose'
+import { Model, ObjectId } from 'mongoose'
 import { Request } from 'express'
 export interface IRegisterRequest extends Request {
    body: {
@@ -38,4 +38,11 @@ export interface UserModel extends Model<IUserTypes> {
       email: string,
       plainPass: string
    ): Promise<{ isPasswordCorrect: boolean; foundUser: IUserTypes }>
+   jwtAccessRefreshTokenSign(
+      userId: string | ObjectId,
+      email: string,
+      ACCESS_TOKEN_SECRET: string,
+      REFRESH_TOKEN_SECRET: string,
+      expiresIn: string
+   ): { accessToken: string; refreshToken: string }
 }
