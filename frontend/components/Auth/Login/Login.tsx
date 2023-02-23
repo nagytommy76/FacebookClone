@@ -1,7 +1,5 @@
-import { ChangeEvent, useState } from 'react'
 import dynamic from 'next/dynamic'
 import useLoginMutate from './Hooks/useLoginMutate'
-import { IInputValues, InputValues } from '../Register/Includes/Types'
 
 import { StyledLoginPaper, StyledAuthContainer, StyledLink } from '../Styles'
 import LoadingButton from '@mui/lab/LoadingButton'

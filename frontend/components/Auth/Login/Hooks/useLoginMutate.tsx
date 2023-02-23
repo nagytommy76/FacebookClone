@@ -16,7 +16,9 @@ const useLoginMutate = () => {
          return { ...prevValue, value: event.target.value }
       })
 
-   const handleLoginSend = async (event: React.FormEvent): Promise<AxiosResponse<{ msg: string }>> => {
+   const handleLoginSend = async (
+      event: React.FormEvent
+   ): Promise<AxiosResponse<{ accessToken: string; isPasswordCorrect: boolean }>> => {
       event.preventDefault()
       return await axios.post('/auth/login', {
          email: email.value,
