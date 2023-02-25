@@ -26,12 +26,14 @@ const useLoginMutate = () => {
       })
    }
 
+   const onSuccessFn = (data: AxiosResponse<{ accessToken: string; isPasswordCorrect: boolean }>) => {
+      // https://www.youtube.com/watch?v=ss-_S1Vyxa0&ab_channel=SonnySangha
+   }
+
    const { mutate, isLoading, data } = useMutation({
       mutationKey: ['login'],
       mutationFn: handleLoginSend,
-      onSuccess: (data) => {
-         console.log(data.data)
-      },
+      onSuccess: onSuccessFn,
       onError: (error) => {
          if (isAxiosError(error)) {
             const errorResponse = error.response?.data.errors as IInputValues[]
