@@ -21,3 +21,10 @@ export const InputValues: IInputValues = {
    param: '',
    value: '',
 }
+
+export interface ILoginData {
+   accessToken: string
+   isPasswordCorrect: boolean
+   userId: string
+   userName: string
+}
