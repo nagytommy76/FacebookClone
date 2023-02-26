@@ -1,32 +1,23 @@
-import React, { ChangeEvent, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse, isAxiosError } from '../../../../axiosSetup/AxiosInstance'
-import { IInputValues, InputValues } from '../../Register/Includes/Types'
+import type { Dispatch, SetStateAction } from 'react'
+import type { IInputValues, ILoginData } from '../../Register/Includes/Types'
 
-const useLoginMutate = () => {
-   const [email, setEmail] = useState<IInputValues>(InputValues)
-   const [password, setPassword] = useState<IInputValues>(InputValues)
-
-   const handleSetEmail = (event: ChangeEvent<HTMLInputElement>) =>
-      setEmail((prevValue) => {
-         return { ...prevValue, value: event.target.value }
-      })
-   const handleSetPassword = (event: ChangeEvent<HTMLInputElement>) =>
-      setPassword((prevValue) => {
-         return { ...prevValue, value: event.target.value }
-      })
-
-   const handleLoginSend = async (
-      event: React.FormEvent
-   ): Promise<AxiosResponse<{ accessToken: string; isPasswordCorrect: boolean }>> => {
+const useLoginMutate = (
+   email: string,
+   password: string,
+   setEmail: Dispatch<SetStateAction<IInputValues>>,
+   setPassword: Dispatch<SetStateAction<IInputValues>>
+) => {
+   const handleLoginSend = async (event: React.FormEvent): Promise<AxiosResponse<ILoginData>> => {
       event.preventDefault()
       return await axios.post('/auth/login', {
-         email: email.value,
-         password: password.value,
+         email,
+         password,
       })
    }
 
-   const onSuccessFn = (data: AxiosResponse<{ accessToken: string; isPasswordCorrect: boolean }>) => {
+   const onSuccessFn = (data: AxiosResponse<ILoginData>) => {
       // https://www.youtube.com/watch?v=ss-_S1Vyxa0&ab_channel=SonnySangha
    }
 
@@ -62,10 +53,6 @@ const useLoginMutate = () => {
    })
 
    return {
-      email,
-      password,
-      handleSetEmail,
-      handleSetPassword,
       loginMutate: mutate,
       isLoading,
       data,

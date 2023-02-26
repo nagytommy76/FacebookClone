@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import useLoginMutate from './Hooks/useLoginMutate'
+import useLoginState from './Hooks/useLoginState'
 
 import { StyledLoginPaper, StyledAuthContainer, StyledLink } from '../Styles'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -11,7 +12,8 @@ import TextField from '@mui/material/TextField'
 const LoginSnackbar = dynamic(() => import('./Includes/LoginSnackbar'))
 
 const Login = () => {
-   const { email, password, handleSetEmail, handleSetPassword, loginMutate, isLoading } = useLoginMutate()
+   const { email, handleSetEmail, password, handleSetPassword, setEmail, setPassword } = useLoginState()
+   const { loginMutate, isLoading } = useLoginMutate(email.value, password.value, setEmail, setPassword)
 
    return (
       <StyledAuthContainer>
