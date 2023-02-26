@@ -52,7 +52,14 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
          maxAge: 2 * 24 * 60 * 60 * 1000, // 2 nap * 24 óra * 1óra * 1 perc
       })
 
-      return res.status(200).json({ isPasswordCorrect, accessToken })
+      return res
+         .status(200)
+         .json({
+            isPasswordCorrect,
+            accessToken,
+            userId: foundUser._id,
+            userName: `${foundUser.firstName} ${foundUser.sureName}`,
+         })
    } catch (error) {
       res.status(500).json(error)
    }
