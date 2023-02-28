@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useAppSelector } from '../../app/store'
 
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,6 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 
 const Navbar = () => {
+   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
    return (
       <AppBar position='sticky'>
          <Toolbar>
@@ -17,9 +19,11 @@ const Navbar = () => {
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                News
             </Typography>
-            <Link href='/login'>
-               <Button color='inherit'>Belépés</Button>
-            </Link>
+            {!isLoggedIn && (
+               <Link href='/login'>
+                  <Button color='inherit'>Belépés</Button>
+               </Link>
+            )}
          </Toolbar>
       </AppBar>
    )
