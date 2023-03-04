@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-import { store } from '../app/store'
+import { store } from '../app/redux/store'
 import { Provider } from 'react-redux'
 
 import type { AppProps } from 'next/app'

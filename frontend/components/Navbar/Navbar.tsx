@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useAppSelector } from '../../app/store'
+import { useAppSelector } from '../../app/redux/store'
 
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
