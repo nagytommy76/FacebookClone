@@ -2,7 +2,8 @@ import { Router } from 'express'
 import { ValidateRegister, ValidateLogin } from './validators/authValidator'
 import { authValidationMiddleware } from '../../middlewares/authValidationMiddleware'
 
-import { registerUserController, loginUserController } from '../../controllers/users/users'
+import { loginUserController } from '../../controllers/users/users'
+import { registerUserController } from '../../controllers/users/register'
 
 const router = Router()
 
