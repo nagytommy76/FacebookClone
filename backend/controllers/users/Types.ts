@@ -38,11 +38,16 @@ export interface UserModel extends Model<IUserTypes> {
       email: string,
       plainPass: string
    ): Promise<{ isPasswordCorrect: boolean; foundUser: IUserTypes }>
-   jwtAccessRefreshTokenSign(
+   jwtAccessTokenSign(
       userId: string | ObjectId,
       email: string,
       ACCESS_TOKEN_SECRET: string,
+      expiresIn?: string
+   ): string
+   jwtRefreshTokenSign(
+      userId: string | ObjectId,
+      email: string,
       REFRESH_TOKEN_SECRET: string,
-      expiresIn: string
-   ): { accessToken: string; refreshToken: string }
+      expiresIn?: string
+   ): string
 }

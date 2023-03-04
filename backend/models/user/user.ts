@@ -1,8 +1,5 @@
-import { Schema, model, ObjectId } from 'mongoose'
-import { hash, compare } from 'bcrypt'
-import jwt from 'jsonwebtoken'
-
-import { UserModel, IUserTypes } from '../../controllers/users/Types'
+import { Schema, model } from 'mongoose'
+import type { UserModel, IUserTypes } from '../../controllers/users/Types'
 
 const UserSchema = new Schema<IUserTypes, UserModel>({
    firstName: String,
@@ -31,26 +28,6 @@ const UserSchema = new Schema<IUserTypes, UserModel>({
    },
 })
 
-UserSchema.statics.encryptPassword = async function (nativePass: string) {
-   return await hash(nativePass, 10)
-}
-UserSchema.statics.comparePassword = async function (email: string, plainPass: string) {
-   const foundUser = await this.findOne({ email })
-   if (!foundUser) throw new Error('Nincs regisztrálva felhasználó ilyen email címmel!')
-   const isPasswordCorrect = await compare(plainPass, foundUser.password)
-   return { isPasswordCorrect, foundUser }
-}
-
-UserSchema.statics.jwtAccessRefreshTokenSign = function (
-   userId: string | ObjectId,
-   email: string,
-   ACCESS_TOKEN_SECRET: string,
-   REFRESH_TOKEN_SECRET: string,
-   expiresIn: string = '15min'
-) {
-   const accessToken = jwt.sign({ userId, email }, ACCESS_TOKEN_SECRET, { expiresIn })
-   const refreshToken = jwt.sign({ userId, email }, REFRESH_TOKEN_SECRET, { expiresIn })
-   return { accessToken, refreshToken }
-}
+require('./statics')(UserSchema)
 
 export const User = model<IUserTypes, UserModel>('User', UserSchema)
