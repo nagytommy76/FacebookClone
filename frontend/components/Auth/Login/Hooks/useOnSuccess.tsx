@@ -19,7 +19,7 @@ const useOnSuccess = () => {
       dispatch(setUserName(data.data.userName))
       dispatch(setUserId(data.data.userId))
       dispatch(setIsLoggedIn(true))
-      router.push('/main')
+      router.push('/')
    }
    return onSuccessFn
 }
