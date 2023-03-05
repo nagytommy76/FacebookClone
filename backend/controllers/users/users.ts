@@ -20,17 +20,11 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
       )
       const refreshToken = UserModel.jwtRefreshTokenSign(foundUser._id, foundUser.email, REFRESH_TOKEN_SECRET)
 
-      res.cookie('accessToken', accessToken, {
-         httpOnly: true,
-         secure: true,
-         sameSite: 'none',
-         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 nap * 24 óra * 1óra * 1 perc
-      })
       res.cookie('refreshToken', refreshToken, {
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 nap * 24 óra * 1óra * 1 perc
+         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       })
 
       return res.status(200).json({
@@ -46,7 +40,7 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
 
 export const checkRefreshTokenValidityController = (req: Request, res: Response) => {
    // Ide a refresh token kell
-   const refreshToken = req.cookies?.refreshToken as string | undefined
+   const refreshToken = req.body.refreshToken as string | undefined
    if (!refreshToken) return res.sendStatus(401)
    try {
       jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err, decoded: any) => {
