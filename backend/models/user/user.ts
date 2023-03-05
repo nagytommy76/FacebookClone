@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 import type { UserModel, IUserTypes } from '../../controllers/users/Types'
+import { UserStatics } from './statics'
 
 const UserSchema = new Schema<IUserTypes, UserModel>({
    firstName: String,
@@ -28,6 +29,6 @@ const UserSchema = new Schema<IUserTypes, UserModel>({
    },
 })
 
-require('./statics')(UserSchema)
+UserStatics(UserSchema)
 
 export const User = model<IUserTypes, UserModel>('User', UserSchema)

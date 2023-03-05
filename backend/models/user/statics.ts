@@ -4,7 +4,7 @@ import { hash, compare } from 'bcrypt'
 import type { DefaultSchemaOptions, ObjectId, Schema } from 'mongoose'
 import type { IUserTypes, UserModel } from '../../controllers/users/Types'
 
-module.exports = function (
+export function UserStatics(
    UserSchema: Schema<IUserTypes, UserModel, {}, {}, {}, {}, DefaultSchemaOptions, IUserTypes>
 ) {
    UserSchema.statics.encryptPassword = async function (nativePass: string) {
