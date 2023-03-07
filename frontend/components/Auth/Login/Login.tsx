@@ -6,6 +6,7 @@ import { StyledLoginPaper, StyledAuthContainer, StyledLink } from '../Styles'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
+import SendIcon from '@mui/icons-material/Send'
 
 import TextField from '@mui/material/TextField'
 
@@ -42,6 +43,7 @@ const Login = () => {
             <LoadingButton
                loading={isLoading}
                loadingPosition='end'
+               endIcon={<SendIcon />}
                variant='contained'
                onClick={(event) => loginMutate(event)}
                fullWidth>
