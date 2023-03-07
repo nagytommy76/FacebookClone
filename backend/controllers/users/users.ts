@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
-import { User as UserModel } from '../../models/user/user'
 import jwt from 'jsonwebtoken'
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '../../config/endpoints.config'
+import { REFRESH_TOKEN_SECRET } from '../../config/endpoints.config'
+import { signAccessAndRefreshToken } from './helpers/signtTokens'
 
 export const checkRefreshTokenValidityController = (req: Request, res: Response) => {
    // Ide a refresh token kell
@@ -10,12 +10,9 @@ export const checkRefreshTokenValidityController = (req: Request, res: Response)
    try {
       jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err, decoded: any) => {
          if (err) return res.status(403).json({ errorMessage: 'refresh token expired' })
-         const accessToken = UserModel.jwtAccessTokenSign(
-            decoded._id,
-            decoded.email,
-            ACCESS_TOKEN_SECRET,
-            '1min'
-         )
+
+         const { accessToken } = signAccessAndRefreshToken(decoded._id, decoded.email)
+
          res.status(200).json(accessToken)
       })
    } catch (error) {
