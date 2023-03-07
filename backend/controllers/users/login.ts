@@ -1,20 +1,10 @@
 import { User as UserModel } from '../../models/user/user'
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from '../../config/endpoints.config'
+import { errorResponse } from './helpers/errorResponse'
+import { signAccessAndRefreshToken } from './helpers/signtTokens'
+import { REFRESH_TOKEN_EXPIRES_IN_MILLISEC, ACCESS_TOKEN_EXPIRES_IN_MILLISEC } from './helpers/signtTokens'
+
 import type { Response } from 'express'
 import type { ILoginRequest } from './Types'
-
-const errorResponse = (isError: boolean, msg: string, param: string, value: string = '') => {
-   return {
-      errors: [
-         {
-            isError,
-            msg,
-            param,
-            value,
-         },
-      ],
-   }
-}
 
 export const loginUserController = async (req: ILoginRequest, res: Response) => {
    const { email, password } = req.body
@@ -23,19 +13,19 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
       if (!isPasswordCorrect)
          return res.status(403).json(errorResponse(true, 'Helytelen jelszó!', 'password'))
 
-      const accessToken = UserModel.jwtAccessTokenSign(
-         foundUser._id,
-         foundUser.email,
-         ACCESS_TOKEN_SECRET,
-         '1min'
-      )
-      const refreshToken = UserModel.jwtRefreshTokenSign(foundUser._id, foundUser.email, REFRESH_TOKEN_SECRET)
+      const { accessToken, refreshToken } = signAccessAndRefreshToken(foundUser._id, foundUser.email)
 
       res.cookie('refreshToken', refreshToken, {
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+         maxAge: REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
+      })
+      res.cookie('accessToken', refreshToken, {
+         httpOnly: true,
+         secure: true,
+         sameSite: 'none',
+         maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
       })
 
       return res.status(200).json({
