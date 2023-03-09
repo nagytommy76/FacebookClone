@@ -21,7 +21,7 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
          sameSite: 'none',
          maxAge: REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
       })
-      res.cookie('accessToken', refreshToken, {
+      res.cookie('accessToken', accessToken, {
          httpOnly: true,
          secure: true,
          sameSite: 'none',
