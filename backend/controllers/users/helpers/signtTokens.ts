@@ -4,11 +4,11 @@ import { convertStringToMillisec } from './convertMilsec'
 
 import type { ObjectId } from 'mongoose'
 
-export const REFRESH_TOKEN_EXPIRES_IN = '1min'
-export const REFRESH_TOKEN_EXPIRES_IN_MILLISEC = convertStringToMillisec('1min')
+export const REFRESH_TOKEN_EXPIRES_IN = '2min'
+export const REFRESH_TOKEN_EXPIRES_IN_MILLISEC = convertStringToMillisec(REFRESH_TOKEN_EXPIRES_IN)
 
 export const ACCESS_TOKEN_EXPIRES_IN = '1min'
-export const ACCESS_TOKEN_EXPIRES_IN_MILLISEC = convertStringToMillisec('1min')
+export const ACCESS_TOKEN_EXPIRES_IN_MILLISEC = convertStringToMillisec(ACCESS_TOKEN_EXPIRES_IN)
 
 export const signAccessAndRefreshToken = (userId: ObjectId, email: string) => {
    const accessToken = UserModel.jwtAccessTokenSign(
