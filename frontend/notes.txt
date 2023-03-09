@@ -1,0 +1,5 @@
+A refreshToken ellenőrzésnél csak azt nézem, hogy valid-e, ha nem kilép -> login oldal
+Az accessToken-t majd az axios interceptornál viszgálom, azzal az api route-ot védem
+
+
+

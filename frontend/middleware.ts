@@ -19,20 +19,22 @@ export async function middleware(request: NextRequest) {
       redirectResponse.cookies.delete('accessToken')
       redirectResponse.cookies.delete('refreshToken')
       return redirectResponse
+   } else {
+      const { accessToken: newAccessToken, expiresIn } = await response.json()
+
+      const nextResponse = NextResponse.next()
+      nextResponse.cookies.delete('accessToken')
+      nextResponse.cookies.set({
+         name: 'accessToken',
+         value: newAccessToken,
+         secure: true,
+         httpOnly: true,
+         sameSite: 'none',
+         // maxAge: expiresIn,
+         expires: new Date(Date.now() + expiresIn),
+      })
+      return nextResponse
    }
-   const newAccessToken = await response.json()
-
-   const nextResponse = NextResponse.next()
-
-   nextResponse.cookies.set({
-      name: 'accessToken',
-      value: newAccessToken,
-      secure: true,
-      httpOnly: true,
-      sameSite: 'none',
-      expires: new Date(Date.now() + 60000),
-   })
-   return nextResponse
 }
 
 export const config = {
@@ -40,6 +42,8 @@ export const config = {
 }
 
 /**
- * A middleware a request és a böngésző közti szakaszon hívódik meg
+ * Atküldeni backendről egy accessTokenExpiresIn stringet/millisecet, hogy itt is szinkronban legyen a cookie
+ * Átküldeni az accessTokent, ha az érvényes minden ok, ha nem a refreshTokent megnézni,hogy érvényes-e,
+ * ha igen igényelni egy új accessTokent, ha az sem kiléptetni a usert
  *
  */
