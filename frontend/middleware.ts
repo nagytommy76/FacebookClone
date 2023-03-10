@@ -14,16 +14,17 @@ export async function middleware(request: NextRequest) {
       body: JSON.stringify({ refreshToken }),
    })
    // Lejárt a refreshToken
-   if (response.status === 403 || response.status === 401) {
+   console.log(response.status)
+   if (response.status === 404 || response.status === 401) {
       let redirectResponse = NextResponse.redirect(new URL('/login', request.url))
       redirectResponse.cookies.delete('accessToken')
       redirectResponse.cookies.delete('refreshToken')
       return redirectResponse
-   } else {
-      const { accessToken: newAccessToken, expiresIn } = await response.json()
-
+   }
+   if (response.status === 200) {
       const nextResponse = NextResponse.next()
-      nextResponse.cookies.delete('accessToken')
+      const { accessToken: newAccessToken, expiresIn } = await response.json()
+      // nextResponse.cookies.delete('accessToken')
       nextResponse.cookies.set({
          name: 'accessToken',
          value: newAccessToken,
@@ -35,6 +36,7 @@ export async function middleware(request: NextRequest) {
       })
       return nextResponse
    }
+   NextResponse.next()
 }
 
 export const config = {
@@ -45,5 +47,7 @@ export const config = {
  * Atküldeni backendről egy accessTokenExpiresIn stringet/millisecet, hogy itt is szinkronban legyen a cookie
  * Átküldeni az accessTokent, ha az érvényes minden ok, ha nem a refreshTokent megnézni,hogy érvényes-e,
  * ha igen igényelni egy új accessTokent, ha az sem kiléptetni a usert
+ *
+ * Valahogy ki kéne deríteni, hogy a login-ról jövök, akkor ne fusson le
  *
  */
