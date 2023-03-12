@@ -1,5 +1,5 @@
 import React from 'react'
-import { axiosInstance as axios } from '../../../../axiosSetup/AxiosInstance'
+import { axiosInstance as axios } from '../../../../src/utils/axiosSetup/AxiosInstance'
 import type { AxiosResponse } from 'axios'
 import type { ILoginData } from '../../Register/Includes/Types'
 

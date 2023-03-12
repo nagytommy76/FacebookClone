@@ -2,7 +2,11 @@ import useRegisterState from './useRegisterState'
 import { useRouter } from 'next/router'
 
 import { useMutation } from '@tanstack/react-query'
-import { isAxiosError, axiosInstance as axios, AxiosResponse } from '../../../../axiosSetup/AxiosInstance'
+import {
+   isAxiosError,
+   axiosInstance as axios,
+   AxiosResponse,
+} from '../../../../src/utils/axiosSetup/AxiosInstance'
 import { IInputValues } from '../Includes/Types'
 
 const useRegisterMutate = () => {
