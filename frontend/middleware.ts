@@ -27,12 +27,3 @@ export async function middleware(request: NextRequest) {
 export const config = {
    matcher: ['/'],
 }
-
-/**
- * Atküldeni backendről egy accessTokenExpiresIn stringet/millisecet, hogy itt is szinkronban legyen a cookie
- * Átküldeni az accessTokent, ha az érvényes minden ok, ha nem a refreshTokent megnézni,hogy érvényes-e,
- * ha igen igényelni egy új accessTokent, ha az sem kiléptetni a usert
- *
- * Valahogy ki kéne deríteni, hogy a login-ról jövök, akkor ne fusson le
- *
- */
