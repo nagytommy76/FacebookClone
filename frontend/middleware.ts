@@ -5,36 +5,21 @@ import type { NextRequest } from 'next/server'
 export async function middleware(request: NextRequest) {
    const refreshToken = request.cookies.get('refreshToken')?.value
    if (!refreshToken) return NextResponse.redirect(new URL('/login', request.url))
-   //  Ha van access token megnézem, hogy valid-e fetch-el, axios nem müxik
+   //  Ha van refresh token megnézem, hogy valid-e fetch-el, axios nem müxik
    const response = await fetch('http://localhost:5050/api/auth/refresh-token', {
       method: 'POST',
       headers: {
          'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({ refreshToken }),
    })
-   // Lejárt a refreshToken
-   console.log(response.status)
-   if (response.status === 404 || response.status === 401) {
+   // // Lejárt a refreshToken
+   if (response.status === 403) {
       let redirectResponse = NextResponse.redirect(new URL('/login', request.url))
       redirectResponse.cookies.delete('accessToken')
       redirectResponse.cookies.delete('refreshToken')
       return redirectResponse
-   }
-   if (response.status === 200) {
-      const nextResponse = NextResponse.next()
-      const { accessToken: newAccessToken, expiresIn } = await response.json()
-      // nextResponse.cookies.delete('accessToken')
-      nextResponse.cookies.set({
-         name: 'accessToken',
-         value: newAccessToken,
-         secure: true,
-         httpOnly: true,
-         sameSite: 'none',
-         // maxAge: expiresIn,
-         expires: new Date(Date.now() + expiresIn),
-      })
-      return nextResponse
    }
    NextResponse.next()
 }
