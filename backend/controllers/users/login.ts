@@ -27,13 +27,13 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
          sameSite: 'none',
          maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
       })
-
-      return res.status(200).json({
-         isPasswordCorrect,
-         accessToken,
-         userId: foundUser._id,
-         userName: `${foundUser.firstName} ${foundUser.sureName}`,
-      })
+         .status(200)
+         .json({
+            isPasswordCorrect,
+            accessToken,
+            userId: foundUser._id,
+            userName: `${foundUser.firstName} ${foundUser.sureName}`,
+         })
    } catch (error) {
       res.status(500).json(error)
    }
