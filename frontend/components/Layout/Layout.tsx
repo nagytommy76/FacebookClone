@@ -1,9 +1,15 @@
 import Head from 'next/head'
+import { useAppSelector } from '../../src/utils/redux/store'
+
+import { ThemeProvider } from '@emotion/react'
+import { lightTheme, darkTheme } from '../../src/theme/theme'
+import { GlobalThemeProvider } from '../../src/theme/themeProvider'
 
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
 
 const Layout: React.FC<{ children: React.ReactNode; className: string }> = ({ children, className }) => {
+   const isDarkTheme = useAppSelector((state) => state.theme.isDarkTheme)
    return (
       <>
          <Head>
@@ -13,11 +19,15 @@ const Layout: React.FC<{ children: React.ReactNode; className: string }> = ({ ch
             <meta name='author' content='Nagy Tamás' />
             <link rel='icon' href='/favicon.ico' />
          </Head>
-         <main className={className}>
-            <Navbar />
-            {children}
-            <Footer />
-         </main>
+         <GlobalThemeProvider>
+            <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+               <main className={className}>
+                  <Navbar />
+                  {children}
+                  <Footer />
+               </main>
+            </ThemeProvider>
+         </GlobalThemeProvider>
       </>
    )
 }
