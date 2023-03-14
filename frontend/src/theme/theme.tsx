@@ -9,12 +9,16 @@ export const work_sans = Work_Sans({
    fallback: ['Helvetica', 'Arial', 'sans-serif'],
 })
 
+const transitions = { create: () => 'all .1s linear' }
 // Create a theme instance.
-const theme = createTheme({
+export const lightTheme = createTheme({
+   transitions,
    palette: {
       mode: 'light',
       primary: {
-         main: '#556cd6',
+         // main: '#2596be',
+         // main: '#1b74e4',
+         main: '#154c79',
       },
       secondary: {
          main: '#19857b',
@@ -28,4 +32,15 @@ const theme = createTheme({
    },
 })
 
-export default theme
+export const darkTheme = createTheme({
+   transitions,
+   palette: {
+      mode: 'dark',
+      primary: {
+         main: '#FFF',
+      },
+   },
+   typography: {
+      fontFamily: work_sans.style.fontFamily,
+   },
+})
