@@ -4,25 +4,25 @@ import { useAppSelector } from '../../utils/redux/store'
 import ThemeSwitch from './Includes/ThemeSwitch'
 
 import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+
+import LeftSide from './Includes/LeftSide/LeftSide'
+import { StyledNavbarToolbar } from './Style'
 
 const Navbar = () => {
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
    return (
       <AppBar position='sticky'>
-         <Toolbar>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-               Facebook 2.0
-            </Typography>
+         <StyledNavbarToolbar>
+            <LeftSide />
+            <p>ide jön a menü</p>
             {!isLoggedIn && (
                <Link href='/login'>
                   <Button color='inherit'>Belépés</Button>
                </Link>
             )}
             <ThemeSwitch />
-         </Toolbar>
+         </StyledNavbarToolbar>
       </AppBar>
    )
 }
