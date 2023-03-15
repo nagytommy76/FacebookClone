@@ -1,4 +1,5 @@
 import { css, Global } from '@emotion/react'
+import { CSSInterpolation } from '@mui/material'
 import { useAppSelector } from '../utils/redux/store'
 
 const lightGlobalTheme = {
@@ -19,68 +20,56 @@ const darkGlobalTheme = {
    scrollbarThumbColorHover: '#717171',
 }
 
-const darkGlobalStyles = css({
-   body: {
-      backgroundColor: darkGlobalTheme.main,
-      width: '100%',
-      fontFamily: 'Work Sans, sans-serif',
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      margin: 0,
-      scrollbarGutter: 'stable',
-   },
-   html: {
-      scrollBehavior: 'smooth',
-      overflowY: 'scroll',
-   },
-   '&::-webkit-scrollbar': {
-      width: '9px',
-      transition: 'all .2s ease',
-   },
-   '&::-webkit-scrollbar-track': {
-      background: darkGlobalTheme.main,
-   },
-   '&::-webkit-scrollbar-thumb': {
-      bordeRadius: '5px',
-      background: darkGlobalTheme.scrollbarThumbColor,
-   },
-   '&::-webkit-scrollbar-thumb:hover': {
-      background: darkGlobalTheme.scrollbarThumbColorHover,
-   },
-})
-const lgihtGlobalStyles = css({
-   body: {
-      backgroundColor: lightGlobalTheme.main,
-      width: '100%',
-      fontFamily: 'Work Sans, sans-serif',
-      WebkitFontSmoothing: 'antialiased',
-      MozOsxFontSmoothing: 'grayscale',
-      margin: 0,
-      scrollbarGutter: 'stable',
-   },
-   html: {
-      scrollBehavior: 'smooth',
-      overflowY: 'scroll',
-   },
-   '&::-webkit-scrollbar': {
-      width: '9px',
-      transition: 'all .2s ease',
-   },
-   '&::-webkit-scrollbar-track': {
-      background: lightGlobalTheme.main,
-   },
-   webkitBorderRadius: {
-      bordeRadius: '5px',
-      background: lightGlobalTheme.scrollbarThumbColor,
-   },
-   // '&::-webkit-scrollbar-thumb': {
-   //    bordeRadius: '5px',
-   //    background: lightGlobalTheme.scrollbarThumbColor,
-   // },
-   '&::-webkit-scrollbar-thumb:hover': {
-      background: lightGlobalTheme.scrollbarThumbColorHover,
-   },
-})
+const globalStyleBase = (
+   mainColor: string,
+   scrollbarThumbColor: string,
+   scrollbarThumbColorHover: string
+) => {
+   return {
+      body: {
+         backgroundColor: mainColor,
+         width: '100%',
+         fontFamily: 'Work Sans, sans-serif',
+         WebkitFontSmoothing: 'antialiased',
+         MozOsxFontSmoothing: 'grayscale',
+         margin: 0,
+         scrollbarGutter: 'stable',
+      },
+      html: {
+         scrollBehavior: 'smooth',
+      },
+      '&::-webkit-scrollbar': {
+         width: '9px',
+         transition: 'all .2s ease',
+      },
+      '&::-webkit-scrollbar-track': {
+         background: mainColor,
+      },
+      '&::-webkit-scrollbar-thumb': {
+         bordeRadius: '5px',
+         background: scrollbarThumbColor,
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+         background: scrollbarThumbColorHover,
+      },
+   }
+}
+// egyelőre any, megoldani!
+const darkGlobalStyles = css(
+   globalStyleBase(
+      darkGlobalTheme.main,
+      darkGlobalTheme.scrollbarThumbColor,
+      darkGlobalTheme.scrollbarThumbColorHover
+   ) as any
+)
+
+const lgihtGlobalStyles = css(
+   globalStyleBase(
+      lightGlobalTheme.main,
+      lightGlobalTheme.scrollbarThumbColor,
+      lightGlobalTheme.scrollbarThumbColorHover
+   ) as any
+)
 
 export const GlobalThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    const isDarkTheme = useAppSelector((state) => state.theme.isDarkTheme)
