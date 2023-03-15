@@ -1,4 +1,4 @@
-import Login from '../../components/Auth/Login/Login'
+import Login from '../../src/components/Auth/Login/Login'
 
 const index = () => {
    return <Login />

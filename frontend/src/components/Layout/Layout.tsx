@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import { useAppSelector } from '../../src/utils/redux/store'
+import { useAppSelector } from '../../utils/redux/store'
 
 import { ThemeProvider } from '@emotion/react'
-import { lightTheme, darkTheme } from '../../src/theme/theme'
-import { GlobalThemeProvider } from '../../src/theme/themeProvider'
+import { lightTheme, darkTheme } from '../../theme/theme'
+import { GlobalThemeProvider } from '../../theme/themeProvider'
 
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'

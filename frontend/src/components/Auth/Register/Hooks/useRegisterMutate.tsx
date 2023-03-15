@@ -6,7 +6,7 @@ import {
    isAxiosError,
    axiosInstance as axios,
    AxiosResponse,
-} from '../../../../src/utils/axiosSetup/AxiosInstance'
+} from '../../../../utils/axiosSetup/AxiosInstance'
 import { IInputValues } from '../Includes/Types'
 
 const useRegisterMutate = () => {

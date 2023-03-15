@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useAppSelector } from '../../src/utils/redux/store'
+import { useAppSelector } from '../../utils/redux/store'
 
 import ThemeSwitch from './Includes/ThemeSwitch'
 

@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import type { AppProps } from 'next/app'
 import { Work_Sans } from '@next/font/google'
 import '../styles/globals.css'
-import Layout from '../components/Layout/Layout'
+import Layout from '../src/components/Layout/Layout'
 
 const work = Work_Sans({ subsets: ['latin'] })
 

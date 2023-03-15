@@ -2,8 +2,8 @@ import React from 'react'
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import MaterialUISwitch from './CustomSwitch'
-import { useAppDispatch, useAppSelector } from '../../../src/utils/redux/store'
-import { setTheme } from '../../../src/utils/redux/slices/ThemeSlice'
+import { useAppDispatch, useAppSelector } from '../../../utils/redux/store'
+import { setTheme } from '../../../utils/redux/slices/ThemeSlice'
 
 const ThemeSwitch = () => {
    const isDarkTheme = useAppSelector((state) => state.theme.isDarkTheme)
