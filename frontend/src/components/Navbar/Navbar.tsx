@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { useAppSelector } from '../../utils/redux/store'
 
-import ThemeSwitch from './Includes/ThemeSwitch'
+import Menu from './Includes/Menu/Menu'
+import Avatar from './Includes/Avatar/Avatar'
 
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
@@ -15,13 +16,13 @@ const Navbar = () => {
       <AppBar position='sticky'>
          <StyledNavbarToolbar>
             <LeftSide />
-            <p>ide jön a menü</p>
+            <Menu />
             {!isLoggedIn && (
                <Link href='/login'>
                   <Button color='inherit'>Belépés</Button>
                </Link>
             )}
-            <ThemeSwitch />
+            <Avatar />
          </StyledNavbarToolbar>
       </AppBar>
    )
