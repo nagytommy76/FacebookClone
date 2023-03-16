@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { styled } from '@mui/material'
 
 import SearchBar from '../SearchBar/SearchBar'
@@ -12,8 +13,10 @@ const StyledContainer = styled('div')({
 
 const LeftSide = () => {
    return (
-      <StyledContainer style={{}}>
-         <Image src={FacebookIcon} alt='facebook icon' width={50} height={50} />
+      <StyledContainer>
+         <Link href='/'>
+            <Image src={FacebookIcon} alt='facebook icon' width={50} height={50} />
+         </Link>
          <SearchBar />
       </StyledContainer>
    )
