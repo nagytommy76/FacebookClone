@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import ThemeSwitch from '../ThemeSwitch'
 import AvatarIcon from './Includes/AvatarComponent'
 import ImageAvatar from './Includes/ImageAvatar'
+import Logout from './Includes/Logout'
 
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Logout from '@mui/icons-material/Logout'
 import Fade from '@mui/material/Fade'
 
 const AvatarComponent = () => {
@@ -38,12 +37,7 @@ const AvatarComponent = () => {
                <ImageAvatar />
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleClose}>
-               <ListItemIcon>
-                  <Logout />
-               </ListItemIcon>
-               Kilépés
-            </MenuItem>
+            <Logout handleClose={handleClose} />
             <MenuItem disableRipple={true} disableTouchRipple={true}>
                <ThemeSwitch />
             </MenuItem>
