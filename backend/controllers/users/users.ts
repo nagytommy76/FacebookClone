@@ -16,3 +16,12 @@ export const checkRefreshTokenValidityController = (req: Request, res: Response)
       res.status(500).json(error)
    }
 }
+
+export const logoutUserController = async (req: Request, res: Response) => {
+   // [0]: refreshToken [1]: accessToken
+   const cookies = req.headers.cookie?.split(';')
+   if (!cookies) return res.sendStatus(204)
+   res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'none', secure: true })
+   res.clearCookie('accessToken', { httpOnly: true, sameSite: 'none', secure: true })
+   res.status(200).json({ message: 'Sikeres kijelentkezés' })
+}
