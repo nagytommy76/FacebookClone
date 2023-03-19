@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 import ThemeSwitch from '../ThemeSwitch'
 import AvatarIcon from './Includes/AvatarComponent'
+import ImageAvatar from './Includes/ImageAvatar'
 
-import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
@@ -35,12 +35,12 @@ const AvatarComponent = () => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
             <MenuItem onClick={handleClose}>
-               <Avatar sx={{ bgcolor: 'orange', width: 45, height: 45 }}>NT</Avatar>
+               <ImageAvatar />
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleClose}>
                <ListItemIcon>
-                  <Logout fontSize='small' />
+                  <Logout />
                </ListItemIcon>
                Kilépés
             </MenuItem>
