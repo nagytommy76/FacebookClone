@@ -1,4 +1,4 @@
-import React from 'react'
+import Link from 'next/link'
 
 import Stack from '@mui/material/Stack'
 import { styled } from '@mui/material/styles'
@@ -20,19 +20,25 @@ const Menu = () => {
    return (
       <Stack direction='row' spacing={1}>
          <Tooltip title='Főoldal'>
-            <CustomIconButton aria-label='home' size='large'>
-               <HomeIcon fontSize='inherit' />
-            </CustomIconButton>
+            <Link href='/'>
+               <CustomIconButton aria-label='home' size='large'>
+                  <HomeIcon fontSize='inherit' />
+               </CustomIconButton>
+            </Link>
          </Tooltip>
          <Tooltip title='Ismerős'>
-            <CustomIconButton aria-label='friends' size='large'>
-               <PeopleAltIcon fontSize='inherit' />
-            </CustomIconButton>
+            <Link href='/friends'>
+               <CustomIconButton aria-label='friends' size='large'>
+                  <PeopleAltIcon fontSize='inherit' />
+               </CustomIconButton>
+            </Link>
          </Tooltip>
          <Tooltip title='Csoportok'>
-            <CustomIconButton aria-label='groups' size='large'>
-               <Diversity3Icon fontSize='inherit' />
-            </CustomIconButton>
+            <Link href='/groups'>
+               <CustomIconButton aria-label='groups' size='large'>
+                  <Diversity3Icon fontSize='inherit' />
+               </CustomIconButton>
+            </Link>
          </Tooltip>
       </Stack>
    )

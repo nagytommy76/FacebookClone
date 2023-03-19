@@ -16,7 +16,7 @@ const ThemeSwitch = () => {
    return (
       <FormGroup>
          <FormControlLabel
-            control={<MaterialUISwitch onChange={handleToggleTheme} checked={isDarkTheme} sx={{ m: 1 }} />}
+            control={<MaterialUISwitch onChange={handleToggleTheme} checked={isDarkTheme} />}
             label=''
          />
       </FormGroup>
