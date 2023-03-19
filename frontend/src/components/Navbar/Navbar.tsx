@@ -17,12 +17,13 @@ const Navbar = () => {
          <StyledNavbarToolbar>
             <LeftSide />
             <Menu />
-            {!isLoggedIn && (
+            {!isLoggedIn ? (
                <Link href='/login'>
                   <Button color='inherit'>Belépés</Button>
                </Link>
+            ) : (
+               <Avatar />
             )}
-            <Avatar />
          </StyledNavbarToolbar>
       </AppBar>
    )
