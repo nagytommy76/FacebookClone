@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import ThemeSwitch from '../ThemeSwitch'
 import AvatarIcon from './Includes/AvatarComponent'
-import ImageAvatar from './Includes/ImageAvatar'
+import ProfileMenuLink from './Includes/ProfileMenuLink'
 import Logout from './Includes/Logout'
 
 import Menu from '@mui/material/Menu'
@@ -29,17 +29,24 @@ const AvatarComponent = () => {
             PaperProps={{
                sx: {
                   width: 230,
+                  minHeight: 170,
+                  filter: 'drop-shadow(0px 2px 6px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                     width: 45,
+                     height: 45,
+                     ml: -0.5,
+                     mr: 1,
+                  },
                },
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
-            <MenuItem onClick={handleClose}>
-               <ImageAvatar />
-            </MenuItem>
-            <Divider />
+            <ProfileMenuLink handleClose={handleClose} />
+            <Divider sx={{ mt: 1, mb: 1 }} />
             <Logout handleClose={handleClose} />
             <MenuItem disableRipple={true} disableTouchRipple={true}>
-               <ThemeSwitch />
+               <ThemeSwitch /> Téma
             </MenuItem>
          </Menu>
       </>
