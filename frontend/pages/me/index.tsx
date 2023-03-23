@@ -1,11 +1,9 @@
 import React from 'react'
 
+import ProfileMe from '../../src/components/Profile/ProfileMe'
+
 const me = () => {
-   return (
-      <div>
-         <h1>Profil adatok jönnek ide</h1>
-      </div>
-   )
+   return <ProfileMe />
 }
 
 export default me
