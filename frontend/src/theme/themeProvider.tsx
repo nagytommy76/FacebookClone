@@ -12,7 +12,7 @@ const lightGlobalTheme = {
 }
 
 const darkGlobalTheme = {
-   main: '#333',
+   main: '#18191a',
    text: '#FFF',
    toggleBorder: '#BBB',
    backgroundImage: 'linear-gradient(to right, #091236, #1E215D)',
