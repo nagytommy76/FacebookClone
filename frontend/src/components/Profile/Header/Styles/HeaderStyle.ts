@@ -7,7 +7,10 @@ export const ProfileHeader = styled(Paper)({
    marginTop: 16,
    padding: 20,
    width: '100%',
-   height: '200px',
+   minHeight: '200px',
+})
+
+export const HeaderTop = styled('div')({
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'center',
