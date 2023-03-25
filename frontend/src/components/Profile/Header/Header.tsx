@@ -1,6 +1,5 @@
 import React from 'react'
 
-import NavTabs from './NavTabs/NavTabs'
 import {
    ProfileHeader,
    HeaderImage,
@@ -15,9 +14,9 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline'
 
 import OwnProfile from '../../../../public/sajat.jpg'
 
-const Header = () => {
+const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    return (
-      <ProfileHeader elevation={3}>
+      <ProfileHeader elevation={1}>
          <HeaderTop>
             <HeaderImage src={OwnProfile} alt='Profil kép' />
             <HeadTitleSection>
@@ -38,7 +37,7 @@ const Header = () => {
             </ProfileModifySection>
          </HeaderTop>
          <Divider sx={{ marginTop: 4, marginBottom: 2 }} />
-         <NavTabs />
+         {children}
       </ProfileHeader>
    )
 }
