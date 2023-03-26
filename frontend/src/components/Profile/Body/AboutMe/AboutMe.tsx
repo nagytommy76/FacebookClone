@@ -8,7 +8,9 @@ import { StyledTabContainer } from './AboutMeStyles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
-const WorkAndStudyComponent = dynamic(() => import('./WorkSchool/WorkSchool'))
+const WorkAndStudyComponent = dynamic(() => import('./WorkSchool/WorkSchool'), {
+   loading: () => <p>Töltés kérlek várj...</p>,
+})
 
 const AboutMe = () => {
    const [value, setValue] = useState(0)
