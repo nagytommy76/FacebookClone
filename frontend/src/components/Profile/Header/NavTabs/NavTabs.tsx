@@ -1,13 +1,7 @@
 import React from 'react'
+import a11yProps from '../../Body/Includes/a11Props'
 
 import { StyledTab, StyledTabs } from '../Styles/HeaderStyle'
-
-function a11yProps(index: number) {
-   return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-   }
-}
 
 const NavTabs: React.FC<{
    handleTabChange: (event: React.SyntheticEvent, newValue: number) => void
