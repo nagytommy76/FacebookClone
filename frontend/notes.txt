@@ -3,6 +3,8 @@ Az accessToken-t majd az axios interceptornál viszgálom, azzal az api route-ot
 Megoldani, ha a felhasználónak a refreshTokenje lejárt és átkerül a login page-re, akkor a reduxból is logoutolni kell!!!
 
 
+a WorkSchoolnál Dialogba tenni a formot, iskolák
+
 MEGCSINÁLTAM ----------------------------------------------------------------------------------------
 
 

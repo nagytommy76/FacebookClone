@@ -12,28 +12,45 @@ export const ProfileHeader = styled(Paper)({
    minHeight: '200px',
 })
 
-export const HeaderTop = styled('div')({
+export const HeaderTop = styled('div')(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'center',
-})
+   [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      justifySelf: 'center',
+   },
+}))
 
-export const HeaderImage = styled(Image)({
+export const HeaderImage = styled(Image)(({ theme }) => ({
    width: '168px',
    height: '168px',
    borderRadius: '50%',
    marginRight: '18px',
-})
+   [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+   },
+}))
 
-export const HeadTitleSection = styled('div')({
+export const HeadTitleSection = styled('div')(({ theme }) => ({
    height: '65%',
    flexGrow: 1,
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-around',
-})
+   [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+      marginBottom: '15px',
+   },
+}))
 
-export const ProfileModifySection = styled('div')({ flexGrow: 0, alignSelf: 'flex-end' })
+export const ProfileModifySection = styled('div')(({ theme }) => ({
+   flexGrow: 0,
+   alignSelf: 'flex-end',
+   [theme.breakpoints.down('sm')]: {
+      alignSelf: 'center',
+   },
+}))
 
 export const StyledTab = styled(Tab)({
    textTransform: 'none',
