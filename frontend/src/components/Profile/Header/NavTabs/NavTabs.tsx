@@ -12,6 +12,9 @@ const NavTabs: React.FC<{
          textColor='primary'
          value={tabValue}
          onChange={handleTabChange}
+         variant='scrollable'
+         scrollButtons
+         allowScrollButtonsMobile
          aria-label='navigation tabs'>
          <StyledTab label='Bejegyzések' {...a11yProps(0)} />
          <StyledTab label='Névjegy' {...a11yProps(1)} />

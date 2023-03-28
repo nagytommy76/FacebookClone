@@ -58,4 +58,16 @@ export const StyledTab = styled(Tab)({
    '&.Mui-selected': { color: '#087aea' },
 })
 
-export const StyledTabs = styled(Tabs)({ '& .MuiTabs-indicator': { backgroundColor: '#087aea' } })
+export const StyledTabs = styled(Tabs)(({ theme }) => ({
+   '& .MuiTabs-indicator': { backgroundColor: '#087aea' },
+   '& .MuiTabs-scrollButtons.Mui-disabled': {
+      display: 'none',
+   },
+   [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%',
+      '& .MuiTabs-scrollButtons.Mui-disabled': {
+         display: 'inherit',
+         opacity: 0.3,
+      },
+   },
+}))
