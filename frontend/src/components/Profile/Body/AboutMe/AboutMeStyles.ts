@@ -1,10 +1,13 @@
 import { styled } from '@mui/system'
 
-export const StyledTabContainer = styled('div')({
+export const StyledTabContainer = styled('div')(({ theme }) => ({
    maxWidth: '100%',
    minHeight: '40%',
    display: 'flex',
-})
+   [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+   },
+}))
 
 // WorkSchool --------------------------
 export const WorkSchoolSection = styled('section')({

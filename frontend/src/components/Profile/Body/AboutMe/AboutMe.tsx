@@ -7,6 +7,7 @@ import a11yProps from '../Includes/a11Props'
 import { StyledTabContainer } from './AboutMeStyles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
+import Divider from '@mui/material/Divider'
 
 const WorkAndStudyComponent = dynamic(() => import('./WorkSchool/WorkSchool'), {
    loading: () => <p>Töltés kérlek várj...</p>,
@@ -26,11 +27,7 @@ const AboutMe = () => {
             variant='scrollable'
             value={value}
             onChange={handleChange}
-            aria-label='About me tabs'
-            sx={{
-               borderRight: 1,
-               borderColor: 'divider',
-            }}>
+            aria-label='About me tabs'>
             {/* Nem működik ha kiszedem külön komponensbe..... */}
             <Tab
                sx={{ '&.MuiButtonBase-root': { alignItems: 'flex-start' }, textTransform: 'none' }}
@@ -53,6 +50,7 @@ const AboutMe = () => {
                {...a11yProps(3)}
             />
          </Tabs>
+         <Divider />
          <TabPanel value={value} index={0}>
             Item One
          </TabPanel>
