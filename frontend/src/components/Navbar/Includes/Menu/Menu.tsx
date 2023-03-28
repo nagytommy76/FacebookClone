@@ -1,46 +1,62 @@
-import Link from 'next/link'
+import { useState } from 'react'
 
-import Stack from '@mui/material/Stack'
-import { styled } from '@mui/material/styles'
+import { DesktomMenuElement, MobileMenuElement } from './Includes/MenuElements'
 
-import IconButton, { IconButtonProps } from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
-
-import HomeIcon from '@mui/icons-material/Home'
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
-import Diversity3Icon from '@mui/icons-material/Diversity3'
-
-const CustomIconButton = styled(IconButton)<IconButtonProps>(({ theme }) => ({
-   width: 100,
-   borderRadius: 10,
-   color: theme.palette.warning.main,
-}))
+import IconButton from '@mui/material/IconButton'
+import MenuItem from '@mui/material/MenuItem'
+import MenuMUI from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import Box from '@mui/material/Box'
 
 const Menu = () => {
+   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
+
+   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorElNav(event.currentTarget)
+   }
+
+   const handleCloseNavMenu = () => {
+      setAnchorElNav(null)
+   }
+
    return (
-      <Stack direction='row' spacing={1}>
-         <Tooltip title='Főoldal'>
-            <Link href='/'>
-               <CustomIconButton aria-label='home' size='large'>
-                  <HomeIcon fontSize='inherit' />
-               </CustomIconButton>
-            </Link>
-         </Tooltip>
-         <Tooltip title='Ismerős'>
-            <Link href='/friends'>
-               <CustomIconButton aria-label='friends' size='large'>
-                  <PeopleAltIcon fontSize='inherit' />
-               </CustomIconButton>
-            </Link>
-         </Tooltip>
-         <Tooltip title='Csoportok'>
-            <Link href='/groups'>
-               <CustomIconButton aria-label='groups' size='large'>
-                  <Diversity3Icon fontSize='inherit' />
-               </CustomIconButton>
-            </Link>
-         </Tooltip>
-      </Stack>
+      <>
+         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+               size='large'
+               aria-label='account of current user'
+               aria-controls='menu-appbar'
+               aria-haspopup='true'
+               onClick={handleOpenNavMenu}
+               color='inherit'>
+               <MenuIcon />
+            </IconButton>
+            <MenuMUI
+               id='menu-appbar'
+               anchorEl={anchorElNav}
+               anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+               }}
+               keepMounted
+               transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+               }}
+               open={Boolean(anchorElNav)}
+               onClose={handleCloseNavMenu}
+               sx={{
+                  display: { xs: 'block', md: 'none' },
+               }}>
+               <MenuItem onClick={handleCloseNavMenu}>
+                  <MobileMenuElement />
+               </MenuItem>
+            </MenuMUI>
+         </Box>
+         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <DesktomMenuElement />
+         </Box>
+      </>
    )
 }
 
