@@ -19,14 +19,17 @@ const UserSchema = new Schema<IUserTypes, UserModel>({
       required: [true, 'Adjon meg egy jelszót!'],
       minlength: [4, 'a jelszó min. 4 karakter legyen!'],
    },
-   gender: {
-      type: String,
-      required: true,
+   userDetails: {
+      gender: {
+         type: String,
+         required: true,
+      },
+      dateOfBirth: {
+         type: Date,
+         required: true,
+      },
    },
-   dateOfBirth: {
-      type: Date,
-      required: true,
-   },
+   posts: { type: Schema.Types.ObjectId, ref: 'Posts' },
 })
 
 UserStatics(UserSchema)
