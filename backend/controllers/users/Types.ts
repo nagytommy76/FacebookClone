@@ -25,8 +25,11 @@ export interface IUserTypes {
    sureName: string
    password: string
    isEmailConfirmed: boolean
-   dateOfBirth: { day: number; month: number; year: number }
-   gender: 'male' | 'female'
+   userDetails: {
+      dateOfBirth: { day: number; month: number; year: number }
+      gender: 'male' | 'female'
+   }
+   posts: { userId: ObjectId; ref: 'Posts' }
    iat?: number
    exp?: number
 }

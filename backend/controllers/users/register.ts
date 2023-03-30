@@ -18,8 +18,10 @@ export const registerUserController = async (req: IRegisterRequest, res: Respons
          firstName,
          sureName,
          password: hashedPassword,
-         dateOfBirth: dateOfBirthString,
-         gender,
+         userDetails: {
+            dateOfBirth: dateOfBirthString,
+            gender,
+         },
       })
       res.status(201).json({
          message: 'A regisztráció sikeres volt',
