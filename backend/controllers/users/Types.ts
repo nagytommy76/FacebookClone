@@ -25,6 +25,7 @@ export interface IUserTypes {
    sureName: string
    password: string
    isEmailConfirmed: boolean
+   friends: { userId: ObjectId }[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
       gender: 'male' | 'female'
