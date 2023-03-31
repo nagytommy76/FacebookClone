@@ -7,4 +7,5 @@ export const BodyPaper = styled(Paper)({
    marginBottom: 16,
    padding: 8,
    width: '100%',
+   minHeight: '35%',
 })

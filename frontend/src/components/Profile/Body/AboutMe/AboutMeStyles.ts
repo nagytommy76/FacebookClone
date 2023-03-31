@@ -1,7 +1,9 @@
 import { styled } from '@mui/system'
 
-export const StyledTabContainer = styled('div')(({ theme }) => ({
-   maxWidth: '100%',
+import { BodyPaper } from '../Styles'
+
+export const StyledTabContainer = styled(BodyPaper)(({ theme }) => ({
+   width: '100%',
    minHeight: '40%',
    display: 'flex',
    [theme.breakpoints.down('sm')]: {
