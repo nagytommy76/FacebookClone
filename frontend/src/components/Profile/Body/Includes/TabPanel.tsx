@@ -1,19 +1,23 @@
 import React from 'react'
 import { TabPanelProps } from '../../Types/Types'
 
-import Box from '@mui/material/Box'
+import { styled } from '@mui/material'
+
+const StyledContainer = styled('section')(({ theme }) => ({
+   minHeight: '250px',
+}))
 
 export default function TabPanel(props: TabPanelProps) {
    const { children, value, index, ...other } = props
 
    return (
-      <div
+      <StyledContainer
          role='tabpanel'
          hidden={value !== index}
-         id={`simple-tabpanel-${index}`}
-         aria-labelledby={`simple-tab-${index}`}
+         id={`tabpanel-${index}`}
+         aria-labelledby={`tab-${index}`}
          {...other}>
-         {value === index && <Box sx={{ p: '7px' }}>{children}</Box>}
-      </div>
+         {value === index && children}
+      </StyledContainer>
    )
 }
