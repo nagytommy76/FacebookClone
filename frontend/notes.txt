@@ -5,6 +5,9 @@ Megoldani, ha a felhasználónak a refreshTokenje lejárt és átkerül a login 
 
 a WorkSchoolnál Dialogba tenni a formot, iskolák
 
+
+Kell most már az axios interceptor, hogy ellenőrizzem az accessToken meglétét/validálását
+
 MEGCSINÁLTAM ----------------------------------------------------------------------------------------
 
 

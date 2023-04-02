@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import usePostMutate from './Hooks/usePostMutate'
+
 import TextInputField from './Includes/TextInputField'
 
 import Dialog from '@mui/material/Dialog'
@@ -14,11 +16,9 @@ const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => 
    openAddDialog,
 }) => {
    const [postDescription, setPostDescription] = useState<string>('')
+   const { data, isLoading, postMutate } = usePostMutate(postDescription, [''])
    const chancgeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
       setPostDescription(event.target.value)
-   }
-   const handleSendPost = () => {
-      console.log(postDescription)
    }
 
    return (
@@ -39,7 +39,7 @@ const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => 
             <p>Ide jön még egy kép feltöltés</p>
          </DialogContent>
          <DialogActions>
-            <Button onClick={handleSendPost} fullWidth variant='contained' color='primary'>
+            <Button onClick={(event) => postMutate(event)} fullWidth variant='contained' color='primary'>
                Közzététel
             </Button>
          </DialogActions>
