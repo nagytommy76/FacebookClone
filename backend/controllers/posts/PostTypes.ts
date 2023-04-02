@@ -1,5 +1,5 @@
 import { Model, ObjectId } from 'mongoose'
-// import { Request } from 'express'
+import { Request } from 'express'
 
 export interface IPostLike {
    userId: ObjectId
@@ -30,4 +30,12 @@ export interface IPostTypes {
    postedAt: Date
    likes: IPostLike
    comments: IPostComment
+}
+
+// Incoming request from Add post
+export interface PostRequest extends Request {
+   body: {
+      description: string
+      postedPicturesPath?: string[]
+   }
 }
