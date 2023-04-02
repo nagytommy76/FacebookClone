@@ -33,6 +33,15 @@ export const lightTheme = createTheme({
 })
 
 export const darkTheme = createTheme({
+   components: {
+      MuiPaper: {
+         styleOverrides: {
+            root: {
+               background: '#242526',
+            },
+         },
+      },
+   },
    transitions,
    palette: {
       mode: 'dark',
