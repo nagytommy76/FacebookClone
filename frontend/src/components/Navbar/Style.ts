@@ -5,4 +5,6 @@ export const StyledNavbarToolbar = styled(Toolbar)({
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'space-between',
+   paddingLeft: '1rem',
+   paddingRight: '1rem',
 })
