@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import usePostMutationFn from './usePostMutationFn'
 
-const usePostMutate = (description: string, postedPicturesPath?: string[]) => {
+const usePostMutate = (description: string, postedPicturesPath?: FileList | null) => {
    const handlePostSend = usePostMutationFn(description, postedPicturesPath)
 
    const { mutate, isLoading, data } = useMutation({
