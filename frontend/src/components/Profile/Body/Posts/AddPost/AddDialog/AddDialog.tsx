@@ -2,7 +2,7 @@ import { useState } from 'react'
 import usePostMutate from './Hooks/usePostMutate'
 
 import TextInputField from './Includes/TextInputField'
-import AddImage from './Includes/AddImage'
+import AddImage from './AddImage/AddImage'
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -18,7 +18,7 @@ const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => 
 }) => {
    const [postDescription, setPostDescription] = useState<string>('')
    const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
-   const { data, isLoading, postMutate } = usePostMutate(postDescription, [''])
+   const { data, isLoading, postMutate } = usePostMutate(postDescription, uploadedPictures)
    const chancgeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
       setPostDescription(event.target.value)
    }

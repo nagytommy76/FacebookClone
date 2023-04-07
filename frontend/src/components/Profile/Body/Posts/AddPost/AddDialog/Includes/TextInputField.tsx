@@ -8,6 +8,7 @@ const TextInputField: React.FC<{
 }> = ({ textValue, onChange }) => {
    return (
       <TextField
+         sx={{ mt: 1, mb: 2 }}
          id='outlined-post-input'
          value={textValue}
          onChange={onChange}
