@@ -17,10 +17,12 @@ const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => 
    openAddDialog,
 }) => {
    const [postDescription, setPostDescription] = useState<string>('')
+   const [isSendBtnDisabled, setIsSendBtnDisabled] = useState<boolean>(true)
    const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
    const { data, isLoading, postMutate } = usePostMutate(postDescription, uploadedPictures)
    const chancgeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
       setPostDescription(event.target.value)
+      setIsSendBtnDisabled(event.target.value.length <= 1)
    }
 
    return (
@@ -41,7 +43,12 @@ const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => 
             <AddImage setUploadedPictures={setUploadedPictures} uploadedPictures={uploadedPictures} />
          </DialogContent>
          <DialogActions>
-            <Button onClick={(event) => postMutate(event)} fullWidth variant='contained' color='primary'>
+            <Button
+               disabled={isSendBtnDisabled}
+               onClick={(event) => postMutate(event)}
+               fullWidth
+               variant='contained'
+               color='primary'>
                Közzététel
             </Button>
          </DialogActions>
