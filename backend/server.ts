@@ -3,6 +3,7 @@ import { config } from 'dotenv'
 import connectDB from './config/connectDB'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 
 import morgan from 'morgan'
 import path, { resolve } from 'path'
@@ -24,6 +25,7 @@ app.use(
       origin: ['http://localhost:3000'],
    })
 )
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
