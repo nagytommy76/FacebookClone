@@ -22,7 +22,7 @@ export const checkRefreshTokenValidityController = (req: Request, res: Response)
 // Itt is tuti van refreshTokenem..
 export const checkAccessTokenValidityController = (req: Request, res: Response) => {
    const refreshToken = req.cookies?.refreshToken as string | undefined
-   if (!refreshToken) return res.sendStatus(401)
+   if (!refreshToken) return res.status(404).json({ errorMessage: 'refreshToken not found' })
    try {
       jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (error, decoded: any) => {
          if (error) return res.status(403).json({ errorMessage: 'refreshToken expired' })
