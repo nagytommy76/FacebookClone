@@ -10,6 +10,7 @@ import type { AppProps } from 'next/app'
 import { Work_Sans } from '@next/font/google'
 import '../styles/globals.css'
 import Layout from '../src/components/Layout/Layout'
+import AxiosSetupProvider from '../src/utils/axiosSetup/AxiosInstance'
 
 const work = Work_Sans({ subsets: ['latin'] })
 
@@ -19,14 +20,16 @@ export default function App({ Component, pageProps }: AppProps) {
    return (
       <Provider store={store}>
          <PersistGate loading={null} persistor={persistor}>
-            <QueryClientProvider client={queryClient}>
-               <ReactQueryDevtools initialIsOpen={true} />
-               <Hydrate state={pageProps.dehydratedState}>
-                  <Layout className={work.className}>
-                     <Component {...pageProps} />
-                  </Layout>
-               </Hydrate>
-            </QueryClientProvider>
+            <AxiosSetupProvider>
+               <QueryClientProvider client={queryClient}>
+                  <ReactQueryDevtools initialIsOpen={true} />
+                  <Hydrate state={pageProps.dehydratedState}>
+                     <Layout className={work.className}>
+                        <Component {...pageProps} />
+                     </Layout>
+                  </Hydrate>
+               </QueryClientProvider>
+            </AxiosSetupProvider>
          </PersistGate>
       </Provider>
    )
