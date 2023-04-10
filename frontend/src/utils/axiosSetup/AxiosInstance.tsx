@@ -32,10 +32,17 @@ const AxiosSetupProvider: React.FC<{ children: React.ReactElement }> = ({ childr
             // Ebben az esetben nincs accessToken a cookie-ban, ezért kell egy új -->
             console.log(error.response.data.errorMessage)
             if (
+               error.response.status === 404 &&
+               error.response.data.errorMessage === 'refreshToken not found'
+            ) {
+               console.log('Nincs refresh token, kilépés')
+               return await logout()
+            }
+            if (
                error.config &&
                error.response &&
                !error.config._retry &&
-               error.response.status === 401 &&
+               error.response.status === 404 &&
                error.response.data.errorMessage === 'accessToken not found'
             ) {
                // Ekkor kell egy új accessToken (Forbidden) / 403 error, tehát lejárt az accessToken
@@ -56,10 +63,14 @@ const AxiosSetupProvider: React.FC<{ children: React.ReactElement }> = ({ childr
                      await logout()
                   }
                }
-            } else await logout()
+            }
+            // else {
+            //    console.log('Else logout fut leeeee')
+            //    await logout()
+            // }
          }
       )
-   }, [axiosInstance])
+   }, [])
 
    return children
 }
