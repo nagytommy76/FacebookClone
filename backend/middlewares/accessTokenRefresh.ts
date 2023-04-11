@@ -1,17 +1,27 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import { ACCESS_TOKEN_SECRET } from '../config/endpoints.config'
+
+export interface IJWTUserType extends Request {
+   user?: {
+      userId: string
+      email: string
+      iat: number
+      exp: number
+   }
+}
 
 // Ez a middleware ellenőrzi,hogy van-e accessToken, ha nincs akkor lép működésbe az axios interceptor API route-ok esetében
 // Ha itt vagyunk tuti van REFRESH_TOKEN, mert a next.js middleware-ből ezt már ellenőrözm
-export const authenticateAccessTokenForApi = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateAccessTokenForApi = (req: IJWTUserType, res: Response, next: NextFunction) => {
    // az access token-re van itt szükségem
    const accessToken = req.cookies.accessToken as string | undefined
 
    if (!accessToken) return res.status(404).json({ errorMessage: 'accessToken not found' })
-   jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err, decoded) => {
+   jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err: any, decoded: any) => {
       if (err) return res.status(403).json({ errorMessage: 'accessToken token expired' })
       if (!decoded) return res.status(404).json({ errorMessage: 'user not found' })
+      req.user = decoded
       next()
    })
 }

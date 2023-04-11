@@ -1,5 +1,5 @@
-import { Model, ObjectId } from 'mongoose'
-import { Request } from 'express'
+import { ObjectId } from 'mongoose'
+import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
 export interface IPostLike {
    userId: ObjectId
@@ -33,7 +33,7 @@ export interface IPostTypes {
 }
 
 // Incoming request from Add post
-export interface PostRequest extends Request {
+export interface IPostRequest extends IJWTUserType {
    body: {
       description: string
       postedPicturesPath?: string[]
