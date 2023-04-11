@@ -3,15 +3,13 @@ import usePostMutate from './Hooks/usePostMutate'
 
 import TextInputField from './Includes/TextInputField'
 import AddImage from './AddImage/AddImage'
+import DialogHeader from './Includes/DialogHeader'
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import IconButton from '@mui/material/IconButton'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
-import CloseIcon from '@mui/icons-material/Close'
 
 const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => void }> = ({
    handleCloseAddDialog,
@@ -28,17 +26,7 @@ const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => 
 
    return (
       <Dialog fullWidth maxWidth='sm' open={openAddDialog} onClose={handleCloseAddDialog}>
-         <DialogTitle
-            sx={{
-               width: '100%',
-               display: 'flex',
-               justifyContent: 'space-between',
-            }}>
-            Bejegyzés létrehozása
-            <IconButton onClick={handleCloseAddDialog}>
-               <CloseIcon />
-            </IconButton>
-         </DialogTitle>
+         <DialogHeader handleCloseAddDialog={handleCloseAddDialog} />
          <DialogContent>
             <TextInputField onChange={chancgeTextField} textValue={postDescription} />
             <AddImage setUploadedPictures={setUploadedPictures} uploadedPictures={uploadedPictures} />
