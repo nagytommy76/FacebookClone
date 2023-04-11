@@ -4,12 +4,12 @@ import { axiosInstance as axios, AxiosResponse } from '../../../../../../../util
 import useUploadFirebase from './useUploadFirebase'
 
 const usePostMutationFn = (description: string, postedPicturesPath: FileList | null) => {
+   const handleMultipleImageUploadToFirebase = useUploadFirebase()
    const handleAddPostSend = async (event: React.FormEvent): Promise<AxiosResponse> => {
       event.preventDefault()
       let uploadedImagesPaths = null
       if (postedPicturesPath) {
-         const handleMultipleImageUploadToFirebase = useUploadFirebase(postedPicturesPath)
-         uploadedImagesPaths = await handleMultipleImageUploadToFirebase()
+         uploadedImagesPaths = await handleMultipleImageUploadToFirebase(postedPicturesPath)
       }
 
       return await axios.post('/post/save-post', {

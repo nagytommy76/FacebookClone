@@ -4,10 +4,10 @@ import { v4 } from 'uuid'
 
 import { useAppSelector } from '../../../../../../../utils/redux/store'
 
-const useUploadFirebase = (uploadImage: FileList) => {
+const useUploadFirebase = () => {
    const userId = useAppSelector((state) => state.auth.userId)
 
-   const handleMultipleImageUploadToFirebase = async () => {
+   const handleMultipleImageUploadToFirebase = async (uploadImage: FileList) => {
       const uploadedImagesArray: string[] = []
       for (let index = 0; index < uploadImage.length; index++) {
          const singleImageFile = uploadImage[index]
