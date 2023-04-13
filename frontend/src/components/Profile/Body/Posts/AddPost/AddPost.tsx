@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import ProfileImage from '../../../../../../public/sajat.jpg'
+import usePostMutate from './AddDialog/Hooks/usePostMutate'
 
 import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostStyle'
 
@@ -9,15 +10,17 @@ const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'), {
 })
 
 const AddPost = () => {
-   const [open, setOpen] = useState<boolean>(false)
-
+   const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false)
+   const [postDescription, setPostDescription] = useState<string>('')
+   const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
    const handleClickOpen = () => {
-      setOpen(true)
+      setAddDialogOpen(true)
    }
 
    const handleClose = () => {
-      setOpen(false)
+      setAddDialogOpen(false)
    }
+   const { isLoading, postMutate } = usePostMutate(postDescription, uploadedPictures, handleClose)
 
    return (
       <>
@@ -28,7 +31,16 @@ const AddPost = () => {
                Mi jár a fejedben?
             </CustomAddPostButton>
          </AddPostStyle>
-         <AddPostDialog handleCloseAddDialog={handleClose} openAddDialog={open} />
+         <AddPostDialog
+            isLoading={isLoading}
+            postDescription={postDescription}
+            openAddDialog={addDialogOpen}
+            uploadedPictures={uploadedPictures}
+            postMutate={postMutate}
+            setPostDescription={setPostDescription}
+            setUploadedPictures={setUploadedPictures}
+            handleCloseAddDialog={handleClose}
+         />
       </>
    )
 }
