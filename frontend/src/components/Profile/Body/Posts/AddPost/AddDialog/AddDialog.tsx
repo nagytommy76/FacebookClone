@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import usePostMutate from './Hooks/usePostMutate'
+import type { AxiosResponse } from 'axios'
+import type { UseMutateFunction } from '@tanstack/react-query'
 
 import TextInputField from './Includes/TextInputField'
 import AddImage from './AddImage/AddImage'
@@ -11,14 +12,26 @@ import DialogContent from '@mui/material/DialogContent'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
 
-const AddDialog: React.FC<{ openAddDialog: boolean; handleCloseAddDialog: () => void }> = ({
+const AddDialog: React.FC<{
+   openAddDialog: boolean
+   uploadedPictures: FileList | null
+   postDescription: string
+   isLoading: boolean
+   handleCloseAddDialog: () => void
+   setUploadedPictures: React.Dispatch<React.SetStateAction<FileList | null>>
+   setPostDescription: React.Dispatch<React.SetStateAction<string>>
+   postMutate: UseMutateFunction<AxiosResponse<any, any>, unknown, React.FormEvent<Element>, unknown>
+}> = ({
    handleCloseAddDialog,
    openAddDialog,
+   setUploadedPictures,
+   setPostDescription,
+   postDescription,
+   uploadedPictures,
+   postMutate,
+   isLoading,
 }) => {
-   const [postDescription, setPostDescription] = useState<string>('')
    const [isSendBtnDisabled, setIsSendBtnDisabled] = useState<boolean>(true)
-   const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
-   const { data, isLoading, postMutate } = usePostMutate(postDescription, uploadedPictures)
    const chancgeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
       setPostDescription(event.target.value)
       setIsSendBtnDisabled(event.target.value.length <= 1)
