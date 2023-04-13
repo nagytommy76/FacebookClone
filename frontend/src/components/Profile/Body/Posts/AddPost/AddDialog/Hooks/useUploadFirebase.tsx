@@ -12,7 +12,6 @@ const useUploadFirebase = () => {
       for (let index = 0; index < uploadImage.length; index++) {
          const singleImageFile = uploadImage[index]
          const imagesPath = await handleSingleImageUploadToFirebase(singleImageFile)
-         console.log(imagesPath)
          uploadedImagesArray.push(imagesPath as string)
       }
       return uploadedImagesArray
@@ -20,7 +19,7 @@ const useUploadFirebase = () => {
 
    const handleSingleImageUploadToFirebase = async (singleImageFile: File) => {
       try {
-         const imageReference = ref(firebaseStorage, `${userId}/${v4()}_${singleImageFile.name}`)
+         const imageReference = ref(firebaseStorage, `${userId}/posts/${v4()}_${singleImageFile.name}`)
          await uploadBytes(imageReference, singleImageFile)
          const currentImageLink = await getDownloadURL(imageReference)
 
