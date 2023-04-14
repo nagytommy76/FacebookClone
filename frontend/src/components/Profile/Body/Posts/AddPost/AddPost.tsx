@@ -8,15 +8,39 @@ import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostSty
 const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'), {
    loading: () => <h1>Töltés, majd csinálni egy suspense-t</h1>,
 })
+const InformSnackbar = dynamic(() => import('./AddDialog/Includes/InformSnackbar'), {
+   loading: () => <h1>Töltés, majd csinálni egy suspense-t</h1>,
+})
 
 const AddPost = () => {
    const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false)
    const [postDescription, setPostDescription] = useState<string>('')
+   const [isSnackOpen, setIsSnackOpen] = useState<{ isOpen: boolean; msg: string }>({
+      isOpen: false,
+      msg: '',
+   })
    const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
+
+   const handleSnackOpen = () => {
+      setIsSnackOpen((prevValue) => {
+         return {
+            ...prevValue,
+            isOpen: true,
+         }
+      })
+   }
+   const handleSnackClose = () => {
+      setIsSnackOpen((prevValue) => {
+         return {
+            ...prevValue,
+            isOpen: false,
+         }
+      })
+   }
+
    const handleClickOpen = () => {
       setAddDialogOpen(true)
    }
-
    const handleClose = () => {
       setAddDialogOpen(false)
    }
@@ -41,6 +65,7 @@ const AddPost = () => {
             setUploadedPictures={setUploadedPictures}
             handleCloseAddDialog={handleClose}
          />
+         <InformSnackbar handleClose={handleSnackClose} isOpen={isSnackOpen.isOpen} />
       </>
    )
 }
