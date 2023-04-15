@@ -6,6 +6,10 @@ Képfeltöltést megondani
 https://www.youtube.com/watch?v=YOAeBSCkArA&ab_channel=PedroTech
 
 
+Megoldani a post hozzáadásánál, hogy amíg töltődnek a képek ne lehessen újra rányomni a küld gombra, ill:
+Amikor alküldtem a postot, törlődjön az addPost felület, vagyis ne az előző "session" lgyen ott
+
+
 a WorkSchoolnál Dialogba tenni a formot, iskolák
 
 

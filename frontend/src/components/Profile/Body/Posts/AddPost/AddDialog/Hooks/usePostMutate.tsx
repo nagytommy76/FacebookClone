@@ -4,8 +4,8 @@ import usePostMutationFn from './usePostMutationFn'
 const usePostMutate = (
    description: string,
    postedPicturesPath: FileList | null,
-   handleClose: () => void,
-   handleSnackOpenIfSuccess: () => void
+   handleSnackOpenIfSuccess: () => void,
+   handleDialogCloseOnSuccess: () => void
 ) => {
    const handlePostSend = usePostMutationFn(description, postedPicturesPath)
 
@@ -15,7 +15,7 @@ const usePostMutate = (
       onSuccess: async () => {
          handleSnackOpenIfSuccess()
          setTimeout(() => {
-            handleClose()
+            handleDialogCloseOnSuccess()
          }, 5000)
       },
    })
