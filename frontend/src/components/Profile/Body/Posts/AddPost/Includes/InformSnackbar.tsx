@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 import Fade from '@mui/material/Fade'
 
@@ -10,12 +11,15 @@ const InformSnackbar: React.FC<{ isOpen: boolean; message: string; handleClose: 
 }) => {
    return (
       <Snackbar
+         sx={{ width: '400px' }}
          open={isOpen}
          onClose={handleClose}
          autoHideDuration={5000}
-         TransitionComponent={Fade}
-         message={message}
-      />
+         TransitionComponent={Fade}>
+         <Alert onClose={handleClose} severity='success' variant='filled' sx={{ width: '100%' }}>
+            {message}
+         </Alert>
+      </Snackbar>
    )
 }
 
