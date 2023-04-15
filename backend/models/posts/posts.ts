@@ -21,7 +21,7 @@ const PostsSchema = new Schema({
    userId: { type: Schema.Types.ObjectId, ref: 'User' },
    description: String,
    postedPicturesPath: { type: [String], required: false },
-   postedAt: Date,
+   postedAt: { type: Date, default: Date.now() },
    likes,
    comments: {
       type: [
