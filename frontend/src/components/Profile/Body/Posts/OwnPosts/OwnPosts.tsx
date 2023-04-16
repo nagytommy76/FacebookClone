@@ -1,17 +1,19 @@
-import React from 'react'
-import { axiosInstance as axios } from '../../../../../utils/axiosSetup/AxiosInstance'
+import dynamic from 'next/dynamic'
+import useGetPosts from './Hooks/useGetPosts'
+import type { IOwnPost } from './Types'
 
-import { useQuery } from '@tanstack/react-query'
+const SinglePostComponent = dynamic(() => import('./SinglePost/SinglePost'), {
+   loading: () => <h1>Töltés</h1>,
+})
 
 const OwnPosts = () => {
-   const { data } = useQuery({
-      queryKey: ['posts'],
-      queryFn: async () => {
-         return await axios.get('/post/get-own-post')
-      },
-   })
+   const { data, isLoading } = useGetPosts()
+   if (isLoading) {
+      return <h1>Ide majd egy Suspense component jön. TÖLTÉS</h1>
+   }
    return (
       <div>
+         {data && data.data.map((post: IOwnPost) => <SinglePostComponent singlePost={post} />)}
          <h1>Itt lesznek az én saját posztjaim</h1>
       </div>
    )
