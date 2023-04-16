@@ -1,10 +1,13 @@
 import React from 'react'
 
-const SinglePost = () => {
+import Paper from '@mui/material/Paper'
+import type { IOwnPost } from '../Types'
+
+const SinglePost: React.FC<{ singlePost: IOwnPost }> = ({ singlePost }) => {
    return (
-      <div>
-         <h1>Ez egy post BODY</h1>
-      </div>
+      <Paper sx={{ margin: '1rem 0', padding: '1rem .5rem', minHeight: '100px' }}>
+         <h1>{singlePost.description}</h1>
+      </Paper>
    )
 }
 
