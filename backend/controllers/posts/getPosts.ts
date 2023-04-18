@@ -7,7 +7,9 @@ export const getOwnPostsController = async (req: IJWTUserTypeRequest, res: Respo
    const userId = req.user?.userId
 
    try {
-      const allPosts = await PostModel.find({ userId })
+      const allPosts = await PostModel.find({ userId }).populate({
+         path: 'userId',
+      })
       res.status(200).json(allPosts)
    } catch (error) {
       res.status(500).json(error)
