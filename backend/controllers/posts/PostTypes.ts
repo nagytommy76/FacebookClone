@@ -27,9 +27,10 @@ export interface IPostTypes {
    userId: ObjectId
    description: string
    postedPicturesPath: string[]
-   postedAt: Date
    likes: IPostLike
    comments: IPostComment
+   createdAt: number
+   updatedAt: number
 }
 
 // Incoming request from Add post

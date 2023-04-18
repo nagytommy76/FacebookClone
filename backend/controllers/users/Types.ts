@@ -1,5 +1,6 @@
 import { Model, ObjectId } from 'mongoose'
 import { Request } from 'express'
+import type { IPostTypes } from '../posts/PostTypes'
 export interface IRegisterRequest extends Request {
    body: {
       email: string
@@ -29,10 +30,14 @@ export interface IUserTypes {
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
       gender: 'male' | 'female'
+      profilePicturePath: string
+      birthTown: string
+      homeTown: string
+      relationShip: { isAlone: boolean; inRelation: boolean }
    }
-   posts: { userId: ObjectId; ref: 'Posts' }
-   iat?: number
-   exp?: number
+   posts: { userId: ObjectId } | IPostTypes
+   createdAt: number
+   updatedAt: number
 }
 
 export interface UserModel extends Model<IUserTypes> {
