@@ -2,9 +2,15 @@ import { styled } from '@mui/material'
 import Image from 'next/image'
 
 export const StyledImageGridContainer = styled('section')({
+   width: '100%',
    display: 'grid',
-   gridTemplateColumns: '250px 250px 250px',
-   gap: '4px',
+   gridTemplateColumns: 'auto auto auto',
+   gap: '2px',
+})
+
+// Header section
+export const PostHeaderStyle = styled('div')({
+   padding: '1rem 1rem',
 })
 
 export const FirstGridImage = styled(Image)({
@@ -16,6 +22,19 @@ export const FirstGridImage = styled(Image)({
 
 export const StyledImage = styled(Image)({
    objectFit: 'cover',
-   width: '250px',
+   width: '100%',
    height: '250px',
+})
+
+// "Footer" section
+
+export const FooterSectionStyle = styled('footer')({
+   width: '100%',
+   padding: '1rem 1rem',
+})
+
+export const ButtonGroupStyle = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   gap: '2px',
 })
