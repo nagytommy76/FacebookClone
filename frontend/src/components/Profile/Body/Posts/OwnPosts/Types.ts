@@ -28,6 +28,8 @@ export interface IOwnPost {
    likes: IPostLike[]
    postedAt: string
    postedPicturesPath: string[]
+   createdAt: number
+   updatedAt: number
 }
 
 export interface IUserTypes {
