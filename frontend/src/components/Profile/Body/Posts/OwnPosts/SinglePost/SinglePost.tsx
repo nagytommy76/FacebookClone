@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import type { IOwnPost } from '../Types'
 
-import Like from './Includes/Like'
+import Like from './Like/Like'
 
 import { StyledImageGridContainer, StyledImage, FirstGridImage, PostHeaderStyle } from './Styles'
 
