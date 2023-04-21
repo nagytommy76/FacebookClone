@@ -1,6 +1,8 @@
 import { styled } from '@mui/material'
 import Image from 'next/image'
 
+import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip'
+
 export const StyledImageGridContainer = styled('section')({
    width: '100%',
    display: 'grid',
@@ -37,4 +39,14 @@ export const ButtonGroupStyle = styled('div')({
    display: 'flex',
    flexDirection: 'row',
    gap: '2px',
+})
+
+// LIke section
+export const CustomTooltipTitle = styled(Tooltip)({
+   backgroundColor: 'transparent',
+   padding: 0,
+   [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: 'transparent',
+      padding: 0,
+   },
 })
