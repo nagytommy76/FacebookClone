@@ -7,6 +7,7 @@ const likes = {
          reactionType: {
             isLike: Boolean,
             isLove: Boolean,
+            isCare: Boolean,
             isHaha: Boolean,
             isWow: Boolean,
             isSad: Boolean,

@@ -6,6 +6,7 @@ export interface IPostLike {
    reactionType: {
       isLike: boolean
       isLove: boolean
+      isCare: boolean
       isHaha: boolean
       isWow: boolean
       isSad: boolean
