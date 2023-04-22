@@ -3,11 +3,14 @@ import moment from 'moment'
 
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 import type { IOwnPost } from '../Types'
+import { FooterSectionStyle } from './Styles'
 
+import ImageContainer from './Includes/ImageContainer'
 import Like from './Like/Like'
 
-import { StyledImageGridContainer, StyledImage, FirstGridImage, PostHeaderStyle } from './Styles'
+import { PostHeaderStyle } from './Styles'
 
 const SinglePost: React.FC<{ singlePost: IOwnPost }> = ({ singlePost }) => {
    return (
@@ -19,17 +22,11 @@ const SinglePost: React.FC<{ singlePost: IOwnPost }> = ({ singlePost }) => {
             <p>{moment(singlePost.createdAt).format('YYYY MMMM D dddd, kk:mm')}</p>
             <Typography variant='body1'>{singlePost.description}</Typography>
          </PostHeaderStyle>
-         <StyledImageGridContainer>
-            {singlePost.postedPicturesPath !== null &&
-               singlePost.postedPicturesPath.map((image, index) =>
-                  index === 0 ? (
-                     <FirstGridImage key={index} src={image} alt='Kép' width={500} height={500} />
-                  ) : (
-                     <StyledImage key={index} src={image} alt='Kép' width={500} height={500} />
-                  )
-               )}
-         </StyledImageGridContainer>
-         <Like />
+         <ImageContainer singlePost={singlePost} />
+         <FooterSectionStyle>
+            <Like />
+            <Divider sx={{ mt: 1, mb: 1 }} />
+         </FooterSectionStyle>
       </Paper>
    )
 }

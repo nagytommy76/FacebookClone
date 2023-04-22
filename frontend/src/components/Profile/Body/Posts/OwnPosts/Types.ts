@@ -13,12 +13,15 @@ export interface IPostLike {
    reactionType: {
       isLike: boolean
       isLove: boolean
+      isCare: boolean
       isHaha: boolean
       isWow: boolean
       isSad: boolean
       isAngry: boolean
    }
 }
+
+export type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
 
 export interface IOwnPost {
    _id: string
