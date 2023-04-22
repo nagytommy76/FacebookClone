@@ -11,7 +11,11 @@ const OwnPosts = () => {
    if (isLoading) {
       return <h1>Ide majd egy Suspense component jön. TÖLTÉS</h1>
    }
-   return <div>{data && data.data.map((post: IOwnPost) => <SinglePostComponent singlePost={post} />)}</div>
+   return (
+      <div>
+         {data && data.data.map((post: IOwnPost) => <SinglePostComponent key={post._id} singlePost={post} />)}
+      </div>
+   )
 }
 
 export default OwnPosts

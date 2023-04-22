@@ -23,9 +23,9 @@ const SinglePost: React.FC<{ singlePost: IOwnPost }> = ({ singlePost }) => {
             {singlePost.postedPicturesPath !== null &&
                singlePost.postedPicturesPath.map((image, index) =>
                   index === 0 ? (
-                     <FirstGridImage src={image} alt='Kép' width={500} height={500} />
+                     <FirstGridImage key={index} src={image} alt='Kép' width={500} height={500} />
                   ) : (
-                     <StyledImage src={image} alt='Kép' width={500} height={500} />
+                     <StyledImage key={index} src={image} alt='Kép' width={500} height={500} />
                   )
                )}
          </StyledImageGridContainer>
