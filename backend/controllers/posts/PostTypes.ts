@@ -1,17 +1,19 @@
 import { ObjectId } from 'mongoose'
 import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
+interface IReactionTypes {
+   isLike: boolean
+   isLove: boolean
+   isCare: boolean
+   isHaha: boolean
+   isWow: boolean
+   isSad: boolean
+   isAngry: boolean
+}
+
 export interface IPostLike {
    userId: ObjectId
-   reactionType: {
-      isLike: boolean
-      isLove: boolean
-      isCare: boolean
-      isHaha: boolean
-      isWow: boolean
-      isSad: boolean
-      isAngry: boolean
-   }
+   reactionType: IReactionTypes
 }
 
 export interface IPostComment {
@@ -39,5 +41,13 @@ export interface IPostRequest extends IJWTUserType {
    body: {
       description: string
       postedPicturesPath?: string[]
+   }
+}
+
+// Incoming Request for like posts
+export interface IPostLikeRequest extends IJWTUserType {
+   body: {
+      reactionType: IReactionTypes
+      postId: string
    }
 }
