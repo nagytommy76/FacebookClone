@@ -1,17 +1,18 @@
 import { Schema, model } from 'mongoose'
+import type { IPostTypes } from '../../controllers/posts/PostTypes'
 
 const likes = {
    type: [
       {
          userId: { type: Schema.Types.ObjectId, ref: 'User' },
          reactionType: {
-            isLike: Boolean,
-            isLove: Boolean,
-            isCare: Boolean,
-            isHaha: Boolean,
-            isWow: Boolean,
-            isSad: Boolean,
-            isAngry: Boolean,
+            isLike: { type: Boolean, default: false },
+            isLove: { type: Boolean, default: false },
+            isCare: { type: Boolean, default: false },
+            isHaha: { type: Boolean, default: false },
+            isWow: { type: Boolean, default: false },
+            isSad: { type: Boolean, default: false },
+            isAngry: { type: Boolean, default: false },
          },
       },
    ],
@@ -41,4 +42,4 @@ const PostsSchema = new Schema(
    { timestamps: true }
 )
 
-export const Posts = model('Posts', PostsSchema)
+export const Posts = model<IPostTypes>('Posts', PostsSchema)
