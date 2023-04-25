@@ -2,6 +2,7 @@ import { ObjectId } from 'mongoose'
 import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
 interface IReactionTypes {
+   [index: string]: boolean
    isLike: boolean
    isLove: boolean
    isCare: boolean
@@ -22,7 +23,7 @@ export interface IPostComment {
    answeredAt: Date
    parentCommentId: string
    commentDepth: number
-   likes: IPostLike
+   likes: IPostLike[]
 }
 
 export interface IPostTypes {
@@ -30,7 +31,7 @@ export interface IPostTypes {
    userId: ObjectId
    description: string
    postedPicturesPath: string[]
-   likes: IPostLike
+   likes: IPostLike[]
    comments: IPostComment
    createdAt: number
    updatedAt: number
@@ -45,9 +46,12 @@ export interface IPostRequest extends IJWTUserType {
 }
 
 // Incoming Request for like posts
+
+type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
+
 export interface IPostLikeRequest extends IJWTUserType {
    body: {
-      reactionType: IReactionTypes
+      reactionType: LikeTypes
       postId: string
    }
 }
