@@ -1,6 +1,10 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
-import type { IPostLikeRequest } from './PostTypes'
+import type { IPostLikeRequest, IReactionTypes, LikeTypes } from './PostTypes'
+
+const findPreviousReactionType = (reactionType: IReactionTypes) => {
+   return Object.keys(reactionType).filter((key) => reactionType[key])[0] as LikeTypes
+}
 
 export const likePostController = async (request: IPostLikeRequest, response: Response) => {
    const { postId, reactionType } = request.body
@@ -13,7 +17,11 @@ export const likePostController = async (request: IPostLikeRequest, response: Re
       const userLike = foundPostToModifyLike.likes.find(
          (like) => like.userId.toString() === userId.toString()
       )
+
       if (userLike) {
+         let previousReaction: LikeTypes
+         previousReaction = findPreviousReactionType(userLike.reactionType)
+         userLike.reactionType[previousReaction] = false
          userLike.reactionType[reactionType] = true
       } else {
          foundPostToModifyLike.likes.push({
@@ -31,9 +39,9 @@ export const likePostController = async (request: IPostLikeRequest, response: Re
          })
       }
 
-      response
-         .status(200)
-         .json({ msg: foundPostToModifyLike, ember: request.user, mit: request.body.reactionType })
+      const savedPostLike = await foundPostToModifyLike.save()
+
+      response.status(200).json({ msg: 'sikeres reakció mentés, vagy módosítás', mit: savedPostLike })
    } catch (error) {
       response.status(500).json({ msg: 'Internal server error' })
    }
