@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import useLikeMutate from './Hooks/useLikeMutate'
+import React, { useEffect } from 'react'
 import useButtonColor from './Hooks/useButtonColor'
+import useHandleFn from './Hooks/useHandleFn'
+import type { IPostLike, LikeTypes } from '../../Types'
 
 import Button from '@mui/material/Button'
 
@@ -8,48 +9,44 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import { CustomTooltipTitle, ButtonGroupStyle } from './Styles'
 
 import Reactions from './Reactions'
-import type { LikeTypes } from '../../Types'
 
-const Like: React.FC<{ postId: string }> = ({ postId }) => {
+const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, postLikes }) => {
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
-   const { mutatePostLike } = useLikeMutate()
-   const [like, setLike] = useState<LikeTypes | undefined>(undefined)
+   const { handleLikeBtnClick, handleSendPostLike, handleSetLikeAndButtonColor } = useHandleFn(
+      setButtonColor,
+      postId
+   )
 
-   const handleLikeBtnClick = () => {
-      if (like === undefined) handleSetLike('isLike')
-      else handleUnsetLike()
-   }
-
-   const handleSetLike = (likeType: LikeTypes) => {
-      // Ide majd egy usemutation jön, illetve controlled close a tooltipre
-      // A gombot pedig a like típusa szerint animálni!
-      setButtonColor(likeType)
-      setLike(likeType)
-      mutatePostLike({ likeTypeFomInput: likeType, postId })
-   }
-
-   const handleUnsetLike = () => {
-      // ide egy remove post like mutate kell
-      setButtonColor(undefined)
-      setLike(undefined)
-   }
+   useEffect(() => {
+      postLikes.map((like) => {
+         // Itt a későbbiekben lehet kategóriánként (isLike, isAngry etc) kiszedni,
+         // hogy hány darab, majd azt összesíteni, (össz likeok száma)
+         const likeType = Object.keys(like.reactionType).filter(
+            (key) => like.reactionType[key]
+         )[0] as LikeTypes
+         handleSetLikeAndButtonColor(likeType)
+      })
+   }, [postLikes])
 
    return (
-      <ButtonGroupStyle>
-         <CustomTooltipTitle placement='top' title={<Reactions setLike={handleSetLike} />}>
-            <Button
-               sx={{ color: likeButtonColor, textTransform: 'none' }}
-               disableRipple
-               onClick={handleLikeBtnClick}
-               fullWidth
-               startIcon={likeBtnIcon}>
-               {likeBtnText}
+      <>
+         <p>likeok száma: {postLikes.length}</p>
+         <ButtonGroupStyle>
+            <CustomTooltipTitle placement='top' title={<Reactions setLike={handleSendPostLike} />}>
+               <Button
+                  sx={{ color: likeButtonColor, textTransform: 'none' }}
+                  disableRipple
+                  onClick={handleLikeBtnClick}
+                  fullWidth
+                  startIcon={likeBtnIcon}>
+                  {likeBtnText}
+               </Button>
+            </CustomTooltipTitle>
+            <Button disableRipple fullWidth startIcon={<ChatBubbleOutlineIcon />}>
+               Hozzászólás
             </Button>
-         </CustomTooltipTitle>
-         <Button disableRipple fullWidth startIcon={<ChatBubbleOutlineIcon />}>
-            Hozzászólás
-         </Button>
-      </ButtonGroupStyle>
+         </ButtonGroupStyle>
+      </>
    )
 }
 
