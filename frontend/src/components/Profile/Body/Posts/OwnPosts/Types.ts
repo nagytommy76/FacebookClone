@@ -11,6 +11,7 @@ export interface IPostComment {
 export interface IPostLike {
    userId: string
    reactionType: {
+      [index: string]: boolean
       isLike: boolean
       isLove: boolean
       isCare: boolean

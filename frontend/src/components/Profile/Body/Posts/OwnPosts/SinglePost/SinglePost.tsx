@@ -24,7 +24,7 @@ const SinglePost: React.FC<{ singlePost: IOwnPost }> = ({ singlePost }) => {
          </PostHeaderStyle>
          <ImageContainer singlePost={singlePost} />
          <FooterSectionStyle>
-            <Like postId={singlePost._id} />
+            <Like postLikes={singlePost.likes} postId={singlePost._id} />
             <Divider sx={{ mt: 1, mb: 1 }} />
          </FooterSectionStyle>
       </Paper>
