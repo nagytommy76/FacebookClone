@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose'
 import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
-interface IReactionTypes {
+export interface IReactionTypes {
    [index: string]: boolean
    isLike: boolean
    isLove: boolean
@@ -47,7 +47,7 @@ export interface IPostRequest extends IJWTUserType {
 
 // Incoming Request for like posts
 
-type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
+export type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
 
 export interface IPostLikeRequest extends IJWTUserType {
    body: {
