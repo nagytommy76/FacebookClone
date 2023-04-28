@@ -46,3 +46,14 @@ export const likePostController = async (request: IPostLikeRequest, response: Re
       response.status(500).json({ msg: 'Internal server error' })
    }
 }
+
+export const deleteLikeFromPostController = async (request: IPostLikeRequest, response: Response) => {
+   const { postId } = request.body
+   const userId = request.user?.userId
+   try {
+      const foundPostToModifyLike = await PostModel.findById(postId)
+      if (!foundPostToModifyLike) return response.status(404).json({ msg: 'nincs ilyen poszt' })
+   } catch (error) {
+      response.status(500).json({ msg: 'Internal server error' })
+   }
+}
