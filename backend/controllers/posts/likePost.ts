@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
-import type { IPostLikeRequest, IReactionTypes, LikeTypes } from './PostTypes'
+import type { IPostLikeRequest, IPostRemoveLikeRequest, IReactionTypes, LikeTypes } from './PostTypes'
 
 const findPreviousReactionType = (reactionType: IReactionTypes) => {
    return Object.keys(reactionType).filter((key) => reactionType[key])[0] as LikeTypes
@@ -47,12 +47,19 @@ export const likePostController = async (request: IPostLikeRequest, response: Re
    }
 }
 
-export const deleteLikeFromPostController = async (request: IPostLikeRequest, response: Response) => {
+export const deleteLikeFromPostController = async (request: IPostRemoveLikeRequest, response: Response) => {
    const { postId } = request.body
    const userId = request.user?.userId
    try {
-      const foundPostToModifyLike = await PostModel.findById(postId)
-      if (!foundPostToModifyLike) return response.status(404).json({ msg: 'nincs ilyen poszt' })
+      const foundPost = await PostModel.findById(postId)
+      if (!foundPost) return response.status(404).json({ msg: 'nincs ilyen poszt' })
+
+      const filteredLikes = foundPost.likes.filter(
+         (like) => like.userId.toString() !== (userId as string).toString()
+      )
+      foundPost.likes = filteredLikes
+      const savedPost = await foundPost.save()
+      response.status(201).json({ savedPost })
    } catch (error) {
       response.status(500).json({ msg: 'Internal server error' })
    }
