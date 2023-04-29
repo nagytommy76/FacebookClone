@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import useGetPosts from './Hooks/useGetPosts'
 import type { IOwnPost } from './Types'
 
-const SinglePostComponent = dynamic(() => import('./SinglePost/SinglePost'), {
+const SinglePostComponent = dynamic(() => import('../../../../Posts/SinglePost/SinglePost'), {
    loading: () => <h1>Töltés</h1>,
 })
 

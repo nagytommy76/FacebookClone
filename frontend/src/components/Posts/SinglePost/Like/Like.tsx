@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
-import type { IPostLike, LikeTypes } from '../../Types'
+import type { IPostLike, LikeTypes } from '../../../Profile/Body/Posts/OwnPosts/Types'
 
 import Button from '@mui/material/Button'
 

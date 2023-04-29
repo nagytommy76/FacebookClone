@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyledImageGridContainer, StyledImage, FirstGridImage } from '../Styles'
-import { IOwnPost } from '../../Types'
+import { IOwnPost } from '../../../Profile/Body/Posts/OwnPosts/Types'
 
 const ImageContainer: React.FC<{ singlePost: IOwnPost }> = ({ singlePost }) => {
    return (

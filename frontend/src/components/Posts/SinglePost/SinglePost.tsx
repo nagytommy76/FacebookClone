@@ -4,7 +4,7 @@ import moment from 'moment'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import type { IOwnPost } from '../Types'
+import type { IOwnPost } from '../../Profile/Body/Posts/OwnPosts/Types'
 import { FooterSectionStyle } from './Styles'
 
 import ImageContainer from './Includes/ImageContainer'
