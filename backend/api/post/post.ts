@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { savePostController } from '../../controllers/posts/savePost'
 import { getOwnPostsController } from '../../controllers/posts/getPosts'
 import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefresh'
-import { likePostController } from '../../controllers/posts/likePost'
+import { likePostController, deleteLikeFromPostController } from '../../controllers/posts/likePost'
 
 const router = Router()
 // Ide kell egy api route protection (accessTokennel, middleware)
@@ -11,5 +11,8 @@ router.post('/save-post', authenticateAccessTokenForApi, savePostController)
 
 // Likolás
 router.post('/post-like', authenticateAccessTokenForApi, likePostController)
+
+// Törlés
+router.delete('/post-like-delete', authenticateAccessTokenForApi, deleteLikeFromPostController)
 
 module.exports = router

@@ -13,6 +13,7 @@ export interface IReactionTypes {
 }
 
 export interface IPostLike {
+   _id?: string | ObjectId
    userId: ObjectId
    reactionType: IReactionTypes
 }
@@ -52,6 +53,12 @@ export type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'i
 export interface IPostLikeRequest extends IJWTUserType {
    body: {
       reactionType: LikeTypes
+      postId: string
+   }
+}
+
+export interface IPostRemoveLikeRequest extends IJWTUserType {
+   body: {
       postId: string
    }
 }
