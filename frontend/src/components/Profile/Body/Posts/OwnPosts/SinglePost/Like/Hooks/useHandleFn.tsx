@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import useLikeMutate from './useLikeMutate'
+import useLikeDelete from './useLikeDelete'
 import type { LikeTypes } from '../../../Types'
 
 const useHandleFn = (setButtonColor: (currentLikeType: LikeTypes | undefined) => void, postId: string) => {
    const { mutatePostLike } = useLikeMutate()
+   const { deleteMutation } = useLikeDelete()
    const [like, setLike] = useState<LikeTypes | undefined>(undefined)
 
    const handleUnsetLike = () => {
       // ide egy remove post like mutate kell
       setButtonColor(undefined)
       setLike(undefined)
+      deleteMutation(postId)
    }
    const handleLikeBtnClick = () => {
       if (like === undefined) handleSendPostLike('isLike')

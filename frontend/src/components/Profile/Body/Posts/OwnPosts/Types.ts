@@ -9,6 +9,7 @@ export interface IPostComment {
 }
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------
 export interface IPostLike {
+   _id: string
    userId: string
    reactionType: {
       [index: string]: boolean
