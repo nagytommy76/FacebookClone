@@ -39,9 +39,9 @@ export const likePostController = async (request: IPostLikeRequest, response: Re
          })
       }
 
-      const savedPostLike = await foundPostToModifyLike.save()
+      await foundPostToModifyLike.save()
 
-      response.status(200).json({ msg: 'sikeres reakció mentés, vagy módosítás', mit: savedPostLike })
+      response.status(200).json({ msg: 'sikeres reakció mentés, vagy módosítás' })
    } catch (error) {
       response.status(500).json({ msg: 'Internal server error' })
    }
