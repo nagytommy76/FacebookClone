@@ -1,14 +1,15 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { MainPageContainer } from './Style'
 
-import Typography from '@mui/material/Typography'
+const AllPostsComponent = dynamic(() => import('./AllPosts/AllPosts'), {
+   loading: () => <>Egyelőre töltés...</>,
+})
 
 const MainPage = () => {
    return (
       <MainPageContainer>
-         <Typography color='primary' variant='h1'>
-            Ez a főoldal és csak belépve látom
-         </Typography>
+         <AllPostsComponent />
       </MainPageContainer>
    )
 }
