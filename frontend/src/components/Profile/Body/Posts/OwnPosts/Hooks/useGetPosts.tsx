@@ -1,11 +1,11 @@
 import { AxiosResponse, axiosInstance as axios } from '../../../../../../utils/axiosSetup/AxiosInstance'
 import { useQuery } from '@tanstack/react-query'
-import { IOwnPost } from '../Types'
+import { IPost } from '../Types'
 
 const useGetPosts = () => {
    const fetchOwnPosts = async () => {
       const data = await axios.get('/post/get-own-post')
-      return data as AxiosResponse<IOwnPost[]>
+      return data as AxiosResponse<IPost[]>
    }
 
    const { data, isLoading } = useQuery({

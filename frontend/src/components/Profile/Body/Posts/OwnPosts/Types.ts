@@ -25,7 +25,7 @@ export interface IPostLike {
 
 export type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
 
-export interface IOwnPost {
+export interface IPost {
    _id: string
    userId: IUserTypes
    comments: IPostComment[]

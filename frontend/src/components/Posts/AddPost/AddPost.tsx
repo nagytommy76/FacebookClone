@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import ProfileImage from '../../../../../../public/sajat.jpg'
+import ProfileImage from '../../../../public/sajat.jpg'
 
 import usePostMutate from './AddDialog/Hooks/usePostMutate'
 import useSnack from './Hooks/useSnack'
