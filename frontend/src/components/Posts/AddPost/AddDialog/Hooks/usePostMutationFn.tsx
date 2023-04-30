@@ -1,5 +1,5 @@
 import React from 'react'
-import { axiosInstance as axios, AxiosResponse } from '../../../../../../../utils/axiosSetup/AxiosInstance'
+import { axiosInstance as axios, AxiosResponse } from '../../../../../utils/axiosSetup/AxiosInstance'
 
 import useUploadFirebase from './useUploadFirebase'
 
