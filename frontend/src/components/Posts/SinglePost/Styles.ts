@@ -8,10 +8,8 @@ export const StyledImageGridContainer = styled('section')({
    gap: '2px',
 })
 
-// Header section
-export const PostHeaderStyle = styled('div')({
-   padding: '1rem 1rem',
-})
+// Body section -----------------
+export const BodyDescriptionSection = styled('div')({ padding: '.6rem 1rem' })
 
 export const FirstGridImage = styled(Image)({
    objectFit: 'cover',
