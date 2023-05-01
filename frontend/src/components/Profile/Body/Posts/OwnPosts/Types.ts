@@ -8,8 +8,8 @@ export interface IPost {
    likes: IPostLike[]
    postedAt: string
    postedPicturesPath: string[]
-   createdAt: number
-   updatedAt: number
+   createdAt: string
+   updatedAt: string
 }
 
 export interface IUserTypes {
