@@ -5,9 +5,15 @@ import type { IJWTUserType as IJWTUserTypeRequest } from '../../middlewares/acce
 
 export const getAllPosts = async (req: Request, res: Response) => {
    try {
-      const allPosts = await PostModel.find().populate({
-         path: 'userId',
-      })
+      const allPosts = await PostModel.find()
+         .populate({
+            path: 'userId',
+            select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath'],
+         })
+         .populate({
+            path: 'likes.userId',
+            select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath'],
+         })
       res.status(200).json({ allPosts })
    } catch (error) {
       res.status(500).json({ error, msg: 'internal server error' })
