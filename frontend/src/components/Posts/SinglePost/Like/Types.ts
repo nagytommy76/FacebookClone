@@ -8,7 +8,7 @@ interface IPopulatedUserId {
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
 export interface IPostComment {
-   userId: string
+   userId: IPopulatedUserId
    answer: string
    answeredAt: Date
    parentCommentId: string

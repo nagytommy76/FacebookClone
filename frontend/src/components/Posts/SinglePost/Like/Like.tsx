@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
-import type { IPostLike, LikeTypes } from '../../../Profile/Body/Posts/OwnPosts/Types'
+import { useAppSelector } from '../../../../utils/redux/store'
+import type { IPostLike, LikeTypes } from './Types'
 
 import Button from '@mui/material/Button'
 
@@ -11,6 +12,7 @@ import { CustomTooltipTitle, ButtonGroupStyle } from './Styles'
 import Reactions from './Reactions'
 
 const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, postLikes }) => {
+   const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
    const { handleLikeBtnClick, handleSendPostLike, handleSetLikeAndButtonColor } = useHandleFn(
       setButtonColor,
@@ -21,10 +23,12 @@ const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, po
       postLikes.map((like) => {
          // Itt a későbbiekben lehet kategóriánként (isLike, isAngry etc) kiszedni,
          // hogy hány darab, majd azt összesíteni, (össz likeok száma)
-         const likeType = Object.keys(like.reactionType).filter(
-            (key) => like.reactionType[key]
-         )[0] as LikeTypes
-         handleSetLikeAndButtonColor(likeType)
+         if (userId === like.userId._id) {
+            const likeType = Object.keys(like.reactionType).filter(
+               (key) => like.reactionType[key]
+            )[0] as LikeTypes
+            handleSetLikeAndButtonColor(likeType)
+         }
       })
    }, [postLikes])
 
