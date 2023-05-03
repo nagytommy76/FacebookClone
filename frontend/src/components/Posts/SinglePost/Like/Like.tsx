@@ -7,8 +7,9 @@ import type { IPostLike, LikeTypes } from './Types'
 import Button from '@mui/material/Button'
 
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
-import { CustomTooltipTitle, ButtonGroupStyle } from './Styles'
+import { ButtonGroupStyle } from './Styles'
 
+import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 import Reactions from './Reactions'
 
 const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, postLikes }) => {

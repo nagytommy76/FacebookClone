@@ -1,4 +1,4 @@
-interface IPopulatedUserId {
+export interface IPopulatedUserId {
    _id: string
    email: string
    firstName: string
