@@ -9,20 +9,25 @@ import {
 } from './HeaderStyles'
 import Typography from '@mui/material/Typography'
 
-import ProfileCard from '../../ProfileCard/ProfileCard'
+import CustomTooltipTitle from '../../../../Base/CustomTooltipTitle'
+import DetailsTooltipTitle from '../../ProfileCard/DetailsTooltipTitle'
+import { IPopulatedUserId } from '../../Like/Types'
 
-const PostHeader: React.FC<{ profilePicturePath: string; displayFullName: string; createdAt: string }> = ({
-   profilePicturePath,
-   displayFullName,
-   createdAt,
-}) => {
+const PostHeader: React.FC<{ userInfo: IPopulatedUserId; createdAt: string }> = ({ userInfo, createdAt }) => {
    return (
       <PostHeaderStyle>
-         <StyledProfileImage alt='My picture' src={profilePicturePath} width={45} height={45} />
+         <StyledProfileImage
+            alt='My picture'
+            src={userInfo.userDetails.profilePicturePath}
+            width={45}
+            height={45}
+         />
          <HeaderRightTitleSection>
-            <ProfileCard>
-               <StyledClickableTypography variant='h6'>{displayFullName}</StyledClickableTypography>
-            </ProfileCard>
+            <CustomTooltipTitle open={true} title={<DetailsTooltipTitle userInfo={userInfo} />}>
+               <StyledClickableTypography variant='h6'>
+                  {userInfo.firstName} {userInfo.sureName}
+               </StyledClickableTypography>
+            </CustomTooltipTitle>
             <Typography variant='caption'>{moment(createdAt).format('YYYY MMMM D dddd, kk:mm')}</Typography>
          </HeaderRightTitleSection>
       </PostHeaderStyle>

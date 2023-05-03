@@ -13,11 +13,7 @@ import Like from './Like/Like'
 const SinglePost: React.FC<{ singlePost: IPost }> = ({ singlePost }) => {
    return (
       <Paper sx={{ margin: '1rem 0', pb: '1rem', minHeight: '100px' }}>
-         <PostHeader
-            profilePicturePath={singlePost.userId.userDetails.profilePicturePath}
-            createdAt={singlePost.createdAt}
-            displayFullName={`${singlePost.userId.firstName} ${singlePost.userId.sureName}`}
-         />
+         <PostHeader userInfo={singlePost.userId} createdAt={singlePost.createdAt} />
          <BodyDescriptionSection>
             <Typography variant='subtitle1'>{singlePost.description}</Typography>
          </BodyDescriptionSection>
