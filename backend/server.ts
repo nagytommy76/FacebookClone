@@ -29,5 +29,6 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
+app.use('/api/user', require('./api/user/userData'))
 app.use('/api/auth', require('./api/user/user'))
 app.use('/api/post', require('./api/post/post'))
