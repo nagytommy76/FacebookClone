@@ -8,11 +8,11 @@ export const getAllPosts = async (req: Request, res: Response) => {
       const allPosts = await PostModel.find()
          .populate({
             path: 'userId',
-            select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath'],
+            select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
          })
          .populate({
             path: 'likes.userId',
-            select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath'],
+            select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
          })
       res.status(200).json({ allPosts })
    } catch (error) {

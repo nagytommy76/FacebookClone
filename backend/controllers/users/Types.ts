@@ -34,6 +34,23 @@ export interface IUserTypes {
       birthTown: string
       homeTown: string
       relationShip: { isAlone: boolean; inRelation: boolean }
+      studies: {
+         elementary: {
+            from: number
+            to: number
+            name: string
+         }
+         highSchool: {
+            from: number
+            to: number
+            name: string
+         }
+         university: {
+            from: number
+            to: number
+            name: string
+         }
+      }
    }
    posts: { userId: ObjectId } | IPostTypes
    createdAt: number

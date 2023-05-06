@@ -26,6 +26,23 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
          birthTown: String,
          homeTown: String,
          relationShip: { type: { isAlone: Boolean, inRelation: Boolean }, required: false },
+         studies: {
+            elementary: {
+               from: Number,
+               to: Number,
+               name: String,
+            },
+            highSchool: {
+               from: Number,
+               to: Number,
+               name: String,
+            },
+            university: {
+               from: Number,
+               to: Number,
+               name: String,
+            },
+         },
          gender: {
             type: String,
             required: true,
