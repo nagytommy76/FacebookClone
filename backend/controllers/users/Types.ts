@@ -59,7 +59,7 @@ export interface IUserTypes {
          to: number
       }[]
    }
-   posts: { userId: ObjectId } | IPostTypes
+   posts: ObjectId[]
    createdAt: number
    updatedAt: number
 }
