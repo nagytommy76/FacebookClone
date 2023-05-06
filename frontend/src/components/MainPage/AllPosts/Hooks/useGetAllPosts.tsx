@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '../../../../utils/axiosSetup/AxiosInstance'
-import { IPost } from '../../../Profile/Body/Posts/OwnPosts/Types'
+import { IPost } from '../../../Posts/Types'
 
 const fetchAllQueries = async () => {
    try {

@@ -1,7 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import useGetAllPosts from './Hooks/useGetAllPosts'
-import type { IPost } from '../../Profile/Body/Posts/OwnPosts/Types'
+import type { IPost } from '../../Posts/Types'
 
 const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'))
 const AddPostComponent = dynamic(() => import('../../Posts/AddPost/AddPost'))

@@ -8,7 +8,7 @@ import Haha from '../../../../assets/haha.svg'
 import Wow from '../../../../assets/wow.svg'
 import Sad from '../../../../assets/sad.svg'
 import Angry from '../../../../assets/angry.svg'
-import { LikeTypes } from '../../../Profile/Body/Posts/OwnPosts/Types'
+import type { LikeTypes } from './Types'
 
 const Reactions: React.FC<{ setLike: (likeType: LikeTypes) => void }> = ({ setLike }) => {
    return (
