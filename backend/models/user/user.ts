@@ -51,6 +51,15 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
             type: Date,
             required: true,
          },
+         workPlaces: [
+            {
+               companyName: String,
+               post: String,
+               city: String,
+               from: Number,
+               to: Number,
+            },
+         ],
       },
       posts: { type: Schema.Types.ObjectId, ref: 'Posts' },
    },

@@ -51,6 +51,13 @@ export interface IUserTypes {
             name: string
          }
       }
+      workPlaces: {
+         companyName: string
+         post: string
+         city: string
+         from: number
+         to: number
+      }[]
    }
    posts: { userId: ObjectId } | IPostTypes
    createdAt: number
