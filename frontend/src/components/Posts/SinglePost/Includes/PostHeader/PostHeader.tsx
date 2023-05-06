@@ -23,7 +23,7 @@ const PostHeader: React.FC<{ userInfo: IPopulatedUserId; createdAt: string }> = 
             height={45}
          />
          <HeaderRightTitleSection>
-            <CustomTooltipTitle open={true} title={<DetailsTooltipTitle userInfo={userInfo} />}>
+            <CustomTooltipTitle title={<DetailsTooltipTitle userInfo={userInfo} />}>
                <StyledClickableTypography variant='h6'>
                   {userInfo.firstName} {userInfo.sureName}
                </StyledClickableTypography>

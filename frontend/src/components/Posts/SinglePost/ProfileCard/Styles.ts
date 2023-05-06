@@ -19,7 +19,6 @@ export const StyledProfileImage = styled(Image)({
 
 export const StyledProfileBody = styled('div')({
    height: '150px',
-   //    padding: '.7rem .7rem .7rem 0',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-evenly',
@@ -28,4 +27,6 @@ export const StyledProfileBody = styled('div')({
 export const StyledIconParagraph = styled('p')({
    fontWeight: 350,
    fontSize: '16px',
+   display: 'flex',
+   alignContent: 'center',
 })

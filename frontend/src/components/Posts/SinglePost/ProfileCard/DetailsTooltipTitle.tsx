@@ -9,7 +9,7 @@ import type { IPopulatedUserId } from '../Like/Types'
 
 const DetailsTooltipTitle: React.FC<{ userInfo: IPopulatedUserId }> = ({ userInfo }) => {
    return (
-      <StyledPaperContainer>
+      <StyledPaperContainer elevation={10}>
          <StyledProfileImage
             alt='Profile image'
             src={userInfo.userDetails.profilePicturePath}
@@ -17,12 +17,15 @@ const DetailsTooltipTitle: React.FC<{ userInfo: IPopulatedUserId }> = ({ userInf
             height={75}
          />
          <StyledProfileBody>
-            <Typography variant='h5'>Tamás Nagy</Typography>
+            <Typography variant='h5'>
+               {userInfo.firstName} {userInfo.sureName}
+            </Typography>
             <StyledIconParagraph>
-               <SchoolIcon /> Tanulmányok: Verebély László SZKI
+               <SchoolIcon sx={{ mr: 1 }} /> Tanulmányok:{' '}
+               {userInfo.userDetails?.studies?.highSchool?.name ?? 'Nincs'}
             </StyledIconParagraph>
             <StyledIconParagraph>
-               <HomeIcon /> Lakhely: Budapest
+               <HomeIcon sx={{ mr: 1 }} /> Lakhely: {userInfo.userDetails.homeTown ?? 'Nincs'}
             </StyledIconParagraph>
          </StyledProfileBody>
       </StyledPaperContainer>
