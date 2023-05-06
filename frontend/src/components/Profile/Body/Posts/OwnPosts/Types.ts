@@ -20,14 +20,33 @@ export interface IUserTypes {
    password: string
    isEmailConfirmed: boolean
    friends: { userId: string }[]
-   userDetails: {
-      dateOfBirth: { day: number; month: number; year: number }
-      gender: 'male' | 'female'
-      profilePicturePath: string
-      birthTown: string
-      homeTown: string
-      relationShip: { isAlone: boolean; inRelation: boolean }
-   }
+   userDetails: IUserDetails
    createdAt: number
    updatedAt: number
+}
+
+export interface IUserDetails {
+   dateOfBirth: { day: number; month: number; year: number }
+   gender: 'male' | 'female'
+   profilePicturePath: string
+   birthTown: string
+   homeTown: string
+   studies: {
+      elementary: {
+         from: number
+         to: number
+         name: string
+      }
+      highSchool: {
+         from: number
+         to: number
+         name: string
+      }
+      university: {
+         from: number
+         to: number
+         name: string
+      }
+   }
+   relationShip: { isAlone: boolean; inRelation: boolean }
 }

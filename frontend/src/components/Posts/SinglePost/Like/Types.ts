@@ -1,9 +1,11 @@
+import { IUserDetails } from '../../../Profile/Body/Posts/OwnPosts/Types'
+
 export interface IPopulatedUserId {
    _id: string
    email: string
    firstName: string
    sureName: string
-   userDetails: { profilePicturePath: string }
+   userDetails: IUserDetails
 }
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
