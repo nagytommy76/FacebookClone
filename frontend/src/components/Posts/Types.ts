@@ -1,4 +1,4 @@
-import type { IPostComment, IPostLike } from '../../../../Posts/SinglePost/Like/Types'
+import type { IPostComment, IPostLike } from './SinglePost/Like/Types'
 
 export interface IPost {
    _id: string

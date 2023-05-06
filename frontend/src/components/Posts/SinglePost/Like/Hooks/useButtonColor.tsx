@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
-import type { LikeTypes } from '../../../../Profile/Body/Posts/OwnPosts/Types'
+import type { LikeTypes } from '../Types'
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import LikeAnimated from '../../../../../assets/likeAnimated.svg'

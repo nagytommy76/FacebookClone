@@ -1,7 +1,7 @@
 import React from 'react'
 import { axiosInstance as axios } from '../../../../../utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { LikeTypes } from '../../../../Profile/Body/Posts/OwnPosts/Types'
+import type { LikeTypes } from '../Types'
 
 interface ISendLike {
    likeTypeFomInput: LikeTypes

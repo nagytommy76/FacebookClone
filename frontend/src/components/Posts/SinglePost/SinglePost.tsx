@@ -1,5 +1,5 @@
 import React from 'react'
-import type { IPost } from '../../Profile/Body/Posts/OwnPosts/Types'
+import type { IPost } from '../Types'
 
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'

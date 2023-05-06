@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useLikeMutate from './useLikeMutate'
 import useLikeDelete from './useLikeDelete'
-import type { LikeTypes } from '../../../../Profile/Body/Posts/OwnPosts/Types'
+import type { LikeTypes } from '../Types'
 
 const useHandleFn = (setButtonColor: (currentLikeType: LikeTypes | undefined) => void, postId: string) => {
    const { mutatePostLike } = useLikeMutate()

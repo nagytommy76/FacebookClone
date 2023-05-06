@@ -1,4 +1,4 @@
-import { IUserDetails } from '../../../Profile/Body/Posts/OwnPosts/Types'
+import { IUserDetails } from '../../Types'
 
 export interface IPopulatedUserId {
    _id: string
