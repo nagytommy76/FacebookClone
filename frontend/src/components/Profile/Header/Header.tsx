@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProfileContext } from '../Context/ProfileContextProvider'
 
 import {
    ProfileHeader,
@@ -15,13 +16,14 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline'
 import OwnProfile from '../../../../public/sajat.jpg'
 
 const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+   const { userData } = useContext(ProfileContext)
    return (
       <ProfileHeader elevation={1}>
          <HeaderTop>
             <HeaderImage src={OwnProfile} alt='Profil kép' />
             <HeadTitleSection>
                <Typography variant='h4' fontWeight='50px' color='text.primary'>
-                  Tamás Nagy
+                  {userData.firstName} {userData.sureName}
                </Typography>
                <Typography variant='body1' fontWeight='42px' color='text.primary'>
                   119 ismerős
