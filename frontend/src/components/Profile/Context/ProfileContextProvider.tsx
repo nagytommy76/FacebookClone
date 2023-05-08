@@ -3,8 +3,11 @@ import { IUserPopulatedPosts } from '../../Auth/AuthTypes'
 import useGetUserData from '../Hooks/useGetUserData'
 
 interface IProfileContext {
+   tabValue: number
+   handleTabChange: (event: React.SyntheticEvent, newValue: number) => void
    userData: IUserPopulatedPosts
    setUserData: React.Dispatch<React.SetStateAction<IUserPopulatedPosts>>
+   isDataLoading: boolean
 }
 
 const userDataObject = {
@@ -37,18 +40,29 @@ const userDataObject = {
 export const ProfileContext = createContext<IProfileContext>({
    userData: userDataObject,
    setUserData: () => {},
+   handleTabChange: () => {},
+   tabValue: 0,
+   isDataLoading: true,
 })
 
 const ProfileContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+   const [tabValue, setTabValue] = useState<number>(0)
+   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+      setTabValue(newValue)
+   }
    const [userData, setUserData] = useState<IUserPopulatedPosts>(userDataObject)
-   const { data, isError } = useGetUserData()
+   const { data, isLoading } = useGetUserData()
 
    useEffect(() => {
       if (data) setUserData(data)
-      console.log(data)
    }, [data])
 
-   return <ProfileContext.Provider value={{ userData, setUserData }}>{children}</ProfileContext.Provider>
+   return (
+      <ProfileContext.Provider
+         value={{ userData, setUserData, handleTabChange, tabValue, isDataLoading: isLoading }}>
+         {children}
+      </ProfileContext.Provider>
+   )
 }
 
 export default ProfileContextProvider
