@@ -27,6 +27,7 @@ export const HeaderImage = styled(Image)(({ theme }) => ({
    height: '168px',
    borderRadius: '50%',
    marginRight: '18px',
+   objectFit: 'cover',
    [theme.breakpoints.down('sm')]: {
       marginRight: 0,
    },
