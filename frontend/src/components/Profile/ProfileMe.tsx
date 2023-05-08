@@ -8,18 +8,13 @@ const ProfileHeader = dynamic(() => import('./Header/Header'))
 const Body = dynamic(() => import('./Body/Body'))
 
 const ProfileMe = () => {
-   const [tabValue, setTabValue] = useState<number>(0)
-   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      setTabValue(newValue)
-   }
-
    return (
       <ProfileContextProvider>
          <StyledMeContainer>
             <ProfileHeader>
-               <NavTabs handleTabChange={handleTabChange} tabValue={tabValue} />
+               <NavTabs />
             </ProfileHeader>
-            <Body tabValue={tabValue} />
+            <Body />
          </StyledMeContainer>
       </ProfileContextProvider>
    )

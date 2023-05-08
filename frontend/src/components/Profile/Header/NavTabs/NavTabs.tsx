@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProfileContext } from '../../Context/ProfileContextProvider'
 import a11yProps from '../../Body/Includes/a11Props'
 
 import { StyledTab, StyledTabs } from '../Styles/HeaderStyle'
 
-const NavTabs: React.FC<{
-   handleTabChange: (event: React.SyntheticEvent, newValue: number) => void
-   tabValue: number
-}> = ({ handleTabChange, tabValue }) => {
+const NavTabs = () => {
+   const { handleTabChange, tabValue } = useContext(ProfileContext)
    return (
       <StyledTabs
          textColor='primary'
