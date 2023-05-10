@@ -13,13 +13,6 @@ export const StyledImagePreview = styled(Image)({
    objectFit: 'cover',
 })
 
-export const StyledImageInputField = styled('input')({
-   opacity: 0,
-   width: 0.1,
-   height: 0.1,
-   position: 'absolute',
-})
-
 export const StyledLabelAsButton = styled('label')(({ theme }) => ({
    position: 'relative',
    width: '210px',

@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 import ImagePreview from './ImagePreview'
+import ImageSelector from '../../../../Base/ImageSelector/ImageSelector'
 
-import { StyledImageInputField, StyledLabelAsButton } from './Style'
+import { StyledLabelAsButton } from './Style'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 
 const AddImage: React.FC<{
@@ -35,15 +36,7 @@ const AddImage: React.FC<{
             <AddPhotoAlternateIcon />
             Válassz fényképeket {selectedFilePreview?.length}
          </StyledLabelAsButton>
-         <StyledImageInputField
-            type='file'
-            accept='image/*'
-            multiple
-            max={3}
-            onChange={handleSetUploadPictures}
-            name='imageUpload'
-            id='uploadImage'
-         />
+         <ImageSelector maxFileCount={3} handleSetUploadPictures={handleSetUploadPictures} />
       </>
    )
 }
