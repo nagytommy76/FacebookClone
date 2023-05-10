@@ -4,9 +4,6 @@ import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import ImagePreview from './ImagePreview'
 import ImageSelector from '../../../../Base/ImageSelector/ImageSelector'
 
-import { StyledLabelAsButton } from './Style'
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
-
 const AddImage: React.FC<{
    setUploadedPictures: Dispatch<SetStateAction<FileList | null>>
    uploadedPictures: FileList | null
@@ -32,10 +29,6 @@ const AddImage: React.FC<{
    return (
       <>
          {!selectedFilePreview ? <></> : <ImagePreview selectedFilePreview={selectedFilePreview} />}
-         <StyledLabelAsButton htmlFor='uploadImage'>
-            <AddPhotoAlternateIcon />
-            Válassz fényképeket {selectedFilePreview?.length}
-         </StyledLabelAsButton>
          <ImageSelector maxFileCount={3} handleSetUploadPictures={handleSetUploadPictures} />
       </>
    )
