@@ -12,7 +12,7 @@ const OwnPosts = () => {
    if (isDataLoading) {
       return <h1>Ide majd egy Suspense component jön. TÖLTÉS</h1>
    }
-   userData.posts[0].postedPicturesPath
+
    return (
       <div>
          {userData.posts &&

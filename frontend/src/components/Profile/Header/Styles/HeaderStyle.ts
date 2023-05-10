@@ -22,17 +22,6 @@ export const HeaderTop = styled('div')(({ theme }) => ({
    },
 }))
 
-export const HeaderImage = styled(Image)(({ theme }) => ({
-   width: '168px',
-   height: '168px',
-   borderRadius: '50%',
-   marginRight: '18px',
-   objectFit: 'cover',
-   [theme.breakpoints.down('sm')]: {
-      marginRight: 0,
-   },
-}))
-
 export const HeadTitleSection = styled('div')(({ theme }) => ({
    height: '65%',
    flexGrow: 1,

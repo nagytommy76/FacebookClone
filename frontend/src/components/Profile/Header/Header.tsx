@@ -1,17 +1,13 @@
 import React, { useContext } from 'react'
 import { ProfileContext } from '../Context/ProfileContextProvider'
 
-import {
-   ProfileHeader,
-   HeaderImage,
-   HeadTitleSection,
-   ProfileModifySection,
-   HeaderTop,
-} from './Styles/HeaderStyle'
+import { ProfileHeader, HeadTitleSection, ProfileModifySection, HeaderTop } from './Styles/HeaderStyle'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline'
+
+import HeaderImage from './HeaderImage/HeaderImage'
 
 const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    const { userData } = useContext(ProfileContext)
@@ -19,12 +15,7 @@ const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    return (
       <ProfileHeader elevation={1}>
          <HeaderTop>
-            <HeaderImage
-               src={userData.userDetails.profilePicturePath}
-               alt='Profil kép'
-               width={100}
-               height={100}
-            />
+            <HeaderImage profilePicturePath={userData.userDetails.profilePicturePath} />
             <HeadTitleSection>
                <Typography variant='h4' fontWeight='50px' color='text.primary'>
                   {userData.firstName} {userData.sureName}
