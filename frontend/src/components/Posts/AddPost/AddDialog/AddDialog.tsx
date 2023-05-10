@@ -3,7 +3,7 @@ import type { AxiosResponse } from 'axios'
 import type { UseMutateFunction } from '@tanstack/react-query'
 
 import TextInputField from './Includes/TextInputField'
-import AddImage from './AddImage/AddImage'
+import AddImage from '../../../Base/ImagePreview/AddImage'
 import DialogHeader from './Includes/DialogHeader'
 
 import Dialog from '@mui/material/Dialog'
