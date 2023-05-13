@@ -17,9 +17,15 @@ const useUploadFirebase = () => {
       return uploadedImagesArray
    }
 
-   const handleSingleImageUploadToFirebase = async (singleImageFile: File) => {
+   const handleSingleImageUploadToFirebase = async (
+      singleImageFile: File,
+      subFolderName: string = 'posts'
+   ) => {
       try {
-         const imageReference = ref(firebaseStorage, `${userId}/posts/${v4()}_${singleImageFile.name}`)
+         const imageReference = ref(
+            firebaseStorage,
+            `${userId}/${subFolderName}/${v4()}_${singleImageFile.name}`
+         )
          await uploadBytes(imageReference, singleImageFile)
          const currentImageLink = await getDownloadURL(imageReference)
 
