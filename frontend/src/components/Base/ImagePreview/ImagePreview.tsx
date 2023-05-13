@@ -6,7 +6,7 @@ const ImagePreview: React.FC<{ selectedFilePreview: string[] }> = ({ selectedFil
    return (
       <StyledImagePreviewContainer>
          {selectedFilePreview.map((filePreview, index) => (
-            <StyledImagePreview key={index} width={550} height={200} alt={filePreview} src={filePreview} />
+            <StyledImagePreview key={index} width={500} height={200} alt={filePreview} src={filePreview} />
          ))}
       </StyledImagePreviewContainer>
    )

@@ -11,4 +11,5 @@ export const StyledImagePreview = styled(Image)({
    flexGrow: 1,
    marginBottom: '.2rem',
    objectFit: 'cover',
+   width: '100%',
 })
