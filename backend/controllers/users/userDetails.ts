@@ -15,3 +15,12 @@ export const getUserDetailsWithOwnPosts = async (request: IJWTUserType, response
       response.status(500).json({ error, msg: 'internal server error' })
    }
 }
+
+export const saveUserProfilePicture = async (request: IJWTUserType, response: Response) => {
+   const userId = request.user?.userId
+   if (!userId) return response.status(404).json({ msg: 'user not found' })
+   try {
+   } catch (error) {
+      response.status(500).json({ error })
+   }
+}
