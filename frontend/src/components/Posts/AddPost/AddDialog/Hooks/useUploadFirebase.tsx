@@ -28,7 +28,7 @@ const useUploadFirebase = () => {
          console.log(error)
       }
    }
-   return handleMultipleImageUploadToFirebase
+   return { handleMultipleImageUploadToFirebase, handleSingleImageUploadToFirebase }
 }
 
 export default useUploadFirebase
