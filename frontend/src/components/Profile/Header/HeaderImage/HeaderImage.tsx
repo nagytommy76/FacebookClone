@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProfileContext } from '../../Context/ProfileContextProvider'
+import dynamic from 'next/dynamic'
 import useUploadFirebase from '../../../Posts/AddPost/AddDialog/Hooks/useUploadFirebase'
 import useCheckPicture from './Hooks/useCheckPicture'
 import useModalControl from './Hooks/useModalControl'
 import usePictureMutate from './Hooks/usePictureMutate'
 
 import { HeaderImage as HeaderImageStyle } from './Style'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
 
 import AddImage from '../../../Base/ImagePreview/AddImage'
+const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
-const HeaderImage: React.FC<{ profilePicturePath: string }> = ({ profilePicturePath }) => {
+const HeaderImage = () => {
    const { handleSingleImageUploadToFirebase } = useUploadFirebase()
+   const { getSelectedProfilePicture } = useContext(ProfileContext)
    const { isButtonDisabled, setUploadedPictures, uploadedPictures } = useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
    const mutationFunction = usePictureMutate()
@@ -35,31 +35,30 @@ const HeaderImage: React.FC<{ profilePicturePath: string }> = ({ profilePictureP
       <>
          <HeaderImageStyle
             onClick={handleOpenDialog}
-            src={profilePicturePath || ''}
+            src={getSelectedProfilePicture()?.path || ''}
             alt='Profil kép'
             width={100}
             height={100}
          />
-         <Dialog open={isModalOpen} onClose={handleCloseDialog}>
-            <DialogTitle>Profilkép feltöltése</DialogTitle>
-            <DialogContent>
+         <ImageModal
+            isModalOpen={isModalOpen}
+            handleCloseDialog={handleCloseDialog}
+            AddImage={
                <AddImage
                   multiple={false}
                   setUploadedPictures={setUploadedPictures}
                   uploadedPictures={uploadedPictures}
                />
-            </DialogContent>
-            <DialogActions>
-               <Button
-                  onClick={handleSetUploadPictures}
-                  disabled={isButtonDisabled}
-                  fullWidth
-                  variant='contained'
-                  endIcon={<SendIcon />}>
-                  Feltöltés
-               </Button>
-            </DialogActions>
-         </Dialog>
+            }>
+            <Button
+               onClick={handleSetUploadPictures}
+               disabled={isButtonDisabled}
+               fullWidth
+               variant='contained'
+               endIcon={<SendIcon />}>
+               Feltöltés
+            </Button>
+         </ImageModal>
       </>
    )
 }
