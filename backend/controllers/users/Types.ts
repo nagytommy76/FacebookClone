@@ -30,7 +30,10 @@ export interface IUserTypes {
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
       gender: 'male' | 'female'
-      profilePicturePath: string
+      profilePicturePath: {
+         path: string
+         isSelected: boolean
+      }[]
       birthTown: string
       homeTown: string
       relationShip: { isAlone: boolean; inRelation: boolean }

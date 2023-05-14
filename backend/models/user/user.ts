@@ -22,7 +22,14 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
       },
       friends: { type: [{ userId: Schema.Types.ObjectId }] },
       userDetails: {
-         profilePicturePath: String,
+         profilePicturePath: {
+            type: [
+               {
+                  path: String,
+                  isSelected: Boolean,
+               },
+            ],
+         },
          birthTown: String,
          homeTown: String,
          relationShip: { type: { isAlone: Boolean, inRelation: Boolean }, required: false },
