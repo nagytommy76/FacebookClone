@@ -16,11 +16,38 @@ export const getUserDetailsWithOwnPosts = async (request: IJWTUserType, response
    }
 }
 
-export const saveUserProfilePicture = async (request: IJWTUserType, response: Response) => {
+export const getCurrentProfilePictures = async (request: IJWTUserType, response: Response) => {
    const userId = request.user?.userId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
+      const foundUser = await UserModel.findById(userId).select('userDetails.profilePicturePath').lean()
+      if (!foundUser) return response.status(404).json({ msg: 'user not found' })
+      return response.status(200).json(foundUser.userDetails.profilePicturePath)
    } catch (error) {
       response.status(500).json({ error })
+   }
+}
+
+export const saveUserProfilePicture = async (request: IProfilePictureRequest, response: Response) => {
+   const userId = request.user?.userId
+   const profilePicturePath = request.body.profilePicturePath
+   if (!userId) return response.status(404).json({ msg: 'user not found' })
+   try {
+      const foundUser = await UserModel.findById(userId).select('userDetails.profilePicturePath')
+      if (!foundUser) return response.status(404).json({ msg: 'user not found' })
+      // Végigmenni mindegyik képen és a selected mezőt false-ra állítani
+      foundUser.userDetails.profilePicturePath.map((image) => (image.isSelected = false))
+      foundUser.userDetails.profilePicturePath.push({ isSelected: true, path: profilePicturePath })
+
+      await foundUser.save()
+      return response.status(200).json({ foundUser })
+   } catch (error) {
+      response.status(500).json({ error })
+   }
+}
+
+interface IProfilePictureRequest extends IJWTUserType {
+   body: {
+      profilePicturePath: string
    }
 }
