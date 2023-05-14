@@ -8,9 +8,15 @@ interface IProfileContext {
    userData: IUserPopulatedPosts
    setUserData: React.Dispatch<React.SetStateAction<IUserPopulatedPosts>>
    isDataLoading: boolean
+   getSelectedProfilePicture: () =>
+      | {
+           path: string
+           isSelected: boolean
+        }
+      | undefined
 }
 
-const userDataObject = {
+const userDataObject: IUserPopulatedPosts = {
    _id: '',
    createdAt: 0,
    email: '',
@@ -26,7 +32,7 @@ const userDataObject = {
       dateOfBirth: { day: 0, month: 0, year: 0 },
       gender: 'female',
       homeTown: '',
-      profilePicturePath: '',
+      profilePicturePath: [{ isSelected: false, path: '' }],
       relationShip: { inRelation: false, isAlone: true },
       studies: {
          elementary: { from: 2000, name: '', to: 2000 },
@@ -43,23 +49,36 @@ export const ProfileContext = createContext<IProfileContext>({
    handleTabChange: () => {},
    tabValue: 0,
    isDataLoading: true,
+   getSelectedProfilePicture: () => {
+      return { isSelected: false, path: '' }
+   },
 })
 
 const ProfileContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    const [tabValue, setTabValue] = useState<number>(0)
-   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      setTabValue(newValue)
-   }
    const [userData, setUserData] = useState<IUserPopulatedPosts>(userDataObject)
    const { data, isLoading } = useGetUserData()
 
+   const getSelectedProfilePicture = () => {
+      return userData.userDetails.profilePicturePath.find((image) => image.isSelected)
+   }
+   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+      setTabValue(newValue)
+   }
    useEffect(() => {
       if (data) setUserData(data)
    }, [data])
 
    return (
       <ProfileContext.Provider
-         value={{ userData, setUserData, handleTabChange, tabValue, isDataLoading: isLoading }}>
+         value={{
+            userData,
+            setUserData,
+            handleTabChange,
+            tabValue,
+            isDataLoading: isLoading,
+            getSelectedProfilePicture,
+         }}>
          {children}
       </ProfileContext.Provider>
    )
