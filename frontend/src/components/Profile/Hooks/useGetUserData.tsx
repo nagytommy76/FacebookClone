@@ -8,6 +8,7 @@ const getUserData = async () => {
       return response.data as IUserPopulatedPosts
    } catch (error) {
       console.log(error)
+      return Promise.reject(new Error())
    }
 }
 
