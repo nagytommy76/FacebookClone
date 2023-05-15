@@ -44,7 +44,14 @@ export const StyledUploadedPic = styled(Image)<{ isHighlighted: boolean }>(({ is
    width: '175px',
    height: '175px',
    objectFit: 'cover',
+
+   cursor: 'pointer',
+   transition: ' filter .15s ease-in-out',
+   [`&:hover`]: {
+      filter: 'brightness(120%)',
+   },
+
    ...(isHighlighted && {
-      border: '2px solid red',
+      border: '1px solid grey',
    }),
 }))
