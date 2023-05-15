@@ -28,7 +28,7 @@ export interface IUserTypes {
 export interface IUserDetails {
    dateOfBirth: { day: number; month: number; year: number }
    gender: 'male' | 'female'
-   profilePicturePath: string
+   profilePicturePath: IProfilePicture[]
    birthTown: string
    homeTown: string
    studies: {
@@ -49,4 +49,10 @@ export interface IUserDetails {
       }
    }
    relationShip: { isAlone: boolean; inRelation: boolean }
+}
+
+export interface IProfilePicture {
+   _id: string
+   path: string
+   isSelected: boolean
 }
