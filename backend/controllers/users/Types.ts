@@ -31,6 +31,7 @@ export interface IUserTypes {
       dateOfBirth: { day: number; month: number; year: number }
       gender: 'male' | 'female'
       profilePicturePath: {
+         _id?: ObjectId | string
          path: string
          isSelected: boolean
       }[]
