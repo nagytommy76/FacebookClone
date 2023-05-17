@@ -10,7 +10,9 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline'
 import HeaderImage from './HeaderImage/HeaderImage'
 
 const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-   const { userData } = useContext(ProfileContext)
+   const {
+      profileReducer: { initialUserDataState },
+   } = useContext(ProfileContext)
 
    return (
       <ProfileHeader elevation={1}>
@@ -18,10 +20,10 @@ const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <HeaderImage />
             <HeadTitleSection>
                <Typography variant='h4' fontWeight='50px' color='text.primary'>
-                  {userData.firstName} {userData.sureName}
+                  {initialUserDataState.firstName} {initialUserDataState.sureName}
                </Typography>
                <Typography variant='body1' fontWeight='42px' color='text.primary'>
-                  {userData.friends.length} ismerős
+                  {initialUserDataState.friends.length} ismerős
                </Typography>
                <Typography variant='body2' fontWeight='42px' color='text.primary'>
                   Itt majd az ismerősökre tudsz menni

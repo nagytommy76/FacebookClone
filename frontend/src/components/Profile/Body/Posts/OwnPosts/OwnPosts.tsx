@@ -8,15 +8,20 @@ const SinglePostComponent = dynamic(() => import('../../../../Posts/SinglePost/S
 })
 
 const OwnPosts = () => {
-   const { isDataLoading, userData } = useContext(ProfileContext)
+   const {
+      isDataLoading,
+      profileReducer: { initialUserDataState },
+   } = useContext(ProfileContext)
    if (isDataLoading) {
       return <h1>Ide majd egy Suspense component jön. TÖLTÉS</h1>
    }
 
    return (
       <div>
-         {userData.posts &&
-            userData.posts.map((post: IPost) => <SinglePostComponent key={post._id} singlePost={post} />)}
+         {initialUserDataState.posts &&
+            initialUserDataState.posts.map((post: IPost) => (
+               <SinglePostComponent key={post._id} singlePost={post} />
+            ))}
       </div>
    )
 }
