@@ -1,4 +1,4 @@
-import { IPost } from '../Posts/Types'
+import type { IPost, IProfilePicture } from '../Posts/Types'
 
 export interface IUserTypes {
    _id: string
@@ -11,7 +11,7 @@ export interface IUserTypes {
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
       gender: string
-      profilePicturePath: { path: string; isSelected: boolean }[]
+      profilePicturePath: IProfilePicture[]
       birthTown: string
       homeTown: string
       relationShip: { isAlone: boolean; inRelation: boolean }

@@ -1,5 +1,6 @@
-import React from 'react'
-import useGetCurrentPictures from '../Hooks/useGetCurrentPictures'
+import React, { useContext } from 'react'
+import { ProfileContext } from '../../../Context/ProfileContextProvider'
+import { UserDataActions } from '../../../Context/ProfileReducer'
 
 import { StyledDialog, StyledUploadedPic, StyledImageContainer } from '../Style'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -13,11 +14,11 @@ const ImageModal: React.FC<{
    children: React.ReactNode
    handleCloseDialog: () => void
 }> = ({ isModalOpen, AddImage, children, handleCloseDialog }) => {
-   const { currentProfilePictures, isLoading, setCurrentProfilePictures } = useGetCurrentPictures()
-   const { mutate } = useMutateSelectedPic(setCurrentProfilePictures)
+   const { profileReducer } = useContext(ProfileContext)
+   const { mutate } = useMutateSelectedPic()
 
    const handleSetCurrentPic = (modifyId: string) => {
-      mutate(modifyId)
+      if (profileReducer.getSelectedProfilePicture()?._id != modifyId) mutate(modifyId)
    }
 
    return (
@@ -26,23 +27,19 @@ const ImageModal: React.FC<{
          <DialogContent dividers>{AddImage}</DialogContent>
          <DialogTitle>Jelenlegi profilkép módosítása</DialogTitle>
          <DialogContent>
-            {isLoading ? (
-               <p>Töltés...</p>
-            ) : (
-               <StyledImageContainer>
-                  {currentProfilePictures?.map((image) => (
-                     <StyledUploadedPic
-                        isHighlighted={image.isSelected}
-                        key={image._id}
-                        alt='image'
-                        src={image.path}
-                        onClick={() => handleSetCurrentPic(image._id)}
-                        width={150}
-                        height={150}
-                     />
-                  ))}
-               </StyledImageContainer>
-            )}
+            <StyledImageContainer>
+               {profileReducer.getEveryProfilePictures().map((image) => (
+                  <StyledUploadedPic
+                     isHighlighted={image.isSelected}
+                     key={image._id}
+                     alt='image'
+                     src={image.path}
+                     onClick={() => handleSetCurrentPic(image._id)}
+                     width={150}
+                     height={150}
+                  />
+               ))}
+            </StyledImageContainer>
          </DialogContent>
          <DialogActions>{children}</DialogActions>
       </StyledDialog>
