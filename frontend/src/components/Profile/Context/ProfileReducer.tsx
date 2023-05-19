@@ -2,21 +2,17 @@ import type { IUserTypes } from '../../Auth/AuthTypes'
 import type { IProfilePicture } from '../../Posts/Types'
 
 export enum UserDataActions {
-   GET_PROFILE_PICTURE = 'GET_PROFILE_PICTURE',
-   GET_SELECTED_PROFILE_PICTURE = 'GET_SELECTED_PROFILE_PICTURE',
    SET_USER_PROFILE_PICUTRES = 'SET_USER_PROFILE_PICUTRES',
+   SET_INITIAL_USER_DATA = 'SET_INITIAL_USER_DATA',
 }
 
 export interface IBaseListAction {
    type: UserDataActions
-   payload: any
+   payload: IUserTypes | IProfilePicture[] | any
 }
 
 export interface InitialState {
    initialUserDataState: IUserTypes
-   getEveryProfilePictures: () => IProfilePicture[]
-   getSelectedProfilePicture: () => IProfilePicture | undefined
-   setUserProfilePicutres: (newProfilePicturePath: IProfilePicture[]) => void
 }
 
 export const initialUserDataState: IUserTypes = {
@@ -48,36 +44,25 @@ export const initialUserDataState: IUserTypes = {
 
 export const initialProfileState: InitialState = {
    initialUserDataState,
-   getEveryProfilePictures: () => {
-      return [{ _id: '', isSelected: false, path: '' }]
-   },
-   getSelectedProfilePicture: () => {
-      return { _id: '', isSelected: false, path: '' }
-   },
-   setUserProfilePicutres: () => {},
 }
 
 export default function UserDetailsReducer(state: InitialState, action: IBaseListAction): InitialState {
    switch (action.type) {
-      case UserDataActions.GET_PROFILE_PICTURE:
+      case UserDataActions.SET_INITIAL_USER_DATA:
          return {
             ...state,
-            getEveryProfilePictures: () => state.initialUserDataState.userDetails.profilePicturePath,
-         }
-      case UserDataActions.GET_SELECTED_PROFILE_PICTURE:
-         return {
-            ...state,
-            getSelectedProfilePicture: () => {
-               return state.initialUserDataState.userDetails.profilePicturePath.find(
-                  (image) => image.isSelected
-               )
-            },
+            initialUserDataState: action.payload,
          }
       case UserDataActions.SET_USER_PROFILE_PICUTRES:
          return {
+            // itt elveszenk az adatok, Immert használni?
             ...state,
-            setUserProfilePicutres: (newProfilePicturePath) => {
-               state.initialUserDataState.userDetails.profilePicturePath = newProfilePicturePath
+            initialUserDataState: {
+               ...initialUserDataState,
+               userDetails: {
+                  ...initialUserDataState.userDetails,
+                  profilePicturePath: action.payload,
+               },
             },
          }
       default:
