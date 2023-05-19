@@ -15,7 +15,7 @@ const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
 const HeaderImage = () => {
    const { handleSingleImageUploadToFirebase } = useUploadFirebase()
-   const { profileReducer } = useContext(ProfileContext)
+   const { selectSelectedProfilePicture } = useContext(ProfileContext)
    const { isButtonDisabled, setUploadedPictures, uploadedPictures } = useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
    const mutationFunction = usePictureMutate()
@@ -35,7 +35,7 @@ const HeaderImage = () => {
       <>
          <HeaderImageStyle
             onClick={handleOpenDialog}
-            src={profileReducer.getSelectedProfilePicture()?.path || ''}
+            src={selectSelectedProfilePicture()?.path || ''}
             alt='Profil kép'
             width={100}
             height={100}

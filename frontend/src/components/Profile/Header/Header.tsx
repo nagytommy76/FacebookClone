@@ -23,7 +23,7 @@ const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   {initialUserDataState.firstName} {initialUserDataState.sureName}
                </Typography>
                <Typography variant='body1' fontWeight='42px' color='text.primary'>
-                  {initialUserDataState.friends.length} ismerős
+                  {initialUserDataState.friends?.length} ismerős
                </Typography>
                <Typography variant='body2' fontWeight='42px' color='text.primary'>
                   Itt majd az ismerősökre tudsz menni

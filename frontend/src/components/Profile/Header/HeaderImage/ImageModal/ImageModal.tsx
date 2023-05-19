@@ -14,11 +14,15 @@ const ImageModal: React.FC<{
    children: React.ReactNode
    handleCloseDialog: () => void
 }> = ({ isModalOpen, AddImage, children, handleCloseDialog }) => {
-   const { profileReducer } = useContext(ProfileContext)
+   const {
+      profileReducer: { initialUserDataState },
+      selectSelectedProfilePicture,
+   } = useContext(ProfileContext)
    const { mutate } = useMutateSelectedPic()
-
    const handleSetCurrentPic = (modifyId: string) => {
-      if (profileReducer.getSelectedProfilePicture()?._id != modifyId) mutate(modifyId)
+      console.log(initialUserDataState.userDetails.profilePicturePath)
+      console.log(selectSelectedProfilePicture())
+      if (selectSelectedProfilePicture()?._id != modifyId) mutate(modifyId)
    }
 
    return (
@@ -28,7 +32,7 @@ const ImageModal: React.FC<{
          <DialogTitle>Jelenlegi profilkép módosítása</DialogTitle>
          <DialogContent>
             <StyledImageContainer>
-               {profileReducer.getEveryProfilePictures().map((image) => (
+               {initialUserDataState.userDetails?.profilePicturePath.map((image) => (
                   <StyledUploadedPic
                      isHighlighted={image.isSelected}
                      key={image._id}
