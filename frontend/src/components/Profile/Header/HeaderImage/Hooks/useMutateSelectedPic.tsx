@@ -2,9 +2,10 @@ import { useContext } from 'react'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '../../../../../utils/axiosSetup/AxiosInstance'
+import { UserDataActions } from '../../../Context/ProfileReducer'
 
 const useMutateSelectedPic = () => {
-   const { profileReducer } = useContext(ProfileContext)
+   const { profileDispatch } = useContext(ProfileContext)
    const handleRequest = async (modifyPictureId: string) => {
       return (await axios.put('/user/edit-profile-picture', {
          modifyId: modifyPictureId,
@@ -15,7 +16,10 @@ const useMutateSelectedPic = () => {
    const { mutate } = useMutation({
       mutationFn: handleRequest,
       onSuccess: (data) => {
-         profileReducer.setUserProfilePicutres(data.data.profilePicturePath)
+         profileDispatch({
+            type: UserDataActions.SET_USER_PROFILE_PICUTRES,
+            payload: data.data.profilePicturePath,
+         })
       },
    })
    return { mutate }
