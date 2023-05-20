@@ -1,5 +1,6 @@
 import type { IUserTypes } from '../../Auth/AuthTypes'
 import type { IProfilePicture } from '../../Posts/Types'
+import { produce } from 'immer'
 
 export enum UserDataActions {
    SET_USER_PROFILE_PICUTRES = 'SET_USER_PROFILE_PICUTRES',
@@ -54,17 +55,10 @@ export default function UserDetailsReducer(state: InitialState, action: IBaseLis
             initialUserDataState: action.payload,
          }
       case UserDataActions.SET_USER_PROFILE_PICUTRES:
-         return {
-            // itt elveszenk az adatok, Immert használni?
-            ...state,
-            initialUserDataState: {
-               ...initialUserDataState,
-               userDetails: {
-                  ...initialUserDataState.userDetails,
-                  profilePicturePath: action.payload,
-               },
-            },
-         }
+         const nextState = produce(state, (draft) => {
+            draft.initialUserDataState.userDetails.profilePicturePath = action.payload
+         })
+         return nextState
       default:
          return state
    }

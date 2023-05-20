@@ -15,6 +15,12 @@ a WorkSchoolnál Dialogba tenni a formot, iskolák
 
 Kell most már az axios interceptor, hogy ellenőrizzem az accessToken meglétét/validálását
 
+
+AZ OWNPOST-nál redundáns az adat, a post nál is meg amúgy is van UserDetails, Megoldani
+
+A NAVBAR-nál redux-ot? használni,h ogy a kép változzon mikor a profilképet megváltoztatom
+
+
 MEGCSINÁLTAM ----------------------------------------------------------------------------------------
 
 

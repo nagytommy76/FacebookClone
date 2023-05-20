@@ -19,8 +19,6 @@ const ImageModal: React.FC<{
    } = useContext(ProfileContext)
    const { mutate } = useMutateSelectedPic()
    const handleSetCurrentPic = (modifyId: string) => {
-      console.log(initialUserDataState.userDetails.profilePicturePath)
-      console.log(selectSelectedProfilePicture())
       if (selectSelectedProfilePicture()?._id != modifyId) mutate(modifyId)
    }
 
