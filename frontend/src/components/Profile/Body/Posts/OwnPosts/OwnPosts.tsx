@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'
 import type { IPost } from '../../../../Posts/Types'
 
+const PostHeader = dynamic(() => import('../../../../Posts/SinglePost/Includes/PostHeader/PostHeader'))
 const SinglePostComponent = dynamic(() => import('../../../../Posts/SinglePost/SinglePost'), {
    loading: () => <h1>Töltés</h1>,
 })
@@ -10,6 +11,7 @@ const SinglePostComponent = dynamic(() => import('../../../../Posts/SinglePost/S
 const OwnPosts = () => {
    const {
       isDataLoading,
+      selectSelectedProfilePicture,
       profileReducer: { initialUserDataState },
    } = useContext(ProfileContext)
    if (isDataLoading) {
@@ -20,7 +22,13 @@ const OwnPosts = () => {
       <div>
          {initialUserDataState.posts &&
             initialUserDataState.posts.map((post: IPost) => (
-               <SinglePostComponent key={post._id} singlePost={post} />
+               <SinglePostComponent key={post._id} singlePost={post}>
+                  <PostHeader
+                     selectSelectedProfilePicture={selectSelectedProfilePicture}
+                     userInfo={post.userId}
+                     createdAt={post.createdAt}
+                  />
+               </SinglePostComponent>
             ))}
       </div>
    )
