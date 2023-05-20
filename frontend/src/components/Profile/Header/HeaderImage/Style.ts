@@ -40,7 +40,9 @@ export const StyledImageContainer = styled('section')({
    gap: '.25rem',
 })
 
-export const StyledUploadedPic = styled(Image)<{ isHighlighted: boolean }>(({ isHighlighted, theme }) => ({
+export const StyledUploadedPic = styled(Image, {
+   shouldForwardProp: (propName) => propName !== 'isHighlighted',
+})<{ isHighlighted: boolean }>(({ isHighlighted, theme }) => ({
    width: '175px',
    height: '175px',
    objectFit: 'cover',

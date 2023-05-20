@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'
-import { UserDataActions } from '../../../Context/ProfileReducer'
 
 import { StyledDialog, StyledUploadedPic, StyledImageContainer } from '../Style'
 import DialogTitle from '@mui/material/DialogTitle'
