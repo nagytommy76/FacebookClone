@@ -6,6 +6,7 @@ import useCheckPicture from './Hooks/useCheckPicture'
 import useModalControl from './Hooks/useModalControl'
 import usePictureMutate from './Hooks/usePictureMutate'
 
+import ProfilePic from '../../../../assets/facebook-profile.jpg'
 import { HeaderImage as HeaderImageStyle } from './Style'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
@@ -35,7 +36,7 @@ const HeaderImage = () => {
       <>
          <HeaderImageStyle
             onClick={handleOpenDialog}
-            src={selectSelectedProfilePicture()?.path || ''}
+            src={selectSelectedProfilePicture()?.path || ProfilePic}
             alt='Profil kép'
             width={100}
             height={100}
