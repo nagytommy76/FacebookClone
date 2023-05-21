@@ -8,7 +8,6 @@ export const getUserDetailsWithOwnPosts = async (request: IJWTUserType, response
    try {
       const foundUserWithPosts = await UserModel.findById(userId).populate({
          path: 'posts',
-         populate: { path: 'userId' },
       })
       return response.status(200).json(foundUserWithPosts)
    } catch (error) {
