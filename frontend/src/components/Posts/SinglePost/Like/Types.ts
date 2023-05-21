@@ -1,12 +1,4 @@
-import { IUserDetails } from '../../Types'
-
-export interface IPopulatedUserId {
-   _id: string
-   email: string
-   firstName: string
-   sureName: string
-   userDetails: IUserDetails
-}
+import type { IPopulatedUserId } from '../../Types'
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
 export interface IPostComment {
@@ -20,7 +12,7 @@ export interface IPostComment {
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------
 export interface IPostLike {
    _id: string
-   userId: IPopulatedUserId
+   userId: IPopulatedUserId | string
    reactionType: {
       [index: string]: boolean
       isLike: boolean

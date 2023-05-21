@@ -31,7 +31,9 @@ export const CustomAddPostButton = styled(Button)({
 })
 
 export const CustomNextImage = styled(Image)({
-   width: 'auto',
+   width: '45px',
+   height: '45px',
+   objectFit: 'cover',
    borderRadius: '50%',
    marginRight: '.75rem',
 })

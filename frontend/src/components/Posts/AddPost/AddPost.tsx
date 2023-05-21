@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic'
-import ProfileImage from '../../../../public/sajat.jpg'
+import { useAppSelector } from '../../../utils/redux/store'
 
 import usePostMutate from './AddDialog/Hooks/usePostMutate'
 import useSnack from './Hooks/useSnack'
 import useDialog from './Hooks/useDialog'
 
+import StockImage from '../../../assets/facebook-profile.jpg'
 import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostStyle'
 
 const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'), {
@@ -15,6 +16,7 @@ const InformSnackbar = dynamic(() => import('./Includes/InformSnackbar'), {
 })
 
 const AddPost = () => {
+   const profilePicture = useAppSelector((state) => state.auth.currentImage)
    const {
       addDialogOpen,
       postDescription,
@@ -36,8 +38,11 @@ const AddPost = () => {
    return (
       <>
          <AddPostStyle>
-            {/* Ez itt majd dinamikus lesz */}
-            <CustomNextImage src={ProfileImage} alt='Sajat kép' />
+            {profilePicture ? (
+               <CustomNextImage src={profilePicture.path} width={35} height={35} alt='Sajat kép' />
+            ) : (
+               <CustomNextImage src={StockImage} width={35} height={35} alt='Sajat kép' />
+            )}
             <CustomAddPostButton onClick={handleDialogClickOpen} disableRipple variant='text' color='primary'>
                Mi jár a fejedben?
             </CustomAddPostButton>

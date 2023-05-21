@@ -1,12 +1,19 @@
 import type { IPostComment, IPostLike } from './SinglePost/Like/Types'
 
+export interface IPopulatedUserId {
+   _id: string
+   email: string
+   firstName: string
+   sureName: string
+   userDetails: IUserDetails
+}
+
 export interface IPost {
    _id: string
-   userId: string
+   userId: IPopulatedUserId
    comments: IPostComment[]
    description: string
    likes: IPostLike[]
-   postedAt: string
    postedPicturesPath: string[]
    createdAt: string
    updatedAt: string
@@ -29,9 +36,9 @@ export interface IUserDetails {
    dateOfBirth: { day: number; month: number; year: number }
    gender: 'male' | 'female'
    profilePicturePath: IProfilePicture[]
-   birthTown: string
-   homeTown: string
-   studies: {
+   birthTown?: string
+   homeTown?: string
+   studies?: {
       elementary: {
          from: number
          to: number
@@ -48,7 +55,7 @@ export interface IUserDetails {
          name: string
       }
    }
-   relationShip: { isAlone: boolean; inRelation: boolean }
+   relationShip?: { isAlone: boolean; inRelation: boolean }
 }
 
 export interface IProfilePicture {
