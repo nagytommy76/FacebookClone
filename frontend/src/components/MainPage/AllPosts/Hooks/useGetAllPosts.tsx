@@ -12,10 +12,13 @@ const fetchAllQueries = async () => {
 }
 
 const useGetAllPosts = () => {
-   const { data, isLoading } = useQuery({ queryKey: ['todos'], queryFn: fetchAllQueries })
+   const { isLoading, data } = useQuery({
+      queryKey: ['getAllPosts'],
+      queryFn: fetchAllQueries,
+   })
    return {
       isLoading,
-      allPosts: data?.data.allPosts,
+      data: data?.data.allPosts,
    }
 }
 
