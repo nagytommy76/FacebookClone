@@ -64,6 +64,22 @@ export const editSelectedProfilePicture = async (request: ISelectedProfilePicReq
    }
 }
 
+export const getCurrentSelectedProfileImage = async (request: IJWTUserType, response: Response) => {
+   // Ezeket majd egyszerürsíteni kéne
+   const userId = request.user?.userId
+   if (!userId) return response.status(404).json({ msg: 'user not found' })
+   try {
+      const foundUser = await UserModel.findById(userId).select('userDetails.profilePicturePath')
+      if (!foundUser) return response.status(404).json({ msg: 'user not found' })
+      const selectedProfilePic = foundUser.userDetails.profilePicturePath.find(
+         (image) => image.isSelected === true
+      )
+      response.status(200).json({ currentImage: selectedProfilePic })
+   } catch (error) {
+      response.status(500).json({ error })
+   }
+}
+
 interface ISelectedProfilePicRequest extends IJWTUserType {
    body: {
       modifyId: string
