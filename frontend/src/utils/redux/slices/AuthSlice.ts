@@ -1,16 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import type { IProfilePicture } from '../../../components/Posts/Types'
 
 interface IAuthState {
    userId: string
    userName: string
    isLoggedIn: boolean
+   currentImage: IProfilePicture
 }
 
 const initialState: IAuthState = {
    userId: '',
    userName: '',
    isLoggedIn: false,
+   currentImage: { _id: '', isSelected: false, path: '' },
 }
 
 export const AuthSlice = createSlice({
@@ -26,6 +29,9 @@ export const AuthSlice = createSlice({
       setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
          state.isLoggedIn = action.payload
       },
+      setCurrentImage: (state, action: PayloadAction<IProfilePicture>) => {
+         state.currentImage = action.payload
+      },
       setLogoutUser: (state) => {
          state.userId = ''
          state.userName = ''
@@ -34,5 +40,5 @@ export const AuthSlice = createSlice({
    },
 })
 
-export const { setUserId, setUserName, setIsLoggedIn, setLogoutUser } = AuthSlice.actions
+export const { setUserId, setUserName, setIsLoggedIn, setLogoutUser, setCurrentImage } = AuthSlice.actions
 export default AuthSlice.reducer
