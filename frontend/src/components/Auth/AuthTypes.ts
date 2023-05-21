@@ -10,7 +10,7 @@ export interface IUserTypes {
    friends: { userId: string }[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
-      gender: string
+      gender: 'female' | 'male'
       profilePicturePath: IProfilePicture[]
       birthTown: string
       homeTown: string

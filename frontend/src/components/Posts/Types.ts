@@ -2,7 +2,7 @@ import type { IPostComment, IPostLike } from './SinglePost/Like/Types'
 
 export interface IPost {
    _id: string
-   userId: IUserTypes
+   userId: string
    comments: IPostComment[]
    description: string
    likes: IPostLike[]

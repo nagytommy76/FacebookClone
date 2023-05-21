@@ -25,7 +25,7 @@ const OwnPosts = () => {
                <SinglePostComponent key={post._id} singlePost={post}>
                   <PostHeader
                      selectSelectedProfilePicture={selectSelectedProfilePicture}
-                     userInfo={post.userId}
+                     userInfo={initialUserDataState}
                      createdAt={post.createdAt}
                   />
                </SinglePostComponent>
