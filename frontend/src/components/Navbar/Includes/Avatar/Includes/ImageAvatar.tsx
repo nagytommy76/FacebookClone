@@ -28,7 +28,7 @@ const ImageAvatar: React.FC<{ displayText?: string }> = ({ displayText }) => {
    return (
       <>
          <Avatar sx={{ bgcolor: 'orange', width: 45, height: 45 }}>
-            {isLoading ? (
+            {isLoading || !currentPicture ? (
                <Image width={45} height={45} alt='Profile picture' src={OwnProfile} />
             ) : (
                <Image width={45} height={45} alt='Profile picture' src={currentPicture.path} />

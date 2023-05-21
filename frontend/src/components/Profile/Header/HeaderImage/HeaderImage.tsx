@@ -28,9 +28,9 @@ const HeaderImage = () => {
          uploadedPictures.item(0) as File,
          'profilePicture'
       )
-      console.log(uploadedPicturePath)
       // Elküldöm az adatbázisnak a visszakapott url-t
       mutationFunction(uploadedPicturePath as string)
+      setUploadedPictures(null)
    }
    return (
       <>
