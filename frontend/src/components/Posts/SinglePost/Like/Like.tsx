@@ -5,14 +5,16 @@ import { useAppSelector } from '../../../../utils/redux/store'
 import type { IPostLike, LikeTypes } from './Types'
 
 import Button from '@mui/material/Button'
-
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import { ButtonGroupStyle } from './Styles'
 
 import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 import Reactions from './Reactions'
 
-const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, postLikes }) => {
+const Like: React.FC<{ postId: string; postLikes: IPostLike[]; children: React.ReactNode }> = ({
+   postId,
+   postLikes,
+   children,
+}) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
    const { handleLikeBtnClick, handleSendPostLike, handleSetLikeAndButtonColor } = useHandleFn(
@@ -47,9 +49,7 @@ const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, po
                   {likeBtnText}
                </Button>
             </CustomTooltipTitle>
-            <Button disableRipple fullWidth startIcon={<ChatBubbleOutlineIcon />}>
-               Hozzászólás
-            </Button>
+            {children}
          </ButtonGroupStyle>
       </>
    )
