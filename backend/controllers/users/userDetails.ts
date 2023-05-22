@@ -39,7 +39,7 @@ export const saveUserProfilePicture = async (request: IProfilePictureRequest, re
       foundUser.userDetails.profilePicturePath.push({ isSelected: true, path: profilePicturePath })
 
       await foundUser.save()
-      return response.status(200).json({ foundUser })
+      return response.status(200).json({ profilePicturePath: foundUser.userDetails.profilePicturePath })
    } catch (error) {
       response.status(500).json({ error })
    }

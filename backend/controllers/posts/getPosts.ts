@@ -10,10 +10,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
             path: 'userId',
             select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
          })
-         .populate({
-            path: 'likes.userId',
-            select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
-         })
+         .lean()
       res.status(200).json({ allPosts })
    } catch (error) {
       res.status(500).json({ error, msg: 'internal server error' })
