@@ -24,7 +24,7 @@ const Like: React.FC<{ postId: string; postLikes: IPostLike[] }> = ({ postId, po
       postLikes.map((like) => {
          // Itt a későbbiekben lehet kategóriánként (isLike, isAngry etc) kiszedni,
          // hogy hány darab, majd azt összesíteni, (össz likeok száma)
-         if (userId === like.userId._id) {
+         if (userId === like.userId) {
             const likeType = Object.keys(like.reactionType).filter(
                (key) => like.reactionType[key]
             )[0] as LikeTypes
