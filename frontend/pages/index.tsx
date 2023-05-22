@@ -1,4 +1,6 @@
 import MainPage from '../src/components/MainPage/MainPage'
-export default function Home() {
+const HomePage = () => {
    return <MainPage />
 }
+
+export default HomePage
