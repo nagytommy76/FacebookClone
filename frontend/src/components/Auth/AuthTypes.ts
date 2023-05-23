@@ -40,7 +40,7 @@ export interface IUserTypes {
          to: number
       }[]
    }
-   posts: string[] | any
+   posts: IPost[] | string[] | any
    createdAt: number
    updatedAt: number
 }

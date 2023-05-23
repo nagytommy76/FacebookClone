@@ -2,8 +2,9 @@ import type { IPopulatedUserId } from '../../Types'
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
 export interface IPostComment {
-   userId: IPopulatedUserId
-   answer: string
+   _id: string
+   userId: IPopulatedUserId | string
+   comment: string
    answeredAt: Date
    parentCommentId: string
    commentDepth: number
