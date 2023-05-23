@@ -6,7 +6,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import Typography from '@mui/material/Typography'
 import { StyledProfileImage, StyledPaperContainer, StyledProfileBody, StyledIconParagraph } from './Styles'
 
-import type { IPopulatedUserId } from '../Like/Types'
+import type { IPopulatedUserId } from '../../Types'
 import { IProfilePicture } from '../../Types'
 
 const DetailsTooltipTitle: React.FC<{
