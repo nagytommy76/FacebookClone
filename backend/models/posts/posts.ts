@@ -29,7 +29,7 @@ const PostsSchema = new Schema(
          type: [
             {
                userId: { type: Schema.Types.ObjectId, ref: 'User' },
-               answer: { type: String, required: true },
+               comment: { type: String, required: true },
                answeredAt: { type: Date, required: true },
                parentCommentId: { type: String, required: false, default: null },
                commentDepth: { type: Number, required: true, default: 1 },

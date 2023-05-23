@@ -19,10 +19,10 @@ export interface IPostLike {
 }
 
 export interface IPostComment {
-   userId: ObjectId
-   answer: string
+   userId: ObjectId | string
+   comment: string
    answeredAt: Date
-   parentCommentId: string
+   parentCommentId: string | null
    commentDepth: number
    likes: IPostLike[]
 }
@@ -33,7 +33,7 @@ export interface IPostTypes {
    description: string
    postedPicturesPath: string[]
    likes: IPostLike[]
-   comments: IPostComment
+   comments: IPostComment[]
    createdAt: number
    updatedAt: number
 }
