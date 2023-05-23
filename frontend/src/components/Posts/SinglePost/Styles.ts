@@ -28,5 +28,5 @@ export const StyledImage = styled(Image)({
 
 export const FooterSectionStyle = styled('footer')({
    width: '100%',
-   padding: '1rem 1rem',
+   padding: '1rem 1rem .5rem 1rem',
 })
