@@ -3,15 +3,14 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 
-const CommentButton: React.FC<{ setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({
-   setIsCollapsed,
+const CommentButton: React.FC<{ commentRef: React.MutableRefObject<null | HTMLInputElement> }> = ({
+   commentRef,
 }) => {
+   const handleClick = () => {
+      if (commentRef) commentRef.current?.focus()
+   }
    return (
-      <Button
-         disableRipple
-         fullWidth
-         startIcon={<ChatBubbleOutlineIcon />}
-         onClick={() => setIsCollapsed((prevState) => !prevState)}>
+      <Button disableRipple fullWidth startIcon={<ChatBubbleOutlineIcon />} onClick={handleClick}>
          Hozzászólás
       </Button>
    )
