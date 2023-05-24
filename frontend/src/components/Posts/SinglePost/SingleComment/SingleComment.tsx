@@ -1,23 +1,60 @@
 import React from 'react'
 import type { IPostComment } from '../Like/Types'
+import moment from 'moment'
+import 'moment/locale/hu'
 
-import { StyledListElement, StyledCommentContainer } from './Styles'
+import {
+   StyledCommentContainer,
+   StyledProfileImage,
+   StyledListElement,
+   StyledCommentPaper,
+   CommentFooterStyle,
+} from './Styles'
+import Tooltip from '@mui/material/Tooltip'
 
 import Likes from '../Like/Like'
+// import ProfileCard from '../ProfileCard/DetailsTooltipTitle'
+// import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
 const SingleComment: React.FC<{ comment: IPostComment }> = ({ comment }) => {
+   const getSelectedPicture = () => {
+      const foundImage = comment.userId.userDetails.profilePicturePath.find((image) => image.isSelected)?.path
+      return foundImage
+   }
+
    return (
-      <ul>
+      <StyledCommentContainer>
+         <StyledProfileImage src={getSelectedPicture() ?? ''} alt='profil' width={20} height={20} />
          <StyledListElement>
-            <StyledCommentContainer>
+            <StyledCommentPaper>
+               {/* <CustomTooltipTitle
+                  title={
+                     <ProfileCard
+                        selectSelectedProfilePicture={() => {
+                           return { _id: '', isSelected: false, path: '' }
+                        }}
+                        userInfo={comment.userId.userDetails as any}
+                     />
+                  }>
+                  <p>
+                     {comment.userId.firstName} {comment.userId.sureName}
+                  </p>
+               </CustomTooltipTitle> */}
                <p>
                   {comment.userId.firstName} {comment.userId.sureName}
                </p>
                <p>{comment.comment}</p>
-               <Likes postId={comment._id} postLikes={comment.likes} />
-            </StyledCommentContainer>
+            </StyledCommentPaper>
+            <CommentFooterStyle>
+               <Likes isPostLike={false} postId={comment._id} postLikes={comment.likes}>
+                  <p>válasz</p>
+               </Likes>
+               <Tooltip arrow title={moment(comment.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
+                  <p>{moment(comment.answeredAt).fromNow(true)}</p>
+               </Tooltip>
+            </CommentFooterStyle>
          </StyledListElement>
-      </ul>
+      </StyledCommentContainer>
    )
 }
 

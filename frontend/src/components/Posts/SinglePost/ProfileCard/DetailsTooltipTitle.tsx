@@ -30,7 +30,7 @@ const DetailsTooltipTitle: React.FC<{
                {userInfo.userDetails?.studies?.highSchool?.name ?? 'Nincs'}
             </StyledIconParagraph>
             <StyledIconParagraph>
-               <HomeIcon sx={{ mr: 1 }} /> Lakhely: {userInfo.userDetails.homeTown ?? 'Nincs'}
+               <HomeIcon sx={{ mr: 1 }} /> Lakhely: {userInfo.userDetails?.homeTown ?? 'Nincs'}
             </StyledIconParagraph>
          </StyledProfileBody>
       </StyledPaperContainer>
