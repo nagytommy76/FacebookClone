@@ -19,9 +19,17 @@ export interface IPostLike {
 }
 
 export interface IPostComment {
-   userId: ObjectId | string
+   userId:
+      | ObjectId
+      | string
+      | {
+           firstName: string
+           sureName: string
+           userDetails: { profilePicturePath: { _id: string; path: string; isSelected: boolean }[] }
+        }
    comment: string
-   answeredAt: Date
+   answeredAt?: Date
+   commentImage?: string
    parentCommentId: string | null
    commentDepth: number
    likes: IPostLike[]
