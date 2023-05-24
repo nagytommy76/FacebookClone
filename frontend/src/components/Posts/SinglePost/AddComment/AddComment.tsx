@@ -9,7 +9,7 @@ import SendIcon from '@mui/icons-material/Send'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 
-const Comment: React.FC<{
+const AddComment: React.FC<{
    reference: React.MutableRefObject<null>
    postId: string
    setCurrentComments: React.Dispatch<React.SetStateAction<IPostComment[]>>
@@ -72,4 +72,4 @@ const Comment: React.FC<{
    )
 }
 
-export default Comment
+export default AddComment
