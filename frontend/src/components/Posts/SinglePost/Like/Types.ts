@@ -6,10 +6,10 @@ export interface IPostComment {
    userId: IPopulatedUserId<{
       firstName: string
       sureName: string
-      userDetails: { profilePicturePath: { _id: string; path: string; isSelected: boolean }[] }
+      profilePicturePath: { _id: string; path: string; isSelected: boolean }[]
    }>
    comment: string
-   answeredAt: Date
+   answeredAt: string
    parentCommentId: string
    commentDepth: number
    likes: IPostLike[]

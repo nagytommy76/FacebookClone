@@ -5,7 +5,7 @@ import type { IPostComment } from './Like/Types'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import { FooterSectionStyle, BodyDescriptionSection } from './Styles'
+import { FooterSectionStyle, ButtonGroupStyle, BodyDescriptionSection } from './Styles'
 
 import ImageContainer from './Includes/ImageContainer'
 import CommentButton from './AddComment/CommentButton'
@@ -32,9 +32,11 @@ const SinglePost: React.FC<{
          </BodyDescriptionSection>
          <ImageContainer singlePost={singlePost} />
          <FooterSectionStyle>
-            <Like postLikes={singlePost.likes} postId={singlePost._id}>
-               <CommentButton commentRef={commentRef} />
-            </Like>
+            <ButtonGroupStyle>
+               <Like postLikes={singlePost.likes} postId={singlePost._id}>
+                  <CommentButton commentRef={commentRef} />
+               </Like>
+            </ButtonGroupStyle>
             <Divider sx={{ mt: 1, mb: 1 }} />
             {currentComments.map((comment) => (
                <SingleComment key={comment._id} comment={comment} />

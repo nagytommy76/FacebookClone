@@ -26,6 +26,12 @@ export const StyledImage = styled(Image)({
 
 // "Footer" section
 
+export const ButtonGroupStyle = styled('div')({
+   display: 'flex',
+   flexDirection: 'row',
+   gap: '2px',
+})
+
 export const FooterSectionStyle = styled('footer')({
    width: '100%',
    padding: '1rem 1rem .5rem 1rem',
