@@ -1,11 +1,11 @@
 import type { IPostComment, IPostLike } from './SinglePost/Like/Types'
 
-export interface IPopulatedUserId {
+export interface IPopulatedUserId<T = IUserDetails> {
    _id: string
    email: string
    firstName: string
    sureName: string
-   userDetails: IUserDetails
+   userDetails: T
 }
 
 export interface IPost {

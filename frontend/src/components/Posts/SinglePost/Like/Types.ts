@@ -3,12 +3,16 @@ import type { IPopulatedUserId } from '../../Types'
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
 export interface IPostComment {
    _id: string
-   userId: IPopulatedUserId | string
+   userId: IPopulatedUserId<{
+      firstName: string
+      sureName: string
+      userDetails: { profilePicturePath: { _id: string; path: string; isSelected: boolean }[] }
+   }>
    comment: string
    answeredAt: Date
    parentCommentId: string
    commentDepth: number
-   likes: IPostLike
+   likes: IPostLike[]
 }
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------
 export interface IPostLike {
