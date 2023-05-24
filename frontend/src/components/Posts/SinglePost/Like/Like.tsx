@@ -5,16 +5,17 @@ import { useAppSelector } from '../../../../utils/redux/store'
 import type { IPostLike, LikeTypes } from './Types'
 
 import Button from '@mui/material/Button'
-import { ButtonGroupStyle } from './Styles'
+import { StyledCommentLikeButton } from './Styles'
 
 import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 import Reactions from './Reactions'
 
-const Like: React.FC<{ postId: string; postLikes: IPostLike[]; children?: React.ReactNode }> = ({
-   postId,
-   postLikes,
-   children,
-}) => {
+const Like: React.FC<{
+   postId: string
+   postLikes: IPostLike[]
+   isPostLike?: boolean
+   children?: React.ReactNode
+}> = ({ postId, postLikes, isPostLike = true, children }) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
    const { handleLikeBtnClick, handleSendPostLike, handleSetLikeAndButtonColor } = useHandleFn(
@@ -37,9 +38,9 @@ const Like: React.FC<{ postId: string; postLikes: IPostLike[]; children?: React.
 
    return (
       <>
-         <p>likeok száma: {postLikes.length}</p>
-         <ButtonGroupStyle>
-            <CustomTooltipTitle placement='top' title={<Reactions setLike={handleSendPostLike} />}>
+         {/* <p>likeok száma: {postLikes.length}</p> */}
+         <CustomTooltipTitle placement='top' title={<Reactions setLike={handleSendPostLike} />}>
+            {isPostLike ? (
                <Button
                   sx={{ color: likeButtonColor, textTransform: 'none' }}
                   disableRipple
@@ -48,9 +49,13 @@ const Like: React.FC<{ postId: string; postLikes: IPostLike[]; children?: React.
                   startIcon={likeBtnIcon}>
                   {likeBtnText}
                </Button>
-            </CustomTooltipTitle>
-            {children}
-         </ButtonGroupStyle>
+            ) : (
+               <StyledCommentLikeButton onClick={handleLikeBtnClick} style={{ color: likeButtonColor }}>
+                  like
+               </StyledCommentLikeButton>
+            )}
+         </CustomTooltipTitle>
+         {children}
       </>
    )
 }

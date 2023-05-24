@@ -17,8 +17,8 @@ export const StyledImage = styled(Image)(({ theme }) => ({
    },
 }))
 
-export const ButtonGroupStyle = styled('div')({
-   display: 'flex',
-   flexDirection: 'row',
-   gap: '2px',
+// Comment like variant -------------------------------
+export const StyledCommentLikeButton = styled('span')({
+   cursor: 'pointer',
+   '&:hover': { textDecoration: 'underline' },
 })
