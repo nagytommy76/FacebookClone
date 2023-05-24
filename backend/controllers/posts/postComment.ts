@@ -11,7 +11,6 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
       foundPost?.comments.push({
          comment,
          userId,
-         answeredAt: new Date(),
          parentCommentId: null,
          commentDepth: 1,
          likes: [],
