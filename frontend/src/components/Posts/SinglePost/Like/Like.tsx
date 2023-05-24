@@ -10,7 +10,7 @@ import { ButtonGroupStyle } from './Styles'
 import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 import Reactions from './Reactions'
 
-const Like: React.FC<{ postId: string; postLikes: IPostLike[]; children: React.ReactNode }> = ({
+const Like: React.FC<{ postId: string; postLikes: IPostLike[]; children?: React.ReactNode }> = ({
    postId,
    postLikes,
    children,

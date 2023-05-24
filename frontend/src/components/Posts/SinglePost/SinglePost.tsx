@@ -8,9 +8,10 @@ import Divider from '@mui/material/Divider'
 import { FooterSectionStyle, BodyDescriptionSection } from './Styles'
 
 import ImageContainer from './Includes/ImageContainer'
-import CommentButton from './Comment/CommentButton'
-import Comment from './Comment/Comment'
+import CommentButton from './AddComment/CommentButton'
 import Like from './Like/Like'
+import AddComment from './AddComment/AddComment'
+import SingleComment from './SingleComment/SingleComment'
 
 const SinglePost: React.FC<{
    singlePost: IPost
@@ -36,9 +37,13 @@ const SinglePost: React.FC<{
             </Like>
             <Divider sx={{ mt: 1, mb: 1 }} />
             {currentComments.map((comment) => (
-               <p key={comment._id}>{comment.comment}</p>
+               <SingleComment key={comment._id} comment={comment} />
             ))}
-            <Comment setCurrentComments={setCurrentComments} postId={singlePost._id} reference={commentRef} />
+            <AddComment
+               setCurrentComments={setCurrentComments}
+               postId={singlePost._id}
+               reference={commentRef}
+            />
          </FooterSectionStyle>
       </Paper>
    )
