@@ -51,7 +51,7 @@ const Like: React.FC<{
                </Button>
             ) : (
                <StyledCommentLikeButton onClick={handleLikeBtnClick} style={{ color: likeButtonColor }}>
-                  like
+                  Tetszik
                </StyledCommentLikeButton>
             )}
          </CustomTooltipTitle>

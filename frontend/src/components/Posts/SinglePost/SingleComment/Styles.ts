@@ -29,7 +29,7 @@ export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
 }))
 
 export const CommentFooterStyle = styled('footer')({
-   width: 140,
+   width: 160,
    marginTop: 5,
 
    display: 'flex',
