@@ -1,7 +1,7 @@
 import React from 'react'
 import type { IPostComment } from '../Like/Types'
+import useMoment from './Hooks/useMoment'
 import moment from 'moment'
-import 'moment/locale/hu'
 
 import {
    StyledCommentContainer,
@@ -17,8 +17,11 @@ import Likes from '../Like/Like'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
 const SingleComment: React.FC<{ comment: IPostComment }> = ({ comment }) => {
+   const currentTime = useMoment(comment.answeredAt)
    const getSelectedPicture = () => {
-      const foundImage = comment.userId.userDetails.profilePicturePath.find((image) => image.isSelected)?.path
+      const foundImage = comment.userId.userDetails?.profilePicturePath.find(
+         (image) => image.isSelected
+      )?.path
       return foundImage
    }
 
@@ -50,7 +53,7 @@ const SingleComment: React.FC<{ comment: IPostComment }> = ({ comment }) => {
                   <p>válasz</p>
                </Likes>
                <Tooltip arrow title={moment(comment.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
-                  <p>{moment(comment.answeredAt).fromNow(true)}</p>
+                  <span>{currentTime}</span>
                </Tooltip>
             </CommentFooterStyle>
          </StyledListElement>
