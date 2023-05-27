@@ -39,7 +39,7 @@ const SinglePost: React.FC<{
             </ButtonGroupStyle>
             <Divider sx={{ mt: 1, mb: 1 }} />
             {currentComments.map((comment) => (
-               <SingleComment key={comment._id} comment={comment} />
+               <SingleComment key={comment._id} postId={singlePost._id} comment={comment} />
             ))}
             <AddComment
                setCurrentComments={setCurrentComments}

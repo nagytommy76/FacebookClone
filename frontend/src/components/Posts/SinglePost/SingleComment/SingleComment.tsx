@@ -16,7 +16,7 @@ import Likes from '../Like/Like'
 // import ProfileCard from '../ProfileCard/DetailsTooltipTitle'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
-const SingleComment: React.FC<{ comment: IPostComment }> = ({ comment }) => {
+const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ comment, postId }) => {
    const currentTime = useMoment(comment.answeredAt)
    const getSelectedPicture = () => {
       const foundImage = comment.userId.userDetails?.profilePicturePath.find(
@@ -49,8 +49,8 @@ const SingleComment: React.FC<{ comment: IPostComment }> = ({ comment }) => {
                <p>{comment.comment}</p>
             </StyledCommentPaper>
             <CommentFooterStyle>
-               <Likes isPostLike={false} postId={comment._id} postLikes={comment.likes}>
-                  <p>válasz</p>
+               <Likes commentId={comment._id} isPostLike={false} postId={postId} postLikes={comment.likes}>
+                  <p>Válasz</p>
                </Likes>
                <Tooltip arrow title={moment(comment.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
                   <span>{currentTime}</span>
