@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import useLikeMutate from './useLikeMutate'
 import useLikeDelete from './useLikeDelete'
+import useLikeComment from './useLikeComment'
 import type { LikeTypes } from '../Types'
 
-const useHandleFn = (setButtonColor: (currentLikeType: LikeTypes | undefined) => void, postId: string) => {
+const useHandleFn = (
+   setButtonColor: (currentLikeType: LikeTypes | undefined) => void,
+   postId: string,
+   commentId?: string
+) => {
    const { mutatePostLike } = useLikeMutate()
    const { deleteMutation } = useLikeDelete()
+   const { mutateCommentLike } = useLikeComment()
    const [like, setLike] = useState<LikeTypes | undefined>(undefined)
 
    const handleUnsetLike = () => {
@@ -31,9 +37,16 @@ const useHandleFn = (setButtonColor: (currentLikeType: LikeTypes | undefined) =>
       mutatePostLike({ likeTypeFomInput: likeType, postId })
    }
 
+   const handleSendCommentLike = (likeType: LikeTypes) => {
+      console.log(likeType)
+      handleSetLikeAndButtonColor(likeType)
+      mutateCommentLike({ likeTypeFomInput: likeType, postId, commentId })
+   }
+
    return {
       handleLikeBtnClick,
       handleSendPostLike,
+      handleSendCommentLike,
       handleSetLikeAndButtonColor,
    }
 }

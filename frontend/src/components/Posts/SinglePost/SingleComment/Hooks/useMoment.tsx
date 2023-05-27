@@ -20,9 +20,14 @@ moment.locale('hu', {
 
 const useMoment = (answeredAt: string) => {
    const [currentTime, setCurrentTime] = useState(moment(answeredAt).fromNow(true))
+   const [currentInterval, setCurrentInterval] = useState<number>(60000)
    setInterval(() => {
-      setCurrentTime(moment(answeredAt).fromNow(true))
-   }, 60000)
+      const elapsedTimeString = moment(answeredAt).fromNow(true)
+      if (new RegExp(/^mp\d+$/)) {
+         // console.log('regex')
+      }
+      setCurrentTime(elapsedTimeString)
+   }, currentInterval)
 
    return currentTime
 }
