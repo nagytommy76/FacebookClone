@@ -15,6 +15,7 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
       const postingUser = await UserModel.findById(userId)
       const createdPost = await PostModel.create({
          userId: userId,
+         createdAt: new Date(),
          description,
          postedPicturesPath,
       })

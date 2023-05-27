@@ -65,6 +65,14 @@ export interface IPostLikeRequest extends IJWTUserType {
    }
 }
 
+export interface ICommentLikeRequest extends IJWTUserType {
+   body: {
+      reactionType: LikeTypes
+      postId: string
+      commentId: string
+   }
+}
+
 export interface IPostRemoveLikeRequest extends IJWTUserType {
    body: {
       postId: string
