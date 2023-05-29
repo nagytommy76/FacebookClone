@@ -54,7 +54,7 @@ const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ co
                </p>
                <p>{comment.comment}</p>
                <LikeIconStyle>
-                  {likeBtnIcon} {9}
+                  {likeBtnIcon} {comment.likes.length}
                </LikeIconStyle>
             </StyledCommentPaper>
             <CommentFooterStyle>
