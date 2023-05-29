@@ -1,7 +1,10 @@
-import React from 'react'
-import type { IPostComment } from '../Like/Types'
+import React, { useEffect } from 'react'
+import type { IPostComment, IPostLike, LikeTypes } from '../Like/Types'
 import useMoment from './Hooks/useMoment'
 import moment from 'moment'
+
+import useButtonColor from '../Like/Hooks/useButtonColor'
+import useGetLikeTypes from './Hooks/useGetLikeTypes'
 
 import {
    StyledCommentContainer,
@@ -9,6 +12,7 @@ import {
    StyledListElement,
    StyledCommentPaper,
    CommentFooterStyle,
+   LikeIconStyle,
 } from './Styles'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -17,6 +21,8 @@ import Likes from '../Like/Like'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
 const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ comment, postId }) => {
+   const { likeBtnIcon, setButtonColor } = useButtonColor()
+   const t = useGetLikeTypes(setButtonColor)
    const currentTime = useMoment(comment.answeredAt)
    const getSelectedPicture = () => {
       const foundImage = comment.userId.userDetails?.profilePicturePath.find(
@@ -47,6 +53,9 @@ const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ co
                   {comment.userId.firstName} {comment.userId.sureName}
                </p>
                <p>{comment.comment}</p>
+               <LikeIconStyle>
+                  {likeBtnIcon} {9}
+               </LikeIconStyle>
             </StyledCommentPaper>
             <CommentFooterStyle>
                <Likes commentId={comment._id} isPostLike={false} postId={postId} postLikes={comment.likes}>
