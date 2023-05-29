@@ -23,11 +23,30 @@ export const StyledListElement = styled('li')({
 })
 
 export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
+   minWidth: 200,
    padding: 12,
    borderRadius: 20,
    backgroundColor: 'rgba(100,100,100, 0.35)',
+
+   position: 'relative',
 }))
 
+export const LikeIconStyle = styled(Paper)({
+   minWidth: 35,
+   display: 'flex',
+   justifyContent: 'space-between',
+
+   borderRadius: 20,
+   padding: '.1rem .3rem',
+   position: 'absolute',
+   right: 0,
+   bottom: -10,
+   fontSize: 13,
+
+   backgroundColor: 'rgba(100,100,100, 1)',
+})
+
+// FOOTER ---------------------------------------------------------------------------
 export const CommentFooterStyle = styled('footer')({
    width: 160,
    marginTop: 5,
