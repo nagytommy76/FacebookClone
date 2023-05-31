@@ -10,7 +10,12 @@ import Haha from '../../../../../assets/haha.svg'
 import Wow from '../../../../../assets/wow.svg'
 import Sad from '../../../../../assets/sad.svg'
 import Angry from '../../../../../assets/angry.svg'
-
+/**
+ * Megoldnai, hogy a commenteknél mutassa mondjuk a top első 3 like típusát (ikonban: isLike, isAngry stb...)
+ * illetve a tetszik gomb olyan színű legyen amire én nyomtam, nem a top like színe mint most.
+ * A post likeoknál is ezt hasonlóan kéne megoldnai, szóval mind2 esetben ugyan ez a funkció lenne
+ *
+ */
 const buttonColor = {
    isLike: '#2073e8',
    isLove: '#ec3d56',
