@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import Image from 'next/image'
 import type { IPostComment, IPostLike, LikeTypes } from '../Like/Types'
 import useMoment from './Hooks/useMoment'
 import moment from 'moment'
@@ -22,7 +23,7 @@ import Likes from '../Like/Like'
 
 const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ comment, postId }) => {
    const { likeBtnIcon, setButtonColor } = useButtonColor()
-   const t = useGetLikeTypes(setButtonColor)
+   const orderedCountedLike = useGetLikeTypes(comment.likes, setButtonColor)
    const currentTime = useMoment(comment.answeredAt)
    const getSelectedPicture = () => {
       const foundImage = comment.userId.userDetails?.profilePicturePath.find(
@@ -53,9 +54,11 @@ const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ co
                   {comment.userId.firstName} {comment.userId.sureName}
                </p>
                <p>{comment.comment}</p>
-               <LikeIconStyle>
-                  {likeBtnIcon} {comment.likes.length}
-               </LikeIconStyle>
+               {orderedCountedLike && (
+                  <LikeIconStyle>
+                     {likeBtnIcon} {comment.likes.length}
+                  </LikeIconStyle>
+               )}
             </StyledCommentPaper>
             <CommentFooterStyle>
                <Likes commentId={comment._id} isPostLike={false} postId={postId} postLikes={comment.likes}>
