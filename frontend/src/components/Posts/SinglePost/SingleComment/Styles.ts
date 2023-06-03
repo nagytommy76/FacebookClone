@@ -46,6 +46,11 @@ export const LikeIconStyle = styled(Paper)({
    backgroundColor: 'rgba(100,100,100, 1)',
 })
 
+export const IconStackStyle = styled('span')({
+   display: 'flex',
+   marginRight: 5,
+})
+
 // FOOTER ---------------------------------------------------------------------------
 export const CommentFooterStyle = styled('footer')({
    width: 160,
