@@ -1,6 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
-import type { IPostComment, IPostLike, LikeTypes } from '../Like/Types'
+import type { IPostComment } from '../Like/Types'
 import useMoment from './Hooks/useMoment'
 import moment from 'moment'
 
@@ -18,11 +17,12 @@ import {
 import Tooltip from '@mui/material/Tooltip'
 
 import Likes from '../Like/Like'
+import IconStack from './Includes/IconStack'
 // import ProfileCard from '../ProfileCard/DetailsTooltipTitle'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
 const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ comment, postId }) => {
-   const { likeBtnIcon, setButtonColor } = useButtonColor()
+   const { setButtonColor } = useButtonColor()
    const orderedCountedLike = useGetLikeTypes(comment.likes, setButtonColor)
    const currentTime = useMoment(comment.answeredAt)
    const getSelectedPicture = () => {
@@ -56,7 +56,8 @@ const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ co
                <p>{comment.comment}</p>
                {orderedCountedLike && (
                   <LikeIconStyle>
-                     {likeBtnIcon} {comment.likes.length}
+                     <IconStack orderedCountedLike={orderedCountedLike} />
+                     {comment.likes.length}
                   </LikeIconStyle>
                )}
             </StyledCommentPaper>

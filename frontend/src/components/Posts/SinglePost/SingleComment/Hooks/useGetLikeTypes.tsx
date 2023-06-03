@@ -1,18 +1,7 @@
 import { useEffect, useState } from 'react'
-import type { IPostLike, LikeTypes } from '../../Like/Types'
+import type { IPostLike, LikeTypes, IOrderedLikesCount } from '../../Like/Types'
 
-interface IOreredLikes {
-   [index: string]: number
-   isAngry: number
-   isCare: number
-   isHaha: number
-   isLike: number
-   isLove: number
-   isSad: number
-   isWow: number
-}
-
-const pickHighest = (obj: IOreredLikes, num = 7): IOreredLikes => {
+const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
    const requiredObj: any = {}
    Object.entries(obj)
       .sort((prevMax, nextMax) => nextMax[1] - prevMax[1])
@@ -25,11 +14,11 @@ const pickHighest = (obj: IOreredLikes, num = 7): IOreredLikes => {
 }
 
 const useGetLikeTypes = (
-   comments: IPostLike[],
+   commentLikes: IPostLike[],
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void
 ) => {
-   if (comments.length === 0) return null
-   const [orderedCountedLike, setOrderedCountedLike] = useState<IOreredLikes>({
+   if (commentLikes.length === 0) return null
+   const [orderedCountedLike, setOrderedCountedLike] = useState<IOrderedLikesCount | null>({
       isAngry: 0,
       isCare: 0,
       isHaha: 0,
@@ -38,10 +27,8 @@ const useGetLikeTypes = (
       isSad: 0,
       isWow: 0,
    })
-   // const [mostLike, setMostLike] = useState<LikeTypes>('isLike')
-
    useEffect(() => {
-      let collectObject: IOreredLikes = {
+      let collectObject: IOrderedLikesCount = {
          isAngry: 0,
          isCare: 0,
          isHaha: 0,
@@ -50,7 +37,7 @@ const useGetLikeTypes = (
          isSad: 0,
          isWow: 0,
       }
-      comments.map((like) => {
+      commentLikes.map((like) => {
          Object.entries(like.reactionType).map((item) => {
             if (item[1]) collectObject[item[0]]++
          })
@@ -58,10 +45,8 @@ const useGetLikeTypes = (
 
       const requiredObj = pickHighest(collectObject)
       setOrderedCountedLike(requiredObj)
-      // setMostLike(theMostLikeType)
       setButtonColor(Object.keys(requiredObj)[0] as any)
-      // console.log(requiredObj)
-   }, [comments])
+   }, [commentLikes])
 
    return orderedCountedLike
 }
