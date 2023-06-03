@@ -31,3 +31,15 @@ export interface IPostLike {
 }
 
 export type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
+
+// LIKES COUNT --------------------------------------
+export interface IOrderedLikesCount {
+   [index: string]: number
+   isAngry: number
+   isCare: number
+   isHaha: number
+   isLike: number
+   isLove: number
+   isSad: number
+   isWow: number
+}
