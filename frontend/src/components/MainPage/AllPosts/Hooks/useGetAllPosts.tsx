@@ -11,10 +11,13 @@ const fetchAllQueries = async () => {
    }
 }
 
-const useGetAllPosts = () => {
+const useGetAllPosts = (setAllPosts: React.Dispatch<React.SetStateAction<IPost[]>>) => {
    const { isLoading, data } = useQuery({
       queryKey: ['getAllPosts'],
       queryFn: fetchAllQueries,
+      onSuccess(data) {
+         if (data) setAllPosts(data.data.allPosts)
+      },
    })
    return {
       isLoading,
