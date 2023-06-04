@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react'
-import type { IPost } from '../Types'
+import React, { useRef, useState, useEffect, useContext } from 'react'
 import type { IPostComment } from './Like/Types'
+import CommentContextProvider from './SingleComment/Context/CommentContext'
+import { PostContext } from '../../MainPage/Context/PostContextProvider'
 
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -14,9 +15,11 @@ import AddComment from './AddComment/AddComment'
 import SingleComment from './SingleComment/SingleComment'
 
 const SinglePost: React.FC<{
-   singlePost: IPost
    children: React.ReactNode
-}> = ({ singlePost, children }) => {
+}> = ({ children }) => {
+   const {
+      postsReducer: { singlePost },
+   } = useContext(PostContext)
    const commentRef = useRef(null)
    // Létrehozok egy state-et, hogy ebben tároljam a commenteket és tudjam módosítani (hozzáadni) a child komponensekben
    const [currentComments, setCurrentComments] = useState<IPostComment[]>([])
@@ -39,7 +42,9 @@ const SinglePost: React.FC<{
             </ButtonGroupStyle>
             <Divider sx={{ mt: 1, mb: 1 }} />
             {currentComments.map((comment) => (
-               <SingleComment key={comment._id} postId={singlePost._id} comment={comment} />
+               <CommentContextProvider key={comment._id}>
+                  <SingleComment postId={singlePost._id} comment={comment} />
+               </CommentContextProvider>
             ))}
             <AddComment
                setCurrentComments={setCurrentComments}
