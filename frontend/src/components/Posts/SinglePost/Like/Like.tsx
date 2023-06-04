@@ -24,8 +24,7 @@ const Like: React.FC<{
 
    useEffect(() => {
       postLikes.map((like) => {
-         // Itt a későbbiekben lehet kategóriánként (isLike, isAngry etc) kiszedni,
-         // hogy hány darab, majd azt összesíteni, (össz likeok száma)
+         // Itt kiválasztom, hogy a belépett user mit nyomott (isLike, isAngry stb...)
          if (userId === like.userId) {
             const likeType = Object.keys(like.reactionType).filter(
                (key) => like.reactionType[key]

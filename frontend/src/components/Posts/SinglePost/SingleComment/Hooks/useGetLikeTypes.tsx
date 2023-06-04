@@ -13,10 +13,7 @@ const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
    return requiredObj
 }
 
-const useGetLikeTypes = (
-   commentLikes: IPostLike[],
-   setButtonColor: (currentLikeType: LikeTypes | undefined) => void
-) => {
+const useGetLikeTypes = (commentLikes: IPostLike[]) => {
    if (commentLikes.length === 0) return null
    const [orderedCountedLike, setOrderedCountedLike] = useState<IOrderedLikesCount | null>({
       isAngry: 0,
@@ -45,7 +42,6 @@ const useGetLikeTypes = (
 
       const requiredObj = pickHighest(collectObject)
       setOrderedCountedLike(requiredObj)
-      setButtonColor(Object.keys(requiredObj)[0] as any)
    }, [commentLikes])
 
    return orderedCountedLike

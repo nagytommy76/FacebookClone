@@ -3,27 +3,21 @@ import type { IPostComment } from '../Like/Types'
 import useMoment from './Hooks/useMoment'
 import moment from 'moment'
 
-import useButtonColor from '../Like/Hooks/useButtonColor'
-import useGetLikeTypes from './Hooks/useGetLikeTypes'
-
 import {
    StyledCommentContainer,
    StyledProfileImage,
    StyledListElement,
    StyledCommentPaper,
    CommentFooterStyle,
-   LikeIconStyle,
 } from './Styles'
 import Tooltip from '@mui/material/Tooltip'
 
 import Likes from '../Like/Like'
-import IconStack from './Includes/IconStack'
+import Reactions from './Includes/Reatcions/Reactions'
 // import ProfileCard from '../ProfileCard/DetailsTooltipTitle'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
 const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ comment, postId }) => {
-   const { setButtonColor } = useButtonColor()
-   const orderedCountedLike = useGetLikeTypes(comment.likes, setButtonColor)
    const currentTime = useMoment(comment.answeredAt)
    const getSelectedPicture = () => {
       const foundImage = comment.userId.userDetails?.profilePicturePath.find(
@@ -54,12 +48,7 @@ const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ co
                   {comment.userId.firstName} {comment.userId.sureName}
                </p>
                <p>{comment.comment}</p>
-               {orderedCountedLike && (
-                  <LikeIconStyle>
-                     <IconStack orderedCountedLike={orderedCountedLike} />
-                     {comment.likes.length}
-                  </LikeIconStyle>
-               )}
+               <Reactions likes={comment.likes} />
             </StyledCommentPaper>
             <CommentFooterStyle>
                <Likes commentId={comment._id} isPostLike={false} postId={postId} postLikes={comment.likes}>

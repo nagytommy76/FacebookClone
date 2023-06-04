@@ -6,7 +6,7 @@ import StockImage from '../../../../assets/facebook-profile.jpg'
 const ImageContainer: React.FC<{ singlePost: IPost }> = ({ singlePost }) => {
    return (
       <StyledImageGridContainer>
-         {singlePost.postedPicturesPath.length > 0 &&
+         {singlePost.postedPicturesPath?.length > 0 &&
             singlePost.postedPicturesPath.map((image, index) =>
                index === 0 ? (
                   <FirstGridImage

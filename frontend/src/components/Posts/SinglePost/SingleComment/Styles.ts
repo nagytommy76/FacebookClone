@@ -31,24 +31,14 @@ export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
    position: 'relative',
 }))
 
-export const LikeIconStyle = styled(Paper)({
+// ICONS ----------------------------------------
+export const IconStackContainerStyle = styled('span')({
    minWidth: 35,
+   minHeight: 25,
    display: 'flex',
+   flexDirection: 'column',
    justifyContent: 'space-between',
-
-   borderRadius: 20,
-   padding: '.1rem .3rem',
-   position: 'absolute',
-   right: 0,
-   bottom: -10,
-   fontSize: 13,
-
-   backgroundColor: 'rgba(100,100,100, 1)',
-})
-
-export const IconStackStyle = styled('span')({
-   display: 'flex',
-   marginRight: 5,
+   alignContent: 'space-around',
 })
 
 // FOOTER ---------------------------------------------------------------------------
