@@ -11,13 +11,16 @@ const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHea
 
 const AllPosts = () => {
    const [allPosts, setAllPosts] = useState<IPost[]>([])
+   const addNewPost = (newPost: IPost) => {
+      setAllPosts([...allPosts, newPost])
+   }
    const { isLoading } = useGetAllPosts(setAllPosts)
    const getSelectedProfilePicture = (profilePictures: IProfilePicture[]) => {
       return profilePictures.find((image) => image.isSelected)
    }
    return (
       <>
-         <AddPostComponent />
+         <AddPostComponent addNewPost={addNewPost} />
          {!isLoading &&
             allPosts &&
             allPosts.map((post: IPost) => (
