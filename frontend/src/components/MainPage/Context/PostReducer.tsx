@@ -3,6 +3,7 @@ import type { IPost } from '../../Posts/Types'
 
 export enum PostsActions {
    SET_SINGLE_POST = 'SET_SINGLE_POST',
+   ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
 }
 
 export interface IPostsAction {
@@ -60,6 +61,11 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.singlePost = action.payload
          })
          return nextState
+      case PostsActions.ADD_NEW_COMMENT:
+         const newComments = produce(state, (draft) => {
+            draft.singlePost.comments = action.payload
+         })
+         return newComments
       default:
          return state
    }
