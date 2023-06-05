@@ -17,6 +17,13 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          likes: [],
       })
       await foundPost?.save()
+      await foundPost?.populate({
+         path: 'comments.userId',
+         select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
+         match: {
+            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+         },
+      })
       response.status(200).json({ comments: foundPost?.comments })
    } catch (error) {
       response.status(500).json({ error })
