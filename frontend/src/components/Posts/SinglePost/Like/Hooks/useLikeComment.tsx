@@ -8,7 +8,7 @@ interface ICommentLike {
    postId: string
    commentId?: string
 }
-
+// Ide kéne egy context-et behívni, (kommentek context), mert ezt a hook-ot csak akkor hívom meg ha !isPostLike
 const useLikeComment = () => {
    const handleSendLike = async ({ likeTypeFomInput, postId, commentId }: ICommentLike) => {
       try {

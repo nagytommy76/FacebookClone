@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from 'react'
-import type { IPostComment } from './Like/Types'
+import React, { useRef, useContext } from 'react'
 import CommentContextProvider from './SingleComment/Context/CommentContext'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
 
@@ -21,11 +20,6 @@ const SinglePost: React.FC<{
       postsReducer: { singlePost },
    } = useContext(PostContext)
    const commentRef = useRef(null)
-   // Létrehozok egy state-et, hogy ebben tároljam a commenteket és tudjam módosítani (hozzáadni) a child komponensekben
-   const [currentComments, setCurrentComments] = useState<IPostComment[]>([])
-   useEffect(() => {
-      setCurrentComments(singlePost.comments)
-   }, [singlePost.comments])
 
    return (
       <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px' }}>
@@ -41,16 +35,12 @@ const SinglePost: React.FC<{
                </Like>
             </ButtonGroupStyle>
             <Divider sx={{ mt: 1, mb: 1 }} />
-            {currentComments.map((comment) => (
+            {singlePost.comments.map((comment) => (
                <CommentContextProvider key={comment._id}>
                   <SingleComment postId={singlePost._id} comment={comment} />
                </CommentContextProvider>
             ))}
-            <AddComment
-               setCurrentComments={setCurrentComments}
-               postId={singlePost._id}
-               reference={commentRef}
-            />
+            <AddComment postId={singlePost._id} reference={commentRef} />
          </FooterSectionStyle>
       </Paper>
    )
