@@ -13,15 +13,19 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
       const postingUser = await UserModel.findById(userId)
+      if (!postingUser) return res.status(404).json({ msg: 'user not found' })
       const createdPost = await PostModel.create({
          userId: userId,
          createdAt: new Date(),
          description,
          postedPicturesPath,
       })
-
-      postingUser?.posts.push(createdPost._id)
-      await postingUser?.save()
+      await createdPost.populate({
+         path: 'userId',
+         select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
+      })
+      postingUser.posts.push(createdPost._id)
+      await postingUser.save()
       res.status(201).json({ createdPost })
    } catch (error) {
       res.status(500).json(error)
