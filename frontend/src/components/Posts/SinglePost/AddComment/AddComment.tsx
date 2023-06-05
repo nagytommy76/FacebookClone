@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '../../../../utils/axiosSetup/AxiosInstance'
 import type { IPostComment } from '../Like/Types'
+
+import { PostContext } from '../../../MainPage/Context/PostContextProvider'
+import { PostsActions } from '../../../MainPage/Context/PostReducer'
 
 import { StyledPaperContainer, StyledTextContainer, StyledTextInput } from './Styles'
 import Collapse from '@mui/material/Collapse'
@@ -12,8 +15,8 @@ import Tooltip from '@mui/material/Tooltip'
 const AddComment: React.FC<{
    reference: React.MutableRefObject<null>
    postId: string
-   setCurrentComments: React.Dispatch<React.SetStateAction<IPostComment[]>>
-}> = ({ reference, postId, setCurrentComments }) => {
+}> = ({ reference, postId }) => {
+   const { postsDispatch } = useContext(PostContext)
    const [commentText, setCommentText] = useState<string>('')
    const { mutate } = useMutation({
       mutationKey: ['sendPostComment'],
@@ -25,7 +28,7 @@ const AddComment: React.FC<{
          return response.data
       },
       onSuccess: (data) => {
-         setCurrentComments(data.comments)
+         postsDispatch({ type: PostsActions.ADD_NEW_COMMENT, payload: data.comments })
       },
    })
 
