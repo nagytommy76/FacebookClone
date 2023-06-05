@@ -7,6 +7,7 @@ import useDialog from './Hooks/useDialog'
 
 import StockImage from '../../../assets/facebook-profile.jpg'
 import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostStyle'
+import type { IPost } from '../Types'
 
 const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'), {
    loading: () => <h1>Töltés, majd csinálni egy suspense-t</h1>,
@@ -15,7 +16,9 @@ const InformSnackbar = dynamic(() => import('./Includes/InformSnackbar'), {
    loading: () => <h1>Töltés, majd csinálni egy suspense-t</h1>,
 })
 
-const AddPost = () => {
+const AddPost: React.FC<{
+   addNewPost: (newPost: IPost) => void
+}> = ({ addNewPost }) => {
    const profilePicture = useAppSelector((state) => state.auth.currentImage)
    const {
       addDialogOpen,
@@ -32,7 +35,8 @@ const AddPost = () => {
       postDescription,
       uploadedPictures,
       handleSnackOpenIfSuccess,
-      handleDialogCloseOnSuccess
+      handleDialogCloseOnSuccess,
+      addNewPost
    )
 
    return (
