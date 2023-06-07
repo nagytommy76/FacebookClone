@@ -38,7 +38,6 @@ const useHandleFn = (
    }
 
    const handleSendCommentLike = (likeType: LikeTypes) => {
-      console.log(likeType)
       handleSetLikeAndButtonColor(likeType)
       mutateCommentLike({ likeTypeFomInput: likeType, postId, commentId })
    }

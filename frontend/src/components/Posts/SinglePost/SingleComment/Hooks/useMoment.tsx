@@ -18,7 +18,7 @@ moment.locale('hu', {
    },
 })
 
-const useMoment = (answeredAt: string) => {
+const useMoment = (answeredAt: string | undefined) => {
    const [currentTime, setCurrentTime] = useState(moment(answeredAt).fromNow(true))
    const [currentInterval, setCurrentInterval] = useState<number>(60000)
    setInterval(() => {
