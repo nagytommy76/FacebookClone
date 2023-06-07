@@ -36,8 +36,8 @@ const SinglePost: React.FC<{
             </ButtonGroupStyle>
             <Divider sx={{ mt: 1, mb: 1 }} />
             {singlePost.comments.map((comment) => (
-               <CommentContextProvider key={comment._id}>
-                  <SingleComment postId={singlePost._id} comment={comment} />
+               <CommentContextProvider key={comment._id} singleComment={comment}>
+                  <SingleComment postId={singlePost._id} />
                </CommentContextProvider>
             ))}
             <AddComment postId={singlePost._id} reference={commentRef} />

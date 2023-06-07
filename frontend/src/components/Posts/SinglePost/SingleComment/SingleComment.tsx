@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CommentContext } from './Context/CommentContext'
 import type { IPostComment } from '../Like/Types'
 import useMoment from './Hooks/useMoment'
 import moment from 'moment'
@@ -17,15 +18,18 @@ import Reactions from './Includes/Reatcions/Reactions'
 // import ProfileCard from '../ProfileCard/DetailsTooltipTitle'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
-const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ comment, postId }) => {
-   const currentTime = useMoment(comment.answeredAt)
+const SingleComment: React.FC<{ postId: string }> = ({ postId }) => {
+   const {
+      commentReducer: { singleComment },
+   } = useContext(CommentContext)
+   const currentTime = useMoment(singleComment?.answeredAt)
+   if (!singleComment) return <h1>SingleComment suspense jön ide</h1>
    const getSelectedPicture = () => {
-      const foundImage = comment.userId.userDetails?.profilePicturePath.find(
+      const foundImage = singleComment.userId?.userDetails?.profilePicturePath.find(
          (image) => image.isSelected
       )?.path
       return foundImage
    }
-
    return (
       <StyledCommentContainer>
          <StyledProfileImage src={getSelectedPicture() ?? ''} alt='profil' width={20} height={20} />
@@ -45,16 +49,20 @@ const SingleComment: React.FC<{ comment: IPostComment; postId: string }> = ({ co
                   </p>
                </CustomTooltipTitle> */}
                <p>
-                  {comment.userId.firstName} {comment.userId.sureName}
+                  {singleComment.userId.firstName} {singleComment.userId.sureName}
                </p>
-               <p>{comment.comment}</p>
-               <Reactions likes={comment.likes} />
+               <p>{singleComment.comment}</p>
+               <Reactions likes={singleComment.likes} />
             </StyledCommentPaper>
             <CommentFooterStyle>
-               <Likes commentId={comment._id} isPostLike={false} postId={postId} postLikes={comment.likes}>
+               <Likes
+                  commentId={singleComment._id}
+                  isPostLike={false}
+                  postId={postId}
+                  postLikes={singleComment.likes}>
                   <p>Válasz</p>
                </Likes>
-               <Tooltip arrow title={moment(comment.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
+               <Tooltip arrow title={moment(singleComment.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
                   <span>{currentTime}</span>
                </Tooltip>
             </CommentFooterStyle>
