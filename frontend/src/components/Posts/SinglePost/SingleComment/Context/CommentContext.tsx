@@ -1,19 +1,36 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useReducer } from 'react'
+
 import type { IPostComment } from '../../Like/Types'
+import CommentReducer, {
+   initialCommentState,
+   CommentActions,
+   InitialCommentState,
+   ICommentAction,
+} from './CommentReducer'
 
 interface ICommentContext {
-   comment: IPostComment
-   setComment: React.Dispatch<React.SetStateAction<IPostComment>>
+   commentReducer: InitialCommentState
+   commentDispatch: React.Dispatch<ICommentAction>
 }
 
 export const CommentContext = createContext<ICommentContext>({
-   comment: {} as IPostComment,
-   setComment: () => {},
+   commentDispatch: () => {},
+   commentReducer: { singleComment: initialCommentState.singleComment },
 })
 
-const CommentContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-   const [comment, setComment] = useState<IPostComment>({} as IPostComment)
-   return <CommentContext.Provider value={{ comment, setComment }}>{children}</CommentContext.Provider>
+const CommentContextProvider: React.FC<{ children: React.ReactNode; singleComment: IPostComment }> = ({
+   children,
+   singleComment,
+}) => {
+   const [commentReducer, commentDispatch] = useReducer(CommentReducer, initialCommentState)
+   useEffect(() => {
+      commentDispatch({ type: CommentActions.SET_COMMENT, payload: singleComment })
+   }, [singleComment])
+   return (
+      <CommentContext.Provider value={{ commentDispatch, commentReducer }}>
+         {children}
+      </CommentContext.Provider>
+   )
 }
 
 export default CommentContextProvider
