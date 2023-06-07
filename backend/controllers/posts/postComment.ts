@@ -69,7 +69,14 @@ export const likeCommentController = async (request: ICommentLikeRequest, respon
          })
       }
       await foundPostToModifyLike.save()
-      response.status(200).json(foundPostToModifyLike.comments)
+      await foundPostToModifyLike.populate({
+         path: 'comments.userId',
+         select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
+         match: {
+            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+         },
+      })
+      response.status(200).json(foundPostToModifyLike.comments[commentLikeIndex].likes)
    } catch (error) {
       console.log(error)
       response.status(500).json({ error })
