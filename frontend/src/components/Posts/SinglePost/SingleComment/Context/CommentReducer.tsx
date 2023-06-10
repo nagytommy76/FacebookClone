@@ -16,7 +16,7 @@ export interface InitialCommentState {
 }
 
 export const initialCommentData: IPostComment = {
-   answeredAt: '2023-05-25T17:16:55.554Z',
+   answeredAt: '',
    comment: 'teszt',
    commentDepth: 1,
    _id: '',

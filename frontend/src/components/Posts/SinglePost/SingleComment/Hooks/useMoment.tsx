@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/hu'
 moment.locale('hu', {
@@ -18,16 +18,23 @@ moment.locale('hu', {
    },
 })
 
-const useMoment = (answeredAt: string | undefined) => {
-   const [currentTime, setCurrentTime] = useState(moment(answeredAt).fromNow(true))
+const useMoment = (answeredAt: string) => {
+   const [currentTime, setCurrentTime] = useState('')
    const [currentInterval, setCurrentInterval] = useState<number>(60000)
-   setInterval(() => {
-      const elapsedTimeString = moment(answeredAt).fromNow(true)
-      if (new RegExp(/^mp\d+$/)) {
-         // console.log('regex')
-      }
-      setCurrentTime(elapsedTimeString)
-   }, currentInterval)
+
+   useEffect(() => {
+      setCurrentTime(moment(answeredAt).fromNow(true))
+      const interval = setInterval(() => {
+         const elapsedTimeString = moment(answeredAt).fromNow(true)
+         // setCurrentInterval(10000)
+         const regexTime = new RegExp(/d+ ó $/)
+         // console.log(regexTime.test(elapsedTimeString))
+         if (regexTime.test(elapsedTimeString)) {
+         }
+         setCurrentTime(elapsedTimeString)
+      }, currentInterval)
+      return () => clearInterval(interval)
+   }, [answeredAt, currentInterval, currentTime])
 
    return currentTime
 }
