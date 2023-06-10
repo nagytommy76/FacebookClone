@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { CommentContext } from './Context/CommentContext'
-import type { IPostComment } from '../Like/Types'
 import useMoment from './Hooks/useMoment'
 import moment from 'moment'
 
@@ -22,8 +21,7 @@ const SingleComment: React.FC<{ postId: string }> = ({ postId }) => {
    const {
       commentReducer: { singleComment },
    } = useContext(CommentContext)
-   const currentTime = useMoment(singleComment?.answeredAt)
-   if (!singleComment) return <h1>SingleComment suspense jön ide</h1>
+   const currentTime = useMoment(singleComment.answeredAt)
    const getSelectedPicture = () => {
       const foundImage = singleComment.userId?.userDetails?.profilePicturePath.find(
          (image) => image.isSelected

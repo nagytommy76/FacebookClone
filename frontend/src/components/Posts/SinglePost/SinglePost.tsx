@@ -12,6 +12,7 @@ import CommentButton from './AddComment/CommentButton'
 import Like from './Like/Like'
 import AddComment from './AddComment/AddComment'
 import SingleComment from './SingleComment/SingleComment'
+import Reactions from './SingleComment/Includes/Reatcions/Reactions'
 
 const SinglePost: React.FC<{
    children: React.ReactNode
@@ -29,6 +30,9 @@ const SinglePost: React.FC<{
          </BodyDescriptionSection>
          <ImageContainer singlePost={singlePost} />
          <FooterSectionStyle>
+            {/* <IconStack orderedCountedLike={orderedCountedLike} /> */}
+            <Reactions isPostReactions={true} likes={singlePost.likes} />
+            <Divider sx={{ mt: 1, mb: 1 }} />
             <ButtonGroupStyle>
                <Like postLikes={singlePost.likes} postId={singlePost._id}>
                   <CommentButton commentRef={commentRef} />
