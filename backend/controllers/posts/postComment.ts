@@ -5,7 +5,7 @@ import type { ICommentLikeRequest, LikeTypes, IReactionTypes } from './PostTypes
 
 export const savePostComment = async (request: ISavePostRequest, response: Response) => {
    const userId = request.user?.userId
-   const { comment, postId } = request.body
+   const { comment, postId, answeredAt } = request.body
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
       const foundPost = await PostModel.findById(postId)
@@ -15,6 +15,7 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          parentCommentId: null,
          commentDepth: 1,
          likes: [],
+         answeredAt,
       })
       await foundPost?.save()
       await foundPost?.populate({
@@ -87,5 +88,6 @@ interface ISavePostRequest extends IJWTUserType {
    body: {
       postId: string
       comment: string
+      answeredAt: string
    }
 }
