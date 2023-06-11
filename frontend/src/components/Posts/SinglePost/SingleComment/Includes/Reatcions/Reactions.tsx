@@ -12,17 +12,25 @@ const Reactions: React.FC<{ likes: IPostLike[]; isPostReactions?: boolean }> = (
    isPostReactions = false,
 }) => {
    const orderedCountedLike = useGetLikeTypes(likes)
+
+   const IconAndLength = () => {
+      return (
+         <>
+            <IconStack orderedCountedLike={orderedCountedLike} />
+            <LikeLengthStyle variant='caption'>{likes.length}</LikeLengthStyle>
+         </>
+      )
+   }
+
    return orderedCountedLike ? (
       <Tooltip title={<IconStack displayRow={false} orderedCountedLike={orderedCountedLike} />}>
          {!isPostReactions ? (
             <LikeIconStyle>
-               <IconStack orderedCountedLike={orderedCountedLike} />
-               <LikeLengthStyle variant='caption'>{likes.length}</LikeLengthStyle>
+               <IconAndLength />
             </LikeIconStyle>
          ) : (
             <PostLikeIconStyle>
-               <IconStack orderedCountedLike={orderedCountedLike} />
-               <LikeLengthStyle variant='caption'>{likes.length}</LikeLengthStyle>
+               <IconAndLength />
             </PostLikeIconStyle>
          )}
       </Tooltip>

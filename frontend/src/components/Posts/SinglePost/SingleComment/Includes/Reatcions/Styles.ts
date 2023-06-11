@@ -19,7 +19,8 @@ export const LikeIconStyle = styled(Paper)({
 
 // POST LIKE CONTAINER ----------------------
 export const PostLikeIconStyle = styled('div')({
-   width: 40,
+   cursor: 'pointer',
+   minWidth: 32,
    display: 'flex',
    justifyContent: 'space-between',
 })
