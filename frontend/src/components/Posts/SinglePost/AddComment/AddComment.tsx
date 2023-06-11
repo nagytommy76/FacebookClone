@@ -22,6 +22,7 @@ const AddComment: React.FC<{
       mutationKey: ['sendPostComment'],
       mutationFn: async () => {
          const response = (await axios.post('/post/post-comment-add', {
+            createdAt: new Date(),
             comment: commentText,
             postId,
          })) as AxiosResponse<{ comments: IPostComment[] }>

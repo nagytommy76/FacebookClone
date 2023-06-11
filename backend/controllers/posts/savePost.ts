@@ -8,7 +8,7 @@ import { IPostRequest } from './PostTypes'
  * a userId az accessToken decoded fog jönni
  */
 export const savePostController = async (req: IPostRequest, res: Response) => {
-   const { description, postedPicturesPath } = req.body
+   const { description, postedPicturesPath, createdAt } = req.body
    const userId = req.user?.userId
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
@@ -16,7 +16,7 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
       if (!postingUser) return res.status(404).json({ msg: 'user not found' })
       const createdPost = await PostModel.create({
          userId: userId,
-         createdAt: new Date(),
+         createdAt,
          description,
          postedPicturesPath,
       })

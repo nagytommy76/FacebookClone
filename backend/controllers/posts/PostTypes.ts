@@ -52,6 +52,7 @@ export interface IPostRequest extends IJWTUserType {
    body: {
       description: string
       postedPicturesPath?: string[]
+      createdAt: string
    }
 }
 
