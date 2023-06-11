@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { IPostLike, LikeTypes, IOrderedLikesCount } from '../../Like/Types'
+import type { IPostLike, IOrderedLikesCount } from '../../Like/Types'
 
 const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
    const requiredObj: any = {}
@@ -14,16 +14,7 @@ const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
 }
 
 const useGetLikeTypes = (commentLikes: IPostLike[]) => {
-   if (commentLikes.length === 0) return null
-   const [orderedCountedLike, setOrderedCountedLike] = useState<IOrderedLikesCount | null>({
-      isAngry: 0,
-      isCare: 0,
-      isHaha: 0,
-      isLike: 0,
-      isLove: 0,
-      isSad: 0,
-      isWow: 0,
-   })
+   const [orderedCountedLike, setOrderedCountedLike] = useState<IOrderedLikesCount | null>(null)
    useEffect(() => {
       let collectObject: IOrderedLikesCount = {
          isAngry: 0,
@@ -34,14 +25,15 @@ const useGetLikeTypes = (commentLikes: IPostLike[]) => {
          isSad: 0,
          isWow: 0,
       }
-      commentLikes.map((like) => {
-         Object.entries(like.reactionType).map((item) => {
-            if (item[1]) collectObject[item[0]]++
+      if (commentLikes.length > 0) {
+         commentLikes.map((like) => {
+            Object.entries(like.reactionType).map((item) => {
+               if (item[1]) collectObject[item[0]]++
+            })
          })
-      })
-
-      const requiredObj = pickHighest(collectObject)
-      setOrderedCountedLike(requiredObj)
+         const requiredObj = pickHighest(collectObject)
+         setOrderedCountedLike(requiredObj)
+      }
    }, [commentLikes])
 
    return orderedCountedLike

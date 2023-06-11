@@ -10,8 +10,8 @@ const IconStack: React.FC<{ orderedCountedLike: IOrderedLikesCount | null; displ
    orderedCountedLike,
    displayRow = true,
 }) => {
-   if (!orderedCountedLike) return <></>
    const getLikeIconComponent = useCommentLikeIcons()
+   if (!orderedCountedLike) return <></>
    return displayRow ? (
       <>
          {Object.entries(orderedCountedLike).map(
