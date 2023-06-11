@@ -22,7 +22,7 @@ const AddComment: React.FC<{
       mutationKey: ['sendPostComment'],
       mutationFn: async () => {
          const response = (await axios.post('/post/post-comment-add', {
-            createdAt: new Date(),
+            answeredAt: new Date(),
             comment: commentText,
             postId,
          })) as AxiosResponse<{ comments: IPostComment[] }>
@@ -39,7 +39,7 @@ const AddComment: React.FC<{
 
    const handleSendComment = () => {
       mutate()
-      console.log(commentText)
+      setCommentText('')
    }
 
    return (
