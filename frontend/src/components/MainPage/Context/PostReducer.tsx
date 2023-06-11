@@ -4,6 +4,7 @@ import type { IPost } from '../../Posts/Types'
 export enum PostsActions {
    SET_SINGLE_POST = 'SET_SINGLE_POST',
    ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
+   ADD_POST_LIKE = 'ADD_POST_LIKE',
 }
 
 export interface IPostsAction {
@@ -66,6 +67,11 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.singlePost.comments = action.payload
          })
          return newComments
+      case PostsActions.ADD_POST_LIKE:
+         const newPostLikes = produce(state, (draft) => {
+            draft.singlePost.likes = action.payload
+         })
+         return newPostLikes
       default:
          return state
    }
