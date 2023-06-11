@@ -36,3 +36,9 @@ export const FooterSectionStyle = styled('footer')({
    width: '100%',
    padding: '1rem 1rem .5rem 1rem',
 })
+
+export const LikeAndCommentContainer = styled('div')({
+   width: '100%',
+   display: 'flex',
+   justifyContent: 'space-between',
+})

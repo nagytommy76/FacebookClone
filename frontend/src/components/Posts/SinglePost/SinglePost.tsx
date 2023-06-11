@@ -5,7 +5,12 @@ import { PostContext } from '../../MainPage/Context/PostContextProvider'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import { FooterSectionStyle, ButtonGroupStyle, BodyDescriptionSection } from './Styles'
+import {
+   FooterSectionStyle,
+   ButtonGroupStyle,
+   BodyDescriptionSection,
+   LikeAndCommentContainer,
+} from './Styles'
 
 import ImageContainer from './Includes/ImageContainer'
 import CommentButton from './AddComment/CommentButton'
@@ -30,8 +35,10 @@ const SinglePost: React.FC<{
          </BodyDescriptionSection>
          <ImageContainer singlePost={singlePost} />
          <FooterSectionStyle>
-            {/* <IconStack orderedCountedLike={orderedCountedLike} /> */}
-            <Reactions isPostReactions={true} likes={singlePost.likes} />
+            <LikeAndCommentContainer>
+               <Reactions isPostReactions={true} likes={singlePost.likes} />
+               {singlePost.comments.length > 0 && <p>{singlePost.comments.length} hozzászólás</p>}
+            </LikeAndCommentContainer>
             <Divider sx={{ mt: 1, mb: 1 }} />
             <ButtonGroupStyle>
                <Like postLikes={singlePost.likes} postId={singlePost._id}>
