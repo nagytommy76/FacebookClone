@@ -1,7 +1,9 @@
-import React from 'react'
-import { axiosInstance as axios } from '../../../../../utils/axiosSetup/AxiosInstance'
+import { useContext } from 'react'
+import { PostContext } from '../../../../MainPage/Context/PostContextProvider'
+import { PostsActions } from '../../../../MainPage/Context/PostReducer'
+import { axiosInstance as axios, AxiosResponse } from '../../../../../utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { LikeTypes } from '../Types'
+import type { IPostLike, LikeTypes } from '../Types'
 
 interface ISendLike {
    likeTypeFomInput: LikeTypes
@@ -9,9 +11,15 @@ interface ISendLike {
 }
 
 const useLikeMutate = () => {
+   const { postsDispatch } = useContext(PostContext)
    const handleSendLike = async ({ likeTypeFomInput, postId }: ISendLike) => {
       try {
-         return await axios.post('/post/post-like', { reactionType: likeTypeFomInput, postId })
+         const response = (await axios.post('/post/post-like', {
+            reactionType: likeTypeFomInput,
+            postId,
+         })) as AxiosResponse<IPostLike[]>
+         postsDispatch({ type: PostsActions.ADD_POST_LIKE, payload: response.data })
+         return response
       } catch (error) {
          console.log(error)
       }
