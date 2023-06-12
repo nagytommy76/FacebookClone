@@ -19,8 +19,13 @@ const Like: React.FC<{
 }> = ({ postId, postLikes, isPostLike = true, children, commentId }) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
-   const { handleLikeBtnClick, handleSendPostLike, handleSendCommentLike, handleSetLikeAndButtonColor } =
-      useHandleFn(setButtonColor, postId, commentId)
+   const {
+      handleLikeBtnClick,
+      handleCommentLikeBtnClick,
+      handleSendPostLike,
+      handleSendCommentLike,
+      handleSetLikeAndButtonColor,
+   } = useHandleFn(setButtonColor, postId, commentId)
 
    useEffect(() => {
       postLikes.map((like) => {
@@ -36,7 +41,6 @@ const Like: React.FC<{
 
    return (
       <>
-         {/* <p>likeok száma: {postLikes.length}</p> */}
          <CustomTooltipTitle
             placement='top'
             title={<Reactions setLike={isPostLike ? handleSendPostLike : handleSendCommentLike} />}>
@@ -50,7 +54,9 @@ const Like: React.FC<{
                   {likeBtnText}
                </Button>
             ) : (
-               <StyledCommentLikeButton onClick={handleLikeBtnClick} style={{ color: likeButtonColor }}>
+               <StyledCommentLikeButton
+                  onClick={handleCommentLikeBtnClick}
+                  style={{ color: likeButtonColor }}>
                   Tetszik
                </StyledCommentLikeButton>
             )}

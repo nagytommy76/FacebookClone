@@ -3,6 +3,9 @@ const nextConfig = {
    experimental: {
       appDir: true,
    },
+   compiler: {
+      styledComponents: true,
+   },
    reactStrictMode: true,
    // Be tudod állítani az engedélyezett img url domain-eket
    images: {
