@@ -54,12 +54,16 @@ export const deleteLikeFromPostController = async (request: IPostRemoveLikeReque
       const foundPost = await PostModel.findById(postId)
       if (!foundPost) return response.status(404).json({ msg: 'nincs ilyen poszt' })
 
-      const filteredLikes = foundPost.likes.filter(
-         (like) => like.userId.toString() !== (userId as string).toString()
-      )
+      let removedUserLikesID = ''
+      const filteredLikes = foundPost.likes.filter((like) => {
+         if (like.userId.toString() !== (userId as string).toString()) {
+            removedUserLikesID = like._id as string
+            return true
+         } else return false
+      })
       foundPost.likes = filteredLikes
       const savedPost = await foundPost.save()
-      response.status(201).json({ savedPost })
+      response.status(200).json(removedUserLikesID)
    } catch (error) {
       response.status(500).json({ msg: 'Internal server error' })
    }
