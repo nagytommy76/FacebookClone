@@ -20,9 +20,21 @@ const useHandleFn = (
       setLike(undefined)
       deleteMutation(postId)
    }
+
+   const handleUnsetCommentLike = () => {
+      setButtonColor(undefined)
+      setLike(undefined)
+      console.log('Ide egy handleUnsetCommentLike function kell és egy deleteCommentMutation')
+   }
+
    const handleLikeBtnClick = () => {
       if (like === undefined) handleSendPostLike('isLike')
       else handleUnsetLike()
+   }
+
+   const handleCommentLikeBtnClick = () => {
+      if (like === undefined) handleSendCommentLike('isLike')
+      else handleUnsetCommentLike()
    }
 
    const handleSetLikeAndButtonColor = (likeType: LikeTypes) => {
@@ -44,6 +56,7 @@ const useHandleFn = (
 
    return {
       handleLikeBtnClick,
+      handleCommentLikeBtnClick,
       handleSendPostLike,
       handleSendCommentLike,
       handleSetLikeAndButtonColor,
