@@ -5,6 +5,7 @@ export enum PostsActions {
    SET_SINGLE_POST = 'SET_SINGLE_POST',
    ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
    ADD_POST_LIKE = 'ADD_POST_LIKE',
+   REMOVE_SINGLE_LIKE = 'REMOVE_SINGLE_LIKE',
 }
 
 export interface IPostsAction {
@@ -72,6 +73,14 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.singlePost.likes = action.payload
          })
          return newPostLikes
+      case PostsActions.REMOVE_SINGLE_LIKE:
+         const removedPostLikes = produce(state, (draft) => {
+            const modified = draft.singlePost.likes.filter(
+               (like) => like._id.toString() === action.payload.toString()
+            )
+            draft.singlePost.likes = modified
+         })
+         return removedPostLikes
       default:
          return state
    }
