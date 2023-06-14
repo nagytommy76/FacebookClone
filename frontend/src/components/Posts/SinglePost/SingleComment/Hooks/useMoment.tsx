@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/hu'
-moment.locale('hu', {
+moment.updateLocale('hu', {
    relativeTime: {
       s: '1 mp',
       ss: '%s mp',
@@ -20,7 +20,7 @@ moment.locale('hu', {
 
 const useMoment = (answeredAt: string) => {
    const [currentTime, setCurrentTime] = useState('')
-   const [currentInterval, setCurrentInterval] = useState<number>(60000)
+   const [currentInterval, setCurrentInterval] = useState<number>(6000000)
 
    useEffect(() => {
       setCurrentTime(moment(answeredAt).fromNow(true))
