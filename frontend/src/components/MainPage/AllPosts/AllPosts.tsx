@@ -5,7 +5,10 @@ import PostContextProvider from '../Context/PostContextProvider'
 
 import type { IPost, IProfilePicture } from '../../Posts/Types'
 
-const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'))
+import SinglePostSkeleton from '../../../skeletons/SinglePost/SinglePost'
+const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'), {
+   loading: () => SinglePostSkeleton(),
+})
 const AddPostComponent = dynamic(() => import('../../Posts/AddPost/AddPost'))
 const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHeader/PostHeader'))
 
@@ -34,6 +37,7 @@ const AllPosts = () => {
                         }
                      />
                   </SinglePostComponent>
+                  {/* <SinglePostSkeleton /> */}
                </PostContextProvider>
             ))}
       </>
