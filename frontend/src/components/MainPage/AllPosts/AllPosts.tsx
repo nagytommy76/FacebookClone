@@ -27,7 +27,6 @@ const AllPosts = () => {
    return (
       <>
          <AddPostComponent addNewPost={addNewPost} />
-         {/* <AddPostSkeleton /> */}
          {!isLoading &&
             allPosts &&
             allPosts.map((post: IPost) => (
