@@ -2,9 +2,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { MainPageContainer } from './Style'
 
-const AllPostsComponent = dynamic(() => import('./AllPosts/AllPosts'), {
-   loading: () => <>Egyelőre töltés...</>,
-})
+const AllPostsComponent = dynamic(() => import('./AllPosts/AllPosts'))
 
 const MainPage = () => {
    return (

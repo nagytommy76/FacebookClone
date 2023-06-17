@@ -6,10 +6,13 @@ import PostContextProvider from '../Context/PostContextProvider'
 import type { IPost, IProfilePicture } from '../../Posts/Types'
 
 import SinglePostSkeleton from '../../../skeletons/SinglePost/SinglePost'
+import AddPostSkeleton from '../../../skeletons/AddPostSkeleton/AddPostSkeleton'
 const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'), {
    loading: () => SinglePostSkeleton(),
 })
-const AddPostComponent = dynamic(() => import('../../Posts/AddPost/AddPost'))
+const AddPostComponent = dynamic(() => import('../../Posts/AddPost/AddPost'), {
+   loading: () => AddPostSkeleton(),
+})
 const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHeader/PostHeader'))
 
 const AllPosts = () => {
@@ -24,6 +27,7 @@ const AllPosts = () => {
    return (
       <>
          <AddPostComponent addNewPost={addNewPost} />
+         {/* <AddPostSkeleton /> */}
          {!isLoading &&
             allPosts &&
             allPosts.map((post: IPost) => (
@@ -37,7 +41,6 @@ const AllPosts = () => {
                         }
                      />
                   </SinglePostComponent>
-                  {/* <SinglePostSkeleton /> */}
                </PostContextProvider>
             ))}
       </>

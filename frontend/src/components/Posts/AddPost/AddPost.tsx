@@ -9,12 +9,8 @@ import StockImage from '../../../assets/facebook-profile.jpg'
 import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostStyle'
 import type { IPost } from '../Types'
 
-const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'), {
-   loading: () => <h1>Töltés, majd csinálni egy suspense-t</h1>,
-})
-const InformSnackbar = dynamic(() => import('./Includes/InformSnackbar'), {
-   loading: () => <h1>Töltés, majd csinálni egy suspense-t</h1>,
-})
+const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'))
+const InformSnackbar = dynamic(() => import('./Includes/InformSnackbar'))
 
 const AddPost: React.FC<{
    addNewPost: (newPost: IPost) => void

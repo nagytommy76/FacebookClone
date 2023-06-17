@@ -19,8 +19,8 @@ export const AddPostStyle = styled(Paper)({
 const AddPostSkeleton = () => {
    return (
       <AddPostStyle>
-         <Skeleton variant='circular' animation='pulse' width={50} height={50} />
-         <Skeleton variant='rounded' animation='pulse' sx={{ marginLeft: 1 }} width='95%' height={45} />
+         <Skeleton variant='circular' animation='wave' width={50} height={50} />
+         <Skeleton variant='rounded' animation='wave' sx={{ marginLeft: 1 }} width='95%' height={45} />
       </AddPostStyle>
    )
 }
