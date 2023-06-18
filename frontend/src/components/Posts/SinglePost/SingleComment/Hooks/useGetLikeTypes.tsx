@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { IPostLike, IOrderedLikesCount } from '../../Like/Types'
+import type { IPostLike, IOrderedLikesCount } from '@/types/LikeTypes'
 
 const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
    const requiredObj: any = {}

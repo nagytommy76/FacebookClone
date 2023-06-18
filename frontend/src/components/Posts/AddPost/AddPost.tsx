@@ -5,9 +5,9 @@ import usePostMutate from './AddDialog/Hooks/usePostMutate'
 import useSnack from './Hooks/useSnack'
 import useDialog from './Hooks/useDialog'
 
-import StockImage from '../../../assets/facebook-profile.jpg'
+import StockImage from '@/assets/facebook-profile.jpg'
 import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostStyle'
-import type { IPost } from '../Types'
+import type { IPost } from '@/types/PostTypes'
 
 const AddPostDialog = dynamic(() => import('./AddDialog/AddDialog'))
 const InformSnackbar = dynamic(() => import('./Includes/InformSnackbar'))

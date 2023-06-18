@@ -1,5 +1,5 @@
-import type { IUserTypes } from '../../Auth/AuthTypes'
-import type { IProfilePicture } from '../../Posts/Types'
+import type { IUserTypes } from '@/types/AuthTypes'
+import type { IProfilePicture } from '@/types/PostTypes'
 import { produce } from 'immer'
 
 export enum UserDataActions {

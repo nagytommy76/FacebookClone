@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer } from 'react'
 
-import type { IPostComment } from '../../Like/Types'
+import type { IPostComment } from '@/types/LikeTypes'
 import CommentReducer, {
    initialCommentState,
    CommentActions,

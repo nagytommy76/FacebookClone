@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
-import { AxiosResponse, axiosInstance as axios } from '../../../../../utils/axiosSetup/AxiosInstance'
-import { useAppDispatch, useAppSelector } from '../../../../../utils/redux/store'
-import { setCurrentImage } from '../../../../../utils/redux/slices/AuthSlice'
-import type { IProfilePicture } from '../../../../Posts/Types'
+import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
+import { useAppDispatch, useAppSelector } from '@/utils/redux/store'
+import { setCurrentImage } from '@/utils/redux/slices/AuthSlice'
+import type { IProfilePicture } from '@/types/PostTypes'
 
 import Avatar from '@mui/material/Avatar'
-import OwnProfile from '../../../../../assets/facebook-profile.jpg'
+import OwnProfile from '@/assets/facebook-profile.jpg'
 
 const ImageAvatar: React.FC<{ displayText?: string }> = ({ displayText }) => {
    const dispatch = useAppDispatch()

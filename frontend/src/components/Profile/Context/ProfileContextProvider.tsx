@@ -6,7 +6,7 @@ import UserDetailsReducer, {
    IBaseListAction,
    UserDataActions,
 } from './ProfileReducer'
-import type { IProfilePicture } from '../../Posts/Types'
+import type { IProfilePicture } from '@/types/PostTypes'
 
 interface IProfileContext {
    profileReducer: InitialState

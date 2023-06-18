@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
-import type { LikeTypes } from '../Types'
+import type { LikeTypes } from '@/types/LikeTypes'
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
-import LikeAnimated from '../../../../../assets/likeAnimated.svg'
-import Love from '../../../../../assets/love.svg'
-import Care from '../../../../../assets/care.svg'
-import Haha from '../../../../../assets/haha.svg'
-import Wow from '../../../../../assets/wow.svg'
-import Sad from '../../../../../assets/sad.svg'
-import Angry from '../../../../../assets/angry.svg'
+import LikeAnimated from '@/assets/likeAnimated.svg'
+import Love from '@/assets/love.svg'
+import Care from '@/assets/care.svg'
+import Haha from '@/assets/haha.svg'
+import Wow from '@/assets/wow.svg'
+import Sad from '@/assets/sad.svg'
+import Angry from '@/assets/angry.svg'
 /**
  * Megoldnai, hogy a commenteknél mutassa mondjuk a top első 3 like típusát (ikonban: isLike, isAngry stb...)
  * illetve a tetszik gomb olyan színű legyen amire én nyomtam, nem a top like színe mint most.

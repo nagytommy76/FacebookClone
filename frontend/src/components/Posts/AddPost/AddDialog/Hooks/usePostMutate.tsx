@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import usePostMutationFn from './usePostMutationFn'
-import type { IPost } from '../../../Types'
+import type { IPost } from '@/types/PostTypes'
 
 const usePostMutate = (
    description: string,

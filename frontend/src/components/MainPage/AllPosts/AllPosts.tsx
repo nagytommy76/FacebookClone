@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic'
 import useGetAllPosts from './Hooks/useGetAllPosts'
 import PostContextProvider from '../Context/PostContextProvider'
 
-import type { IPost, IProfilePicture } from '../../Posts/Types'
+import type { IPost, IProfilePicture } from '@/types/PostTypes'
 
-import SinglePostSkeleton from '../../../skeletons/SinglePost/SinglePost'
-import AddPostSkeleton from '../../../skeletons/AddPostSkeleton/AddPostSkeleton'
+import SinglePostSkeleton from '@/src/skeletons/SinglePost/SinglePost'
+import AddPostSkeleton from '@/src/skeletons/AddPostSkeleton/AddPostSkeleton'
 const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'), {
    loading: () => SinglePostSkeleton(),
 })

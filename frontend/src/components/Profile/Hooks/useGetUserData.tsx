@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { axiosInstance as axios } from '../../../utils/axiosSetup/AxiosInstance'
-import { IUserPopulatedPosts } from '../../Auth/AuthTypes'
+import { axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
+import { IUserPopulatedPosts } from '@/types/AuthTypes'
 
 const getUserData = async () => {
    try {

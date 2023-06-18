@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import useGetLikeTypes from '../../Hooks/useGetLikeTypes'
-import type { IPostLike } from '../../../Like/Types'
+import type { IPostLike } from '@/types/LikeTypes'
 
 import Tooltip from '@mui/material/Tooltip'
 import { LikeIconStyle, LikeLengthStyle, PostLikeIconStyle } from './Styles'

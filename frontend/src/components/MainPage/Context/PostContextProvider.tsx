@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from 'react'
 import PostsReducer, { initialPostsState, InitialPostsState, IPostsAction, PostsActions } from './PostReducer'
-import { IPost } from '../../Posts/Types'
+import { IPost } from '@/types/PostTypes'
 
 interface IPostsContext {
    postsDispatch: React.Dispatch<IPostsAction>

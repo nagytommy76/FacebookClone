@@ -2,7 +2,7 @@ import { useState } from 'react'
 import useLikeMutate from './useLikeMutate'
 import useLikeDelete from './useLikeDelete'
 import useLikeComment from './useLikeComment'
-import type { LikeTypes } from '../Types'
+import type { LikeTypes } from '@/types/LikeTypes'
 
 const useHandleFn = (
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void,

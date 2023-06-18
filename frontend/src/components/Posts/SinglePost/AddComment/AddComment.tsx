@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { AxiosResponse, axiosInstance as axios } from '../../../../utils/axiosSetup/AxiosInstance'
-import type { IPostComment } from '../Like/Types'
+import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
+import type { IPostComment } from '@/types/LikeTypes'
 
 import { PostContext } from '../../../MainPage/Context/PostContextProvider'
 import { PostsActions } from '../../../MainPage/Context/PostReducer'

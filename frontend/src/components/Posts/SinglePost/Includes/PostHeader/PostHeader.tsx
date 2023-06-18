@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import 'moment/locale/hu'
 
-import ProfilePic from '../../../../../assets/facebook-profile.jpg'
+import ProfilePic from '@/assets/facebook-profile.jpg'
 import {
    HeaderRightTitleSection,
    PostHeaderStyle,
@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography'
 
 import CustomTooltipTitle from '../../../../Base/CustomTooltipTitle'
 import DetailsTooltipTitle from '../../ProfileCard/DetailsTooltipTitle'
-import type { IPopulatedUserId, IProfilePicture } from '../../../Types'
+import type { IPopulatedUserId, IProfilePicture } from '@/types/PostTypes'
 
 const PostHeader: React.FC<{
    userInfo: IPopulatedUserId

@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { IPost } from '../../Posts/Types'
+import type { IPost } from '@/types/PostTypes'
 
 export enum PostsActions {
    SET_SINGLE_POST = 'SET_SINGLE_POST',

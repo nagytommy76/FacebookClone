@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { CommentContext } from '../../SingleComment/Context/CommentContext'
 import { CommentActions } from '../../SingleComment/Context/CommentReducer'
-import { AxiosResponse, axiosInstance as axios } from '../../../../../utils/axiosSetup/AxiosInstance'
+import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { IPostLike, LikeTypes } from '../Types'
+import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
 
 interface ICommentLike {
    likeTypeFomInput: LikeTypes

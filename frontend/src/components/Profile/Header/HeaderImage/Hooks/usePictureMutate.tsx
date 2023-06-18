@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { AxiosResponse, axiosInstance as axios } from '../../../../../utils/axiosSetup/AxiosInstance'
-import type { IProfilePicture } from '../../../../Posts/Types'
+import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
+import type { IProfilePicture } from '@/types/PostTypes'
 
-import { useAppDispatch } from '../../../../../utils/redux/store'
-import { setCurrentImage } from '../../../../../utils/redux/slices/AuthSlice'
+import { useAppDispatch } from '@/utils/redux/store'
+import { setCurrentImage } from '@/utils/redux/slices/AuthSlice'
 import { UserDataActions } from '../../../Context/ProfileReducer'
 import { useContext } from 'react'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'

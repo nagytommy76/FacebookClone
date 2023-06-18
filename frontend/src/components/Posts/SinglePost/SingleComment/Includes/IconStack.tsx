@@ -1,6 +1,6 @@
 import React from 'react'
 import useCommentLikeIcons from '../Hooks/useCommentLikeIcons'
-import type { IOrderedLikesCount } from '../../Like/Types'
+import type { IOrderedLikesCount } from '@/types/LikeTypes'
 
 import { IconStackStyle } from '../Includes/Reatcions/Styles'
 import { IconStackContainerStyle } from '../Styles'

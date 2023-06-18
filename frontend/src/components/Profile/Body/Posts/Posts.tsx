@@ -2,15 +2,15 @@ import { useContext } from 'react'
 import dynamic from 'next/dynamic'
 import { ProfileContext } from '../../Context/ProfileContextProvider'
 import PostContextProvider from '../../../MainPage/Context/PostContextProvider'
-import type { IPost } from '../../../Posts/Types'
+import type { IPost } from '@/types/PostTypes'
 
-import SinglePost from '../../../../skeletons/SinglePost/SinglePost'
-import AddPostSkeleton from '../../../../skeletons/AddPostSkeleton/AddPostSkeleton'
-const PostHeader = dynamic(() => import('../../../Posts/SinglePost/Includes/PostHeader/PostHeader'))
-const SinglePostComponent = dynamic(() => import('../../../Posts/SinglePost/SinglePost'), {
+import SinglePost from '@/src/skeletons/SinglePost/SinglePost'
+import AddPostSkeleton from '@/src/skeletons/AddPostSkeleton/AddPostSkeleton'
+const PostHeader = dynamic(() => import('@/components/Posts/SinglePost/Includes/PostHeader/PostHeader'))
+const SinglePostComponent = dynamic(() => import('@/components/Posts/SinglePost/SinglePost'), {
    loading: () => SinglePost(),
 })
-const AddPostComponent = dynamic(() => import('../../../Posts/AddPost/AddPost'), {
+const AddPostComponent = dynamic(() => import('@/components/Posts/AddPost/AddPost'), {
    loading: () => AddPostSkeleton(),
 })
 

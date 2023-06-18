@@ -1,14 +1,14 @@
 import { StyledPaperContainer, StyledImage } from './Styles'
 import Tooltip from '@mui/material/Tooltip'
 
-import LikeAnimated from '../../../../assets/likeAnimated.svg'
-import Love from '../../../../assets/love.svg'
-import Care from '../../../../assets/care.svg'
-import Haha from '../../../../assets/haha.svg'
-import Wow from '../../../../assets/wow.svg'
-import Sad from '../../../../assets/sad.svg'
-import Angry from '../../../../assets/angry.svg'
-import type { LikeTypes } from './Types'
+import LikeAnimated from '@/assets/likeAnimated.svg'
+import Love from '@/assets/love.svg'
+import Care from '@/assets/care.svg'
+import Haha from '@/assets/haha.svg'
+import Wow from '@/assets/wow.svg'
+import Sad from '@/assets/sad.svg'
+import Angry from '@/assets/angry.svg'
+import type { LikeTypes } from '@/types/LikeTypes'
 
 const Reactions: React.FC<{ setLike: (likeType: LikeTypes) => void }> = ({ setLike }) => {
    return (

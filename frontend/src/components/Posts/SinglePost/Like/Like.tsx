@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
-import { useAppSelector } from '../../../../utils/redux/store'
-import type { IPostLike, LikeTypes } from './Types'
+import { useAppSelector } from '@/utils/redux/store'
+import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
 
 import Button from '@mui/material/Button'
 import { StyledCommentLikeButton } from './Styles'

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { IProfilePicture } from '../../../components/Posts/Types'
+import type { IProfilePicture } from '@/types/PostTypes'
 
 interface IAuthState {
    userId: string

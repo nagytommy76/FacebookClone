@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { IPostComment } from '../../Like/Types'
+import type { IPostComment } from '@/types/LikeTypes'
 
 export enum CommentActions {
    SET_COMMENT = 'SET_COMMENT',
