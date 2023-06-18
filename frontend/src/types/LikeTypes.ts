@@ -1,4 +1,4 @@
-import type { IPopulatedUserId } from '../../Types'
+import type { IPopulatedUserId } from './PostTypes'
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
 export interface IPostComment {

@@ -1,4 +1,4 @@
-import type { IPostComment, IPostLike } from './SinglePost/Like/Types'
+import type { IPostComment, IPostLike } from './LikeTypes'
 
 export interface IPopulatedUserId<T = IUserDetails> {
    _id: string

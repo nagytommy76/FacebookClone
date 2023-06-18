@@ -1,4 +1,4 @@
-import type { IPost, IProfilePicture } from '../Posts/Types'
+import type { IPost, IProfilePicture } from './PostTypes'
 
 export interface IUserTypes {
    _id: string
