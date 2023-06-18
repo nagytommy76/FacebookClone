@@ -12,7 +12,7 @@ import {
    LikeAndCommentContainer,
 } from './Styles'
 
-import ImageContainer from './Includes/ImageContainer'
+import ImageContainer from './Includes/ImageContainer/ImageContainer'
 import CommentButton from './AddComment/CommentButton'
 import Like from './Like/Like'
 import AddComment from './AddComment/AddComment'
@@ -33,7 +33,9 @@ const SinglePost: React.FC<{
          <BodyDescriptionSection>
             <Typography variant='subtitle1'>{singlePost.description}</Typography>
          </BodyDescriptionSection>
-         <ImageContainer singlePost={singlePost} />
+         {singlePost.postedPicturesPath && singlePost.postedPicturesPath.length > 0 && (
+            <ImageContainer postedPicturesPath={singlePost.postedPicturesPath} />
+         )}
          <FooterSectionStyle>
             <LikeAndCommentContainer>
                {singlePost.likes.length > 0 && <Reactions isPostReactions={true} likes={singlePost.likes} />}

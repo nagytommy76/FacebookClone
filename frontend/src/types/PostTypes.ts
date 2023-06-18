@@ -14,7 +14,7 @@ export interface IPost {
    comments: IPostComment[]
    description: string
    likes: IPostLike[]
-   postedPicturesPath: string[]
+   postedPicturesPath: string[] | null
    createdAt: string
    updatedAt: string
 }
