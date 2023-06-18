@@ -5,6 +5,7 @@ import { produce } from 'immer'
 export enum UserDataActions {
    SET_USER_PROFILE_PICUTRES = 'SET_USER_PROFILE_PICUTRES',
    SET_INITIAL_USER_DATA = 'SET_INITIAL_USER_DATA',
+   ADD_NEW_POST = 'ADD_NEW_POST',
 }
 
 export interface IBaseListAction {
@@ -59,6 +60,11 @@ export default function UserDetailsReducer(state: InitialState, action: IBaseLis
             draft.initialUserDataState.userDetails.profilePicturePath = action.payload
          })
          return nextState
+      case UserDataActions.ADD_NEW_POST:
+         const withNewPost = produce(state, (draft) => {
+            draft.initialUserDataState.posts.push(action.payload)
+         })
+         return withNewPost
       default:
          return state
    }
