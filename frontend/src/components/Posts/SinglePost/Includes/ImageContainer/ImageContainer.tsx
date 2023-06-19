@@ -8,12 +8,21 @@ import {
 } from './Styles'
 import StockImage from '@/assets/facebook-profile.jpg'
 
-const ImageContainer: React.FC<{ postedPicturesPath: string[] }> = ({ postedPicturesPath }) => {
+const ImageContainer: React.FC<{
+   postedPicturesPath: string[]
+   setCurrentPicIndex: React.Dispatch<React.SetStateAction<number>>
+   setIsImgSliderOpen: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ postedPicturesPath, setCurrentPicIndex, setIsImgSliderOpen }) => {
+   const setPicIndexAndOpenModal = (index: number) => {
+      setCurrentPicIndex(index)
+      setIsImgSliderOpen(true)
+   }
    return (
       <StyledImageGridContainer>
          {postedPicturesPath.map((image, index) =>
             index === 0 ? (
                <FirstGridImage
+                  onClick={() => setPicIndexAndOpenModal(index)}
                   key={index}
                   src={image == '' ? StockImage : image}
                   alt='Kép'
@@ -25,6 +34,7 @@ const ImageContainer: React.FC<{ postedPicturesPath: string[] }> = ({ postedPict
                (index === 3 ? (
                   <OverlayedContainer>
                      <StyledImage
+                        onClick={() => setPicIndexAndOpenModal(index)}
                         key={index}
                         src={image == '' ? StockImage : image}
                         alt='Kép'
@@ -35,6 +45,7 @@ const ImageContainer: React.FC<{ postedPicturesPath: string[] }> = ({ postedPict
                   </OverlayedContainer>
                ) : (
                   <StyledImage
+                     onClick={() => setPicIndexAndOpenModal(index)}
                      key={index}
                      src={image == '' ? StockImage : image}
                      alt='Kép'
