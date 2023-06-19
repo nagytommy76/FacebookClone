@@ -9,6 +9,7 @@ export const StyledImageGridContainer = styled('section')({
 })
 
 export const FirstGridImage = styled(Image)({
+   cursor: 'pointer',
    objectFit: 'cover',
    gridColumnStart: 1,
    gridColumnEnd: 4,
@@ -16,6 +17,7 @@ export const FirstGridImage = styled(Image)({
 })
 
 export const StyledImage = styled(Image)({
+   cursor: 'pointer',
    objectFit: 'cover',
    width: '100%',
    height: '250px',
@@ -27,6 +29,7 @@ export const OverlayedContainer = styled('div')({
 })
 
 export const OverlayedContent = styled('span')({
+   cursor: 'pointer',
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
