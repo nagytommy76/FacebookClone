@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
 
-import { StyledModalContainer, StyledImageContainer } from './Styles'
+import { StyledModalContainer, StyledImageContainer, CloseIconStyle, StyledModalImage } from './Styles'
 import Modal from '@mui/material/Modal'
-import Fade from '@mui/material/Fade'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
-
+// import Fade from '@mui/material/Fade'
+import LeftArrow from './Includes/LeftArrow'
 const ImageSlider: React.FC<{
    isImgSliderOpen: boolean
    postedPicturesPath: string[]
@@ -19,12 +17,18 @@ const ImageSlider: React.FC<{
    return (
       <Modal open={isImgSliderOpen}>
          <StyledModalContainer>
-            <HighlightOffIcon sx={{ color: 'red' }} onClick={() => setIsImgSliderOpen(false)} />
-            <Fade in={isSlide}>
-               <StyledImageContainer>
-                  <Image width={500} height={500} src={postedPicturesPath[currentPicIndex]} alt='' />
-               </StyledImageContainer>
-            </Fade>
+            <CloseIconStyle onClick={() => setIsImgSliderOpen(false)} />
+            {/* <Fade in={isSlide}> */}
+            <StyledImageContainer>
+               <StyledModalImage
+                  width={1920}
+                  height={1080}
+                  src={postedPicturesPath[currentPicIndex]}
+                  alt=''
+               />
+            </StyledImageContainer>
+            {/* </Fade> */}
+            <LeftArrow />
          </StyledModalContainer>
       </Modal>
    )
