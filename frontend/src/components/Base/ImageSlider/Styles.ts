@@ -1,4 +1,8 @@
 import { styled } from '@mui/material'
+import Image from 'next/image'
+
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 export const StyledModalContainer = styled('div')({
    outline: 'none',
@@ -11,12 +15,36 @@ export const StyledModalContainer = styled('div')({
    backgroundColor: 'rgba(0, 0, 0, 1)',
 
    display: 'flex',
-   //    flexDirection: 'column',
+   flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'center',
 })
 
 export const StyledImageContainer = styled('div')({
+   width: '90%',
+   height: '100%',
+})
+
+export const StyledModalImage = styled(Image)({
    width: '100%',
-   height: '65%',
+   height: '100%',
+   objectFit: 'contain',
+})
+
+// ICONS -----------------------------------------------------
+export const CloseIconStyle = styled(CloseIcon)({
+   color: '#FFF',
+   cursor: 'pointer',
+   position: 'absolute',
+   fontSize: '55px',
+   top: 5,
+   left: 5,
+})
+
+export const NavigateIconButtonStyle = styled(IconButton)({
+   position: 'absolute',
+   left: 5,
+   color: '#FFF',
+   fontSize: '45px',
+   top: '50%',
 })
