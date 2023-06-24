@@ -1,12 +1,12 @@
 import React from 'react'
-import { NavigateIconButtonStyle } from '../Styles'
+import { NavigateLeftIconButtonStyle } from '../Styles'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 
-const LeftArrow = () => {
+const LeftArrow: React.FC<{ previousImage: () => void }> = ({ previousImage }) => {
    return (
-      <NavigateIconButtonStyle size='large'>
+      <NavigateLeftIconButtonStyle size='large' onClick={previousImage}>
          <ArrowBackIosNewIcon fontSize='inherit' />
-      </NavigateIconButtonStyle>
+      </NavigateLeftIconButtonStyle>
    )
 }
 

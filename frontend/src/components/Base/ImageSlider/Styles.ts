@@ -19,11 +19,14 @@ export const StyledModalContainer = styled('div')({
    justifyContent: 'center',
    alignItems: 'center',
 })
-
-export const StyledImageContainer = styled('div')({
+export const StyledImageContainer = styled('div')(({ theme }) => ({
+   position: 'relative',
    width: '90%',
    height: '100%',
-})
+   [theme.breakpoints.down('sm')]: {
+      width: '100%',
+   },
+}))
 
 export const StyledModalImage = styled(Image)({
    width: '100%',
@@ -39,12 +42,21 @@ export const CloseIconStyle = styled(CloseIcon)({
    fontSize: '55px',
    top: 5,
    left: 5,
+   zIndex: 10,
 })
 
-export const NavigateIconButtonStyle = styled(IconButton)({
+export const NavigateLeftIconButtonStyle = styled(IconButton)({
    position: 'absolute',
-   left: 5,
    color: '#FFF',
-   fontSize: '45px',
+   fontSize: '30px',
    top: '50%',
+   left: 5,
+})
+export const NavigateRightIconButtonStyle = styled(IconButton)({
+   position: 'absolute',
+   color: '#FFF',
+   fontSize: '30px',
+   top: '50%',
+   right: 5,
+   transform: 'rotate(-180deg)',
 })
