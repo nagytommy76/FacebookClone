@@ -32,15 +32,8 @@ const ImageContainer: React.FC<{
             ) : (
                index < 4 &&
                (index === 3 ? (
-                  <OverlayedContainer>
-                     <StyledImage
-                        onClick={() => setPicIndexAndOpenModal(index)}
-                        key={index}
-                        src={image == '' ? StockImage : image}
-                        alt='Kép'
-                        width={500}
-                        height={500}
-                     />
+                  <OverlayedContainer onClick={() => setPicIndexAndOpenModal(index)} key={index}>
+                     <StyledImage src={image == '' ? StockImage : image} alt='Kép' width={500} height={500} />
                      <OverlayedContent>+{postedPicturesPath.length - index - 1}</OverlayedContent>
                   </OverlayedContainer>
                ) : (
