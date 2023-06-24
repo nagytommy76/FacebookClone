@@ -1,4 +1,5 @@
-import React, { useRef, useContext, useState } from 'react'
+import React, { useRef, useContext } from 'react'
+import dynamic from 'next/dynamic'
 import CommentContextProvider from './SingleComment/Context/CommentContext'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
 
@@ -12,13 +13,12 @@ import {
    LikeAndCommentContainer,
 } from './Styles'
 
-import ImageContainer from './Includes/ImageContainer/ImageContainer'
+const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'))
 import CommentButton from './AddComment/CommentButton'
 import Like from './Like/Like'
 import AddComment from './AddComment/AddComment'
 import SingleComment from './SingleComment/SingleComment'
 import Reactions from './SingleComment/Includes/Reatcions/Reactions'
-import ImageSlider from '@/components/Base/ImageSlider/ImageSlider'
 
 const SinglePost: React.FC<{
    children: React.ReactNode
@@ -27,8 +27,6 @@ const SinglePost: React.FC<{
       postsReducer: { singlePost },
    } = useContext(PostContext)
    const commentRef = useRef(null)
-   const [isImgSliderOpen, setIsImgSliderOpen] = useState<boolean>(true)
-   const [currentPicIndex, setCurrentPicIndex] = useState<number>(0)
 
    return (
       <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px' }}>
@@ -36,21 +34,8 @@ const SinglePost: React.FC<{
          <BodyDescriptionSection>
             <Typography variant='subtitle1'>{singlePost.description}</Typography>
          </BodyDescriptionSection>
-         {/* Ezt majd külön komponensbe tenni !!! */}
          {singlePost.postedPicturesPath && singlePost.postedPicturesPath.length > 0 && (
-            <>
-               <ImageContainer
-                  setIsImgSliderOpen={setIsImgSliderOpen}
-                  setCurrentPicIndex={setCurrentPicIndex}
-                  postedPicturesPath={singlePost.postedPicturesPath}
-               />
-               <ImageSlider
-                  setIsImgSliderOpen={setIsImgSliderOpen}
-                  currentPicIndex={currentPicIndex}
-                  isImgSliderOpen={isImgSliderOpen}
-                  postedPicturesPath={singlePost.postedPicturesPath}
-               />
-            </>
+            <ImageSlideComponent postedPicturesPath={singlePost.postedPicturesPath} />
          )}
          <FooterSectionStyle>
             <LikeAndCommentContainer>
