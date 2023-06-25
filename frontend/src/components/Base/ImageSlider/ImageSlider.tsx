@@ -24,9 +24,7 @@ const ImageSlider: React.FC<{
             <CloseIconStyle onClick={() => setIsImgSliderOpen(false)} />
             <StyledImageContainer>
                <StyledModalImage
-                  // width={1920}
-                  // height={1080}
-                  sizes='(max-width: 768px) 500px, (max-width: 1200px) 1200px, 100vw'
+                  sizes='(max-width: 400px) 400px, (max-width: 1200px) 1200px, 100vw'
                   fill
                   src={postedPicturesPath[currentPicIndex]}
                   alt=''
