@@ -19,6 +19,21 @@ const likes = {
    required: false,
 }
 
+const commentAnswers = {
+   type: [
+      {
+         userId: { type: Schema.Types.ObjectId, ref: 'User' },
+         comment: { type: String, required: true },
+         parentCommentId: { type: String, required: false, default: null },
+         commentDepth: { type: Number, required: true, default: 1 },
+         answeredAt: { type: Date, required: false },
+         commentImage: { type: String, required: false, default: '' },
+         likes,
+      },
+   ],
+   required: false,
+}
+
 const PostsSchema = new Schema(
    {
       userId: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -32,8 +47,7 @@ const PostsSchema = new Schema(
                comment: { type: String, required: true },
                answeredAt: { type: Date, required: false },
                commentImage: { type: String, required: false, default: '' },
-               parentCommentId: { type: String, required: false, default: null },
-               commentDepth: { type: Number, required: true, default: 1 },
+               commentAnswers,
                likes,
             },
          ],
