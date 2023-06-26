@@ -5,25 +5,31 @@ import Paper from '@mui/material/Paper'
 export const StyledCommentContainer = styled('div')({
    margin: '.75rem 0',
    display: 'flex',
-   flexDirection: 'row',
+   flexDirection: 'column',
 })
 
 // Picture style --------------------------------------------
 export const StyledProfileImage = styled(Image)({
+   position: 'absolute',
+   left: 0,
+   top: 0,
    marginRight: 8,
-   height: 40,
-   width: 40,
+   height: 38,
+   width: 38,
    borderRadius: 50,
 })
 
-export const StyledListElement = styled('li')({
+export const StyledListElement = styled('div')({
+   position: 'relative',
+   paddingLeft: 45,
    listStyle: 'none',
    display: 'flex',
    flexDirection: 'column',
 })
 
 export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
-   minWidth: 200,
+   width: 'max-content',
+   maxWidth: '90%',
    padding: 12,
    borderRadius: 20,
    backgroundColor: 'rgba(100,100,100, 0.35)',
@@ -39,14 +45,4 @@ export const IconStackContainerStyle = styled('span')({
    flexDirection: 'column',
    justifyContent: 'space-between',
    alignContent: 'space-around',
-})
-
-// FOOTER ---------------------------------------------------------------------------
-export const CommentFooterStyle = styled('footer')({
-   width: 160,
-   marginTop: 5,
-
-   display: 'flex',
-   flexDirection: 'row',
-   justifyContent: 'space-between',
 })
