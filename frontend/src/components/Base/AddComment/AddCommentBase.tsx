@@ -11,7 +11,8 @@ const AddCommentBase: React.FC<{
    handleSendComment: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
    commentText: string
-}> = ({ reference, handleSendComment, commentText, handleChangeText }) => {
+   isSendDisabled?: boolean
+}> = ({ reference, handleSendComment, commentText, handleChangeText, isSendDisabled }) => {
    return (
       <>
          <Collapse orientation='vertical' in={true}>
@@ -30,15 +31,23 @@ const AddCommentBase: React.FC<{
                      fullWidth
                   />
                   <Tooltip title='Küldés' placement='top' arrow>
-                     <IconButton
-                        onClick={handleSendComment}
-                        type='submit'
-                        sx={{ color: 'primary.main' }}
-                        size='small'
-                        aria-label='send-comment'
-                     >
-                        <SendIcon fontSize='inherit' />
-                     </IconButton>
+                     <span>
+                        <IconButton
+                           sx={{
+                              color: 'primary.main',
+                              ...(isSendDisabled && {
+                                 cursor: 'not-allowed',
+                              }),
+                           }}
+                           disabled={isSendDisabled}
+                           onClick={handleSendComment}
+                           type='submit'
+                           size='small'
+                           aria-label='send-comment'
+                        >
+                           <SendIcon fontSize='inherit' />
+                        </IconButton>
+                     </span>
                   </Tooltip>
                </StyledTextContainer>
             </StyledPaperContainer>
