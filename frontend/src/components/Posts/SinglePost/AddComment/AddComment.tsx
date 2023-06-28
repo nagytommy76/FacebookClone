@@ -14,6 +14,7 @@ const AddComment: React.FC<{
 }> = ({ reference, postId }) => {
    const { postsDispatch } = useContext(PostContext)
    const [commentText, setCommentText] = useState<string>('')
+   const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
    const { mutate } = useMutation({
       mutationKey: ['sendPostComment'],
       mutationFn: async () => {
@@ -30,6 +31,8 @@ const AddComment: React.FC<{
    })
 
    const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.value.length === 0) setIsSendDisabled(true)
+      else setIsSendDisabled(false)
       setCommentText(event.target.value)
    }
 
@@ -45,6 +48,7 @@ const AddComment: React.FC<{
             commentText={commentText}
             handleChangeText={handleChangeText}
             reference={reference}
+            isSendDisabled={isSendDisabled}
          />
       </>
    )
