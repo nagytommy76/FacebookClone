@@ -4,7 +4,7 @@ import BasePostController from './basePost'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import type { ICommentLikeRequest, LikeTypes, IReactionTypes } from './PostTypes'
 
-export default class PostController extends BasePostController {
+export default class PostCommentController extends BasePostController {
    likeCommentController = async (request: ICommentLikeRequest, response: Response) => {
       const { commentId, postId, reactionType } = request.body
       const userId = request.user?.userId as string | any
@@ -36,6 +36,17 @@ export default class PostController extends BasePostController {
             },
          })
          response.status(200).json(foundPostToModifyLike.comments[commentLikeIndex].likes)
+      } catch (error) {
+         console.log(error)
+         response.status(500).json({ error })
+      }
+   }
+
+   answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
+      const userId = request.user?.userId
+      const { answeredAt, commentAnswer, postId } = request.body
+      try {
+         const post = await this.findPostModelByPostId(postId)
       } catch (error) {
          console.log(error)
          response.status(500).json({ error })
@@ -79,6 +90,14 @@ interface ISavePostRequest extends IJWTUserType {
    body: {
       postId: string
       comment: string
+      answeredAt: string
+   }
+}
+
+interface ISavePostCommentAnswerRequest extends IJWTUserType {
+   body: {
+      postId: string
+      commentAnswer: string
       answeredAt: string
    }
 }
