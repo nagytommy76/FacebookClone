@@ -44,9 +44,20 @@ export default class PostCommentController extends BasePostController {
 
    answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
       const userId = request.user?.userId
-      const { answeredAt, commentAnswer, postId } = request.body
+      const { answeredAt, commentAnswer, postId, commentId, parentCommentId, commentDepth } = request.body
       try {
-         const post = await this.findPostModelByPostId(postId)
+         // const post = await this.findPostModelByPostId(postId)
+         const foundPostComment = await PostModel.find({
+            comments: {
+               $elemMatch: { _id: commentId },
+            },
+         }).select({ 'comments.$': 1 })
+         //  a $jel azt jelenti, hogy az első megtalált elemet select-eli ki
+
+         response
+            .status(200)
+            // .json({ answeredAt, commentAnswer, postId, commentId, parentCommentId, commentDepth })
+            .json(foundPostComment)
       } catch (error) {
          console.log(error)
          response.status(500).json({ error })
@@ -97,6 +108,9 @@ interface ISavePostRequest extends IJWTUserType {
 interface ISavePostCommentAnswerRequest extends IJWTUserType {
    body: {
       postId: string
+      commentId: string
+      commentDepth: number
+      parentCommentId: string
       commentAnswer: string
       answeredAt: string
    }
