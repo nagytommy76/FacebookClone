@@ -1,7 +1,8 @@
 import React, { useContext, useState, useRef } from 'react'
 import { CommentContext } from '../Context/CommentContext'
-import useMoment from '../Hooks/useMoment'
 import moment from 'moment'
+import useMoment from '../Hooks/useMoment'
+import useCreateAnswer from './Hooks/useCreateAnswer'
 
 import Tooltip from '@mui/material/Tooltip'
 import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
@@ -21,6 +22,7 @@ const FooterSection: React.FC<{
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const [answerText, setAnswerText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
+   const answerMutate = useCreateAnswer(postId, singleComment._id, 1, null, answerText)
 
    const handleSetAnswerOpen = () => {
       setIsAnswerOpen(true)
@@ -53,7 +55,9 @@ const FooterSection: React.FC<{
          <Collapse in={isAnswerOpen} timeout={100}>
             <AddCommentBase
                reference={reference as React.MutableRefObject<null>}
-               handleSendComment={() => {}}
+               handleSendComment={() => {
+                  answerMutate()
+               }}
                commentText={answerText}
                handleChangeText={handleChangeText}
                isSendDisabled={isSendDisabled}
