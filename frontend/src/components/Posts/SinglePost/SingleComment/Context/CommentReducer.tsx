@@ -4,6 +4,7 @@ import type { IPostComment } from '@/types/LikeTypes'
 export enum CommentActions {
    SET_COMMENT = 'SET_COMMENT',
    SET_COMMENT_LIKE = 'SET_COMMENT_LIKE',
+   ADD_SINGLE_COMMENT_ANSWER = 'ADD_SINGLE_COMMENT_ANSWER',
 }
 
 export interface ICommentAction {
@@ -18,10 +19,9 @@ export interface InitialCommentState {
 export const initialCommentData: IPostComment = {
    answeredAt: '',
    comment: 'teszt',
-   commentDepth: 1,
    _id: '',
    likes: [],
-   parentCommentId: '',
+   commentAnswers: [],
    userId: {
       _id: '',
       email: '',
@@ -59,6 +59,11 @@ export default function CommentReducer(
             draft.singleComment.likes = action.payload
          })
          return nextLikeState
+      case CommentActions.ADD_SINGLE_COMMENT_ANSWER:
+         const newComments = produce(state, (draft) => {
+            draft.singleComment.commentAnswers?.push(action.payload)
+         })
+         return newComments
       default:
          return state
    }
