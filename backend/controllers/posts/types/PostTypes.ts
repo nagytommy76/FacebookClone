@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongoose'
-import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
+import type { IPostComment } from './commentTypes'
 
 export interface IReactionTypes {
    [index: string]: boolean
@@ -16,24 +17,6 @@ export interface IPostLike {
    _id?: string | ObjectId
    userId: ObjectId
    reactionType: IReactionTypes
-}
-
-export interface IPostComment {
-   _id?: string | ObjectId
-   userId:
-      | ObjectId
-      | string
-      | {
-           firstName: string
-           sureName: string
-           userDetails: { profilePicturePath: { _id: string; path: string; isSelected: boolean }[] }
-        }
-   comment: string
-   answeredAt?: Date | string
-   commentImage?: string
-   parentCommentId: string | null
-   commentDepth: number
-   likes: IPostLike[]
 }
 
 export interface IPostTypes {
