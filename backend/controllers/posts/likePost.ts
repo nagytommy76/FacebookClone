@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
-import type { IPostLikeRequest, IPostRemoveLikeRequest, IReactionTypes, LikeTypes } from './PostTypes'
+import type { IPostLikeRequest, IPostRemoveLikeRequest, IReactionTypes, LikeTypes } from './types/PostTypes'
 
 const findPreviousReactionType = (reactionType: IReactionTypes) => {
    return Object.keys(reactionType).filter((key) => reactionType[key])[0] as LikeTypes

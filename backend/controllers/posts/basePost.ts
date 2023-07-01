@@ -1,5 +1,5 @@
 import { Posts as PostModel } from '../../models/posts/posts'
-import type { IReactionTypes, LikeTypes, IPostLike } from './PostTypes'
+import type { IReactionTypes, LikeTypes, IPostLike } from './types/PostTypes'
 
 export default abstract class BasePostController {
    public async findPostModelByPostId(postId: string) {

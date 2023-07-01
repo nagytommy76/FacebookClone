@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import type { IPostTypes } from '../../controllers/posts/PostTypes'
+import type { IPostTypes } from '../../controllers/posts/types/PostTypes'
 
 const likes = {
    type: [

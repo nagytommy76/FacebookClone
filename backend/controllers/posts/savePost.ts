@@ -2,7 +2,7 @@ import { Response, response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
 import { User as UserModel } from '../../models/user/user'
 
-import { IPostRequest } from './PostTypes'
+import { IPostRequest } from './types/PostTypes'
 
 /**
  * a userId az accessToken decoded fog jönni
