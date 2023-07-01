@@ -1,6 +1,18 @@
 import type { IPopulatedUserId } from './PostTypes'
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
+
+export interface ICommentAnswers {
+   _id: string
+   userId: string
+   comment: string
+   parentCommentId: string
+   commentDepth: number
+   answeredAt: string
+   commentImage: string
+   likes?: IPostLike[]
+}
+
 export interface IPostComment {
    _id: string
    userId: IPopulatedUserId<{
@@ -10,9 +22,8 @@ export interface IPostComment {
    }>
    comment: string
    answeredAt: string
-   parentCommentId: string
-   commentDepth: number
    likes: IPostLike[]
+   commentAnswers?: ICommentAnswers[]
 }
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------
 export interface IPostLike {
