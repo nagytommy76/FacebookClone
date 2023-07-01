@@ -4,8 +4,9 @@ import moment from 'moment'
 import useMoment from '../Hooks/useMoment'
 import useCreateAnswer from './Hooks/useCreateAnswer'
 
-import Tooltip from '@mui/material/Tooltip'
 import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
+import { StyledCommentPaper } from '../Styles'
+import Tooltip from '@mui/material/Tooltip'
 import Collapse from '@mui/material/Collapse'
 
 import Likes from '../../Like/Like'
@@ -63,6 +64,15 @@ const FooterSection: React.FC<{
                isSendDisabled={isSendDisabled}
             />
          </Collapse>
+         {singleComment.commentAnswers !== undefined ? (
+            singleComment.commentAnswers.map((answer) => (
+               <StyledCommentPaper key={answer._id}>
+                  <p>{answer.comment}</p>
+               </StyledCommentPaper>
+            ))
+         ) : (
+            <></>
+         )}
       </>
    )
 }
