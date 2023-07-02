@@ -59,12 +59,17 @@ export default class PostCommentController extends BasePostController {
             parentCommentId,
             userId,
          })
-
          await foundPostComment.save()
+         await foundPostComment.populate({
+            path: 'comments.commentAnswers.userId',
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
          response
             .status(200)
-            // .json({ answeredAt, commentAnswer, postId, commentId, parentCommentId, commentDepth })
-            .json({ createdCommentAnswer: foundPostComment.comments[foundCommentIndex] })
+            .json({ createdCommentAnswer: foundPostComment.comments[foundCommentIndex].commentAnswers })
       } catch (error) {
          console.log(error)
          response.status(500).json({ error })
