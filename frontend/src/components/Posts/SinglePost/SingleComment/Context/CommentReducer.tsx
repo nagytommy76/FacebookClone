@@ -2,6 +2,7 @@ import { produce } from 'immer'
 import type { IPostComment } from '@/types/LikeTypes'
 
 export enum CommentActions {
+   SET_POSTID = 'SET_POSTID',
    SET_COMMENT = 'SET_COMMENT',
    SET_COMMENT_LIKE = 'SET_COMMENT_LIKE',
    ADD_SINGLE_COMMENT_ANSWER = 'ADD_SINGLE_COMMENT_ANSWER',
@@ -14,6 +15,7 @@ export interface ICommentAction {
 
 export interface InitialCommentState {
    singleComment: IPostComment
+   postId: string
 }
 
 export const initialCommentData: IPostComment = {
@@ -42,6 +44,7 @@ export const initialCommentData: IPostComment = {
 }
 export const initialCommentState: InitialCommentState = {
    singleComment: initialCommentData,
+   postId: '',
 }
 
 export default function CommentReducer(
@@ -49,6 +52,11 @@ export default function CommentReducer(
    action: ICommentAction
 ): InitialCommentState {
    switch (action.type) {
+      case CommentActions.SET_POSTID:
+         return {
+            ...state,
+            postId: action.payload,
+         }
       case CommentActions.SET_COMMENT:
          const nextState = produce(state, (draft) => {
             draft.singleComment = action.payload
@@ -61,7 +69,7 @@ export default function CommentReducer(
          return nextLikeState
       case CommentActions.ADD_SINGLE_COMMENT_ANSWER:
          const newComments = produce(state, (draft) => {
-            draft.singleComment.commentAnswers?.push(action.payload)
+            draft.singleComment.commentAnswers = action.payload
          })
          return newComments
       default:
