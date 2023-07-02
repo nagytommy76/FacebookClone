@@ -1,15 +1,15 @@
 import React, { useContext, useState, useRef } from 'react'
-import { CommentContext } from '../Context/CommentContext'
+import { CommentContext } from '../../Context/CommentContext'
 import moment from 'moment'
-import useMoment from '../Hooks/useMoment'
+import useMoment from '../../Hooks/useMoment'
 import useCreateAnswer from './Hooks/useCreateAnswer'
 
 import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
-import { StyledCommentPaper } from '../Styles'
 import Tooltip from '@mui/material/Tooltip'
 import Collapse from '@mui/material/Collapse'
 
-import Likes from '../../Like/Like'
+import Likes from '../../../Like/Like'
+import SingleAnswer from '../SingleAnswer/SingleAnswer'
 import AddCommentBase from '@/src/components/Base/AddComment/AddCommentBase'
 
 const FooterSection: React.FC<{
@@ -65,11 +65,7 @@ const FooterSection: React.FC<{
             />
          </Collapse>
          {singleComment.commentAnswers !== undefined ? (
-            singleComment.commentAnswers.map((answer) => (
-               <StyledCommentPaper key={answer._id}>
-                  <p>{answer.comment}</p>
-               </StyledCommentPaper>
-            ))
+            singleComment.commentAnswers.map((answer) => <SingleAnswer key={answer._id} answer={answer} />)
          ) : (
             <></>
          )}
