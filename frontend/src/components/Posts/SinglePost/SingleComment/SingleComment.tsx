@@ -4,18 +4,16 @@ import { CommentContext } from './Context/CommentContext'
 import { StyledCommentContainer, StyledProfileImage, StyledListElement, StyledCommentPaper } from './Styles'
 
 import Reactions from './Includes/Reatcions/Reactions'
-import FooterSection from './FooterSection/FooterSection'
+import FooterSection from './Includes/FooterSection/FooterSection'
 // import ProfileCard from '../ProfileCard/DetailsTooltipTitle'
 // import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
 
-const SingleComment: React.FC<{ postId: string }> = ({ postId }) => {
+const SingleComment = () => {
    const {
       commentReducer: { singleComment },
    } = useContext(CommentContext)
    const getSelectedPicture = () => {
-      const foundImage = singleComment.userId?.userDetails?.profilePicturePath.find(
-         (image) => image.isSelected
-      )?.path
+      const foundImage = singleComment.userId.userDetails.profilePicturePath[0].path
       return foundImage
    }
 
@@ -43,7 +41,7 @@ const SingleComment: React.FC<{ postId: string }> = ({ postId }) => {
                <p>{singleComment.comment}</p>
                <Reactions likes={singleComment.likes} />
             </StyledCommentPaper>
-            <FooterSection postId={postId} />
+            <FooterSection />
          </StyledListElement>
       </StyledCommentContainer>
    )
