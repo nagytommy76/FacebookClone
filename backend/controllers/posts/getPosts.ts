@@ -3,14 +3,24 @@ import { Posts as PostModel } from '../../models/posts/posts'
 
 export const getAllPosts = async (req: Request, res: Response) => {
    try {
-      const allPosts = await PostModel.find({})
+      const allPosts = await PostModel.find()
          .populate({
             path: 'userId',
             select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
          })
          .populate({
             path: 'comments.userId',
-            select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
+         .populate({
+            path: 'comments.commentAnswers.userId',
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
             match: {
                'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
             },
