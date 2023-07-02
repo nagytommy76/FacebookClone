@@ -9,14 +9,13 @@ import Tooltip from '@mui/material/Tooltip'
 import Collapse from '@mui/material/Collapse'
 
 import Likes from '../../../Like/Like'
-import SingleAnswer from '../SingleAnswer/SingleAnswer'
+// import SingleAnswer from '../SingleAnswer/SingleAnswer'
 import AddCommentBase from '@/src/components/Base/AddComment/AddCommentBase'
+import AnswerList from '../AnswerList/AnswerList'
 
-const FooterSection: React.FC<{
-   postId: string
-}> = ({ postId }) => {
+const FooterSection = () => {
    const {
-      commentReducer: { singleComment },
+      commentReducer: { singleComment, postId },
    } = useContext(CommentContext)
    const currentTime = useMoment(singleComment.answeredAt)
    const reference = useRef<null | HTMLInputElement>(null)
@@ -64,11 +63,12 @@ const FooterSection: React.FC<{
                isSendDisabled={isSendDisabled}
             />
          </Collapse>
-         {singleComment.commentAnswers !== undefined ? (
+         {singleComment.commentAnswers ? <AnswerList answer={singleComment.commentAnswers} /> : <></>}
+         {/* {singleComment.commentAnswers !== undefined ? (
             singleComment.commentAnswers.map((answer) => <SingleAnswer key={answer._id} answer={answer} />)
          ) : (
             <></>
-         )}
+         )} */}
       </>
    )
 }
