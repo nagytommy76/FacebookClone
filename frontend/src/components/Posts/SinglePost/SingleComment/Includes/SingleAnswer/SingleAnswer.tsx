@@ -1,6 +1,9 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import moment from 'moment'
+
 import useMoment from '../../Hooks/useMoment'
+import useCreateAnswer from '../Hooks/useCreateAnswer'
+
 import { CommentContext } from '../../Context/CommentContext'
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
 
@@ -21,25 +24,22 @@ import Reactions from '../Reatcions/Reactions'
 const SingleAnswer: React.FC<{ answer: ICommentAnswers }> = ({ answer }) => {
    const {
       commentReducer: { postId },
+      getAnswerReplies,
    } = useContext(CommentContext)
-   const reference = useRef<null | HTMLInputElement>(null)
-   const [answerText, setAnswerText] = useState<string>('')
-   const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
-   const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const currentTime = useMoment(answer.answeredAt)
+   const {
+      answerText,
+      isAnswerOpen,
+      isSendDisabled,
+      reference,
+      answerMutate,
+      handleChangeText,
+      handleSetAnswerOpen,
+   } = useCreateAnswer(answer.commentDepth + 1, answer._id)
 
-   const handleSetAnswerOpen = () => {
-      setIsAnswerOpen(true)
-      setTimeout(() => {
-         if (reference) reference.current?.focus()
-      }, 200)
-   }
-
-   const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value.length === 0) setIsSendDisabled(true)
-      else setIsSendDisabled(false)
-      setAnswerText(event.target.value)
-   }
+   useEffect(() => {
+      console.log(getAnswerReplies(answer._id))
+   }, [answer._id, getAnswerReplies])
 
    return (
       <StyledCommentContainer>
@@ -65,7 +65,9 @@ const SingleAnswer: React.FC<{ answer: ICommentAnswers }> = ({ answer }) => {
             <Collapse in={isAnswerOpen} timeout={100}>
                <AddCommentBase
                   reference={reference as React.MutableRefObject<null>}
-                  handleSendComment={() => {}}
+                  handleSendComment={() => {
+                     answerMutate()
+                  }}
                   commentText={answerText}
                   handleChangeText={handleChangeText}
                   isSendDisabled={isSendDisabled}
