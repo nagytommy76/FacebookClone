@@ -1,8 +1,8 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext } from 'react'
 import { CommentContext } from '../../Context/CommentContext'
 import moment from 'moment'
 import useMoment from '../../Hooks/useMoment'
-import useCreateAnswer from './Hooks/useCreateAnswer'
+import useCreateAnswer from '../Hooks/useCreateAnswer'
 
 import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
 import Tooltip from '@mui/material/Tooltip'
@@ -18,24 +18,15 @@ const FooterSection = () => {
       commentReducer: { singleComment, postId },
    } = useContext(CommentContext)
    const currentTime = useMoment(singleComment.answeredAt)
-   const reference = useRef<null | HTMLInputElement>(null)
-   const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
-   const [answerText, setAnswerText] = useState<string>('')
-   const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
-   const answerMutate = useCreateAnswer(postId, singleComment._id, 1, null, answerText)
-
-   const handleSetAnswerOpen = () => {
-      setIsAnswerOpen(true)
-      // Azért kell, hogy miután kinyílik a collapse, az után állítsa be.
-      setTimeout(() => {
-         if (reference) reference.current?.focus()
-      }, 200)
-   }
-   const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.value.length === 0) setIsSendDisabled(true)
-      else setIsSendDisabled(false)
-      setAnswerText(event.target.value)
-   }
+   const {
+      answerMutate,
+      answerText,
+      isAnswerOpen,
+      isSendDisabled,
+      reference,
+      handleChangeText,
+      handleSetAnswerOpen,
+   } = useCreateAnswer(1, null)
 
    return (
       <>
