@@ -1,10 +1,11 @@
 import { produce } from 'immer'
-import type { IPostComment } from '@/types/LikeTypes'
+import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
 
 export enum CommentActions {
    SET_POSTID = 'SET_POSTID',
    SET_COMMENT = 'SET_COMMENT',
    SET_COMMENT_LIKE = 'SET_COMMENT_LIKE',
+   SET_CHILD_ANSWERS = 'SET_CHILD_ANSWERS',
    ADD_SINGLE_COMMENT_ANSWER = 'ADD_SINGLE_COMMENT_ANSWER',
 }
 
@@ -16,6 +17,7 @@ export interface ICommentAction {
 export interface InitialCommentState {
    singleComment: IPostComment
    postId: string
+   childAnswers: ICommentAnswers[]
 }
 
 export const initialCommentData: IPostComment = {
@@ -45,6 +47,7 @@ export const initialCommentData: IPostComment = {
 export const initialCommentState: InitialCommentState = {
    singleComment: initialCommentData,
    postId: '',
+   childAnswers: [],
 }
 
 export default function CommentReducer(
@@ -72,6 +75,11 @@ export default function CommentReducer(
             draft.singleComment.commentAnswers = action.payload
          })
          return newComments
+      case CommentActions.SET_CHILD_ANSWERS:
+         const newAnswers = produce(state, (draft) => {
+            draft.childAnswers = action.payload
+         })
+         return newAnswers
       default:
          return state
    }
