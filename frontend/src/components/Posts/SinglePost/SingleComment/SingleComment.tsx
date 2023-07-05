@@ -12,15 +12,16 @@ const SingleComment = () => {
    const {
       commentReducer: { singleComment },
    } = useContext(CommentContext)
-   const getSelectedPicture = () => {
-      const foundImage = singleComment.userId.userDetails.profilePicturePath[0].path
-      return foundImage
-   }
 
    return (
       <StyledCommentContainer>
          <StyledListElement>
-            <StyledProfileImage src={getSelectedPicture() ?? ''} alt='profil' width={20} height={20} />
+            <StyledProfileImage
+               src={singleComment.userId.userDetails.profilePicturePath[0].path}
+               alt='profil'
+               width={20}
+               height={20}
+            />
             <StyledCommentPaper>
                {/* <CustomTooltipTitle
                   title={

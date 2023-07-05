@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { CommentContext } from '../../Context/CommentContext'
 import moment from 'moment'
-import useMoment from '../../Hooks/useMoment'
+import useMoment from '../../../../../../hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
 
 import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
@@ -9,13 +9,13 @@ import Tooltip from '@mui/material/Tooltip'
 import Collapse from '@mui/material/Collapse'
 
 import Likes from '../../../Like/Like'
-// import SingleAnswer from '../SingleAnswer/SingleAnswer'
 import AddCommentBase from '@/src/components/Base/AddComment/AddCommentBase'
 import AnswerList from '../AnswerList/AnswerList'
 
 const FooterSection = () => {
    const {
       commentReducer: { singleComment, postId },
+      parentRootAnswers,
    } = useContext(CommentContext)
    const currentTime = useMoment(singleComment.answeredAt)
    const {
@@ -54,12 +54,7 @@ const FooterSection = () => {
                isSendDisabled={isSendDisabled}
             />
          </Collapse>
-         {singleComment.commentAnswers ? <AnswerList answer={singleComment.commentAnswers} /> : <></>}
-         {/* {singleComment.commentAnswers !== undefined ? (
-            singleComment.commentAnswers.map((answer) => <SingleAnswer key={answer._id} answer={answer} />)
-         ) : (
-            <></>
-         )} */}
+         {parentRootAnswers ? <AnswerList answer={parentRootAnswers} /> : <></>}
       </>
    )
 }

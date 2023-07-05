@@ -53,6 +53,7 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
          })
          setAnswerText('')
          setIsSendDisabled(true)
+         setIsAnswerOpen(false)
       },
    })
    return {

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer, useMemo } from 'react'
 
-import type { IPostComment } from '@/types/LikeTypes'
+import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
 import CommentReducer, {
    initialCommentState,
    CommentActions,
@@ -10,13 +10,15 @@ import CommentReducer, {
 
 interface ICommentContext {
    commentReducer: InitialCommentState
+   parentRootAnswers: ICommentAnswers[]
    commentDispatch: React.Dispatch<ICommentAction>
    getAnswerReplies(parentId: string): any
 }
 
 export const CommentContext = createContext<ICommentContext>({
-   commentDispatch: () => {},
    commentReducer: { singleComment: initialCommentState.singleComment, postId: '', childAnswers: [] },
+   parentRootAnswers: [],
+   commentDispatch: () => {},
    getAnswerReplies(parentId) {},
 })
 
@@ -39,7 +41,6 @@ const CommentContextProvider: React.FC<{
          grouppedAnswers[answer.parentCommentId] ||= []
          grouppedAnswers[answer.parentCommentId].push(answer)
       })
-      console.log(grouppedAnswers)
       return grouppedAnswers
    }, [commentReducer.singleComment])
 
@@ -48,7 +49,14 @@ const CommentContextProvider: React.FC<{
    }
 
    return (
-      <CommentContext.Provider value={{ commentDispatch, commentReducer, getAnswerReplies }}>
+      <CommentContext.Provider
+         value={{
+            commentReducer,
+            parentRootAnswers: getCommentsByParentId['null'],
+            commentDispatch,
+            getAnswerReplies,
+         }}
+      >
          {children}
       </CommentContext.Provider>
    )
