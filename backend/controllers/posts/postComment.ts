@@ -94,7 +94,14 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
       await foundPost?.save()
       await foundPost?.populate({
          path: 'comments.userId',
-         select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
+         select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+         match: {
+            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+         },
+      })
+      await foundPost?.populate({
+         path: 'comments.commentAnswers.userId',
+         select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
          match: {
             'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          },
