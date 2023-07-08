@@ -18,6 +18,7 @@ export interface ICommentAnswers {
 }
 
 export interface IPostComment {
+   [key: string]: any
    _id: string
    userId: IPopulatedUserId<{
       firstName: string
