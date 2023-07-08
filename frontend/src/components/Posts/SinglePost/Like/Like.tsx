@@ -43,20 +43,23 @@ const Like: React.FC<{
       <>
          <CustomTooltipTitle
             placement='top'
-            title={<Reactions setLike={isPostLike ? handleSendPostLike : handleSendCommentLike} />}>
+            title={<Reactions setLike={isPostLike ? handleSendPostLike : handleSendCommentLike} />}
+         >
             {isPostLike ? (
                <Button
                   sx={{ color: likeButtonColor, textTransform: 'none' }}
                   disableRipple
                   onClick={handleLikeBtnClick}
                   fullWidth
-                  startIcon={likeBtnIcon}>
+                  startIcon={likeBtnIcon}
+               >
                   {likeBtnText}
                </Button>
             ) : (
                <StyledCommentLikeButton
                   onClick={handleCommentLikeBtnClick}
-                  style={{ color: likeButtonColor }}>
+                  style={{ color: likeButtonColor }}
+               >
                   Tetszik
                </StyledCommentLikeButton>
             )}
