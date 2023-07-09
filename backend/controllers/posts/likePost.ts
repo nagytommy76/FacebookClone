@@ -1,6 +1,13 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
-import type { IPostLikeRequest, IPostRemoveLikeRequest, IReactionTypes, LikeTypes } from './types/PostTypes'
+import { Types } from 'mongoose'
+import type {
+   IPostLikeRequest,
+   IPostRemoveLikeRequest,
+   IReactionTypes,
+   LikeTypes,
+   IGetLikesRequest,
+} from './types/PostTypes'
 
 const findPreviousReactionType = (reactionType: IReactionTypes) => {
    return Object.keys(reactionType).filter((key) => reactionType[key])[0] as LikeTypes
@@ -67,4 +74,13 @@ export const deleteLikeFromPostController = async (request: IPostRemoveLikeReque
    } catch (error) {
       response.status(500).json({ msg: 'Internal server error' })
    }
+}
+
+export const getLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
+   const { postId, commentId } = request.body
+   console.log(request.query)
+   const objectId = new Types.ObjectId(postId)
+   const post = await PostModel.aggregate([{ $match: { _id: new Types.ObjectId(postId) } }])
+
+   return response.status(200).json(post[0])
 }
