@@ -54,7 +54,7 @@ const BaseAnswerAndComment: React.FC<{
             />
             <StyledCommentPaper key={answer._id}>
                <p>{answer.comment}</p>
-               <Reactions likes={answer.likes as []} />
+               <Reactions likes={answer.likes as []} commentId={answer._id} postId={postId} />
             </StyledCommentPaper>
             <CommentFooterStyle>
                <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>

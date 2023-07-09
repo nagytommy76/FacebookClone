@@ -12,9 +12,13 @@ const LikeModal = dynamic(() => import('./LikeModal/LikeModal'))
 const Reactions = memo(function Reactions({
    likes,
    isPostReactions = false,
+   commentId,
+   postId,
 }: {
    likes: IPostLike[]
    isPostReactions?: boolean
+   commentId: string
+   postId: string
 }) {
    const orderedCountedLike = useGetLikeTypes(likes)
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -43,7 +47,12 @@ const Reactions = memo(function Reactions({
                </PostLikeIconStyle>
             )}
          </Tooltip>
-         <LikeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+         <LikeModal
+            commentId={commentId}
+            postId={postId}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+         />
       </>
    ) : (
       <></>
