@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 
 import Modal from '@mui/material/Modal'
 import Fade from '@mui/material/Fade'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
-import { StyledModalPaper } from './Style'
+import { StyledModalPaper, ModalHeader } from './Style'
 
 const LikeModal: React.FC<{
    isModalOpen: boolean
    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ isModalOpen, setIsModalOpen }) => {
+   commentId: string
+   postId: string
+}> = ({ isModalOpen, setIsModalOpen, commentId, postId }) => {
    const handleCloseModal = () => setIsModalOpen(false)
 
+   const { data } = useQuery({
+      queryKey: ['GetLikeTypes', postId],
+      queryFn: async () => {
+         return await axios.get(`/post/get-like-count/?${commentId}/${postId}`)
+      },
+   })
+   console.log(data?.data)
    return (
       <Modal
          aria-labelledby='like-modal-title'
@@ -26,6 +39,12 @@ const LikeModal: React.FC<{
       >
          <Fade in={isModalOpen}>
             <StyledModalPaper>
+               <ModalHeader>
+                  <h1>FEJ</h1>
+                  <IconButton onClick={handleCloseModal}>
+                     <CloseIcon />
+                  </IconButton>
+               </ModalHeader>
                <h1>semmi</h1>
             </StyledModalPaper>
          </Fade>
