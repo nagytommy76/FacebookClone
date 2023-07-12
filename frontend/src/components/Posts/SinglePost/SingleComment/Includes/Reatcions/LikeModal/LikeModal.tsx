@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 
@@ -20,7 +20,7 @@ const LikeModal: React.FC<{
    const { data } = useQuery({
       queryKey: ['GetLikeTypes', postId],
       queryFn: async () => {
-         return await axios.get(`/post/get-like-count/?${commentId}/${postId}`)
+         return await axios.post(`/post/get-comment-like-count`, { commentId, postId })
       },
    })
    console.log(data?.data)
@@ -40,12 +40,15 @@ const LikeModal: React.FC<{
          <Fade in={isModalOpen}>
             <StyledModalPaper>
                <ModalHeader>
-                  <h1>FEJ</h1>
+                  <h1>Head</h1>
                   <IconButton onClick={handleCloseModal}>
                      <CloseIcon />
                   </IconButton>
                </ModalHeader>
-               <h1>semmi</h1>
+               <p>
+                  Ide szeretnék egy olyat mint a facebookon: head: csoportosítva likeok szerint, body, kik
+                  adták a reakciót
+               </p>
             </StyledModalPaper>
          </Fade>
       </Modal>

@@ -47,12 +47,14 @@ const Reactions = memo(function Reactions({
                </PostLikeIconStyle>
             )}
          </Tooltip>
-         <LikeModal
-            commentId={commentId}
-            postId={postId}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-         />
+         {isModalOpen && (
+            <LikeModal
+               commentId={commentId}
+               postId={postId}
+               isModalOpen={isModalOpen}
+               setIsModalOpen={setIsModalOpen}
+            />
+         )}
       </>
    ) : (
       <></>
