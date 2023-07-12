@@ -12,7 +12,11 @@ const SingleComment = () => {
    } = useContext(CommentContext)
 
    return (
-      <BaseCommentComponent answer={singleComment} postId={postId}>
+      <BaseCommentComponent
+         answer={singleComment}
+         postId={postId}
+         isChild={singleComment.commentAnswers && singleComment.commentAnswers?.length > 0}
+      >
          {parentRootAnswers ? <AnswerList answer={parentRootAnswers} /> : <></>}
       </BaseCommentComponent>
    )

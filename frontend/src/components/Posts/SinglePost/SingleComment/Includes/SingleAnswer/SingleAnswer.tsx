@@ -22,7 +22,7 @@ const SingleAnswer: React.FC<{ answer: ICommentAnswers }> = ({ answer }) => {
    }, [answer.parentCommentId, getAnswerReplies, answer._id])
 
    return (
-      <BaseAnswerComponent answer={answer} postId={postId}>
+      <BaseAnswerComponent answer={answer} postId={postId} isChild={true}>
          {childAnswers ? <AnswerList answer={childAnswers} /> : <></>}
       </BaseAnswerComponent>
    )
