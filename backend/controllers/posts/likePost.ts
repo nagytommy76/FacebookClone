@@ -76,11 +76,16 @@ export const deleteLikeFromPostController = async (request: IPostRemoveLikeReque
    }
 }
 
-export const getLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
+export const getCommentLikesByTypeAndCountController = async (
+   request: IGetLikesRequest,
+   response: Response
+) => {
    const { postId, commentId } = request.body
-   console.log(request.query)
-   const objectId = new Types.ObjectId(postId)
-   const post = await PostModel.aggregate([{ $match: { _id: new Types.ObjectId(postId) } }])
+
+   const post = await PostModel.aggregate([
+      { $match: { _id: new Types.ObjectId(postId) } },
+      { $match: { 'comments._id': new Types.ObjectId(commentId) } },
+   ])
 
    return response.status(200).json(post[0])
 }

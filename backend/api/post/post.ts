@@ -5,7 +5,7 @@ import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefr
 import {
    likePostController,
    deleteLikeFromPostController,
-   getLikesByTypeAndCountController,
+   getCommentLikesByTypeAndCountController,
 } from '../../controllers/posts/likePost'
 import { savePostComment } from '../../controllers/posts/postComment'
 import PostCommentController from '../../controllers/posts/postComment'
@@ -16,7 +16,7 @@ const router = Router()
 // Ide kell egy api route protection (accessTokennel, middleware)
 router.get('/get-posts', authenticateAccessTokenForApi, getAllPosts)
 router.get('/get-posts-test', authenticateAccessTokenForApi, getCommentLikes)
-router.get('/get-like-count', authenticateAccessTokenForApi, getLikesByTypeAndCountController)
+router.post('/get-comment-like-count', authenticateAccessTokenForApi, getCommentLikesByTypeAndCountController)
 router.post('/save-post', authenticateAccessTokenForApi, savePostController)
 
 // Likolás
