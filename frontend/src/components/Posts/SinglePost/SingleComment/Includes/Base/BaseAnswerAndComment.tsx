@@ -6,13 +6,19 @@ import useMoment from '@/src/hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
 
 import {
-   StyledCommentContainer,
    StyledCommentPaper,
-   StyledListElement,
    StyledProfileImage,
    CommentFooterStyle,
    StyledCommentAnswerButton,
-} from './Styles'
+} from './Styles/Styles'
+import {
+   StyledCommentContainer,
+   StyledListElement,
+   StyledRightSide,
+   StyledLeftSide,
+   HorizontalLineStyle,
+} from './Styles/ContainerStyles.tsx'
+
 import Collapse from '@mui/material/Collapse'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -26,7 +32,8 @@ const BaseAnswerAndComment: React.FC<{
    answer: ICommentAnswers | IPostComment
    children: React.ReactNode
    postId: string
-}> = ({ answer, children, postId }) => {
+   isChild?: boolean
+}> = ({ answer, children, postId, isChild = false }) => {
    const currentTime = useMoment(answer.answeredAt)
 
    const functionParams = answer.hasOwnProperty('commentDepth')
@@ -46,36 +53,43 @@ const BaseAnswerAndComment: React.FC<{
    return (
       <StyledCommentContainer>
          <StyledListElement>
-            <StyledProfileImage
-               src={answer.userId.userDetails.profilePicturePath[0].path}
-               alt='profil'
-               width={20}
-               height={20}
-            />
-            <StyledCommentPaper key={answer._id}>
-               <p>{answer.comment}</p>
-               <Reactions likes={answer.likes as []} commentId={answer._id} postId={postId} />
-            </StyledCommentPaper>
-            <CommentFooterStyle>
-               <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>
-                  <StyledCommentAnswerButton onClick={handleSetAnswerOpen}>Válasz</StyledCommentAnswerButton>
-               </Likes>
-               <Tooltip arrow title={moment(answer.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
-                  <span>{currentTime}</span>
-               </Tooltip>
-            </CommentFooterStyle>
-            <Collapse in={isAnswerOpen} timeout={100}>
-               <AddCommentBase
-                  reference={reference as React.MutableRefObject<null>}
-                  handleSendComment={() => {
-                     answerMutate()
-                  }}
-                  commentText={answerText}
-                  handleChangeText={handleChangeText}
-                  isSendDisabled={isSendDisabled}
+            <StyledLeftSide>
+               <StyledProfileImage
+                  src={answer.userId.userDetails.profilePicturePath[0].path}
+                  alt='profil'
+                  width={20}
+                  height={20}
                />
-            </Collapse>
-            {children}
+               <HorizontalLineStyle isChildComment={isChild} />
+            </StyledLeftSide>
+            <StyledRightSide>
+               <StyledCommentPaper key={answer._id}>
+                  <p>{answer.comment}</p>
+                  <Reactions likes={answer.likes as []} commentId={answer._id} postId={postId} />
+               </StyledCommentPaper>
+               <CommentFooterStyle>
+                  <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>
+                     <StyledCommentAnswerButton onClick={handleSetAnswerOpen}>
+                        Válasz
+                     </StyledCommentAnswerButton>
+                  </Likes>
+                  <Tooltip arrow title={moment(answer.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
+                     <span>{currentTime}</span>
+                  </Tooltip>
+               </CommentFooterStyle>
+               <Collapse in={isAnswerOpen} timeout={100}>
+                  <AddCommentBase
+                     reference={reference as React.MutableRefObject<null>}
+                     handleSendComment={() => {
+                        answerMutate()
+                     }}
+                     commentText={answerText}
+                     handleChangeText={handleChangeText}
+                     isSendDisabled={isSendDisabled}
+                  />
+               </Collapse>
+               {children}
+            </StyledRightSide>
          </StyledListElement>
       </StyledCommentContainer>
    )
