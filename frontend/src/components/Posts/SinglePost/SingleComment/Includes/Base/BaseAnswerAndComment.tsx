@@ -17,7 +17,7 @@ import {
    StyledRightSide,
    StyledLeftSide,
    HorizontalLineStyle,
-} from './Styles/ContainerStyles.tsx'
+} from './Styles/ContainerStyles'
 
 import Collapse from '@mui/material/Collapse'
 import Tooltip from '@mui/material/Tooltip'

@@ -30,30 +30,20 @@ export const HorizontalLineStyle = styled('span')<{ isChildComment: boolean }>(
    ({ isChildComment, theme }) => ({
       display: isChildComment ? 'block' : 'none',
       position: 'absolute',
-      cursor: 'pointer',
+      // cursor: 'pointer',
 
       top: '50px',
-      width: '10px',
+      width: '6px',
       height: 'calc(100% - 50px)',
 
-      borderLeft: '3px solid transparent',
-      borderRight: '3px solid transparent',
+      borderLeft: '2px solid transparent',
+      borderRight: '2px solid transparent',
 
-      backgroundColor: 'rgba(50, 50, 50, 0.5)',
-      // backgroundColor: theme.,
+      backgroundColor: 'rgba(100, 100, 100, .55)',
       backgroundClip: 'padding-box',
-
+      transition: 'all .05s ease',
       ['&:hover']: {
-         backgroundColor: theme.palette.grey[100],
+         backgroundColor: theme.palette.grey[300],
       },
    })
 )
-
-const StyledSlider = styled('span', {
-   shouldForwardProp: (prop) => prop !== 'success',
-})<{ isChildComment: boolean }>(({ isChildComment, theme }) => ({
-   ...(isChildComment &&
-      {
-         // the overrides added when the new prop is used
-      }),
-}))
