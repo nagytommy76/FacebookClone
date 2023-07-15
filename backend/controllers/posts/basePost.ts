@@ -35,4 +35,31 @@ export default abstract class BasePostController {
          })
       }
    }
+
+   async returnPostModelWithPopulated(userId: string | null = null) {
+      const allPosts = await PostModel.find(userId ? { userId } : {})
+         .populate({
+            path: 'userId',
+            select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
+         .populate({
+            path: 'comments.userId',
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
+         .populate({
+            path: 'comments.commentAnswers.userId',
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
+         .lean()
+      return allPosts
+   }
 }
