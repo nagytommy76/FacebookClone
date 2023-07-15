@@ -19,7 +19,7 @@ const Posts = () => {
    const {
       selectSelectedProfilePicture,
       profileDispatch,
-      profileReducer: { initialUserDataState },
+      profileReducer: { initialUserDataState, usersPosts },
    } = useContext(ProfileContext)
    const addNewPost = (newPost: IPost) => {
       profileDispatch({ type: UserDataActions.ADD_NEW_POST, payload: newPost })
@@ -27,8 +27,8 @@ const Posts = () => {
    return (
       <>
          <AddPostComponent addNewPost={addNewPost} />
-         {initialUserDataState.posts &&
-            initialUserDataState.posts.map((post: IPost) => (
+         {usersPosts &&
+            usersPosts.map((post: IPost) => (
                <PostContextProvider key={post._id} singlePost={post}>
                   <SinglePostComponent>
                      <PostHeader

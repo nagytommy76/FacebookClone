@@ -5,10 +5,6 @@ import Paper from '@mui/material/Paper'
 // Picture style --------------------------------------------
 
 export const StyledProfileImage = styled(Image)({
-   // position: 'absolute',
-   // left: 0,
-   // top: 0,
-   // marginRight: 8,
    height: 38,
    width: 38,
    borderRadius: 50,
