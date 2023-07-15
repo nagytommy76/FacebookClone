@@ -21,7 +21,7 @@ const useGetAllPosts = (setAllPosts: React.Dispatch<React.SetStateAction<IPost[]
    })
    return {
       isLoading,
-      data: data?.data.allPosts,
+      allPostsData: data?.data.allPosts,
    }
 }
 

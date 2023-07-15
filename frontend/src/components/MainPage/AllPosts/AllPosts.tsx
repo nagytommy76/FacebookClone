@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import useGetAllPosts from './Hooks/useGetAllPosts'
 import PostContextProvider from '../Context/PostContextProvider'
@@ -20,16 +20,15 @@ const AllPosts = () => {
    const addNewPost = (newPost: IPost) => {
       setAllPosts([...allPosts, newPost])
    }
-   const { isLoading } = useGetAllPosts(setAllPosts)
+   const { allPostsData } = useGetAllPosts(setAllPosts)
    const getSelectedProfilePicture = (profilePictures: IProfilePicture[]) => {
       return profilePictures.find((image) => image.isSelected)
    }
    return (
       <>
          <AddPostComponent addNewPost={addNewPost} />
-         {!isLoading &&
-            allPosts &&
-            allPosts.map((post: IPost) => (
+         {allPostsData &&
+            allPostsData.map((post: IPost) => (
                <PostContextProvider key={post._id} singlePost={post}>
                   <SinglePostComponent>
                      <PostHeader
