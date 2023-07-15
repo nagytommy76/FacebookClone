@@ -6,17 +6,7 @@ export const getUserDetailsWithOwnPosts = async (request: IJWTUserType, response
    const userId = request.user?.userId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
-      const foundUserWithPosts = await UserModel.findById(userId).populate({
-         path: 'posts',
-         populate: {
-            path: 'comments.userId',
-            select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
-            match: {
-               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-            },
-            // match: { 'userDetails.profilePicturePath.isSelected': true },
-         },
-      })
+      const foundUserWithPosts = await UserModel.findById(userId)
       return response.status(200).json(foundUserWithPosts)
    } catch (error) {
       response.status(500).json({ error, msg: 'internal server error' })

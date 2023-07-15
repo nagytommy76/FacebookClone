@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { savePostController } from '../../controllers/posts/savePost'
-import { getAllPosts, getCommentLikes } from '../../controllers/posts/getPosts'
 import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefresh'
 import {
    likePostController,
@@ -9,13 +8,15 @@ import {
 } from '../../controllers/posts/likePost'
 import { savePostComment } from '../../controllers/posts/postComment'
 import PostCommentController from '../../controllers/posts/postComment'
+import GetPostsController from '../../controllers/posts/getPosts'
 
 const PostComment = new PostCommentController()
+const GetPosts = new GetPostsController()
 
 const router = Router()
 // Ide kell egy api route protection (accessTokennel, middleware)
-router.get('/get-posts', authenticateAccessTokenForApi, getAllPosts)
-router.get('/get-posts-test', authenticateAccessTokenForApi, getCommentLikes)
+router.get('/get-posts', authenticateAccessTokenForApi, GetPosts.getAllPosts)
+router.get('/get-user-posts', authenticateAccessTokenForApi, GetPosts.getUsersAllPosts)
 router.post('/get-comment-like-count', authenticateAccessTokenForApi, getCommentLikesByTypeAndCountController)
 router.post('/save-post', authenticateAccessTokenForApi, savePostController)
 
