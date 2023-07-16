@@ -84,8 +84,36 @@ export const getCommentLikesByTypeAndCountController = async (
 
    const post = await PostModel.aggregate([
       { $match: { _id: new Types.ObjectId(postId) } },
-      { $match: { 'comments._id': new Types.ObjectId(commentId) } },
+      {
+         $project: {
+            comments: {
+               $filter: {
+                  input: '$comments',
+                  as: 'foundComment',
+                  cond: { $eq: ['$$foundComment._id', new Types.ObjectId(commentId)] },
+               },
+            },
+         },
+      },
+      {
+         $unwind: {
+            path: '$comments',
+         },
+      },
+      // { $project: { 'comments.likes': 1 } },
+      {
+         $group: {
+            _id: null,
+            isLike: { $addToSet: '$comments.likes.reactionType.isLike' },
+            isAngry: { $addToSet: '$comments.likes.reactionType.isAngry' },
+         },
+      },
+      // {
+      //    $unwind: {
+      //       path: '$isAngry',
+      //    },
+      // },
    ])
 
-   return response.status(200).json(post[0])
+   return response.status(200).json(post)
 }
