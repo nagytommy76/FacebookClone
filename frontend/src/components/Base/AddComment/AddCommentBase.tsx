@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { StyledPaperContainer, StyledTextContainer, StyledTextInput } from './Styles'
 import Collapse from '@mui/material/Collapse'
-import SendIcon from '@mui/icons-material/Send'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
+import SendIcon from '@mui/icons-material/Send'
+import AddReactionIcon from '@mui/icons-material/AddReaction'
 
 const AddCommentBase: React.FC<{
    reference: React.MutableRefObject<null>
@@ -30,6 +31,17 @@ const AddCommentBase: React.FC<{
                      variant='standard'
                      fullWidth
                   />
+                  <IconButton
+                     sx={{
+                        color: 'primary.main',
+                     }}
+                     onClick={() => {}}
+                     type='button'
+                     size='small'
+                     aria-label='add-reaction-emoji'
+                  >
+                     <AddReactionIcon fontSize='inherit' />
+                  </IconButton>
                   <Tooltip title='Küldés' placement='top' arrow>
                      <span>
                         <IconButton
