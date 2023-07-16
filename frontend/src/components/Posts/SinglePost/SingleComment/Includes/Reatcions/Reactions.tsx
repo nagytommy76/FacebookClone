@@ -35,7 +35,9 @@ const Reactions = memo(function Reactions({
       <>
          <Tooltip
             title={<IconStack displayRow={false} orderedCountedLike={orderedCountedLike} />}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+               setIsModalOpen(true)
+            }}
          >
             {!isPostReactions ? (
                <LikeIconStyle>

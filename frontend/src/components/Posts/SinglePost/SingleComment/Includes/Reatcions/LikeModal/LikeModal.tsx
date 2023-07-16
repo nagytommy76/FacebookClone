@@ -18,12 +18,12 @@ const LikeModal: React.FC<{
    const handleCloseModal = () => setIsModalOpen(false)
 
    const { data } = useQuery({
-      queryKey: ['GetLikeTypes', postId],
+      queryKey: ['GetLikeTypes', commentId],
       queryFn: async () => {
          return await axios.post(`/post/get-comment-like-count`, { commentId, postId })
       },
    })
-   console.log(data?.data)
+
    return (
       <Modal
          aria-labelledby='like-modal-title'
