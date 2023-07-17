@@ -5,7 +5,8 @@ import Collapse from '@mui/material/Collapse'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/Send'
-import AddReactionIcon from '@mui/icons-material/AddReaction'
+
+import AddEmojiButton from './Includes/AddEmojiButton'
 
 const AddCommentBase: React.FC<{
    reference: React.MutableRefObject<null>
@@ -31,17 +32,7 @@ const AddCommentBase: React.FC<{
                      variant='standard'
                      fullWidth
                   />
-                  <IconButton
-                     sx={{
-                        color: 'primary.main',
-                     }}
-                     onClick={() => {}}
-                     type='button'
-                     size='small'
-                     aria-label='add-reaction-emoji'
-                  >
-                     <AddReactionIcon fontSize='inherit' />
-                  </IconButton>
+                  <AddEmojiButton />
                   <Tooltip title='Küldés' placement='top' arrow>
                      <span>
                         <IconButton
