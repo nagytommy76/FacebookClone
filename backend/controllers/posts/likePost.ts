@@ -100,14 +100,22 @@ export const getCommentLikesByTypeAndCountController = async (
             path: '$comments',
          },
       },
-      // { $project: { 'comments.likes': 1 } },
+      { $project: { 'comments.likes': 1 } },
       {
-         $group: {
-            _id: null,
-            isLike: { $addToSet: '$comments.likes.reactionType.isLike' },
-            isAngry: { $addToSet: '$comments.likes.reactionType.isAngry' },
+         $lookup: {
+            from: 'users',
+            localField: 'comments.likes.userId',
+            foreignField: '_id',
+            as: 'comments.likes.userId',
          },
       },
+      // {
+      //    $group: {
+      //       _id: null,
+      //       isLike: { $addToSet: '$comments.likes.reactionType.isLike' },
+      //       isAngry: { $addToSet: '$comments.likes.reactionType.isAngry' },
+      //    },
+      // },
       // {
       //    $unwind: {
       //       path: '$isAngry',
