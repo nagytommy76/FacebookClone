@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import ClickAwayListener from '@mui/base/ClickAwayListener'
@@ -21,11 +20,13 @@ const EmojiTooltipTitle: React.FC<{ handleCloseTooltip: () => void }> = ({ handl
       <ClickAwayListener onClickAway={handleCloseTooltip}>
          <Box>
             {EmojiHexUnicodes.map((emoji, index) => (
-               //    <Typography  key={index}>{emoji}</Typography>
-               <span key={index} role='img' aria-label='dog'>
+               // <Typography key={index}>{emoji}</Typography>
+               <h3 key={index} role='img' aria-label='dog'>
                   {emoji}
-               </span>
+               </h3>
             ))}
+            &#x1F600;
+            <h1>&#x1F600;</h1>
          </Box>
       </ClickAwayListener>
    )
