@@ -1,33 +1,16 @@
 import React from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import ClickAwayListener from '@mui/base/ClickAwayListener'
 
-const EmojiHexUnicodes = [
-   '&#x1F600;',
-   '&#x1F601;',
-   '&#x1F602;',
-   '&#x1F923;',
-   '&#x1F603;',
-   '&#x1F604;',
-   '&#x1F605;',
-   '&#x1F606;',
-   '&#x1F60B;',
-]
+import Box from '@mui/material/Box'
+import ClickAwayListener from '@mui/base/ClickAwayListener'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 
 const EmojiTooltipTitle: React.FC<{ handleCloseTooltip: () => void }> = ({ handleCloseTooltip }) => {
    return (
       <ClickAwayListener onClickAway={handleCloseTooltip}>
-         <Box>
-            {EmojiHexUnicodes.map((emoji, index) => (
-               // <Typography key={index}>{emoji}</Typography>
-               <h3 key={index} role='img' aria-label='dog'>
-                  {emoji}
-               </h3>
-            ))}
-            &#x1F600;
-            <h1>&#x1F600;</h1>
-         </Box>
+         <div>
+            <Picker data={data} onEmojiSelect={console.log} />
+         </div>
       </ClickAwayListener>
    )
 }
