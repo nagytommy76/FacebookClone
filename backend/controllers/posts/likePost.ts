@@ -76,52 +76,78 @@ export const deleteLikeFromPostController = async (request: IPostRemoveLikeReque
    }
 }
 
-export const getCommentLikesByTypeAndCountController = async (
-   request: IGetLikesRequest,
-   response: Response
-) => {
-   const { postId, commentId } = request.body
+export const getPostLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
+   const { postId } = request.body
 
-   const post = await PostModel.aggregate([
-      { $match: { _id: new Types.ObjectId(postId) } },
-      {
-         $project: {
-            comments: {
-               $filter: {
-                  input: '$comments',
-                  as: 'foundComment',
-                  cond: { $eq: ['$$foundComment._id', new Types.ObjectId(commentId)] },
-               },
-            },
+   const postLikes = await PostModel.findById(postId)
+      .select('likes')
+      .populate({
+         path: 'likes.userId',
+         select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+         match: {
+            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          },
-      },
-      {
-         $unwind: {
-            path: '$comments',
-         },
-      },
-      { $project: { 'comments.likes': 1 } },
-      {
-         $lookup: {
-            from: 'users',
-            localField: 'comments.likes.userId',
-            foreignField: '_id',
-            as: 'comments.likes.userId',
-         },
-      },
-      // {
-      //    $group: {
-      //       _id: null,
-      //       isLike: { $addToSet: '$comments.likes.reactionType.isLike' },
-      //       isAngry: { $addToSet: '$comments.likes.reactionType.isAngry' },
-      //    },
-      // },
-      // {
-      //    $unwind: {
-      //       path: '$isAngry',
-      //    },
-      // },
-   ])
+      })
+   if (!postLikes) return response.status(404).json({ msg: 'post not found' })
 
-   return response.status(200).json(post)
+   let reactionTypes: {
+      [index: string]: number
+   } = {
+      isAngry: 0,
+      isCare: 0,
+      isHaha: 0,
+      isLike: 0,
+      isLove: 0,
+      isSad: 0,
+      isWow: 0,
+   }
+   postLikes.likes.map((like) => {
+      Object.keys(reactionTypes).map((key) => {
+         if (like.reactionType[key] === true) reactionTypes[key]++
+      })
+   })
+
+   return response.status(200).json(reactionTypes)
+}
+export const getPostCommentsLikesByTypeAndCountController = () => {
+   // const post = await PostModel.aggregate([
+   //    { $match: { _id: new Types.ObjectId(postId) } },
+   // {
+   //    $project: {
+   //       comments: {
+   //          $filter: {
+   //             input: '$comments',
+   //             as: 'foundComment',
+   //             cond: { $eq: ['$$foundComment._id', new Types.ObjectId(commentId)] },
+   //          },
+   //       },
+   //    },
+   // },
+   // {
+   //    $unwind: {
+   //       path: '$comments',
+   //    },
+   // },
+   // { $project: { 'comments.likes': 1 } },
+   // {
+   //    $lookup: {
+   //       from: 'users',
+   //       localField: 'comments.likes.userId',
+   //       foreignField: '_id',
+   //       as: 'comments.likes.userId',
+   //    },
+   // },
+   // {
+   //    $group: {
+   //       _id: null,
+   //       isLike: { $addToSet: '$comments.likes.reactionType.isLike' },
+   //       isAngry: { $addToSet: '$comments.likes.reactionType.isAngry' },
+   //    },
+   // },
+   // {
+   //    $unwind: {
+   //       path: '$isAngry',
+   //    },
+   // },
+   // ])
 }
