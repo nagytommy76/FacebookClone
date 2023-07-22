@@ -12,15 +12,15 @@ import { StyledModalPaper, ModalHeader } from './Style'
 const LikeModal: React.FC<{
    isModalOpen: boolean
    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-   commentId: string
+   commentId?: string
    postId: string
 }> = ({ isModalOpen, setIsModalOpen, commentId, postId }) => {
    const handleCloseModal = () => setIsModalOpen(false)
 
    const { data } = useQuery({
-      queryKey: ['GetLikeTypes', commentId],
+      queryKey: ['GetLikeTypes', postId],
       queryFn: async () => {
-         return await axios.post(`/post/get-comment-like-count`, { commentId, postId })
+         return await axios.post(`/post/get-post-like-count`, { commentId, postId })
       },
    })
 
