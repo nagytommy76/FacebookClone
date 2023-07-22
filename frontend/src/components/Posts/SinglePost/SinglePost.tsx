@@ -39,7 +39,9 @@ const SinglePost: React.FC<{
          )}
          <FooterSectionStyle>
             <LikeAndCommentContainer>
-               {singlePost.likes.length > 0 && <Reactions isPostReactions={true} likes={singlePost.likes} />}
+               {singlePost.likes.length > 0 && (
+                  <Reactions isPostReactions={true} postId={singlePost._id} likes={singlePost.likes} />
+               )}
                {singlePost.comments.length > 0 && <p>{singlePost.comments.length} hozzászólás</p>}
             </LikeAndCommentContainer>
             <Divider sx={{ mt: 1, mb: 1 }} />

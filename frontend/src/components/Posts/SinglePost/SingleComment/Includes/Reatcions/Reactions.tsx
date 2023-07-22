@@ -17,7 +17,7 @@ const Reactions = memo(function Reactions({
 }: {
    likes: IPostLike[]
    isPostReactions?: boolean
-   commentId: string
+   commentId?: string
    postId: string
 }) {
    const orderedCountedLike = useGetLikeTypes(likes)
