@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongoose'
-import type { IPostLike } from '../PostTypes'
+import type { IPostLike } from './PostTypes'
 
 export interface ICommentAnswer {
    userId: string

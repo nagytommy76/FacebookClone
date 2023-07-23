@@ -76,6 +76,141 @@ export const deleteLikeFromPostController = async (request: IPostRemoveLikeReque
    }
 }
 
+const TESTOBJECT: {
+   [index: string]: any
+} = [
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: true,
+         isCare: false,
+         isHaha: false,
+         isLike: false,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: true,
+         isLike: false,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: true,
+         isLike: false,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: true,
+         isCare: false,
+         isHaha: false,
+         isLike: false,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: false,
+         isLike: false,
+         isLove: true,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: false,
+         isLike: true,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: false,
+         isLike: true,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: false,
+         isLike: false,
+         isLove: false,
+         isSad: false,
+         isWow: true,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: false,
+         isCare: false,
+         isHaha: false,
+         isLike: true,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+   {
+      _id: '648487373714f88d348f6704',
+      userId: '64777ef1c3038faf5e1a41c6',
+      reactionType: {
+         isAngry: true,
+         isCare: false,
+         isHaha: false,
+         isLike: false,
+         isLove: false,
+         isSad: false,
+         isWow: false,
+      },
+   },
+]
+
 export const getPostLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
    const { postId } = request.body
 
@@ -90,22 +225,38 @@ export const getPostLikesByTypeAndCountController = async (request: IGetLikesReq
       })
    if (!postLikes) return response.status(404).json({ msg: 'post not found' })
 
-   let reactionTypes: {
-      [index: string]: number
-   } = {
-      isAngry: 0,
-      isCare: 0,
-      isHaha: 0,
-      isLike: 0,
-      isLove: 0,
-      isSad: 0,
-      isWow: 0,
-   }
-   postLikes.likes.map((like) => {
-      Object.keys(reactionTypes).map((key) => {
-         if (like.reactionType[key] === true) reactionTypes[key]++
+   const reactionTypes: {
+      [index: string]: { count: number; reactors: string[] }
+   } = {}
+   // postLikes.likes.map((like) => {
+   //    Object.entries(like.reactionType).map((keyValue) => {
+   //       if (like.reactionType[keyValue[0]] === true) {
+   //          Object.defineProperty(reactionTypes, keyValue[0], {
+   //             value: {
+   //                count: reactionTypes[keyValue[0]]++ || 1,
+   //                reactors: like.userId,
+   //             },
+   //             writable: true,
+   //          })
+   //          console.log(reactionTypes)
+   //       }
+   //    })
+   // })
+   TESTOBJECT.map((like: any) => {
+      Object.entries(like.reactionType).map((keyValue) => {
+         if (like.reactionType[keyValue[0]] === true) {
+            if (reactionTypes[keyValue[0]] === undefined) {
+               reactionTypes[keyValue[0]] = {
+                  count: 1,
+                  reactors: like.userId,
+               }
+            } else {
+               reactionTypes[keyValue[0]].count++
+            }
+         }
       })
    })
+   console.log(reactionTypes)
 
    return response.status(200).json(reactionTypes)
 }
