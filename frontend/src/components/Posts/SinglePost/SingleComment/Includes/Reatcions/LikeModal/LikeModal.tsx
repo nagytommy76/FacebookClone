@@ -1,6 +1,7 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
+
+// import useGetComment from '../../Hooks/useGetComment'
+// import useGetPostLike from '../../Hooks/useGetPostLike'
 
 import Modal from '@mui/material/Modal'
 import Fade from '@mui/material/Fade'
@@ -12,17 +13,11 @@ import { StyledModalPaper, ModalHeader } from './Style'
 const LikeModal: React.FC<{
    isModalOpen: boolean
    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-   commentId?: string
-   postId: string
-}> = ({ isModalOpen, setIsModalOpen, commentId, postId }) => {
+}> = ({ isModalOpen, setIsModalOpen }) => {
    const handleCloseModal = () => setIsModalOpen(false)
 
-   const { data } = useQuery({
-      queryKey: ['GetLikeTypes', postId],
-      queryFn: async () => {
-         return await axios.post(`/post/get-post-like-count`, { commentId, postId })
-      },
-   })
+   // const { postLikeCount } = useGetPostLike(postId)
+   // const { commentLikeCount } = useGetComment(commentId, postId)
 
    return (
       <Modal

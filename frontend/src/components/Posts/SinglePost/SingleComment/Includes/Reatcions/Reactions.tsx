@@ -1,5 +1,4 @@
-import dynamic from 'next/dynamic'
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import useGetLikeTypes from '../../Hooks/useGetLikeTypes'
 import type { IPostLike } from '@/types/LikeTypes'
 
@@ -7,21 +6,19 @@ import Tooltip from '@mui/material/Tooltip'
 import { LikeIconStyle, LikeLengthStyle, PostLikeIconStyle } from './Styles'
 
 import IconStack from '../IconStack'
-const LikeModal = dynamic(() => import('./LikeModal/LikeModal'))
 
 const Reactions = memo(function Reactions({
+   children,
    likes,
    isPostReactions = false,
-   commentId,
-   postId,
+   setIsModalOpen,
 }: {
+   children: React.ReactNode
    likes: IPostLike[]
    isPostReactions?: boolean
-   commentId?: string
-   postId: string
+   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
    const orderedCountedLike = useGetLikeTypes(likes)
-   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
    const IconAndLength = () => {
       return (
@@ -49,14 +46,7 @@ const Reactions = memo(function Reactions({
                </PostLikeIconStyle>
             )}
          </Tooltip>
-         {isModalOpen && (
-            <LikeModal
-               commentId={commentId}
-               postId={postId}
-               isModalOpen={isModalOpen}
-               setIsModalOpen={setIsModalOpen}
-            />
-         )}
+         {children}
       </>
    ) : (
       <></>

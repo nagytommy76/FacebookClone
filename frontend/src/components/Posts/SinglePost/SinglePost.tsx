@@ -1,7 +1,8 @@
-import React, { useRef, useContext } from 'react'
+import React, { useRef, useContext, useState } from 'react'
 import dynamic from 'next/dynamic'
 import CommentContextProvider from './SingleComment/Context/CommentContext'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
+import useGetPostLike from './SingleComment/Includes/Hooks/useGetPostLike'
 
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -14,6 +15,7 @@ import {
 } from './Styles'
 
 const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'))
+const LikeModal = dynamic(() => import('./SingleComment/Includes/Reatcions/LikeModal/LikeModal'))
 import CommentButton from './AddComment/CommentButton'
 import Like from './Like/Like'
 import AddComment from './AddComment/AddComment'
@@ -27,6 +29,8 @@ const SinglePost: React.FC<{
       postsReducer: { singlePost },
    } = useContext(PostContext)
    const commentRef = useRef(null)
+   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+   const { postLikeCount } = useGetPostLike(singlePost._id)
 
    return (
       <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px' }}>
@@ -40,7 +44,15 @@ const SinglePost: React.FC<{
          <FooterSectionStyle>
             <LikeAndCommentContainer>
                {singlePost.likes.length > 0 && (
-                  <Reactions isPostReactions={true} postId={singlePost._id} likes={singlePost.likes} />
+                  <Reactions
+                     isPostReactions={true}
+                     // postId={singlePost._id}
+                     // commentId={null}
+                     likes={singlePost.likes}
+                     setIsModalOpen={setIsModalOpen}
+                  >
+                     <LikeModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                  </Reactions>
                )}
                {singlePost.comments.length > 0 && <p>{singlePost.comments.length} hozzászólás</p>}
             </LikeAndCommentContainer>
