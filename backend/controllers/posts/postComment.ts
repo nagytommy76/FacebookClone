@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
-import BasePostController from './basePost'
+import BasePostController from './Base/basePost'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import type { ICommentLikeRequest } from './types/PostTypes'
 

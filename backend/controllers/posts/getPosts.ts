@@ -1,6 +1,6 @@
 import { Response, Request } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
-import BasePostController from './basePost'
+import BasePostController from './Base/basePost'
 
 export default class GetPostsController extends BasePostController {
    getAllPosts = async (req: Request, res: Response) => {
