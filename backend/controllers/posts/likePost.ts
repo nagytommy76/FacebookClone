@@ -27,7 +27,31 @@ export default class LikePost extends BaseLikeController {
       }
    }
 
-   getPostCommentsLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {}
+   getPostCommentsLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
+      const { commentId, postId } = request.body
+      try {
+         const postCommentLikes = await PostModel.find({
+            _id: postId,
+            comments: { $elemMatch: { _id: commentId } },
+         })
+            .select('comments.$')
+            .populate({
+               path: 'comments.likes.userId',
+               select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+               match: {
+                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+               },
+            })
+         if (!postCommentLikes) return response.status(404).json({ msg: 'post not found' })
+
+         const reactionTypes = this.getLikesByReactionType(postCommentLikes[0].comments[0].likes)
+         const totalReactionCount = this.countLikeReactions(reactionTypes)
+
+         response.status(200).json({ reactionTypes, totalReactionCount })
+      } catch (error) {
+         response.status(500).json({ msg: 'Internal server error', error })
+      }
+   }
 
    likePostController = async (request: IPostLikeRequest, response: Response) => {
       const { postId, reactionType } = request.body
