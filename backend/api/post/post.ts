@@ -20,6 +20,11 @@ router.post(
    authenticateAccessTokenForApi,
    LikePostClass.getPostLikesByTypeAndCountController
 )
+router.post(
+   '/get-comment-like-count',
+   authenticateAccessTokenForApi,
+   LikePostClass.getPostCommentsLikesByTypeAndCountController
+)
 router.post('/save-post', authenticateAccessTokenForApi, savePostController)
 
 // Likolás
