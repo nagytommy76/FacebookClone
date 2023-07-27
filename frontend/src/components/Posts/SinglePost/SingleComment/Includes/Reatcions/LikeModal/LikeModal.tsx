@@ -1,7 +1,5 @@
 import React from 'react'
-
-// import useGetComment from '../../Hooks/useGetComment'
-// import useGetPostLike from '../../Hooks/useGetPostLike'
+import type { IReactionCount } from '@/src/types/LikeTypes'
 
 import Modal from '@mui/material/Modal'
 import Fade from '@mui/material/Fade'
@@ -13,12 +11,9 @@ import { StyledModalPaper, ModalHeader } from './Style'
 const LikeModal: React.FC<{
    isModalOpen: boolean
    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ isModalOpen, setIsModalOpen }) => {
+   likeCount: IReactionCount | undefined
+}> = ({ isModalOpen, setIsModalOpen, likeCount }) => {
    const handleCloseModal = () => setIsModalOpen(false)
-
-   // const { postLikeCount } = useGetPostLike(postId)
-   // const { commentLikeCount } = useGetComment(commentId, postId)
-
    return (
       <Modal
          aria-labelledby='like-modal-title'
