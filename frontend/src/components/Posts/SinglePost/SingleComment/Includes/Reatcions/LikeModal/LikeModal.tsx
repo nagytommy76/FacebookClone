@@ -1,10 +1,14 @@
-import React from 'react'
-import type { IReactionCount } from '@/src/types/LikeTypes'
+import React, { useState } from 'react'
+import type { IReactionCount, LikeTypes } from '@/src/types/LikeTypes'
+import useIcon from './Hooks/useIcon'
 
 import Modal from '@mui/material/Modal'
 import Fade from '@mui/material/Fade'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 
 import { StyledModalPaper, ModalHeader } from './Style'
 
@@ -13,7 +17,14 @@ const LikeModal: React.FC<{
    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
    likeCount: IReactionCount | undefined
 }> = ({ isModalOpen, setIsModalOpen, likeCount }) => {
+   const [tabValue, setTabValue] = React.useState(0)
    const handleCloseModal = () => setIsModalOpen(false)
+   const returnImage = useIcon()
+
+   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+      setTabValue(newValue)
+   }
+
    return (
       <Modal
          aria-labelledby='like-modal-title'
@@ -27,20 +38,25 @@ const LikeModal: React.FC<{
             },
          }}
       >
-         <Fade in={isModalOpen}>
-            <StyledModalPaper>
-               <ModalHeader>
-                  <h1>Head</h1>
-                  <IconButton onClick={handleCloseModal}>
-                     <CloseIcon />
-                  </IconButton>
-               </ModalHeader>
-               <p>
-                  Ide szeretnék egy olyat mint a facebookon: head: csoportosítva likeok szerint, body, kik
-                  adták a reakciót
-               </p>
-            </StyledModalPaper>
-         </Fade>
+         {likeCount ? (
+            <Fade in={isModalOpen}>
+               <StyledModalPaper>
+                  <ModalHeader>
+                     <Tabs value={tabValue} onChange={handleChange} aria-label='icon tabs example'>
+                        {Object.entries(likeCount.reactionTypes).map((key, index) => (
+                           <Tab key={index} icon={returnImage(key[0] as LikeTypes)} aria-label='phone' />
+                        ))}
+                     </Tabs>
+                     <IconButton onClick={handleCloseModal}>
+                        <CloseIcon />
+                     </IconButton>
+                  </ModalHeader>
+                  <p>{likeCount.reactionTypes[0]}</p>
+               </StyledModalPaper>
+            </Fade>
+         ) : (
+            <>töltés</>
+         )}
       </Modal>
    )
 }
