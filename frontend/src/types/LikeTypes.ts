@@ -59,3 +59,20 @@ export interface IOrderedLikesCount {
    isSad: number
    isWow: number
 }
+
+type ReactionType<Types> = {
+   [Property in keyof Types]: {
+      count: number
+      reactors: {
+         firstName: string
+         sureName: string
+         userDetails: {
+            profilePicturePath: { isSelected: boolean; path: string; id: string }[]
+         }
+      }[]
+   }
+}
+export interface IReactionCount {
+   totalReactionCount: number
+   reactionTypes: ReactionType<LikeTypes>
+}
