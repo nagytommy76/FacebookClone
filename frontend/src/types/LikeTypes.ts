@@ -60,7 +60,7 @@ export interface IOrderedLikesCount {
    isWow: number
 }
 
-type ReactionType<Types> = {
+export type ReactionType<Types> = {
    [Property in keyof Types]: {
       count: number
       reactors: {
