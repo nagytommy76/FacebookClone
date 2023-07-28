@@ -1,5 +1,5 @@
 import React from 'react'
-import { TabPanelProps } from '../../Types/Types'
+import { TabPanelProps } from '../../../../types/TabPanelTypes'
 
 import { styled } from '@mui/material'
 
@@ -16,7 +16,8 @@ export default function TabPanel(props: TabPanelProps) {
          hidden={value !== index}
          id={`tabpanel-${index}`}
          aria-labelledby={`tab-${index}`}
-         {...other}>
+         {...other}
+      >
          {value === index && children}
       </StyledContainer>
    )
