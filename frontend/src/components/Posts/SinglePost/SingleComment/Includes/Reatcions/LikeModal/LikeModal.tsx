@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
 import TabHeader from './TabHeader/TabHeader'
+import TabPanel from './TabPanel/TabPanel'
 
 import { StyledModalPaper, ModalHeader } from './Style'
 
@@ -44,7 +45,7 @@ const LikeModal: React.FC<{
                         <CloseIcon />
                      </IconButton>
                   </ModalHeader>
-                  <p>{likeCount.reactionTypes[0]}</p>
+                  <TabPanel tabValue={tabValue} />
                </StyledModalPaper>
             </Fade>
          ) : (
