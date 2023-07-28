@@ -14,19 +14,19 @@ const useIcon = () => {
    const returnImage = (reactionType: LikeTypes) => {
       switch (reactionType) {
          case 'isAngry':
-            return <Image src={Angry} alt='angry icon' />
+            return <Image width={25} height={25} src={Angry} alt='angry icon' />
          case 'isCare':
-            return <Image src={Care} alt='angry icon' />
+            return <Image width={25} height={25} src={Care} alt='angry icon' />
          case 'isHaha':
-            return <Image src={Haha} alt='angry icon' />
+            return <Image width={25} height={25} src={Haha} alt='angry icon' />
          case 'isLike':
-            return <Image src={LikeAnimated} alt='angry icon' />
+            return <Image width={25} height={25} src={LikeAnimated} alt='angry icon' />
          case 'isLove':
-            return <Image src={Love} alt='angry icon' />
+            return <Image width={25} height={25} src={Love} alt='angry icon' />
          case 'isSad':
-            return <Image src={Sad} alt='angry icon' />
+            return <Image width={25} height={25} src={Sad} alt='angry icon' />
          case 'isWow':
-            return <Image src={Wow} alt='angry icon' />
+            return <Image width={25} height={25} src={Wow} alt='angry icon' />
       }
    }
 
