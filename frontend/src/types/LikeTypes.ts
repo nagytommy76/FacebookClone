@@ -60,8 +60,8 @@ export interface IOrderedLikesCount {
    isWow: number
 }
 
-export type ReactionType<LikeTypes> = {
-   [Property in keyof LikeTypes]: {
+export type ReactionType = {
+   [Key in LikeTypes]: {
       count: number
       reactors: {
          firstName: string
@@ -74,5 +74,5 @@ export type ReactionType<LikeTypes> = {
 }
 export interface IReactionCount {
    totalReactionCount: number
-   reactionTypes: ReactionType<LikeTypes>
+   reactionTypes: ReactionType
 }
