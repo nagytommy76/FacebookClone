@@ -3,7 +3,7 @@ import type { LikeTypes, ReactionType } from '@/src/types/LikeTypes'
 import { styled } from '@mui/material'
 import useIcon from '../Hooks/useIcon'
 
-import Tabs from '@mui/material/Tabs'
+import TabList from '@mui/lab/TabList'
 import Tab from '@mui/material/Tab'
 
 const StyledTab = styled(Tab)({
@@ -19,26 +19,27 @@ const StyledTab = styled(Tab)({
 })
 
 const TabHeader: React.FC<{
-   reactionTypes: ReactionType<LikeTypes>
-   setTabValue: React.Dispatch<React.SetStateAction<number>>
-   tabValue: number
+   reactionTypes: ReactionType
+   setTabValue: React.Dispatch<React.SetStateAction<LikeTypes>>
+   tabValue: LikeTypes
 }> = ({ reactionTypes, setTabValue, tabValue }) => {
    const returnImage = useIcon()
-   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+   const handleChange = (event: React.SyntheticEvent, newValue: LikeTypes) => {
       setTabValue(newValue)
    }
 
    return (
-      <Tabs indicatorColor='primary' value={tabValue} onChange={handleChange} aria-label='icon tabs '>
-         {Object.entries(reactionTypes).map((key: [string, string], index: number) => (
+      <TabList indicatorColor='primary' value={tabValue} onChange={handleChange} aria-label='icon tabs '>
+         {Object.keys(reactionTypes).map((key, index) => (
             <StyledTab
+               value={key}
                key={index}
-               icon={returnImage(key[0] as LikeTypes)}
-               label={reactionTypes[key[0]].count}
+               icon={returnImage(key as LikeTypes)}
+               label={reactionTypes[key as LikeTypes].count}
                aria-label='phone'
             />
          ))}
-      </Tabs>
+      </TabList>
    )
 }
 
