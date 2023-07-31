@@ -1,7 +1,6 @@
 import React from 'react'
 import { LikeTypes, ReactionType } from '@/src/types/LikeTypes'
 
-// import TabPanel from '../TabPanel/TabPanel'
 import TabPanel from '@mui/lab/TabPanel'
 
 const TabBody: React.FC<{ tabValue: LikeTypes; reactionTypes: ReactionType }> = ({
