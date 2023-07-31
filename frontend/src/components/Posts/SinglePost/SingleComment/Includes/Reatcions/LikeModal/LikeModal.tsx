@@ -1,5 +1,5 @@
-import React from 'react'
-import type { IReactionCount } from '@/src/types/LikeTypes'
+import React, { useState } from 'react'
+import type { IReactionCount, LikeTypes } from '@/src/types/LikeTypes'
 
 import Modal from '@mui/material/Modal'
 import Fade from '@mui/material/Fade'
@@ -7,17 +7,18 @@ import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
 import TabHeader from './TabHeader/TabHeader'
-import TabPanel from './TabPanel/TabPanel'
+import TabBody from './TabBody/TabBody'
+import TabContext from '@mui/lab/TabContext'
 
-import { StyledModalPaper, ModalHeader } from './Style'
+import { StyledModalPaper } from './Style'
 
 const LikeModal: React.FC<{
    isModalOpen: boolean
    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
    likeCount: IReactionCount | undefined
 }> = ({ isModalOpen, setIsModalOpen, likeCount }) => {
-   const [tabValue, setTabValue] = React.useState(0)
    const handleCloseModal = () => setIsModalOpen(false)
+   const [tabValue, setTabValue] = useState<LikeTypes>('isLove')
 
    return (
       <Modal
@@ -35,17 +36,17 @@ const LikeModal: React.FC<{
          {likeCount ? (
             <Fade in={isModalOpen}>
                <StyledModalPaper>
-                  <ModalHeader>
+                  <IconButton onClick={handleCloseModal}>
+                     <CloseIcon />
+                  </IconButton>
+                  <TabContext value={tabValue}>
                      <TabHeader
                         reactionTypes={likeCount.reactionTypes}
                         setTabValue={setTabValue}
                         tabValue={tabValue}
                      />
-                     <IconButton onClick={handleCloseModal}>
-                        <CloseIcon />
-                     </IconButton>
-                  </ModalHeader>
-                  <TabPanel tabValue={tabValue} />
+                     <TabBody tabValue={tabValue} reactionTypes={likeCount.reactionTypes} />
+                  </TabContext>
                </StyledModalPaper>
             </Fade>
          ) : (
