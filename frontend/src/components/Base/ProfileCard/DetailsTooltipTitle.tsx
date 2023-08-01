@@ -11,13 +11,12 @@ import { IProfilePicture } from '@/types/PostTypes'
 
 const DetailsTooltipTitle: React.FC<{
    userInfo: IPopulatedUserId
-   selectSelectedProfilePicture: () => IProfilePicture | undefined
-}> = ({ userInfo, selectSelectedProfilePicture }) => {
+}> = ({ userInfo }) => {
    return (
       <StyledPaperContainer elevation={10}>
          <StyledProfileImage
             alt='Profile image'
-            src={selectSelectedProfilePicture()?.path || ProfilePic}
+            src={userInfo.userDetails.profilePicturePath[0].path || ProfilePic}
             width={75}
             height={75}
          />
