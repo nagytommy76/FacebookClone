@@ -11,22 +11,22 @@ import Sad from '@/assets/sad.svg'
 import Angry from '@/assets/angry.svg'
 
 const useIcon = () => {
-   const returnImage = (reactionType: LikeTypes) => {
+   const returnImage = (reactionType: LikeTypes | 'all', width: number = 25, height: number = 25) => {
       switch (reactionType) {
          case 'isAngry':
-            return <Image width={25} height={25} src={Angry} alt='angry icon' />
+            return <Image width={width} height={height} src={Angry} alt='angry icon' />
          case 'isCare':
-            return <Image width={25} height={25} src={Care} alt='angry icon' />
+            return <Image width={width} height={height} src={Care} alt='care icon' />
          case 'isHaha':
-            return <Image width={25} height={25} src={Haha} alt='angry icon' />
+            return <Image width={width} height={height} src={Haha} alt='haha icon' />
          case 'isLike':
-            return <Image width={25} height={25} src={LikeAnimated} alt='angry icon' />
+            return <Image width={width} height={height} src={LikeAnimated} alt='like icon' />
          case 'isLove':
-            return <Image width={25} height={25} src={Love} alt='angry icon' />
+            return <Image width={width} height={height} src={Love} alt='love icon' />
          case 'isSad':
-            return <Image width={25} height={25} src={Sad} alt='angry icon' />
+            return <Image width={width} height={height} src={Sad} alt='sad icon' />
          case 'isWow':
-            return <Image width={25} height={25} src={Wow} alt='angry icon' />
+            return <Image width={width} height={height} src={Wow} alt='wow icon' />
       }
    }
 
