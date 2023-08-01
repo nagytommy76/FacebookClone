@@ -1,6 +1,8 @@
 import { styled } from '@mui/material'
 
 import Paper from '@mui/material/Paper'
+import IconButton from '@mui/material/IconButton'
+import Tab from '@mui/material/Tab'
 
 export const StyledModalPaper = styled(Paper)({
    minWidth: 400,
@@ -20,4 +22,22 @@ export const ModalHeader = styled('header')({
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'space-between',
+})
+
+export const StyledTab = styled(Tab)({
+   fontSize: 16,
+   ['&.MuiButtonBase-root']: {
+      padding: 5,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      minHeight: 50,
+      minWidth: 72,
+   },
+})
+
+export const StyledIconButton = styled(IconButton)({
+   position: 'absolute',
+   right: 0,
+   top: 5,
 })
