@@ -1,16 +1,5 @@
 import { styled } from '@mui/material'
-import Image from 'next/image'
 import Paper from '@mui/material/Paper'
-
-// Picture style --------------------------------------------
-
-export const StyledProfileImage = styled(Image)({
-   height: 38,
-   width: 38,
-   borderRadius: 50,
-})
-
-// ----------------------
 
 export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
    width: 'max-content',

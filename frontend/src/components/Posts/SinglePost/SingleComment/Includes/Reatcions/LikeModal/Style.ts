@@ -26,6 +26,7 @@ export const ModalHeader = styled('header')({
 
 export const StyledTab = styled(Tab)({
    fontSize: 16,
+   textTransform: 'none',
    ['&.MuiButtonBase-root']: {
       padding: 5,
       display: 'flex',
