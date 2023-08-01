@@ -11,31 +11,24 @@ import {
 } from './HeaderStyles'
 import Typography from '@mui/material/Typography'
 
-import CustomTooltipTitle from '../../../../Base/CustomTooltipTitle'
-import DetailsTooltipTitle from '../../ProfileCard/DetailsTooltipTitle'
-import type { IPopulatedUserId, IProfilePicture } from '@/types/PostTypes'
+import CustomTooltipTitle from '@/Base/CustomTooltipTitle'
+import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
+import type { IPopulatedUserId } from '@/types/PostTypes'
 
 const PostHeader: React.FC<{
    userInfo: IPopulatedUserId
    createdAt: string
-   selectSelectedProfilePicture: () => IProfilePicture | undefined
-}> = ({ userInfo, createdAt, selectSelectedProfilePicture }) => {
+}> = ({ userInfo, createdAt }) => {
    return (
       <PostHeaderStyle>
          <StyledProfileImage
             alt='My picture'
-            src={selectSelectedProfilePicture()?.path || ProfilePic}
+            src={userInfo.userDetails.profilePicturePath[0].path || ProfilePic}
             width={45}
             height={45}
          />
          <HeaderRightTitleSection>
-            <CustomTooltipTitle
-               title={
-                  <DetailsTooltipTitle
-                     selectSelectedProfilePicture={selectSelectedProfilePicture}
-                     userInfo={userInfo}
-                  />
-               }>
+            <CustomTooltipTitle title={<DetailsTooltipTitle userInfo={userInfo} />}>
                <StyledClickableTypography variant='h6'>
                   {userInfo.firstName} {userInfo.sureName}
                </StyledClickableTypography>
