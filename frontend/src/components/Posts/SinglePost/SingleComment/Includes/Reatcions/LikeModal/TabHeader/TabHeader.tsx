@@ -9,8 +9,8 @@ import { StyledIconButton, StyledTab } from '../Style'
 
 const TabHeader: React.FC<{
    reactionTypes: ReactionType
-   tabValue: LikeTypes
-   setTabValue: React.Dispatch<React.SetStateAction<LikeTypes>>
+   tabValue: LikeTypes | 'all'
+   setTabValue: React.Dispatch<React.SetStateAction<LikeTypes | 'all'>>
    handleCloseModal: () => void
 }> = ({ reactionTypes, setTabValue, tabValue, handleCloseModal }) => {
    const returnImage = useIcon()
@@ -23,6 +23,7 @@ const TabHeader: React.FC<{
          <StyledIconButton onClick={handleCloseModal}>
             <CloseIcon />
          </StyledIconButton>
+         <StyledTab value='all' label='Az összes' />
          {Object.keys(reactionTypes).map((key, index) => (
             <StyledTab
                value={key}
