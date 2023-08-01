@@ -1,21 +1,39 @@
-import React from 'react'
-import { LikeTypes, ReactionType } from '@/src/types/LikeTypes'
+import dynamic from 'next/dynamic'
+import useIcon from '../Hooks/useIcon'
+import type { LikeTypes, ReactionType } from '@/src/types/LikeTypes'
 
-import TabPanel from '@mui/lab/TabPanel'
+import { StyledTabBodyContainer } from './Style'
 
-const TabBody: React.FC<{ tabValue: LikeTypes; reactionTypes: ReactionType }> = ({
+const ReactionElement = dynamic(() => import('./Includes/ReactorBase'))
+
+const TabBody: React.FC<{ tabValue: LikeTypes | 'all'; reactionTypes: ReactionType }> = ({
    tabValue,
    reactionTypes,
 }) => {
-   return (
-      <TabPanel value={tabValue}>
-         {reactionTypes[tabValue].reactors.map((reactor, index) => (
-            <p key={index}>
-               {reactor.firstName} {reactor.sureName}
-            </p>
-         ))}
-      </TabPanel>
-   )
+   const iconImageComponent = useIcon()
+
+   if (tabValue === 'all')
+      return (
+         <StyledTabBodyContainer value={tabValue}>
+            {Object.entries(reactionTypes).map((keyValue) =>
+               keyValue[1].reactors.map((reactor, index) => (
+                  <ReactionElement key={index} reactor={reactor}>
+                     {iconImageComponent(keyValue[0] as LikeTypes | 'all', 17, 17)}
+                  </ReactionElement>
+               ))
+            )}
+         </StyledTabBodyContainer>
+      )
+   else
+      return (
+         <StyledTabBodyContainer value={tabValue}>
+            {reactionTypes[tabValue].reactors.map((reactor, index) => (
+               <ReactionElement key={index} reactor={reactor}>
+                  {iconImageComponent(tabValue, 17, 17)}
+               </ReactionElement>
+            ))}
+         </StyledTabBodyContainer>
+      )
 }
 
 export default TabBody
