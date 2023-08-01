@@ -60,16 +60,18 @@ export interface IOrderedLikesCount {
    isWow: number
 }
 
+export interface IReactors {
+   firstName: string
+   sureName: string
+   userDetails: {
+      profilePicturePath: { isSelected: boolean; path: string; id: string }[]
+   }
+}
+
 export type ReactionType = {
    [Key in LikeTypes]: {
       count: number
-      reactors: {
-         firstName: string
-         sureName: string
-         userDetails: {
-            profilePicturePath: { isSelected: boolean; path: string; id: string }[]
-         }
-      }[]
+      reactors: IReactors[]
    }
 }
 export interface IReactionCount {
