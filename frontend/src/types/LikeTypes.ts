@@ -1,14 +1,17 @@
 import type { IPopulatedUserId } from './PostTypes'
 
 // Ez egyelőre nem biztos, hogy így lesz -------------------------------
+interface IProfilePicture {
+   _id: string
+   path: string
+   isSelected: boolean
+}
 
 export interface ICommentAnswers {
    _id: string
-   userId: {
-      firstName: string
-      sureName: string
-      userDetails: { profilePicturePath: { isSelected: boolean; path: string; id: string }[] }
-   }
+   userId: IPopulatedUserId<{
+      profilePicturePath: IProfilePicture[]
+   }>
    comment: string
    parentCommentId: string
    commentDepth: number
@@ -21,9 +24,7 @@ export interface IPostComment {
    [key: string]: any
    _id: string
    userId: IPopulatedUserId<{
-      firstName: string
-      sureName: string
-      profilePicturePath: { _id: string; path: string; isSelected: boolean }[]
+      profilePicturePath: IProfilePicture[]
    }>
    comment: string
    answeredAt: string
