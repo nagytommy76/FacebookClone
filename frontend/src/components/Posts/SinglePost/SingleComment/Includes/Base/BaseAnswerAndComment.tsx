@@ -1,16 +1,13 @@
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import moment from 'moment'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
 import useMoment from '@/src/hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
+import useGetComment from '../Hooks/useGetComment'
 
-import {
-   StyledCommentPaper,
-   StyledProfileImage,
-   CommentFooterStyle,
-   StyledCommentAnswerButton,
-} from './Styles/Styles'
+import { StyledCommentPaper, CommentFooterStyle, StyledCommentAnswerButton } from './Styles/Styles'
 import {
    StyledCommentContainer,
    StyledListElement,
@@ -18,10 +15,12 @@ import {
    StyledLeftSide,
    HorizontalLineStyle,
 } from './Styles/ContainerStyles'
+import { StyledProfileImage } from '@/src/styles/BaseStyles'
 
 import Collapse from '@mui/material/Collapse'
 import Tooltip from '@mui/material/Tooltip'
 
+const LikeModal = dynamic(() => import('../Reatcions/LikeModal/LikeModal'))
 const Reactions = dynamic(() => import('../Reatcions/Reactions'))
 const Likes = dynamic(() => import('../../../Like/Like'))
 const AddCommentBase = dynamic(() => import('@/src/components/Base/AddComment/AddCommentBase'))
@@ -35,11 +34,11 @@ const BaseAnswerAndComment: React.FC<{
    isChild?: boolean
 }> = ({ answer, children, postId, isChild = false }) => {
    const currentTime = useMoment(answer.answeredAt)
-
+   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
    const functionParams = answer.hasOwnProperty('commentDepth')
       ? [answer.commentDepth + 1, answer._id]
       : [1, null]
-
+   const { commentLikeCount } = useGetComment(answer._id, postId, isModalOpen)
    const {
       answerText,
       isAnswerOpen,
@@ -65,7 +64,13 @@ const BaseAnswerAndComment: React.FC<{
             <StyledRightSide>
                <StyledCommentPaper key={answer._id}>
                   <p>{answer.comment}</p>
-                  <Reactions likes={answer.likes as []} commentId={answer._id} postId={postId} />
+                  <Reactions likes={answer.likes as []} setIsModalOpen={setIsModalOpen}>
+                     <LikeModal
+                        isModalOpen={isModalOpen}
+                        likeCount={commentLikeCount}
+                        setIsModalOpen={setIsModalOpen}
+                     />
+                  </Reactions>
                </StyledCommentPaper>
                <CommentFooterStyle>
                   <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>
