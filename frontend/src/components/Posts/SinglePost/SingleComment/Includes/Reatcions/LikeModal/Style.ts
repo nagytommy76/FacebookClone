@@ -4,8 +4,8 @@ import Paper from '@mui/material/Paper'
 import IconButton from '@mui/material/IconButton'
 import Tab from '@mui/material/Tab'
 
-export const StyledModalPaper = styled(Paper)({
-   minWidth: 400,
+export const StyledModalPaper = styled(Paper)(({ theme }) => ({
+   minWidth: 500,
    minHeight: 400,
    padding: '.75rem 1rem',
    position: 'absolute',
@@ -14,7 +14,10 @@ export const StyledModalPaper = styled(Paper)({
    transform: 'translate(-50%, -50%)',
 
    borderRadius: 15,
-})
+   [theme.breakpoints.down('md')]: {
+      minWidth: '95%',
+   },
+}))
 
 // "HEADER SECTION"
 export const ModalHeader = styled('header')({
