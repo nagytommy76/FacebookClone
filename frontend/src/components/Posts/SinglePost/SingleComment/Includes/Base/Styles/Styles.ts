@@ -11,6 +11,12 @@ export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
    position: 'relative',
 }))
 
+export const StyledRightContainer = styled('section')({
+   display: 'flex',
+   flexDirection: 'row',
+   alignItems: 'center',
+})
+
 // FOOTER ---------------------------------------------------------------------------
 export const CommentFooterStyle = styled('footer')({
    width: 160,

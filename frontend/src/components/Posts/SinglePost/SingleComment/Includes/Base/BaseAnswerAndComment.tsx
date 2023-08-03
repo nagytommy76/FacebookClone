@@ -7,7 +7,12 @@ import useMoment from '@/src/hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
 import useGetComment from '../Hooks/useGetComment'
 
-import { StyledCommentPaper, CommentFooterStyle, StyledCommentAnswerButton } from './Styles/Styles'
+import {
+   StyledCommentPaper,
+   CommentFooterStyle,
+   StyledCommentAnswerButton,
+   StyledRightContainer,
+} from './Styles/Styles'
 import {
    StyledCommentContainer,
    StyledListElement,
@@ -20,6 +25,7 @@ import { StyledProfileImage } from '@/src/styles/BaseStyles'
 import Collapse from '@mui/material/Collapse'
 import Tooltip from '@mui/material/Tooltip'
 
+import Options from './Includes/Options/Options'
 const LikeModal = dynamic(() => import('../Reatcions/LikeModal/LikeModal'))
 const Reactions = dynamic(() => import('../Reatcions/Reactions'))
 const Likes = dynamic(() => import('../../../Like/Like'))
@@ -62,16 +68,19 @@ const BaseAnswerAndComment: React.FC<{
                <HorizontalLineStyle isChildComment={isChild} />
             </StyledLeftSide>
             <StyledRightSide>
-               <StyledCommentPaper key={answer._id}>
-                  <p>{answer.comment}</p>
-                  <Reactions likes={answer.likes as []} setIsModalOpen={setIsModalOpen}>
-                     <LikeModal
-                        isModalOpen={isModalOpen}
-                        likeCount={commentLikeCount}
-                        setIsModalOpen={setIsModalOpen}
-                     />
-                  </Reactions>
-               </StyledCommentPaper>
+               <StyledRightContainer>
+                  <StyledCommentPaper key={answer._id}>
+                     <p>{answer.comment}</p>
+                     <Reactions likes={answer.likes as []} setIsModalOpen={setIsModalOpen}>
+                        <LikeModal
+                           isModalOpen={isModalOpen}
+                           likeCount={commentLikeCount}
+                           setIsModalOpen={setIsModalOpen}
+                        />
+                     </Reactions>
+                  </StyledCommentPaper>
+                  <Options answeredUserId={answer.userId._id} commentId={answer._id} />
+               </StyledRightContainer>
                <CommentFooterStyle>
                   <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>
                      <StyledCommentAnswerButton onClick={handleSetAnswerOpen}>
