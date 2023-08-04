@@ -37,8 +37,9 @@ const BaseAnswerAndComment: React.FC<{
    answer: ICommentAnswers | IPostComment
    children: React.ReactNode
    postId: string
+   isChildComment: boolean
    isChild?: boolean
-}> = ({ answer, children, postId, isChild = false }) => {
+}> = ({ answer, children, postId, isChild = false, isChildComment = false }) => {
    const currentTime = useMoment(answer.answeredAt)
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
    const functionParams = answer.hasOwnProperty('commentDepth')
@@ -79,7 +80,11 @@ const BaseAnswerAndComment: React.FC<{
                         />
                      </Reactions>
                   </StyledCommentPaper>
-                  <Options answeredUserId={answer.userId._id} commentId={answer._id} />
+                  <Options
+                     isChildComment={isChildComment}
+                     answeredUserId={answer.userId._id}
+                     commentId={answer._id}
+                  />
                </StyledRightContainer>
                <CommentFooterStyle>
                   <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>

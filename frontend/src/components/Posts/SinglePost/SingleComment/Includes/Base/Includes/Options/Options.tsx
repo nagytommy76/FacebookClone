@@ -10,7 +10,11 @@ import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
-const Options: React.FC<{ answeredUserId: string; commentId: string }> = ({ answeredUserId, commentId }) => {
+const Options: React.FC<{ answeredUserId: string; commentId: string; isChildComment: boolean }> = ({
+   answeredUserId,
+   commentId,
+   isChildComment = false,
+}) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const mutateRemoveComment = useRemoveComment()
    const {
@@ -23,7 +27,7 @@ const Options: React.FC<{ answeredUserId: string; commentId: string }> = ({ answ
       setAnchorEl(event.currentTarget)
    }
    const handleCloseAndDelete = () => {
-      mutateRemoveComment({ commentId, postId })
+      mutateRemoveComment({ commentId, postId, isChildComment })
       setAnchorEl(null)
    }
    const handleCloseAndUpdate = () => {
