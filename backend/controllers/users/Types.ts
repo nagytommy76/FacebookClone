@@ -1,6 +1,5 @@
 import { Model, ObjectId } from 'mongoose'
 import { Request } from 'express'
-import type { IPostTypes } from '../posts/PostTypes'
 export interface IRegisterRequest extends Request {
    body: {
       email: string

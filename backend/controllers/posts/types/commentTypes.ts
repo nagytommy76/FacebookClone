@@ -2,6 +2,7 @@ import { ObjectId } from 'mongoose'
 import type { IPostLike } from './PostTypes'
 
 export interface ICommentAnswer {
+   _id?: string | ObjectId
    userId: string
    comment: string
    parentCommentId: string
