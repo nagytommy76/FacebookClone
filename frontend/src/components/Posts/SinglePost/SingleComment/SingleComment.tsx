@@ -16,6 +16,7 @@ const SingleComment = () => {
          answer={singleComment}
          postId={postId}
          isChild={singleComment.commentAnswers && singleComment.commentAnswers?.length > 0}
+         isChildComment={false}
       >
          {parentRootAnswers ? <AnswerList answer={parentRootAnswers} /> : <></>}
       </BaseCommentComponent>
