@@ -21,6 +21,7 @@
       ],
       "paths": {
          "@/src/*": ["./src/*"],
+         "@/reduxStore/*": ["./src/utils/redux/*"],
          "@/components/*": ["./src/components/*"],
          "@/Base/*": ["./src/components/Base/*"],
          "@/assets/*": ["./src/assets/*"],

@@ -29,6 +29,7 @@ export interface IPostComment {
    comment: string
    answeredAt: string
    likes: IPostLike[]
+   commentImage?: string
    commentAnswers?: ICommentAnswers[]
 }
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------

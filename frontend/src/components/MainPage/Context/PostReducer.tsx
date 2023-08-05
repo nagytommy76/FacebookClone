@@ -1,14 +1,6 @@
 import { produce } from 'immer'
 import type { IPost } from '@/types/PostTypes'
 
-// export enum PostsActions {
-//    SET_SINGLE_POST = 'SET_SINGLE_POST',
-//    ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
-//    ADD_POST_LIKE = 'ADD_POST_LIKE',
-//    REMOVE_SINGLE_LIKE = 'REMOVE_SINGLE_LIKE',
-//    REMOVE_SINGLE_COMMENT = 'REMOVE_SINGLE_COMMENT',
-// }
-
 export type PostAction =
    | 'REMOVE_SINGLE_COMMENT'
    | 'REMOVE_SINGLE_LIKE'

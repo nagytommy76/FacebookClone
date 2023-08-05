@@ -32,7 +32,6 @@ export const initialCommentData: IPostComment = {
       firstName: '',
       sureName: '',
       userDetails: {
-         firstName: '',
          profilePicturePath: [
             {
                _id: '',
@@ -40,7 +39,6 @@ export const initialCommentData: IPostComment = {
                path: 'https://firebasestorage.googleapis.com/v0/b/facebookimagestorage.appspot.com/o/facebook-profile.jpg?alt=media&token=654bab74-a4a3-4eab-8fdb-e7e22f116c9a&_gl=1*55zcu2*_ga*MTIyMDgyODMyOC4xNjgwNjI4NDU2*_ga_CW55HF8NVT*MTY4NjE2MDc5NS4xMC4xLjE2ODYxNjExMjIuMC4wLjA.',
             },
          ],
-         sureName: '',
       },
    },
 }
