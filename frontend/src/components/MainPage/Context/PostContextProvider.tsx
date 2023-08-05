@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from 'react'
-import PostsReducer, { initialPostsState, InitialPostsState, IPostsAction, PostsActions } from './PostReducer'
+import PostsReducer, { initialPostsState, InitialPostsState, IPostsAction } from './PostReducer'
 import { IPost } from '@/types/PostTypes'
 
 interface IPostsContext {
@@ -21,7 +21,7 @@ export default function PostContextProvider({
 }) {
    const [postsReducer, postsDispatch] = useReducer(PostsReducer, initialPostsState)
    useEffect(() => {
-      if (singlePost) postsDispatch({ type: PostsActions.SET_SINGLE_POST, payload: singlePost })
+      if (singlePost) postsDispatch({ type: 'SET_SINGLE_POST', payload: singlePost })
    }, [singlePost])
    return <PostContext.Provider value={{ postsDispatch, postsReducer }}>{children}</PostContext.Provider>
 }

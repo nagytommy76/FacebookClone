@@ -1,15 +1,23 @@
 import { produce } from 'immer'
 import type { IPost } from '@/types/PostTypes'
 
-export enum PostsActions {
-   SET_SINGLE_POST = 'SET_SINGLE_POST',
-   ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
-   ADD_POST_LIKE = 'ADD_POST_LIKE',
-   REMOVE_SINGLE_LIKE = 'REMOVE_SINGLE_LIKE',
-}
+// export enum PostsActions {
+//    SET_SINGLE_POST = 'SET_SINGLE_POST',
+//    ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
+//    ADD_POST_LIKE = 'ADD_POST_LIKE',
+//    REMOVE_SINGLE_LIKE = 'REMOVE_SINGLE_LIKE',
+//    REMOVE_SINGLE_COMMENT = 'REMOVE_SINGLE_COMMENT',
+// }
+
+export type PostAction =
+   | 'REMOVE_SINGLE_COMMENT'
+   | 'REMOVE_SINGLE_LIKE'
+   | 'ADD_POST_LIKE'
+   | 'ADD_NEW_COMMENT'
+   | 'SET_SINGLE_POST'
 
 export interface IPostsAction {
-   type: PostsActions
+   type: PostAction
    payload: any
 }
 
@@ -58,22 +66,22 @@ export const initialPostsState: InitialPostsState = {
 
 export default function PostsReducer(state: InitialPostsState, action: IPostsAction): InitialPostsState {
    switch (action.type) {
-      case PostsActions.SET_SINGLE_POST:
+      case 'SET_SINGLE_POST':
          const nextState = produce(state, (draft) => {
             draft.singlePost = action.payload
          })
          return nextState
-      case PostsActions.ADD_NEW_COMMENT:
+      case 'ADD_NEW_COMMENT':
          const newComments = produce(state, (draft) => {
             draft.singlePost.comments = action.payload
          })
          return newComments
-      case PostsActions.ADD_POST_LIKE:
+      case 'ADD_POST_LIKE':
          const newPostLikes = produce(state, (draft) => {
             draft.singlePost.likes = action.payload
          })
          return newPostLikes
-      case PostsActions.REMOVE_SINGLE_LIKE:
+      case 'REMOVE_SINGLE_LIKE':
          const removedPostLikes = produce(state, (draft) => {
             const modified = draft.singlePost.likes.filter(
                (like) => like._id.toString() === action.payload.toString()
@@ -81,6 +89,11 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.singlePost.likes = modified
          })
          return removedPostLikes
+      case 'REMOVE_SINGLE_COMMENT':
+         const removedComments = produce(state, (draft) => {
+            draft.singlePost.comments = action.payload
+         })
+         return removedComments
       default:
          return state
    }
