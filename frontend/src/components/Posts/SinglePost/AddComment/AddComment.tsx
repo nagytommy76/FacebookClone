@@ -4,7 +4,6 @@ import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosI
 import type { IPostComment } from '@/types/LikeTypes'
 
 import { PostContext } from '../../../MainPage/Context/PostContextProvider'
-import { PostsActions } from '../../../MainPage/Context/PostReducer'
 
 import AddCommentBase from '@/src/components/Base/AddComment/AddCommentBase'
 
@@ -26,7 +25,7 @@ const AddComment: React.FC<{
          return response.data
       },
       onSuccess: (data) => {
-         postsDispatch({ type: PostsActions.ADD_NEW_COMMENT, payload: data.comments })
+         postsDispatch({ type: 'ADD_NEW_COMMENT', payload: data.comments })
       },
    })
 

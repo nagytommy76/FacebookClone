@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { PostContext } from '../../../../MainPage/Context/PostContextProvider'
-import { PostsActions } from '../../../../MainPage/Context/PostReducer'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '../../../../../utils/axiosSetup/AxiosInstance'
 
@@ -14,7 +13,7 @@ const useLikeDelete = () => {
       mutationKey: ['deleteLike'],
       mutationFn: deleteLikeFn,
       onSuccess(data) {
-         if (data.status === 200) postsDispatch({ type: PostsActions.REMOVE_SINGLE_LIKE, payload: data.data })
+         if (data.status === 200) postsDispatch({ type: 'REMOVE_SINGLE_LIKE', payload: data.data })
       },
    })
    return { deleteMutation: mutate }
