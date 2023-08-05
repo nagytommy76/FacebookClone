@@ -3,7 +3,7 @@ import { savePostController } from '../../controllers/posts/savePost'
 import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefresh'
 import { deleteLikeFromPostController } from '../../controllers/posts/likePost'
 import { savePostComment } from '../../controllers/posts/postComment'
-import { removeCommentController } from '../../controllers/posts/removeComment'
+import { removeCommentController, removeCommentAnswerController } from '../../controllers/posts/removeComment'
 import PostCommentController from '../../controllers/posts/postComment'
 import GetPostsController from '../../controllers/posts/getPosts'
 import LikePost from '../../controllers/posts/likePost'
@@ -37,5 +37,6 @@ router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.an
 // Törlés
 router.delete('/post-like-delete', authenticateAccessTokenForApi, deleteLikeFromPostController)
 router.delete('/post-comment-delete', authenticateAccessTokenForApi, removeCommentController)
+router.delete('/post-comment-answer-delete', authenticateAccessTokenForApi, removeCommentAnswerController)
 
 module.exports = router
