@@ -83,7 +83,9 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
          return removedPostLikes
       case 'REMOVE_SINGLE_COMMENT':
          const removedComments = produce(state, (draft) => {
-            draft.singlePost.comments = action.payload
+            draft.singlePost.comments = draft.singlePost.comments.filter(
+               (comment) => comment._id !== action.payload
+            )
          })
          return removedComments
       default:
