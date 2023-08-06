@@ -1,6 +1,7 @@
 import { Response } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import { Posts as PostModel } from '../../models/posts/posts'
+import { ICommentAnswer } from './types/commentTypes'
 
 interface IRemoveCommentRequest extends IJWTUserType {
    body: {
@@ -16,7 +17,6 @@ interface IRemoveAnswerRequest extends IJWTUserType {
 }
 
 export const removeCommentController = async (request: IRemoveCommentRequest, response: Response) => {
-   const user = request.user
    const { postId, commentId } = request.body
 
    try {
@@ -24,28 +24,13 @@ export const removeCommentController = async (request: IRemoveCommentRequest, re
       const foundPostsComment = await PostModel.find({
          _id: postId,
          comments: { $elemMatch: { _id: commentId } },
-      })
-         .select('comments')
-         .populate({
-            path: 'comments.userId',
-            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-            match: {
-               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-            },
-         })
-         .populate({
-            path: 'comments.commentAnswers.userId',
-            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-            match: {
-               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-            },
-         })
+      }).select('comments')
 
       foundPostsComment[0].comments = foundPostsComment[0].comments.filter(
          (comment) => comment._id?.toString() != commentId.toString()
       )
-
-      response.status(200).json({ msg: 'helló', newComments: foundPostsComment[0].comments })
+      foundPostsComment[0].save()
+      response.status(200).json({ msg: 'success' })
    } catch (error) {
       response.status(500).json({ error, msg: 'internal server error' })
    }
@@ -58,11 +43,34 @@ export const removeCommentAnswerController = async (request: IRemoveAnswerReques
       const foundPostsComment = await PostModel.find({
          _id: postId,
          'comments.commentAnswers': { $elemMatch: { _id: answerId } },
-      }).select([/*'comments.$',*/ 'comments.commentAnswers.$'])
+      }).select(['comments.commentAnswers.$'])
+
+      const foundAnswerToDelete = foundPostsComment[0].comments[0].commentAnswers?.find(
+         (answer) => answer._id == answerId
+      ) as ICommentAnswer
+
+      const testing = foundPostsComment[0].comments[0].commentAnswers?.map((answer) => {
+         if (foundAnswerToDelete?.commentDepth <= answer.commentDepth) {
+            console.log('csá', answer.commentDepth, answer.comment)
+         }
+      })
+
       foundPostsComment[0].comments[0].commentAnswers =
-         foundPostsComment[0].comments[0].commentAnswers?.filter((answer) => answer._id != answerId)
-      // Itt meg kell oldani,hogy a child answerek is törlődjenek!
-      response.status(200).json({ msg: 'helló VÁLASZ TÖRLÉS', semmi: foundPostsComment[0] })
+         foundPostsComment[0].comments[0].commentAnswers?.filter((answer) => {
+            return (
+               answer.commentDepth <= foundAnswerToDelete?.commentDepth &&
+               answer._id != answerId &&
+               answer.parentCommentId != answerId
+            )
+         })
+      // A commentDepth + 1 et vizsgálnom kell, hogy a parentComentId-je az megegyezik-e a törlendővel,
+      // Ha igen azt is törölnöm kell
+
+      response.status(200).json({
+         msg: 'helló VÁLASZ TÖRLÉS',
+         newCommentAnswers: foundPostsComment[0].comments[0].commentAnswers,
+         foundAnswerToDelete,
+      })
    } catch (error) {
       response.status(500).json({ error, msg: 'internal server error' })
    }
