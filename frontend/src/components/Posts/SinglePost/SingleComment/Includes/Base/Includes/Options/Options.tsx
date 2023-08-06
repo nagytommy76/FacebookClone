@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import { CommentContext } from '../../../../Context/CommentContext'
 
-import { useAppSelector } from '@/src/utils/redux/store'
-import useRemoveComment from '../../Hooks/useRemoveComment'
+import { useAppSelector } from '@/reduxStore/store'
+import useRemoveComment from './Hooks/useRemoveComment'
+import useRemoveAnswer from './Hooks/useRemoveAnswer'
 
 import { StyledOptions } from './Style'
 import Menu from '@mui/material/Menu'
@@ -10,16 +11,18 @@ import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
-const Options: React.FC<{ answeredUserId: string; commentId: string; isChildComment: boolean }> = ({
-   answeredUserId,
-   commentId,
-   isChildComment = false,
-}) => {
+const Options: React.FC<{
+   answeredUserId: string
+   commentId: string
+   isChildComment: boolean
+   handleSetAnswerOpen: () => void
+}> = ({ answeredUserId, commentId, isChildComment = false, handleSetAnswerOpen }) => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const mutateRemoveComment = useRemoveComment()
    const {
       commentReducer: { postId },
    } = useContext(CommentContext)
+   const mutateRemoveComment = useRemoveComment()
+   const mutateRemoveCommentAnswer = useRemoveAnswer()
 
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
    const open = Boolean(anchorEl)
@@ -27,10 +30,12 @@ const Options: React.FC<{ answeredUserId: string; commentId: string; isChildComm
       setAnchorEl(event.currentTarget)
    }
    const handleCloseAndDelete = () => {
-      mutateRemoveComment({ commentId, postId, isChildComment })
+      if (!isChildComment) mutateRemoveComment({ commentId, postId })
+      else mutateRemoveCommentAnswer({ answerId: commentId, postId })
       setAnchorEl(null)
    }
    const handleCloseAndUpdate = () => {
+      handleSetAnswerOpen()
       setAnchorEl(null)
    }
 
