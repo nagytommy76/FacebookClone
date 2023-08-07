@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
 export const StyledPaperContainer = styled(Paper)({
+   width: '90%',
    marginTop: '5px',
    borderRadius: '25px',
    backgroundColor: 'rgba(100,100,100, 0.35)',
