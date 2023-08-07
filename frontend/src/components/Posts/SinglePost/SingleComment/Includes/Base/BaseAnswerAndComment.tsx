@@ -53,14 +53,9 @@ const BaseAnswerAndComment: React.FC<{
       reference,
       saveAnswerMutate,
       handleChangeText,
-      setAnswerText,
       handleSetAnswerOpen,
+      setAndOpenAnswerInput,
    } = useCreateAnswer(functionParams[0], functionParams[1])
-
-   const setAndOpenAnswerInput = () => {
-      setAnswerText(answer.comment)
-      handleSetAnswerOpen()
-   }
 
    return (
       <StyledCommentContainer>
@@ -87,7 +82,7 @@ const BaseAnswerAndComment: React.FC<{
                      </Reactions>
                   </StyledCommentPaper>
                   <Options
-                     handleSetAnswerOpen={setAndOpenAnswerInput}
+                     handleSetAnswerOpen={() => setAndOpenAnswerInput(answer.comment)}
                      isChildComment={isChildComment}
                      answeredUserId={answer.userId._id}
                      commentId={answer._id}
