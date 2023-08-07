@@ -31,11 +31,16 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
       setAnswerText(event.target.value)
    }
 
+   const setAndOpenAnswerInput = (commentText: string) => {
+      setAnswerText(commentText)
+      handleSetAnswerOpen()
+   }
+
    return {
+      setAndOpenAnswerInput,
       saveAnswerMutate,
       handleChangeText,
       handleSetAnswerOpen,
-      setAnswerText,
       isAnswerOpen,
       answerText,
       isSendDisabled,
