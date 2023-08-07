@@ -12,6 +12,7 @@ export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
 }))
 
 export const StyledRightContainer = styled('section')({
+   width: '100%',
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'center',

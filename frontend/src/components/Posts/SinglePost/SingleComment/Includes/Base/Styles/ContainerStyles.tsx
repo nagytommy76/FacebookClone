@@ -16,7 +16,7 @@ export const StyledListElement = styled('div')({
 })
 
 export const StyledRightSide = styled('div')({
-   maxWidth: '100%',
+   width: '100%',
    marginLeft: 8,
 })
 
