@@ -6,6 +6,7 @@ import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 import useMoment from '@/src/hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
 import useGetComment from '../Hooks/useGetComment'
+import useUpdateCommentMutate from '../Hooks/useUpdateCommentMutate'
 
 import {
    StyledCommentPaper,
@@ -56,6 +57,7 @@ const BaseAnswerAndComment: React.FC<{
       handleSetAnswerOpen,
       setAndOpenAnswerInput,
    } = useCreateAnswer(functionParams[0], functionParams[1])
+   const { updateCommentMutate } = useUpdateCommentMutate()
 
    return (
       <StyledCommentContainer>

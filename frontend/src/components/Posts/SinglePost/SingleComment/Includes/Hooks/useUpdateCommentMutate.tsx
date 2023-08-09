@@ -15,11 +15,20 @@ const useUpdateCommentMutate = () => {
       },
    } = useContext(CommentContext)
 
-   const updateMutateFn = async () => {
-      const response = await axios.put('/post/update-comment', { postId, commentId: _id })
+   const updateMutateFn = async (modifiedText: string) => {
+      const response = await axios.put('/post/update-post-comment', { postId, commentId: _id, modifiedText })
+      return response.data
    }
 
-   return null
+   const { mutate } = useMutation({
+      mutationKey: ['updateComment'],
+      mutationFn: updateMutateFn,
+      onSuccess(data) {
+         console.log(data)
+      },
+   })
+
+   return { updateCommentMutate: mutate }
 }
 
 export default useUpdateCommentMutate
