@@ -43,7 +43,9 @@ const useAnswerCreateMutate = (
       },
    })
 
-   return { saveAnswerMutate: mutate }
+   const saveAnswerMutate = () => mutate()
+
+   return saveAnswerMutate
 }
 
 export default useAnswerCreateMutate

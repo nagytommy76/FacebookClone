@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react'
 import useAnswerCreateMutate from './useAnswerCreateMutate'
+import useUpdateCommentMutate from './useUpdateCommentMutate'
 
 const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const reference = useRef<null | HTMLInputElement>(null)
+   const [isUpdate, setIsUpdate] = useState<boolean>(false)
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const [answerText, setAnswerText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
@@ -10,8 +12,11 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
       setAnswerText('')
       setIsSendDisabled(true)
       setIsAnswerOpen(false)
+      setIsUpdate(false)
    }
-   const { saveAnswerMutate } = useAnswerCreateMutate(
+
+   const updateCommentMutate = useUpdateCommentMutate(answerText, setStatesToDefault)
+   const saveAnswerMutate = useAnswerCreateMutate(
       commentDepth,
       parentCommentId,
       answerText,
@@ -31,19 +36,22 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
       setAnswerText(event.target.value)
    }
 
-   const setAndOpenAnswerInput = (commentText: string) => {
+   const handleSetAnswerOpenForUpdate = (commentText: string) => {
       setAnswerText(commentText)
       handleSetAnswerOpen()
+      setIsUpdate(true)
    }
 
    return {
-      setAndOpenAnswerInput,
+      handleSetAnswerOpenForUpdate,
       saveAnswerMutate,
+      updateCommentMutate,
       handleChangeText,
       handleSetAnswerOpen,
       isAnswerOpen,
       answerText,
       isSendDisabled,
+      isUpdate,
       reference,
    }
 }
