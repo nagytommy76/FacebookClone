@@ -7,6 +7,7 @@ export enum CommentActions {
    SET_COMMENT_LIKE = 'SET_COMMENT_LIKE',
    SET_CHILD_ANSWERS = 'SET_CHILD_ANSWERS',
    ADD_SINGLE_COMMENT_ANSWER = 'ADD_SINGLE_COMMENT_ANSWER',
+   UPDATE_COMMENT_TEXT = 'UPDATE_COMMENT_TEXT',
 }
 
 export interface ICommentAction {
@@ -50,34 +51,39 @@ export const initialCommentState: InitialCommentState = {
 
 export default function CommentReducer(
    state: InitialCommentState,
-   action: ICommentAction
+   { payload, type }: ICommentAction
 ): InitialCommentState {
-   switch (action.type) {
+   switch (type) {
       case CommentActions.SET_POSTID:
          return {
             ...state,
-            postId: action.payload,
+            postId: payload,
          }
       case CommentActions.SET_COMMENT:
          const nextState = produce(state, (draft) => {
-            draft.singleComment = action.payload
+            draft.singleComment = payload
          })
          return nextState
       case CommentActions.SET_COMMENT_LIKE:
          const nextLikeState = produce(state, (draft) => {
-            draft.singleComment.likes = action.payload
+            draft.singleComment.likes = payload
          })
          return nextLikeState
       case CommentActions.ADD_SINGLE_COMMENT_ANSWER:
          const newComments = produce(state, (draft) => {
-            draft.singleComment.commentAnswers = action.payload
+            draft.singleComment.commentAnswers = payload
          })
          return newComments
       case CommentActions.SET_CHILD_ANSWERS:
          const newAnswers = produce(state, (draft) => {
-            draft.childAnswers = action.payload
+            draft.childAnswers = payload
          })
          return newAnswers
+      case CommentActions.UPDATE_COMMENT_TEXT:
+         const updatedCommentText = produce(state, (draft) => {
+            draft.singleComment.comment = payload
+         })
+         return updatedCommentText
       default:
          return state
    }

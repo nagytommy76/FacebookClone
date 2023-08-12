@@ -15,8 +15,8 @@ const Options: React.FC<{
    answeredUserId: string
    commentId: string
    isChildComment: boolean
-   handleSetAnswerOpen: () => void
-}> = ({ answeredUserId, commentId, isChildComment = false, handleSetAnswerOpen }) => {
+   handleSetAnswerOpenForUpdate: () => void
+}> = ({ answeredUserId, commentId, isChildComment = false, handleSetAnswerOpenForUpdate }) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const {
       commentReducer: { postId },
@@ -35,7 +35,7 @@ const Options: React.FC<{
       setAnchorEl(null)
    }
    const handleCloseAndUpdate = () => {
-      handleSetAnswerOpen()
+      handleSetAnswerOpenForUpdate()
       setAnchorEl(null)
    }
 
