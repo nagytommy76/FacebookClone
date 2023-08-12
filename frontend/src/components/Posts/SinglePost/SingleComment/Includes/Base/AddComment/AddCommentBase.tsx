@@ -6,17 +6,24 @@ import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/Send'
 
 import AddEmojiButton from './Includes/AddEmojiButton'
-import useUpdateCommentMutate from '../../Hooks/useUpdateCommentMutate'
 
 const AddCommentBase: React.FC<{
    reference: React.MutableRefObject<null>
    handleSendComment: () => void
+   updateCommentMutate: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
    commentText: string
    isSendDisabled?: boolean
    isUpdate: boolean
-}> = ({ reference, handleSendComment, commentText, handleChangeText, isSendDisabled, isUpdate = false }) => {
-   const updateCommentMutate = useUpdateCommentMutate()
+}> = ({
+   reference,
+   handleSendComment,
+   updateCommentMutate,
+   commentText,
+   handleChangeText,
+   isSendDisabled,
+   isUpdate = false,
+}) => {
    return (
       <>
          <StyledPaperContainer>
@@ -34,7 +41,7 @@ const AddCommentBase: React.FC<{
                   fullWidth
                />
                <AddEmojiButton />
-               <Tooltip title='Küldés' placement='top' arrow>
+               <Tooltip title={isUpdate ? 'Módosítás' : 'Küldés'} placement='top' arrow>
                   <span>
                      <IconButton
                         sx={{
@@ -44,7 +51,7 @@ const AddCommentBase: React.FC<{
                            }),
                         }}
                         disabled={isSendDisabled}
-                        onClick={handleSendComment}
+                        onClick={isUpdate ? updateCommentMutate : handleSendComment}
                         type='submit'
                         size='small'
                         aria-label='send-comment'

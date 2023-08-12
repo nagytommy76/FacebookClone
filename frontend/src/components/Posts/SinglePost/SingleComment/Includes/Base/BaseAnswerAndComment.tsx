@@ -6,7 +6,6 @@ import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 import useMoment from '@/src/hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
 import useGetComment from '../Hooks/useGetComment'
-import useUpdateCommentMutate from '../Hooks/useUpdateCommentMutate'
 
 import {
    StyledCommentPaper,
@@ -30,7 +29,7 @@ import Options from './Includes/Options/Options'
 const LikeModal = dynamic(() => import('../Reatcions/LikeModal/LikeModal'))
 const Reactions = dynamic(() => import('../Reatcions/Reactions'))
 const Likes = dynamic(() => import('../../../Like/Like'))
-const AddCommentBase = dynamic(() => import('@/src/components/Base/AddComment/AddCommentBase'))
+const AddCommentBase = dynamic(() => import('./AddComment/AddCommentBase'))
 
 // Erre a mappa szintre áthozni a style-okat
 
@@ -48,16 +47,17 @@ const BaseAnswerAndComment: React.FC<{
       : [1, null]
    const { commentLikeCount } = useGetComment(answer._id, postId, isModalOpen)
    const {
+      isUpdate,
       answerText,
       isAnswerOpen,
       isSendDisabled,
       reference,
       saveAnswerMutate,
+      updateCommentMutate,
       handleChangeText,
       handleSetAnswerOpen,
-      setAndOpenAnswerInput,
+      handleSetAnswerOpenForUpdate,
    } = useCreateAnswer(functionParams[0], functionParams[1])
-   const { updateCommentMutate } = useUpdateCommentMutate()
 
    return (
       <StyledCommentContainer>
@@ -84,7 +84,7 @@ const BaseAnswerAndComment: React.FC<{
                      </Reactions>
                   </StyledCommentPaper>
                   <Options
-                     handleSetAnswerOpen={() => setAndOpenAnswerInput(answer.comment)}
+                     handleSetAnswerOpenForUpdate={() => handleSetAnswerOpenForUpdate(answer.comment)}
                      isChildComment={isChildComment}
                      answeredUserId={answer.userId._id}
                      commentId={answer._id}
@@ -102,12 +102,12 @@ const BaseAnswerAndComment: React.FC<{
                </CommentFooterStyle>
                <Collapse in={isAnswerOpen} timeout={100}>
                   <AddCommentBase
-                     reference={reference as React.MutableRefObject<null>}
-                     handleSendComment={() => {
-                        saveAnswerMutate()
-                     }}
-                     commentText={answerText}
+                     updateCommentMutate={updateCommentMutate}
+                     handleSendComment={saveAnswerMutate}
                      handleChangeText={handleChangeText}
+                     reference={reference as React.MutableRefObject<null>}
+                     commentText={answerText}
+                     isUpdate={isUpdate}
                      isSendDisabled={isSendDisabled}
                   />
                </Collapse>

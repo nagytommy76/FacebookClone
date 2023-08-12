@@ -5,7 +5,7 @@ import type { IPostComment } from '@/types/LikeTypes'
 
 import { PostContext } from '../../../MainPage/Context/PostContextProvider'
 
-import AddCommentBase from '@/src/components/Base/AddComment/AddCommentBase'
+import AddCommentBase from '../SingleComment/Includes/Base/AddComment/AddCommentBase'
 
 const AddComment: React.FC<{
    reference: React.MutableRefObject<null>
@@ -43,6 +43,8 @@ const AddComment: React.FC<{
    return (
       <>
          <AddCommentBase
+            updateCommentMutate={() => {}}
+            isUpdate={false}
             handleSendComment={handleSendComment}
             commentText={commentText}
             handleChangeText={handleChangeText}

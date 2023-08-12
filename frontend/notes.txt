@@ -20,6 +20,9 @@ Kell most már az axios interceptor, hogy ellenőrizzem az accessToken meglété
 A NAVBAR-nál redux-ot? használni,h ogy a kép változzon mikor a profilképet megváltoztatom
 
 
+Egy BUG: A meglévő comment-nél ha hozzáadok egy comment answert- az nem jelenik meg, még refresh-nél sem. MEGOLDANI!!!!!!
+
+
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
 
 A refreshToken ellenőrzésnél csak azt nézem, hogy valid-e, ha nem kilép -> login oldal
