@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/Send'
 
 import AddEmojiButton from './Includes/AddEmojiButton'
+import useUpdateCommentMutate from '../../Hooks/useUpdateCommentMutate'
 
 const AddCommentBase: React.FC<{
    reference: React.MutableRefObject<null>
@@ -13,7 +14,9 @@ const AddCommentBase: React.FC<{
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
    commentText: string
    isSendDisabled?: boolean
-}> = ({ reference, handleSendComment, commentText, handleChangeText, isSendDisabled }) => {
+   isUpdate: boolean
+}> = ({ reference, handleSendComment, commentText, handleChangeText, isSendDisabled, isUpdate = false }) => {
+   const updateCommentMutate = useUpdateCommentMutate()
    return (
       <>
          <StyledPaperContainer>

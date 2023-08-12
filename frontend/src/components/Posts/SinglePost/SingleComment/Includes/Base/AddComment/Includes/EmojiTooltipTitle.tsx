@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Box from '@mui/material/Box'
 import ClickAwayListener from '@mui/base/ClickAwayListener'
 import data from '@emoji-mart/data'
 import {} from 'emoji-mart'
