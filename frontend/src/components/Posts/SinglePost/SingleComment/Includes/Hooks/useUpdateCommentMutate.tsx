@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 
-import type { ICommentAnswers } from '@/src/types/LikeTypes'
 import { CommentContext } from '../../Context/CommentContext'
 import { CommentActions } from '../../Context/CommentReducer'
 
-const useUpdateCommentMutate = () => {
+const useUpdateCommentMutate = (modifiedText: string, setStatesToDefault: () => void) => {
    const {
       commentDispatch,
       commentReducer: {
@@ -15,8 +14,12 @@ const useUpdateCommentMutate = () => {
       },
    } = useContext(CommentContext)
 
-   const updateMutateFn = async (modifiedText: string) => {
-      const response = await axios.put('/post/update-post-comment', { postId, commentId: _id, modifiedText })
+   const updateMutateFn = async () => {
+      const response = (await axios.put('/post/update-post-comment', {
+         postId,
+         commentId: _id,
+         modifiedText,
+      })) as AxiosResponse<{ modifiedComment: string }>
       return response.data
    }
 
@@ -24,11 +27,14 @@ const useUpdateCommentMutate = () => {
       mutationKey: ['updateComment'],
       mutationFn: updateMutateFn,
       onSuccess(data) {
-         console.log(data)
+         commentDispatch({ payload: data.modifiedComment, type: CommentActions.UPDATE_COMMENT_TEXT })
+         setStatesToDefault()
       },
    })
 
-   return { updateCommentMutate: mutate }
+   const updateCommentMutate = () => mutate()
+
+   return updateCommentMutate
 }
 
 export default useUpdateCommentMutate
