@@ -14,16 +14,15 @@ export const updateCommentController = async (request: IRemoveCommentRequest, re
    const { commentId, modifiedText, postId } = request.body
 
    try {
-      const foundPostComment = await PostModel.findOne({
-         _id: postId,
-         comments: { $elemMatch: { _id: commentId } },
-      }).select('comments.$')
-      if (!foundPostComment) return response.status(404)
-      foundPostComment.comments[0].comment = modifiedText
+      const foundPostComment = await PostModel.updateOne(
+         {
+            _id: postId,
+            comments: { $elemMatch: { _id: commentId } },
+         },
+         { $set: { 'comments.$.comment': modifiedText } }
+      )
 
-      foundPostComment.save()
-
-      response.status(201).json({ modifiedComment: foundPostComment.comments[0].comment })
+      response.status(201).json({ modifiedComment: modifiedText, foundPostComment })
    } catch (error) {
       response.status(500).json({ msg: 'internal server error', error })
    }
