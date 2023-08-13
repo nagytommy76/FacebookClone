@@ -4,7 +4,7 @@ import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefr
 import { deleteLikeFromPostController } from '../../controllers/posts/likePost'
 import { savePostComment } from '../../controllers/posts/postComment'
 import { removeCommentController, removeCommentAnswerController } from '../../controllers/posts/removeComment'
-import { updateCommentController } from '../../controllers/posts/updateComment'
+import { updateCommentController, updateCommentAnswerController } from '../../controllers/posts/updateComment'
 
 import PostCommentController from '../../controllers/posts/postComment'
 import GetPostsController from '../../controllers/posts/getPosts'
@@ -38,6 +38,7 @@ router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.an
 
 // Módosítás
 router.put('/update-post-comment', authenticateAccessTokenForApi, updateCommentController)
+router.put('/update-post-comment-answer', authenticateAccessTokenForApi, updateCommentAnswerController)
 
 // Törlés
 router.delete('/post-like-delete', authenticateAccessTokenForApi, deleteLikeFromPostController)
