@@ -27,7 +27,7 @@ const useUpdateCommentMutate = (modifiedText: string, setStatesToDefault: () => 
       mutationKey: ['updateComment'],
       mutationFn: updateMutateFn,
       onSuccess(data) {
-         commentDispatch({ payload: data.modifiedComment, type: CommentActions.UPDATE_COMMENT_TEXT })
+         commentDispatch({ payload: modifiedText, type: CommentActions.UPDATE_COMMENT_TEXT })
          setStatesToDefault()
       },
    })
