@@ -1,34 +1,16 @@
-import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import moment from 'moment'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
-import useMoment from '@/src/hooks/useMoment'
 import useCreateAnswer from '../Hooks/useCreateAnswer'
-import useGetComment from '../Hooks/useGetComment'
 
-import {
-   StyledCommentPaper,
-   CommentFooterStyle,
-   StyledCommentAnswerButton,
-   StyledRightContainer,
-} from './Styles/Styles'
-import {
-   StyledCommentContainer,
-   StyledListElement,
-   StyledRightSide,
-   StyledLeftSide,
-   HorizontalLineStyle,
-} from './Styles/ContainerStyles'
-import { StyledProfileImage } from '@/src/styles/BaseStyles'
-
+import { StyledRightContainer } from './Styles/Styles'
+import { StyledCommentContainer, StyledListElement, StyledRightSide } from './Styles/ContainerStyles'
 import Collapse from '@mui/material/Collapse'
-import Tooltip from '@mui/material/Tooltip'
 
 import Options from './Includes/Options/Options'
-const LikeModal = dynamic(() => import('../Reatcions/LikeModal/LikeModal'))
-const Reactions = dynamic(() => import('../Reatcions/Reactions'))
-const Likes = dynamic(() => import('../../../Like/Like'))
+const LeftSide = dynamic(() => import('./Includes/LeftImageSide/LeftImage'))
+const CommentBody = dynamic(() => import('./Includes/CommentBody/CommentBody'))
+const CommentFooter = dynamic(() => import('./Includes/CommentFooter/CommentFooter'))
 const AddCommentBase = dynamic(() => import('./AddComment/AddCommentBase'))
 
 // Erre a mappa szintre áthozni a style-okat
@@ -40,12 +22,9 @@ const BaseAnswerAndComment: React.FC<{
    isChildComment: boolean
    isChild?: boolean
 }> = ({ answer, children, postId, isChild = false, isChildComment = false }) => {
-   const currentTime = useMoment(answer.answeredAt)
-   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
    const functionParams = answer.hasOwnProperty('commentDepth')
       ? [answer.commentDepth + 1, answer._id]
       : [1, null]
-   const { commentLikeCount } = useGetComment(answer._id, postId, isModalOpen)
    const {
       isUpdate,
       answerText,
@@ -57,32 +36,24 @@ const BaseAnswerAndComment: React.FC<{
       handleChangeText,
       handleSetAnswerOpen,
       handleSetAnswerOpenForUpdate,
+      updateCommentAnswerMutate,
    } = useCreateAnswer(functionParams[0], functionParams[1])
-
+   // Az isChildComment-et fel tudom használni, hogy eldöntsem answer-ről van-e szó, és úgy tudom módosítani
    return (
       <StyledCommentContainer>
          <StyledListElement>
-            <StyledLeftSide>
-               <StyledProfileImage
-                  src={answer.userId.userDetails.profilePicturePath[0].path}
-                  alt='profil'
-                  width={20}
-                  height={20}
-               />
-               <HorizontalLineStyle isChildComment={isChild} />
-            </StyledLeftSide>
+            <LeftSide
+               isChild={isChild}
+               profilePicturePath={answer.userId.userDetails.profilePicturePath[0].path}
+            />
             <StyledRightSide>
                <StyledRightContainer>
-                  <StyledCommentPaper key={answer._id}>
-                     <p>{answer.comment}</p>
-                     <Reactions likes={answer.likes as []} setIsModalOpen={setIsModalOpen}>
-                        <LikeModal
-                           isModalOpen={isModalOpen}
-                           likeCount={commentLikeCount}
-                           setIsModalOpen={setIsModalOpen}
-                        />
-                     </Reactions>
-                  </StyledCommentPaper>
+                  <CommentBody
+                     answerId={answer._id}
+                     comment={answer.comment}
+                     likes={answer.likes}
+                     postId={postId}
+                  />
                   <Options
                      handleSetAnswerOpenForUpdate={() => handleSetAnswerOpenForUpdate(answer.comment)}
                      isChildComment={isChildComment}
@@ -90,16 +61,13 @@ const BaseAnswerAndComment: React.FC<{
                      commentId={answer._id}
                   />
                </StyledRightContainer>
-               <CommentFooterStyle>
-                  <Likes commentId={answer._id} isPostLike={false} postId={postId} postLikes={answer.likes}>
-                     <StyledCommentAnswerButton onClick={handleSetAnswerOpen}>
-                        Válasz
-                     </StyledCommentAnswerButton>
-                  </Likes>
-                  <Tooltip arrow title={moment(answer.answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
-                     <span>{currentTime}</span>
-                  </Tooltip>
-               </CommentFooterStyle>
+               <CommentFooter
+                  answerId={answer._id}
+                  answeredAt={answer.answeredAt}
+                  handleSetAnswerOpen={handleSetAnswerOpen}
+                  likes={answer.likes}
+                  postId={postId}
+               />
                <Collapse in={isAnswerOpen} timeout={100}>
                   <AddCommentBase
                      updateCommentMutate={updateCommentMutate}
