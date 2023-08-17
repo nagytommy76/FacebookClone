@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import useAnswerCreateMutate from './useAnswerCreateMutate'
 import useUpdateCommentMutate from './useUpdateCommentMutate'
+import useUpdateAnswer from './useUpdateAnswer'
 
 const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const reference = useRef<null | HTMLInputElement>(null)
@@ -16,6 +17,7 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
    }
 
    const updateCommentMutate = useUpdateCommentMutate(answerText, setStatesToDefault)
+   const updateCommentAnswerMutate = useUpdateAnswer(answerText, setStatesToDefault)
    const saveAnswerMutate = useAnswerCreateMutate(
       commentDepth,
       parentCommentId,
@@ -46,6 +48,7 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
       handleSetAnswerOpenForUpdate,
       saveAnswerMutate,
       updateCommentMutate,
+      updateCommentAnswerMutate,
       handleChangeText,
       handleSetAnswerOpen,
       isAnswerOpen,
