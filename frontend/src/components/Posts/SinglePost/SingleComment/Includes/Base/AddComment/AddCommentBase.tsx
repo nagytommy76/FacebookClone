@@ -8,22 +8,37 @@ import SendIcon from '@mui/icons-material/Send'
 import AddEmojiButton from './Includes/AddEmojiButton'
 
 const AddCommentBase: React.FC<{
-   reference: React.MutableRefObject<null>
    handleSendComment: () => void
    updateCommentMutate: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
+   handleUpdateCommentAnswerMutate: (answerId: string) => void
+   commentAnswerId: string
+   reference: React.MutableRefObject<null>
    commentText: string
    isSendDisabled?: boolean
+   isChildComment?: boolean
    isUpdate: boolean
 }> = ({
-   reference,
+   handleUpdateCommentAnswerMutate,
    handleSendComment,
    updateCommentMutate,
-   commentText,
    handleChangeText,
+   commentAnswerId,
+   reference,
+   commentText,
    isSendDisabled,
    isUpdate = false,
+   isChildComment = false,
 }) => {
+   const handleClick = () => {
+      console.log(isChildComment, isUpdate)
+      if (isChildComment) {
+         isUpdate ? handleUpdateCommentAnswerMutate(commentAnswerId) : () => {}
+      } else {
+         isUpdate ? updateCommentMutate() : handleSendComment()
+      }
+   }
+
    return (
       <>
          <StyledPaperContainer>
@@ -51,7 +66,7 @@ const AddCommentBase: React.FC<{
                            }),
                         }}
                         disabled={isSendDisabled}
-                        onClick={isUpdate ? updateCommentMutate : handleSendComment}
+                        onClick={handleClick}
                         type='submit'
                         size='small'
                         aria-label='send-comment'
