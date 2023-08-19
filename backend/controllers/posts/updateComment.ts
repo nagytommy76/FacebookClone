@@ -43,12 +43,23 @@ export const updateCommentAnswerController = async (
 ) => {
    const { commentAnswerId, commentId, modifiedText, postId } = request.body
    try {
-      // const found = await PostModel.updateOne({
-      const found = await PostModel.findOne({
-         _id: postId,
-         comments: { $elemMatch: { _id: commentId } },
-         'comments.$.commentAnswers': { $elemMatch: { _id: commentAnswerId } },
-      })
+      const found = await PostModel.updateOne(
+         //const found = await PostModel.findOne(
+         {
+            _id: postId,
+            comments: { $elemMatch: { _id: commentId, 'commentAnswers._id': commentAnswerId } },
+            // 'comments.commentAnswers': { $elemMatch: { _id: commentAnswerId } },
+         },
+         {
+            $set: {
+               // 'commentAnswers.$.comment': modifiedText,
+               'comment.$[outer].commentAnswers.$[inner].comment': modifiedText,
+            },
+         },
+         {
+            arrayFilters: [{ 'outer._id': commentId }, { 'inner._id': commentAnswerId }],
+         }
+      )
       response.status(201).json(found)
    } catch (error) {
       response.status(500).json({ msg: 'internal server error', error })
