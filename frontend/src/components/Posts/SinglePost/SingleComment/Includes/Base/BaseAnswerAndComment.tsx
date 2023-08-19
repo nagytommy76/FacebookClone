@@ -36,7 +36,7 @@ const BaseAnswerAndComment: React.FC<{
       handleChangeText,
       handleSetAnswerOpen,
       handleSetAnswerOpenForUpdate,
-      updateCommentAnswerMutate,
+      handleUpdateCommentAnswerMutate,
    } = useCreateAnswer(functionParams[0], functionParams[1])
    // Az isChildComment-et fel tudom használni, hogy eldöntsem answer-ről van-e szó, és úgy tudom módosítani
    return (
@@ -70,12 +70,15 @@ const BaseAnswerAndComment: React.FC<{
                />
                <Collapse in={isAnswerOpen} timeout={100}>
                   <AddCommentBase
+                     handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
                      updateCommentMutate={updateCommentMutate}
                      handleSendComment={saveAnswerMutate}
                      handleChangeText={handleChangeText}
+                     commentAnswerId={answer._id}
                      reference={reference as React.MutableRefObject<null>}
                      commentText={answerText}
                      isUpdate={isUpdate}
+                     isChildComment={isChildComment}
                      isSendDisabled={isSendDisabled}
                   />
                </Collapse>

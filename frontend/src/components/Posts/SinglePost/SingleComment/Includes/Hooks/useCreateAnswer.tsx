@@ -44,11 +44,16 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
       setIsUpdate(true)
    }
 
+   const handleUpdateCommentAnswerMutate = (answerId: string) => {
+      updateCommentAnswerMutate(answerId)
+      setIsUpdate(true)
+   }
+
    return {
       handleSetAnswerOpenForUpdate,
       saveAnswerMutate,
       updateCommentMutate,
-      updateCommentAnswerMutate,
+      handleUpdateCommentAnswerMutate,
       handleChangeText,
       handleSetAnswerOpen,
       isAnswerOpen,
