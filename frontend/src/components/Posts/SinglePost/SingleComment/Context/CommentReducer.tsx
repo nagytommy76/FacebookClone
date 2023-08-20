@@ -1,17 +1,17 @@
 import { produce } from 'immer'
 import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
 
-export enum CommentActions {
-   SET_POSTID = 'SET_POSTID',
-   SET_COMMENT = 'SET_COMMENT',
-   SET_COMMENT_LIKE = 'SET_COMMENT_LIKE',
-   SET_CHILD_ANSWERS = 'SET_CHILD_ANSWERS',
-   ADD_SINGLE_COMMENT_ANSWER = 'ADD_SINGLE_COMMENT_ANSWER',
-   UPDATE_COMMENT_TEXT = 'UPDATE_COMMENT_TEXT',
-}
+type CommentAction =
+   | 'SET_POSTID'
+   | 'SET_COMMENT'
+   | 'SET_COMMENT_LIKE'
+   | 'SET_CHILD_ANSWERS'
+   | 'ADD_SINGLE_COMMENT_ANSWER'
+   | 'UPDATE_SINGLE_COMMENT_ANSWER'
+   | 'UPDATE_COMMENT_TEXT'
 
 export interface ICommentAction {
-   type: CommentActions
+   type: CommentAction
    payload: any
 }
 
@@ -54,32 +54,41 @@ export default function CommentReducer(
    { payload, type }: ICommentAction
 ): InitialCommentState {
    switch (type) {
-      case CommentActions.SET_POSTID:
+      case 'SET_POSTID':
          return {
             ...state,
             postId: payload,
          }
-      case CommentActions.SET_COMMENT:
+      case 'SET_COMMENT':
          const nextState = produce(state, (draft) => {
             draft.singleComment = payload
          })
          return nextState
-      case CommentActions.SET_COMMENT_LIKE:
+      case 'SET_COMMENT_LIKE':
          const nextLikeState = produce(state, (draft) => {
             draft.singleComment.likes = payload
          })
          return nextLikeState
-      case CommentActions.ADD_SINGLE_COMMENT_ANSWER:
+      case 'ADD_SINGLE_COMMENT_ANSWER':
          const newComments = produce(state, (draft) => {
             draft.singleComment.commentAnswers = payload
          })
          return newComments
-      case CommentActions.SET_CHILD_ANSWERS:
+      case 'UPDATE_SINGLE_COMMENT_ANSWER':
+         const { answerID, modifiedText } = payload as { answerID: string; modifiedText: string }
+         const UpdatedComments = produce(state, (draft) => {
+            const foundAnswer = draft.singleComment.commentAnswers?.find((answer) => answer._id == answerID)
+            if (foundAnswer) {
+               foundAnswer.comment = modifiedText
+            }
+         })
+         return UpdatedComments
+      case 'SET_CHILD_ANSWERS':
          const newAnswers = produce(state, (draft) => {
             draft.childAnswers = payload
          })
          return newAnswers
-      case CommentActions.UPDATE_COMMENT_TEXT:
+      case 'UPDATE_COMMENT_TEXT':
          const updatedCommentText = produce(state, (draft) => {
             draft.singleComment.comment = payload
          })
