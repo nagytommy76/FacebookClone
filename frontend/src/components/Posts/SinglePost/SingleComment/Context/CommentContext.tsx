@@ -1,12 +1,7 @@
 import React, { createContext, useEffect, useReducer, useMemo } from 'react'
 
 import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
-import CommentReducer, {
-   initialCommentState,
-   CommentActions,
-   InitialCommentState,
-   ICommentAction,
-} from './CommentReducer'
+import CommentReducer, { initialCommentState, InitialCommentState, ICommentAction } from './CommentReducer'
 
 interface ICommentContext {
    commentReducer: InitialCommentState
@@ -29,10 +24,10 @@ const CommentContextProvider: React.FC<{
 }> = ({ children, singleComment, postId }) => {
    const [commentReducer, commentDispatch] = useReducer(CommentReducer, initialCommentState)
    useEffect(() => {
-      commentDispatch({ type: CommentActions.SET_COMMENT, payload: singleComment })
+      commentDispatch({ type: 'SET_COMMENT', payload: singleComment })
    }, [singleComment])
    useEffect(() => {
-      commentDispatch({ type: CommentActions.SET_POSTID, payload: postId })
+      commentDispatch({ type: 'SET_POSTID', payload: postId })
    }, [postId])
 
    const getCommentsByParentId = useMemo(() => {

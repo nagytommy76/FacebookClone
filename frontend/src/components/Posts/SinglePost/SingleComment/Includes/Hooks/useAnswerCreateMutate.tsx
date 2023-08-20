@@ -4,7 +4,6 @@ import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/Ax
 
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
 import { CommentContext } from '../../Context/CommentContext'
-import { CommentActions } from '../../Context/CommentReducer'
 
 const useAnswerCreateMutate = (
    commentDepth: number,
@@ -36,7 +35,7 @@ const useAnswerCreateMutate = (
       mutationFn: handleCreateMutate,
       onSuccess(data) {
          commentDispatch({
-            type: CommentActions.ADD_SINGLE_COMMENT_ANSWER,
+            type: 'ADD_SINGLE_COMMENT_ANSWER',
             payload: data.data.createdCommentAnswer,
          })
          setStatesToDefault()

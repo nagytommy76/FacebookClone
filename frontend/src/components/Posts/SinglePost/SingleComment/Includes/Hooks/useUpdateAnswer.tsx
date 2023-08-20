@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 
 import { CommentContext } from '../../Context/CommentContext'
-import { CommentActions } from '../../Context/CommentReducer'
 
 const useUpdateAnswer = (modifiedText: string, setStatesToDefault: () => void) => {
    const {
@@ -29,7 +28,7 @@ const useUpdateAnswer = (modifiedText: string, setStatesToDefault: () => void) =
       mutationFn: updateAnswerMutateFn,
       onSuccess(data, variables) {
          commentDispatch({
-            type: CommentActions.ADD_SINGLE_COMMENT_ANSWER,
+            type: 'UPDATE_SINGLE_COMMENT_ANSWER',
             payload: { modifiedText, answerID: variables },
          })
          setStatesToDefault()

@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { CommentContext } from '../../SingleComment/Context/CommentContext'
-import { CommentActions } from '../../SingleComment/Context/CommentReducer'
 import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
@@ -20,7 +19,7 @@ const useLikeComment = () => {
             postId,
             commentId,
          })) as AxiosResponse<IPostLike[]>
-         commentDispatch({ type: CommentActions.SET_COMMENT_LIKE, payload: response.data })
+         commentDispatch({ type: 'SET_COMMENT_LIKE', payload: response.data })
          return response
       } catch (error) {
          console.log(error)
