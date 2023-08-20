@@ -3,7 +3,7 @@ import useAnswerCreateMutate from './useAnswerCreateMutate'
 import useUpdateCommentMutate from './useUpdateCommentMutate'
 import useUpdateAnswer from './useUpdateAnswer'
 
-const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) => {
+const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const reference = useRef<null | HTMLInputElement>(null)
    const [isUpdate, setIsUpdate] = useState<boolean>(false)
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
@@ -64,4 +64,4 @@ const useCreateAnswer = (commentDepth: number, parentCommentId: string | null) =
    }
 }
 
-export default useCreateAnswer
+export default useAnswer

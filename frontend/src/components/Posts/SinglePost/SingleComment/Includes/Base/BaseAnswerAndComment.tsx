@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
-import useCreateAnswer from '../Hooks/useCreateAnswer'
+import useAnswer from '../Hooks/useAnswer'
 
 import { StyledRightContainer } from './Styles/Styles'
 import { StyledCommentContainer, StyledListElement, StyledRightSide } from './Styles/ContainerStyles'
@@ -37,7 +37,7 @@ const BaseAnswerAndComment: React.FC<{
       handleSetAnswerOpen,
       handleSetAnswerOpenForUpdate,
       handleUpdateCommentAnswerMutate,
-   } = useCreateAnswer(functionParams[0], functionParams[1])
+   } = useAnswer(functionParams[0], functionParams[1])
    // Az isChildComment-et fel tudom használni, hogy eldöntsem answer-ről van-e szó, és úgy tudom módosítani
    return (
       <StyledCommentContainer>
@@ -72,7 +72,7 @@ const BaseAnswerAndComment: React.FC<{
                   <AddCommentBase
                      handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
                      updateCommentMutate={updateCommentMutate}
-                     handleSendComment={saveAnswerMutate}
+                     handleSendCommentAnswer={saveAnswerMutate}
                      handleChangeText={handleChangeText}
                      commentAnswerId={answer._id}
                      reference={reference as React.MutableRefObject<null>}

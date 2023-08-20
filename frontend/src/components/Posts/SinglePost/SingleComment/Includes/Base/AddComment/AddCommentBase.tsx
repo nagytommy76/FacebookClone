@@ -8,7 +8,7 @@ import SendIcon from '@mui/icons-material/Send'
 import AddEmojiButton from './Includes/AddEmojiButton'
 
 const AddCommentBase: React.FC<{
-   handleSendComment: () => void
+   handleSendCommentAnswer: () => void
    updateCommentMutate: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
    handleUpdateCommentAnswerMutate: (answerId: string) => void
@@ -20,7 +20,7 @@ const AddCommentBase: React.FC<{
    isUpdate: boolean
 }> = ({
    handleUpdateCommentAnswerMutate,
-   handleSendComment,
+   handleSendCommentAnswer,
    updateCommentMutate,
    handleChangeText,
    commentAnswerId,
@@ -33,9 +33,9 @@ const AddCommentBase: React.FC<{
    const handleClick = () => {
       console.log(isChildComment, isUpdate)
       if (isChildComment) {
-         isUpdate ? handleUpdateCommentAnswerMutate(commentAnswerId) : () => {}
+         isUpdate ? handleUpdateCommentAnswerMutate(commentAnswerId) : handleSendCommentAnswer()
       } else {
-         isUpdate ? updateCommentMutate() : handleSendComment()
+         isUpdate ? updateCommentMutate() : handleSendCommentAnswer()
       }
    }
 
