@@ -27,8 +27,12 @@ const useUpdateAnswer = (modifiedText: string, setStatesToDefault: () => void) =
    const { mutate } = useMutation({
       mutationKey: ['updateCommentAnswer'],
       mutationFn: updateAnswerMutateFn,
-      onSuccess(data) {
-         console.log(data)
+      onSuccess(data, variables) {
+         commentDispatch({
+            type: CommentActions.ADD_SINGLE_COMMENT_ANSWER,
+            payload: { modifiedText, answerID: variables },
+         })
+         setStatesToDefault()
       },
    })
 
