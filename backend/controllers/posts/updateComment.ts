@@ -44,20 +44,18 @@ export const updateCommentAnswerController = async (
    const { commentAnswerId, commentId, modifiedText, postId } = request.body
    try {
       const found = await PostModel.updateOne(
-         //const found = await PostModel.findOne(
          {
             _id: postId,
             comments: { $elemMatch: { _id: commentId, 'commentAnswers._id': commentAnswerId } },
-            // 'comments.commentAnswers': { $elemMatch: { _id: commentAnswerId } },
          },
          {
             $set: {
-               // 'commentAnswers.$.comment': modifiedText,
-               'comment.$[outer].commentAnswers.$[inner].comment': modifiedText,
+               'comments.$[outer].commentAnswers.$[inner].comment': modifiedText,
             },
          },
          {
             arrayFilters: [{ 'outer._id': commentId }, { 'inner._id': commentAnswerId }],
+            upsert: true,
          }
       )
       response.status(201).json(found)
@@ -65,3 +63,9 @@ export const updateCommentAnswerController = async (
       response.status(500).json({ msg: 'internal server error', error })
    }
 }
+
+/**
+ *    https://dev.to/rajeshroyal/update-an-object-in-nested-array-in-mongodb-o5a
+ *    https://www.mongodb.com/docs/v6.2/reference/method/db.collection.updateOne/#examples
+ *
+ */
