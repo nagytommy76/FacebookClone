@@ -40,8 +40,14 @@ router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.an
 router.put('/update-post-comment', authenticateAccessTokenForApi, updateCommentController)
 router.put('/update-post-comment-answer', authenticateAccessTokenForApi, updateCommentAnswerController)
 
-// Törlés
+// TÖRLÉS ----------------------------------
 router.delete('/post-like-delete', authenticateAccessTokenForApi, deleteLikeFromPostController)
+router.delete(
+   '/post-comment-like-delete',
+   authenticateAccessTokenForApi,
+   PostComment.deleteLikeCommentController
+)
+// KOMMENT TÖRLÉS -------------------
 router.delete('/post-comment-delete', authenticateAccessTokenForApi, removeCommentController)
 router.delete('/post-comment-answer-delete', authenticateAccessTokenForApi, removeCommentAnswerController)
 
