@@ -28,7 +28,8 @@
          "@/types/*": ["./src/types/*"],
          "@/utils/*": ["./src/utils/*"],
          "@/hooks/*": ["./src/hooks/*"],
-         "@/styles/*": ["./src/styles/*"]
+         "@/styles/*": ["./src/styles/*"],
+         "@/axios/*": ["./src/utils/axiosSetup/*"]
       }
    },
    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
