@@ -42,6 +42,18 @@ export default class PostCommentController extends BasePostController {
       }
    }
 
+   deleteLikeCommentController = async (request: ICommentLikeRequest, response: Response) => {
+      const { commentId, postId } = request.body
+      const userId = request.user?.userId
+      try {
+         const foundPost = await this.findPostModelByPostId(postId)
+         if (!foundPost) return response.status(404).json({ msg: 'nincs ilyen poszt' })
+         response.status(200).json({ msg: 'KOMMENT TÖRLÉSE' })
+      } catch (error) {
+         response.status(500).json(error)
+      }
+   }
+
    answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
       const userId = request.user?.userId
       if (!userId) return response.status(404).json({ msg: 'User not found' })

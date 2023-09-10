@@ -18,7 +18,6 @@ interface IRemoveAnswerRequest extends IJWTUserType {
 
 export const removeCommentController = async (request: IRemoveCommentRequest, response: Response) => {
    const { postId, commentId } = request.body
-
    try {
       // ha egy "fő" komment:
       const foundPostsComment = await PostModel.find({
@@ -48,12 +47,6 @@ export const removeCommentAnswerController = async (request: IRemoveAnswerReques
       const foundAnswerToDelete = foundPostsComment[0].comments[0].commentAnswers?.find(
          (answer) => answer._id == answerId
       ) as ICommentAnswer
-
-      const testing = foundPostsComment[0].comments[0].commentAnswers?.map((answer) => {
-         if (foundAnswerToDelete?.commentDepth <= answer.commentDepth) {
-            console.log('csá', answer.commentDepth, answer.comment)
-         }
-      })
 
       foundPostsComment[0].comments[0].commentAnswers =
          foundPostsComment[0].comments[0].commentAnswers?.filter((answer) => {
