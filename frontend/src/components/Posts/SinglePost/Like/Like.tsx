@@ -37,7 +37,7 @@ const Like: React.FC<{
             handleSetLikeAndButtonColor(likeType)
          }
       })
-   }, [postLikes])
+   }, [postLikes, userId])
 
    return (
       <>
