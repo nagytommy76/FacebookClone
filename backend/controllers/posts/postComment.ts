@@ -46,9 +46,21 @@ export default class PostCommentController extends BasePostController {
       const { commentId, postId } = request.body
       const userId = request.user?.userId
       try {
-         const foundPost = await this.findPostModelByPostId(postId)
-         if (!foundPost) return response.status(404).json({ msg: 'nincs ilyen poszt' })
-         response.status(200).json({ msg: 'KOMMENT TÖRLÉSE' })
+         const foundPostsComment = await PostModel.find({
+            _id: postId,
+            comments: { $elemMatch: { _id: commentId } },
+         }).select(['comments.$'])
+         if (!foundPostsComment) return response.status(404).json({ msg: 'nincs ilyen poszt' })
+
+         let removedUserLikesID = ''
+         const filteredLikes = foundPostsComment[0].comments[0].likes.filter((like) => {
+            if (like.userId.toString() !== (userId as string).toString()) {
+               removedUserLikesID = like._id as string
+               return true
+            } else return false
+         })
+
+         response.status(200).json({ msg: 'KOMMENT TÖRLÉSE', foundPostsComment, filteredLikes })
       } catch (error) {
          response.status(500).json(error)
       }
