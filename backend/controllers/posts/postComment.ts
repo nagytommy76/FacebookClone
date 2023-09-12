@@ -42,30 +42,6 @@ export default class PostCommentController extends BasePostController {
       }
    }
 
-   deleteLikeCommentController = async (request: ICommentLikeRequest, response: Response) => {
-      const { commentId, postId } = request.body
-      const userId = request.user?.userId
-      try {
-         const foundPostsComment = await PostModel.find({
-            _id: postId,
-            comments: { $elemMatch: { _id: commentId } },
-         }).select(['comments.$'])
-         if (!foundPostsComment) return response.status(404).json({ msg: 'nincs ilyen poszt' })
-
-         let removedUserLikesID = ''
-         const filteredLikes = foundPostsComment[0].comments[0].likes.filter((like) => {
-            if (like.userId.toString() !== (userId as string).toString()) {
-               removedUserLikesID = like._id as string
-               return true
-            } else return false
-         })
-
-         response.status(200).json({ msg: 'KOMMENT TÖRLÉSE', foundPostsComment, filteredLikes })
-      } catch (error) {
-         response.status(500).json(error)
-      }
-   }
-
    answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
       const userId = request.user?.userId
       if (!userId) return response.status(404).json({ msg: 'User not found' })
