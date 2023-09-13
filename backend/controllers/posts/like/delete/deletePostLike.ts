@@ -1,0 +1,29 @@
+import { Response } from 'express'
+import { Posts as PostModel } from '../../../../models/posts/posts'
+import BaseLikeController from '../../Base/baseLike'
+
+import type { IPostRemoveLikeRequest } from '../../types/PostTypes'
+
+export default class DeleteLikePost extends BaseLikeController {
+   deleteLikeFromPostController = async (request: IPostRemoveLikeRequest, response: Response) => {
+      const { postId } = request.body
+      const userId = request.user?.userId
+      try {
+         const foundPost = await PostModel.findById(postId)
+         if (!foundPost) return response.status(404).json({ msg: 'nincs ilyen poszt' })
+
+         let removedUserLikesID = ''
+         const filteredLikes = foundPost.likes.filter((like) => {
+            if (like.userId.toString() !== (userId as string).toString()) {
+               removedUserLikesID = like._id as string
+               return true
+            } else return false
+         })
+         foundPost.likes = filteredLikes
+         await foundPost.save()
+         response.status(200).json(removedUserLikesID)
+      } catch (error) {
+         response.status(500).json({ msg: 'Internal server error' })
+      }
+   }
+}
