@@ -8,12 +8,16 @@ import { updateCommentController, updateCommentAnswerController } from '../../co
 import PostCommentController from '../../controllers/posts/postComment'
 import GetPostsController from '../../controllers/posts/getPosts'
 import LikePost from '../../controllers/posts/like/likePost'
-import DeleteLikePost from '../../controllers/posts/like/deletePostLike'
+import CommentLikeController from '../../controllers/posts/like/likeComment'
+import DeleteLikePost from '../../controllers/posts/like/delete/deletePostLike'
+import DeleteCommentLike from '../../controllers/posts/like/delete/deleteCommentLike'
 
+const LikePostClass = new LikePost()
+const CommentLikeControllerClass = new CommentLikeController()
 const PostComment = new PostCommentController()
 const GetPosts = new GetPostsController()
-const LikePostClass = new LikePost()
 const DeleteLike = new DeleteLikePost()
+const DeleteCommentLikeClass = new DeleteCommentLike()
 
 const router = Router()
 // Ide kell egy api route protection (accessTokennel, middleware)
@@ -34,7 +38,11 @@ router.post('/save-post', authenticateAccessTokenForApi, savePostController)
 // Likolás
 router.post('/post-like', authenticateAccessTokenForApi, LikePostClass.likePostController)
 router.post('/post-comment-add', authenticateAccessTokenForApi, savePostComment)
-router.post('/post-comment-like', authenticateAccessTokenForApi, PostComment.likeCommentController)
+router.post(
+   '/post-comment-like',
+   authenticateAccessTokenForApi,
+   CommentLikeControllerClass.likeCommentController
+)
 router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.answerToCommentController)
 
 // Módosítás
@@ -46,7 +54,7 @@ router.delete('/post-like-delete', authenticateAccessTokenForApi, DeleteLike.del
 router.delete(
    '/post-comment-like-delete',
    authenticateAccessTokenForApi,
-   DeleteLike.deleteLikeCommentController
+   DeleteCommentLikeClass.deleteLikeCommentController
 )
 // KOMMENT TÖRLÉS -------------------
 router.delete('/post-comment-delete', authenticateAccessTokenForApi, removeCommentController)
