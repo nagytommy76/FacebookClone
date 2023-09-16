@@ -31,6 +31,21 @@ export default abstract class BaseLikeController extends BasePostController {
       return reactionTypes
    }
 
+   public getFilteredLikesByUserId(likes: IPostLike[], userId: string) {
+      let removedUserLikesID: string | null = null
+
+      const filteredLikes = likes.filter((like) => {
+         if (like.userId.toString() !== userId.toString()) {
+            removedUserLikesID = like._id?.toString() as string
+            return true
+         } else return false
+      })
+      return {
+         removedUserLikesID,
+         filteredLikes,
+      }
+   }
+
    protected countLikeReactions(reactionTypes: IReactionTypes) {
       let totalReactionCount = 0
       Object.values(reactionTypes).forEach((value) => {
