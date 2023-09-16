@@ -21,13 +21,15 @@ const CommentBody: React.FC<{ answerId: string; postId: string; likes: IPostLike
    return (
       <StyledCommentPaper>
          <p>{comment}</p>
-         <Reactions likes={likes} setIsModalOpen={setIsModalOpen}>
-            <LikeModal
-               isModalOpen={isModalOpen}
-               likeCount={commentLikeCount}
-               setIsModalOpen={setIsModalOpen}
-            />
-         </Reactions>
+         {likes.length !== 0 && (
+            <Reactions likes={likes} setIsModalOpen={setIsModalOpen}>
+               <LikeModal
+                  isModalOpen={isModalOpen}
+                  likeCount={commentLikeCount}
+                  setIsModalOpen={setIsModalOpen}
+               />
+            </Reactions>
+         )}
       </StyledCommentPaper>
    )
 }

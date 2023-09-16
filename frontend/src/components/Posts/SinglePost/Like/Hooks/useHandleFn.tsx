@@ -27,7 +27,6 @@ const useHandleFn = (
       setButtonColor(undefined)
       setLike(undefined)
       deleteCommentLikeMutation({ postId, commentId })
-      console.log('Ide egy handleUnsetCommentLike function kell és egy deleteCommentMutation')
    }
 
    const handleLikeBtnClick = () => {
