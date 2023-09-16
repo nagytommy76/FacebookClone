@@ -12,15 +12,13 @@ export default class DeleteLikePost extends BaseLikeController {
          const foundPost = await PostModel.findById(postId)
          if (!foundPost) return response.status(404).json({ msg: 'nincs ilyen poszt' })
 
-         let removedUserLikesID = ''
-         const filteredLikes = foundPost.likes.filter((like) => {
-            if (like.userId.toString() !== (userId as string).toString()) {
-               removedUserLikesID = like._id as string
-               return true
-            } else return false
-         })
+         const { filteredLikes, removedUserLikesID } = this.getFilteredLikesByUserId(
+            foundPost.likes,
+            userId as string
+         )
          foundPost.likes = filteredLikes
          await foundPost.save()
+
          response.status(200).json(removedUserLikesID)
       } catch (error) {
          response.status(500).json({ msg: 'Internal server error' })
