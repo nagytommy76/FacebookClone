@@ -9,6 +9,7 @@ type CommentAction =
    | 'ADD_SINGLE_COMMENT_ANSWER'
    | 'UPDATE_SINGLE_COMMENT_ANSWER'
    | 'UPDATE_COMMENT_TEXT'
+   | 'REMOVE_SINGLE_COMMENT_LIKE'
 
 export interface ICommentAction {
    type: CommentAction
@@ -93,6 +94,12 @@ export default function CommentReducer(
             draft.singleComment.comment = payload
          })
          return updatedCommentText
+      case 'REMOVE_SINGLE_COMMENT_LIKE':
+         const removedLikes = produce(state, (draft) => {
+            const removed = draft.singleComment.likes.filter((like) => like._id.toString() == payload)
+            draft.singleComment.likes = removed
+         })
+         return removedLikes
       default:
          return state
    }
