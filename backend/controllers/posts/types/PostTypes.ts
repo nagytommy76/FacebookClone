@@ -49,6 +49,12 @@ export interface IPostLikeRequest extends IJWTUserType {
       postId: string
    }
 }
+export interface IGetLikesRequest extends IJWTUserType {
+   body: {
+      postId: string
+      commentId: string
+   }
+}
 
 export interface ICommentLikeRequest extends IJWTUserType {
    body: {
@@ -58,14 +64,18 @@ export interface ICommentLikeRequest extends IJWTUserType {
    }
 }
 
+// TÖRLÉS
+
+export interface ICommentRemoveLikeRequest extends IJWTUserType {
+   body: {
+      likeIdToDelete: string
+      postId: string
+      commentId: string
+   }
+}
+
 export interface IPostRemoveLikeRequest extends IJWTUserType {
    body: {
       postId: string
-   }
-}
-export interface IGetLikesRequest extends IJWTUserType {
-   body: {
-      postId: string
-      commentId: string
    }
 }
