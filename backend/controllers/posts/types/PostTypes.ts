@@ -63,6 +63,14 @@ export interface ICommentLikeRequest extends IJWTUserType {
       commentId: string
    }
 }
+export interface ICommentAnswerLikeRequest extends IJWTUserType {
+   body: {
+      postId: string
+      commentId: string
+      commentAnswerId: string
+      reactionType: LikeTypes
+   }
+}
 
 // TÖRLÉS
 

@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import BasePostController from '../Base/basePost'
-import { ICommentLikeRequest } from '../types/PostTypes'
+import { ICommentLikeRequest, ICommentAnswerLikeRequest } from '../types/PostTypes'
 
 export default class CommentLikeController extends BasePostController {
    likeCommentController = async (request: ICommentLikeRequest, response: Response) => {
@@ -38,5 +38,13 @@ export default class CommentLikeController extends BasePostController {
          console.log(error)
          response.status(500).json({ error })
       }
+   }
+
+   likeCommentAnswerController = async (request: ICommentAnswerLikeRequest, response: Response) => {
+      const { commentId, postId, commentAnswerId, reactionType } = request.body
+      const userId = request.user?.userId
+
+      const foundPostToModifyLike = await this.findPostModelByPostId(postId)
+      if (!foundPostToModifyLike) return response.status(404).json({ msg: 'Post comment not found' })
    }
 }
