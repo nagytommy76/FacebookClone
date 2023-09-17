@@ -73,6 +73,7 @@ const BaseAnswerAndComment: React.FC<{
                      handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
                      updateCommentMutate={updateCommentMutate}
                      handleSendCommentAnswer={saveAnswerMutate}
+                     handleAddSinglePostComment={() => {}}
                      handleChangeText={handleChangeText}
                      commentAnswerId={answer._id}
                      reference={reference as React.MutableRefObject<null>}

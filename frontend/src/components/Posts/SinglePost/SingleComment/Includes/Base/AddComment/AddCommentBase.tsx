@@ -12,13 +12,16 @@ const AddCommentBase: React.FC<{
    updateCommentMutate: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
    handleUpdateCommentAnswerMutate: (answerId: string) => void
+   handleAddSinglePostComment: () => void
    commentAnswerId: string
    reference: React.MutableRefObject<null>
    commentText: string
+   isUpdate: boolean
    isSendDisabled?: boolean
    isChildComment?: boolean
-   isUpdate: boolean
+   isAddPostComment?: boolean
 }> = ({
+   handleAddSinglePostComment,
    handleUpdateCommentAnswerMutate,
    handleSendCommentAnswer,
    updateCommentMutate,
@@ -29,13 +32,17 @@ const AddCommentBase: React.FC<{
    isSendDisabled,
    isUpdate = false,
    isChildComment = false,
+   isAddPostComment = false,
 }) => {
    const handleClick = () => {
-      console.log(isChildComment, isUpdate)
       if (isChildComment) {
          isUpdate ? handleUpdateCommentAnswerMutate(commentAnswerId) : handleSendCommentAnswer()
       } else {
-         isUpdate ? updateCommentMutate() : handleSendCommentAnswer()
+         isUpdate
+            ? updateCommentMutate()
+            : isAddPostComment
+            ? handleAddSinglePostComment()
+            : handleSendCommentAnswer()
       }
    }
 
