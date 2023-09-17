@@ -48,7 +48,7 @@ const AddCommentBase: React.FC<{
 
    return (
       <>
-         <StyledPaperContainer>
+         <StyledPaperContainer isAddPostComment={isAddPostComment}>
             <StyledTextContainer>
                <StyledTextInput
                   value={commentText}

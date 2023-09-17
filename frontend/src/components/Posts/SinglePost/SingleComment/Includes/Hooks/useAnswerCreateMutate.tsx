@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
-import { CommentContext } from '../../Context/CommentContext'
+import { CommentContext } from '@/CommentContext/CommentContext'
 
 const useAnswerCreateMutate = (
    commentDepth: number,

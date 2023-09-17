@@ -2,12 +2,14 @@ import { styled } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
-export const StyledPaperContainer = styled(Paper)({
-   width: '90%',
+export const StyledPaperContainer = styled(Paper, {
+   shouldForwardProp: (prop) => prop !== 'isAddPostComment',
+})(({ isAddPostComment = false }: { isAddPostComment: boolean }) => ({
+   width: `${isAddPostComment ? '100%' : '90%'}`,
    marginTop: '5px',
    borderRadius: '25px',
    backgroundColor: 'rgba(100,100,100, 0.35)',
-})
+}))
 
 export const StyledTextContainer = styled('div')({
    display: 'flex',
