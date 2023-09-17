@@ -40,7 +40,7 @@ const BaseAnswerAndComment: React.FC<{
    } = useAnswer(functionParams[0], functionParams[1])
    // Az isChildComment-et fel tudom használni, hogy eldöntsem answer-ről van-e szó, és úgy tudom módosítani
    return (
-      <StyledCommentContainer>
+      <StyledCommentContainer isChildComment={isChildComment}>
          <StyledListElement>
             <LeftSide
                isChild={isChild}

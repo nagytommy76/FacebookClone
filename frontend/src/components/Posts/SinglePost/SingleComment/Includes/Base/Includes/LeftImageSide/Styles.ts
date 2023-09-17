@@ -1,6 +1,7 @@
 import { styled } from '@mui/material'
 
 export const StyledLeftSide = styled('aside')({
+   width: '40px',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
