@@ -15,6 +15,7 @@ const useHandleFn = (
    const { deleteCommentLikeMutation } = useLikeCommentDelete()
    const { mutateCommentLike } = useLikeComment()
    const [like, setLike] = useState<LikeTypes | undefined>(undefined)
+   const [likeIdToDelete, setLikeIdToDelete] = useState<string>('')
 
    const handleUnsetLike = () => {
       // ide egy remove post like mutate kell
@@ -26,7 +27,7 @@ const useHandleFn = (
    const handleUnsetCommentLike = () => {
       setButtonColor(undefined)
       setLike(undefined)
-      deleteCommentLikeMutation({ postId, commentId })
+      deleteCommentLikeMutation({ postId, commentId, likeIdToDelete })
    }
 
    const handleLikeBtnClick = () => {
@@ -62,6 +63,7 @@ const useHandleFn = (
       handleSendPostLike,
       handleSendCommentLike,
       handleSetLikeAndButtonColor,
+      setLikeIdToDelete,
    }
 }
 

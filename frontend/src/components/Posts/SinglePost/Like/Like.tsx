@@ -20,6 +20,7 @@ const Like: React.FC<{
    const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
    const {
+      setLikeIdToDelete,
       handleLikeBtnClick,
       handleCommentLikeBtnClick,
       handleSendPostLike,
@@ -31,6 +32,7 @@ const Like: React.FC<{
       postLikes.map((like) => {
          // Itt kiválasztom, hogy a belépett user mit nyomott (isLike, isAngry stb...)
          if (userId === like.userId) {
+            setLikeIdToDelete(like._id)
             const likeType = Object.keys(like.reactionType).filter(
                (key) => like.reactionType[key]
             )[0] as LikeTypes

@@ -6,12 +6,13 @@ import { CommentContext } from '@/CommentContext/CommentContext'
 import { IPostLike } from '@/src/types/LikeTypes'
 interface ICommentLikeDelete {
    postId: string
+   likeIdToDelete: string
    commentId?: string
 }
 
-const deleteCommentLikeFn = async ({ postId, commentId }: ICommentLikeDelete) => {
+const deleteCommentLikeFn = async ({ postId, commentId, likeIdToDelete }: ICommentLikeDelete) => {
    return (await axios.delete('/post/post-comment-like-delete', {
-      data: { postId, commentId },
+      data: { postId, commentId, likeIdToDelete },
    })) as AxiosResponse<{ likes: IPostLike[]; removedUserLikesID: string }>
 }
 
