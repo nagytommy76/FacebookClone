@@ -23,6 +23,13 @@ const router = Router()
 // Ide kell egy api route protection (accessTokennel, middleware)
 router.get('/get-posts', authenticateAccessTokenForApi, GetPosts.getAllPosts)
 router.get('/get-user-posts', authenticateAccessTokenForApi, GetPosts.getUsersAllPosts)
+router.post('/save-post', authenticateAccessTokenForApi, savePostController)
+
+// Komment
+router.post('/post-comment-add', authenticateAccessTokenForApi, savePostComment)
+router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.answerToCommentController)
+
+// Likolás
 router.post(
    '/get-post-like-count',
    authenticateAccessTokenForApi,
@@ -33,17 +40,17 @@ router.post(
    authenticateAccessTokenForApi,
    LikePostClass.getPostCommentsLikesByTypeAndCountController
 )
-router.post('/save-post', authenticateAccessTokenForApi, savePostController)
-
-// Likolás
 router.post('/post-like', authenticateAccessTokenForApi, LikePostClass.likePostController)
-router.post('/post-comment-add', authenticateAccessTokenForApi, savePostComment)
 router.post(
    '/post-comment-like',
    authenticateAccessTokenForApi,
    CommentLikeControllerClass.likeCommentController
 )
-router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.answerToCommentController)
+router.post(
+   '/comment-answer-like',
+   authenticateAccessTokenForApi,
+   CommentLikeControllerClass.likeCommentAnswerController
+)
 
 // Módosítás
 router.put('/update-post-comment', authenticateAccessTokenForApi, updateCommentController)
