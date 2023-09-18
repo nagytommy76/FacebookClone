@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
 import { useAppSelector } from '@/utils/redux/store'
@@ -16,17 +16,20 @@ const Like: React.FC<{
    isPostLike?: boolean
    commentId?: string
    children?: React.ReactNode
-}> = ({ postId, postLikes, isPostLike = true, children, commentId }) => {
+   isChildComment?: boolean
+}> = ({ postId, postLikes, isPostLike = true, children, commentId, isChildComment = false }) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
    const {
       setLikeIdToDelete,
       handleLikeBtnClick,
+      handleSetLikeAndButtonColor,
       handleCommentLikeBtnClick,
+      handleCommentAnswerLikeClick,
       handleSendPostLike,
       handleSendCommentLike,
-      handleSetLikeAndButtonColor,
-   } = useHandleFn(setButtonColor, postId, commentId)
+      handleSendAnswerLike,
+   } = useHandleFn(setButtonColor, postId, isChildComment, commentId)
 
    useEffect(() => {
       postLikes.map((like) => {
@@ -41,12 +44,21 @@ const Like: React.FC<{
       })
    }, [postLikes, userId])
 
+   const handleReactionClick = () => {
+      if (isPostLike) {
+         return handleSendPostLike
+      } else {
+         if (isChildComment) {
+            // Itt kell az answer like mutate-et futtatni handleSendAnswerLike
+            return handleSendAnswerLike
+         }
+         return handleSendCommentLike
+      }
+   }
+
    return (
       <>
-         <CustomTooltipTitle
-            placement='top'
-            title={<Reactions setLike={isPostLike ? handleSendPostLike : handleSendCommentLike} />}
-         >
+         <CustomTooltipTitle placement='top' title={<Reactions setLike={handleReactionClick} />}>
             {isPostLike ? (
                <Button
                   sx={{ color: likeButtonColor, textTransform: 'none' }}
@@ -59,7 +71,7 @@ const Like: React.FC<{
                </Button>
             ) : (
                <StyledCommentLikeButton
-                  onClick={handleCommentLikeBtnClick}
+                  onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
                   style={{ color: likeButtonColor }}
                >
                   Tetszik
