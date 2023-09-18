@@ -15,12 +15,19 @@ const CommentFooter: React.FC<{
    postId: string
    likes: IPostLike[]
    answeredAt: string
-}> = ({ handleSetAnswerOpen, answerId, likes, postId, answeredAt }) => {
+   isChildComment?: boolean
+}> = ({ handleSetAnswerOpen, answerId, likes, postId, answeredAt, isChildComment = false }) => {
    const currentTime = useMoment(answeredAt)
 
    return (
       <CommentFooterStyle>
-         <Likes commentId={answerId} isPostLike={false} postId={postId} postLikes={likes}>
+         <Likes
+            isChildComment={isChildComment}
+            commentId={answerId}
+            isPostLike={false}
+            postId={postId}
+            postLikes={likes}
+         >
             <StyledCommentAnswerButton onClick={handleSetAnswerOpen}>Válasz</StyledCommentAnswerButton>
          </Likes>
          <Tooltip arrow title={moment(answeredAt).format('YYYY MMMM D dddd, kk:mm')}>

@@ -67,6 +67,7 @@ const BaseAnswerAndComment: React.FC<{
                   handleSetAnswerOpen={handleSetAnswerOpen}
                   likes={answer.likes}
                   postId={postId}
+                  isChildComment={isChildComment}
                />
                <Collapse in={isAnswerOpen} timeout={100}>
                   <AddCommentBase
