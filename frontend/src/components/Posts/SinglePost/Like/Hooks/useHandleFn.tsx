@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react'
 import { CommentContext } from '@/CommentContext/CommentContext'
 import useLikeMutate from './useLikeMutate'
+import useLikeComment from './useLikeComment'
+import useLikeAnswer from './useLikeAnswer'
 import useLikeDelete from './useLikeDelete'
 import useLikeCommentDelete from './useLikeCommentDelete'
-import useLikeComment from './useLikeComment'
 import type { LikeTypes } from '@/types/LikeTypes'
 
 const useHandleFn = (
@@ -16,9 +17,11 @@ const useHandleFn = (
       commentReducer: { singleComment },
    } = useContext(CommentContext)
    const { mutatePostLike } = useLikeMutate()
+   const { mutateCommentLike } = useLikeComment()
+   const { mutateAnswerLike } = useLikeAnswer()
    const { deleteMutation } = useLikeDelete()
    const { deleteCommentLikeMutation } = useLikeCommentDelete()
-   const { mutateCommentLike } = useLikeComment()
+
    const [like, setLike] = useState<LikeTypes | undefined>(undefined)
    const [likeIdToDelete, setLikeIdToDelete] = useState<string>('')
 
@@ -58,9 +61,15 @@ const useHandleFn = (
    }
 
    const handleSendAnswerLike = (likeType: LikeTypes) => {
-      console.log('heee')
-      handleSetLikeAndButtonColor(likeType)
       console.log(singleComment._id)
+      handleSetLikeAndButtonColor(likeType)
+      mutateAnswerLike({
+         commentId: singleComment._id,
+         postId,
+         commentAnswerId: commentId,
+         reactionType: likeType,
+      })
+      console.log(commentId)
    }
 
    const handleSendPostLike = (likeType: LikeTypes) => {
