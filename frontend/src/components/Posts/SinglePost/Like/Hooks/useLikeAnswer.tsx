@@ -1,4 +1,4 @@
-import React from 'react'
+import { useContext } from 'react'
 import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 import { CommentContext } from '@/CommentContext/CommentContext'
@@ -11,6 +11,7 @@ interface IAnswerLike {
 }
 
 const useLikeAnswer = () => {
+   const { commentDispatch } = useContext(CommentContext)
    const handleSendAnswerLike = async ({ commentId, postId, commentAnswerId, reactionType }: IAnswerLike) => {
       try {
          const response = await axios.post('post/comment-answer-like', {
@@ -19,6 +20,7 @@ const useLikeAnswer = () => {
             commentAnswerId,
             reactionType,
          })
+         commentDispatch({ type: 'ADD_ANSWER_LIKE', payload: { commentAnswerId, reactionType } })
          return response
       } catch (error) {
          console.log(error)
