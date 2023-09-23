@@ -1,10 +1,11 @@
 import { produce } from 'immer'
-import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
+import type { ICommentAnswers, IPostComment, LikeTypes } from '@/types/LikeTypes'
 
 type CommentAction =
    | 'SET_POSTID'
    | 'SET_COMMENT'
    | 'SET_COMMENT_LIKE'
+   | 'ADD_ANSWER_LIKE'
    | 'SET_CHILD_ANSWERS'
    | 'ADD_SINGLE_COMMENT_ANSWER'
    | 'UPDATE_SINGLE_COMMENT_ANSWER'
@@ -70,6 +71,20 @@ export default function CommentReducer(
             draft.singleComment.likes = payload
          })
          return nextLikeState
+      case 'ADD_ANSWER_LIKE':
+         const { commentAnswerId, reactionType } = payload as {
+            commentAnswerId: string
+            reactionType: LikeTypes
+         }
+         const newAnswerLikes = produce(state, (draft) => {
+            const foundAnswer = draft.singleComment.commentAnswers?.find(
+               (answer) => answer._id == commentAnswerId
+            )
+            console.log(commentAnswerId)
+            console.log(draft.singleComment)
+            // draft.singleComment.commentAnswers
+         })
+         return newAnswerLikes
       case 'ADD_SINGLE_COMMENT_ANSWER':
          const newComments = produce(state, (draft) => {
             draft.singleComment.commentAnswers = payload
