@@ -19,6 +19,7 @@ export default class PostCommentController extends BasePostController {
             commentDepth,
             commentImage: '',
             parentCommentId,
+            likes: [],
             userId,
          })
          await foundPostComment.save()

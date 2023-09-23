@@ -9,7 +9,7 @@ export interface ICommentAnswer {
    commentDepth: number
    answeredAt: string
    commentImage: string
-   likes?: IPostLike[]
+   likes: IPostLike[]
 }
 
 export interface IPostComment {
