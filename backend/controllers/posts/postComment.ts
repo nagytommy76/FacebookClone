@@ -53,6 +53,7 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          commentDepth: 1,
          likes: [],
          answeredAt,
+         commentAnswers: [],
       })
       await foundPost?.save()
       await foundPost?.populate({
