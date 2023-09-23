@@ -47,10 +47,17 @@ const useHandleFn = (
       if (like === undefined) handleSendCommentLike('isLike')
       else handleUnsetCommentLike()
    }
+
+   const handleUnsetAnswerLike = () => {
+      setButtonColor(undefined)
+      setLike(undefined)
+   }
+
    // Ez a likeolás esetén fut le
    const handleCommentAnswerLikeClick = () => {
       console.log('Likeolom a választ')
       if (like === undefined) handleSendAnswerLike('isLike')
+      else handleUnsetAnswerLike()
    }
 
    const handleSetLikeAndButtonColor = (likeType: LikeTypes) => {
@@ -61,7 +68,6 @@ const useHandleFn = (
    }
 
    const handleSendAnswerLike = (likeType: LikeTypes) => {
-      console.log(singleComment._id)
       handleSetLikeAndButtonColor(likeType)
       mutateAnswerLike({
          commentId: singleComment._id,
@@ -69,7 +75,6 @@ const useHandleFn = (
          commentAnswerId: commentId,
          reactionType: likeType,
       })
-      console.log(commentId)
    }
 
    const handleSendPostLike = (likeType: LikeTypes) => {
