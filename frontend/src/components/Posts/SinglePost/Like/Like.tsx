@@ -44,21 +44,22 @@ const Like: React.FC<{
       })
    }, [postLikes, userId])
 
-   const handleReactionClick = () => {
-      if (isPostLike) {
-         return handleSendPostLike
-      } else {
-         if (isChildComment) {
-            // Itt kell az answer like mutate-et futtatni handleSendAnswerLike
-            return handleSendAnswerLike
-         }
-         return handleSendCommentLike
-      }
-   }
-
    return (
       <>
-         <CustomTooltipTitle placement='top' title={<Reactions setLike={handleReactionClick} />}>
+         <CustomTooltipTitle
+            placement='top'
+            title={
+               <Reactions
+                  setLike={
+                     isPostLike
+                        ? handleSendPostLike
+                        : isChildComment
+                        ? handleSendAnswerLike
+                        : handleSendCommentLike
+                  }
+               />
+            }
+         >
             {isPostLike ? (
                <Button
                   sx={{ color: likeButtonColor, textTransform: 'none' }}
