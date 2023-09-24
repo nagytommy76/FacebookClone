@@ -81,6 +81,14 @@ export interface ICommentRemoveLikeRequest extends IJWTUserType {
       commentId: string
    }
 }
+export interface IAnswerRemoveLikeRequest extends IJWTUserType {
+   body: {
+      answerId: string
+      postId: string
+      commentId: string
+      likeIdToDelete: string
+   }
+}
 
 export interface IPostRemoveLikeRequest extends IJWTUserType {
    body: {
