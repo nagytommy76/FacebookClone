@@ -5,15 +5,17 @@ import { styled } from '@mui/material'
 export const StyledCommentContainer = styled('div', {
    shouldForwardProp: (prop) => prop !== 'isChildComment',
 })(({ isChildComment = false }: { isChildComment: boolean }) => ({
+   position: 'relative',
    maxWidth: `${isChildComment ? 'calc(100% - 54px)' : '100%'}`,
-   margin: '.75rem 0',
+   marginTop: '1rem',
+   marginBottom: `${!isChildComment ? '1.4rem' : '0'}`,
+   marginRight: 0,
    display: 'flex',
    flexDirection: 'column',
 }))
 
 export const StyledListElement = styled('div')({
    position: 'relative',
-   listStyle: 'none',
    display: 'flex',
    flexDirection: 'row',
 })
