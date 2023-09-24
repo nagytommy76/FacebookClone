@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 import { CommentContext } from '@/CommentContext/CommentContext'
+import type { IPostLike } from '@/src/types/LikeTypes'
 
 interface IAnswerLike {
    commentId: string
@@ -10,26 +11,40 @@ interface IAnswerLike {
    reactionType: string
 }
 
+interface IAnswerLikeResponse {
+   commentAnswersIndex: number
+   updatedCommentAnswerLikes: IPostLike[]
+}
+const handleSendAnswerLike = async ({ commentId, postId, commentAnswerId, reactionType }: IAnswerLike) => {
+   try {
+      const response = (await axios.post('post/comment-answer-like', {
+         commentId,
+         postId,
+         commentAnswerId,
+         reactionType,
+      })) as AxiosResponse<IAnswerLikeResponse>
+      return response
+   } catch (error) {
+      console.log(error)
+   }
+}
+
 const useLikeAnswer = () => {
    const { commentDispatch } = useContext(CommentContext)
-   const handleSendAnswerLike = async ({ commentId, postId, commentAnswerId, reactionType }: IAnswerLike) => {
-      try {
-         const response = await axios.post('post/comment-answer-like', {
-            commentId,
-            postId,
-            commentAnswerId,
-            reactionType,
-         })
-         commentDispatch({ type: 'ADD_ANSWER_LIKE', payload: { commentAnswerId, reactionType } })
-         return response
-      } catch (error) {
-         console.log(error)
-      }
-   }
 
    const { mutate } = useMutation({
       mutationKey: ['likeCommentAnswer'],
       mutationFn: handleSendAnswerLike,
+      onSuccess(data) {
+         if (data?.status === 200)
+            commentDispatch({
+               type: 'ADD_ANSWER_LIKE',
+               payload: {
+                  commentAnswersIndex: data.data.commentAnswersIndex,
+                  updatedCommentAnswerLikes: data.data.updatedCommentAnswerLikes,
+               },
+            })
+      },
    })
    return { mutateAnswerLike: mutate }
 }
