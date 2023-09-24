@@ -3,15 +3,16 @@ import { CommentContext } from '@/CommentContext/CommentContext'
 import useLikeMutate from './useLikeMutate'
 import useLikeComment from './useLikeComment'
 import useLikeAnswer from './useLikeAnswer'
-import useLikeDelete from './useLikeDelete'
-import useLikeCommentDelete from './useLikeCommentDelete'
+import useLikeDelete from './delete/useLikeDelete'
+import useLikeCommentDelete from './delete/useLikeCommentDelete'
+import useAnswerLikeDelete from './delete/useAnswerLikeDelete'
 import type { LikeTypes } from '@/types/LikeTypes'
 
+// A commentId az lehet answerId is
 const useHandleFn = (
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void,
    postId: string,
-   isChildComment: boolean,
-   commentId?: string
+   commentId: string
 ) => {
    const {
       commentReducer: { singleComment },
@@ -21,6 +22,7 @@ const useHandleFn = (
    const { mutateAnswerLike } = useLikeAnswer()
    const { deleteMutation } = useLikeDelete()
    const { deleteCommentLikeMutation } = useLikeCommentDelete()
+   const { deleteAnswerLikeMutation } = useAnswerLikeDelete()
 
    const [like, setLike] = useState<LikeTypes | undefined>(undefined)
    const [likeIdToDelete, setLikeIdToDelete] = useState<string>('')
@@ -51,11 +53,16 @@ const useHandleFn = (
    const handleUnsetAnswerLike = () => {
       setButtonColor(undefined)
       setLike(undefined)
+      deleteAnswerLikeMutation({
+         likeIdToDelete,
+         answerId: commentId, // ebben az esetben az answerId kapom meg mert a childAnswer-en nyomtam a like-ot
+         commentId: singleComment._id,
+         postId,
+      })
    }
 
    // Ez a likeolás esetén fut le
    const handleCommentAnswerLikeClick = () => {
-      console.log('Likeolom a választ')
       if (like === undefined) handleSendAnswerLike('isLike')
       else handleUnsetAnswerLike()
    }

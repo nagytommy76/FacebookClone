@@ -29,7 +29,7 @@ const Like: React.FC<{
       handleSendPostLike,
       handleSendCommentLike,
       handleSendAnswerLike,
-   } = useHandleFn(setButtonColor, postId, isChildComment, commentId)
+   } = useHandleFn(setButtonColor, postId, commentId)
 
    useEffect(() => {
       postLikes.map((like) => {
