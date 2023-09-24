@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios } from '@/axios/AxiosInstance'
-
 import { CommentContext } from '@/CommentContext/CommentContext'
 
 interface IAnswerLikeDelete {
@@ -24,7 +23,6 @@ const useAnswerLikeDelete = () => {
       mutationKey: ['likeAnswerRemove'],
       mutationFn: deleteCommentLikeFn,
       onSuccess(data, variables) {
-         console.log(variables)
          commentDispatch({
             type: 'REMOVE_ANSWER_LIKE',
             payload: { answerId: variables.answerId, likeIdToDelete: variables.likeIdToDelete },
