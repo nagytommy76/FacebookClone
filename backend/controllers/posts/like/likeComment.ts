@@ -47,30 +47,38 @@ export default class CommentLikeController extends BasePostController {
       const userId = request.user?.userId as string
 
       try {
-         const postToModifyLike = await PostModel.findOne({
+         const foundPostToModifyLike = await PostModel.findOne({
             _id: postId,
-            comments: { $elemMatch: { _id: commentId } },
-         }).select(['comments.$'])
-         if (!postToModifyLike) return response.status(404).json({ msg: 'Post comment not found' })
+         }).select('comments')
+         if (!foundPostToModifyLike) return response.status(404).json({ msg: 'Post comment not found' })
 
-         const commentAnswersLikeIndex = postToModifyLike.comments[0].commentAnswers.findIndex(
-            (commentAnswer) => {
-               return commentAnswer._id?.toString() === commentAnswerId.toString()
-            }
-         )
+         const foundCommentIndex = foundPostToModifyLike.comments.findIndex((comment) => {
+            return comment._id?.toString() === commentId.toString()
+         })
+
+         const commentAnswersLikeIndex = foundPostToModifyLike.comments[
+            foundCommentIndex
+         ].commentAnswers.findIndex((commentAnswer) => {
+            return commentAnswer._id?.toString() === commentAnswerId.toString()
+         })
 
          const userLike = this.findUsersLikeByUserID(
-            postToModifyLike.comments[0].commentAnswers[commentAnswersLikeIndex].likes,
+            foundPostToModifyLike.comments[foundCommentIndex].commentAnswers[commentAnswersLikeIndex].likes,
             userId
          )
          this.checkUserLike(
             userLike,
             reactionType,
-            postToModifyLike.comments[0].commentAnswers[commentAnswersLikeIndex].likes,
+            foundPostToModifyLike.comments[foundCommentIndex].commentAnswers[commentAnswersLikeIndex].likes,
             userId
          )
-         await postToModifyLike.save()
-         response.status(200).json({ postToModifyLike })
+         await foundPostToModifyLike.save()
+         response.status(200).json({
+            commentAnswersIndex: commentAnswersLikeIndex,
+            updatedCommentAnswerLikes:
+               foundPostToModifyLike.comments[foundCommentIndex].commentAnswers[commentAnswersLikeIndex]
+                  .likes,
+         })
       } catch (error) {
          console.log(error)
          response.status(500).json({ msg: 'internal server error', error })
