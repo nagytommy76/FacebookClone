@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { ICommentAnswers, IPostComment, LikeTypes } from '@/types/LikeTypes'
+import type { ICommentAnswers, IPostComment, IPostLike } from '@/types/LikeTypes'
 
 type CommentAction =
    | 'SET_POSTID'
@@ -11,6 +11,7 @@ type CommentAction =
    | 'UPDATE_SINGLE_COMMENT_ANSWER'
    | 'UPDATE_COMMENT_TEXT'
    | 'REMOVE_SINGLE_COMMENT_LIKE'
+   | 'REMOVE_ANSWER_LIKE'
 
 export interface ICommentAction {
    type: CommentAction
@@ -72,17 +73,12 @@ export default function CommentReducer(
          })
          return nextLikeState
       case 'ADD_ANSWER_LIKE':
-         const { commentAnswerId, reactionType } = payload as {
-            commentAnswerId: string
-            reactionType: LikeTypes
+         const { commentAnswersIndex, updatedCommentAnswerLikes } = payload as {
+            commentAnswersIndex: number
+            updatedCommentAnswerLikes: IPostLike[]
          }
          const newAnswerLikes = produce(state, (draft) => {
-            const foundAnswer = draft.singleComment.commentAnswers?.find(
-               (answer) => answer._id == commentAnswerId
-            )
-            console.log(commentAnswerId)
-            console.log(draft.singleComment)
-            // draft.singleComment.commentAnswers
+            draft.singleComment.commentAnswers[commentAnswersIndex].likes = updatedCommentAnswerLikes
          })
          return newAnswerLikes
       case 'ADD_SINGLE_COMMENT_ANSWER':
@@ -111,10 +107,22 @@ export default function CommentReducer(
          return updatedCommentText
       case 'REMOVE_SINGLE_COMMENT_LIKE':
          const removedLikes = produce(state, (draft) => {
-            const removed = draft.singleComment.likes.filter((like) => like._id.toString() == payload)
+            const removed = draft.singleComment.likes.filter((like) => like._id.toString() !== payload)
             draft.singleComment.likes = removed
          })
          return removedLikes
+      case 'REMOVE_ANSWER_LIKE':
+         const { answerId, likeIdToDelete } = payload
+         const removedAnswerLikes = produce(state, (draft) => {
+            const foundAnswerIndex = draft.singleComment.commentAnswers.findIndex(
+               (answer) => answer._id.toString() === answerId.toString()
+            )
+            const modifiedAnswerLike = draft.singleComment.commentAnswers[foundAnswerIndex].likes.filter(
+               (like) => like._id !== likeIdToDelete
+            )
+            draft.singleComment.commentAnswers[foundAnswerIndex].likes = modifiedAnswerLike
+         })
+         return removedAnswerLikes
       default:
          return state
    }
