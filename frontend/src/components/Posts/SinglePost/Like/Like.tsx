@@ -14,7 +14,7 @@ const Like: React.FC<{
    postId: string
    postLikes: IPostLike[]
    isPostLike?: boolean
-   commentId?: string
+   commentId: string
    children?: React.ReactNode
    isChildComment?: boolean
 }> = ({ postId, postLikes, isPostLike = true, children, commentId, isChildComment = false }) => {

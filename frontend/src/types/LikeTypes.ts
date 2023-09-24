@@ -30,7 +30,7 @@ export interface IPostComment {
    answeredAt: string
    likes: IPostLike[]
    commentImage?: string
-   commentAnswers?: ICommentAnswers[]
+   commentAnswers: ICommentAnswers[]
 }
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------
 export interface IPostLike {
