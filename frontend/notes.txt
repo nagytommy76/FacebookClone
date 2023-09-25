@@ -23,6 +23,10 @@ A NAVBAR-nál redux-ot? használni,h ogy a kép változzon mikor a profilképet 
 Egy BUG: A meglévő comment-nél ha hozzáadok egy comment answert- az nem jelenik meg, még refresh-nél sem. MEGOLDANI!!!!!!
 
 
+A singlePost-nál esetleg kiváltani a commentContextet és a post context-ben változtatni a Statet VAGY-
+amikor rámegyek a HOZZÁSZÓLÁS gombra akkor lekérni az adatbázisból a kommenteket és úgy viszont maradthat a comentContext - TALÁN JOBB MEGOLDÁS
+
+
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
 
 A refreshToken ellenőrzésnél csak azt nézem, hogy valid-e, ha nem kilép -> login oldal
