@@ -1,6 +1,5 @@
 import React, { useRef, useContext, useState } from 'react'
 import dynamic from 'next/dynamic'
-import CommentContextProvider from './SingleComment/Context/CommentContext'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
 
 import Paper from '@mui/material/Paper'
@@ -13,16 +12,14 @@ import {
    LikeAndCommentContainer,
 } from './Styles'
 
-import Dialog from '@mui/material/Dialog'
-
 const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'))
 const ReactionsContainer = dynamic(
    () => import('./SingleComment/Includes/Reatcions/Container/ReactionsContainer')
 )
+const CommentsDialog = dynamic(() => import('./SingleComment/Includes/CommentDialog/CommentDialog'))
+
 import CommentButton from './AddComment/CommentButton'
 import Like from './Like/Like'
-import AddComment from './AddComment/AddComment'
-import SingleComment from './SingleComment/SingleComment'
 
 const SinglePost: React.FC<{
    children: React.ReactNode
@@ -65,38 +62,14 @@ const SinglePost: React.FC<{
                {CommentsComponent}
             </FooterSectionStyle>
          </Paper>
-         <Dialog
-            maxWidth='md'
-            scroll='body'
-            sx={{ width: '100%', margin: 'auto' }}
-            open={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-            aria-labelledby='scroll-dialog-title'
-            aria-describedby='scroll-dialog-description'
+         <CommentsDialog
+            commentRef={commentRef}
+            isDialogOpen={isDialogOpen}
+            onCloseFn={() => setIsDialogOpen(false)}
+            postId={singlePost._id}
          >
-            <div style={{ width: '800px', overflowX: 'hidden' }}>
-               <SinglePost
-                  isTextFieldActive={true}
-                  CommentsComponent={
-                     <>
-                        <Divider sx={{ mt: 1, mb: 1 }} />
-                        {singlePost.comments.map((comment) => (
-                           <CommentContextProvider
-                              key={comment._id}
-                              singleComment={comment}
-                              postId={singlePost._id}
-                           >
-                              <SingleComment />
-                           </CommentContextProvider>
-                        ))}
-                        <AddComment postId={singlePost._id} reference={commentRef} />
-                     </>
-                  }
-               >
-                  {children}
-               </SinglePost>
-            </div>
-         </Dialog>
+            {children}
+         </CommentsDialog>
       </>
    )
 }
