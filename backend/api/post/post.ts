@@ -5,6 +5,7 @@ import { savePostComment } from '../../controllers/posts/postComment'
 import { removeCommentController, removeCommentAnswerController } from '../../controllers/posts/removeComment'
 import { updateCommentController, updateCommentAnswerController } from '../../controllers/posts/updateComment'
 
+import GetCommentController from '../../controllers/posts/comment/getComments'
 import PostCommentController from '../../controllers/posts/postComment'
 import GetPostsController from '../../controllers/posts/getPosts'
 import LikePost from '../../controllers/posts/like/likePost'
@@ -13,6 +14,7 @@ import DeleteLikePost from '../../controllers/posts/like/delete/deletePostLike'
 import DeleteCommentLike from '../../controllers/posts/like/delete/deleteCommentLike'
 import DeleteAnswerLike from '../../controllers/posts/like/delete/deleteAnswerLike'
 
+const GetCommentControllerClass = new GetCommentController()
 const LikePostClass = new LikePost()
 const CommentLikeControllerClass = new CommentLikeController()
 const PostComment = new PostCommentController()
@@ -28,6 +30,11 @@ router.get('/get-user-posts', authenticateAccessTokenForApi, GetPosts.getUsersAl
 router.post('/save-post', authenticateAccessTokenForApi, savePostController)
 
 // Komment
+router.get(
+   '/get-post-comments',
+   authenticateAccessTokenForApi,
+   GetCommentControllerClass.getCommentsController
+)
 router.post('/post-comment-add', authenticateAccessTokenForApi, savePostComment)
 router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.answerToCommentController)
 
