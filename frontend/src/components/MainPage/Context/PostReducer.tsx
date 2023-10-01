@@ -7,6 +7,7 @@ export type PostAction =
    | 'ADD_POST_LIKE'
    | 'ADD_NEW_COMMENT'
    | 'SET_SINGLE_POST'
+   | 'SET_COMMENTS'
 
 export interface IPostsAction {
    type: PostAction
@@ -58,6 +59,11 @@ export const initialPostsState: InitialPostsState = {
 
 export default function PostsReducer(state: InitialPostsState, action: IPostsAction): InitialPostsState {
    switch (action.type) {
+      case 'SET_COMMENTS':
+         const nextComment = produce(state, (draft) => {
+            draft.singlePost.comments = action.payload
+         })
+         return nextComment
       case 'SET_SINGLE_POST':
          const nextState = produce(state, (draft) => {
             draft.singlePost = action.payload
