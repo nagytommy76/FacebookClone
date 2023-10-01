@@ -11,8 +11,24 @@ interface ICommentRequest extends IJWTUserType {
 export default class GetCommentController {
    getCommentsController = async (req: ICommentRequest, res: Response) => {
       const postId = req.query.postId
-      const foundComments = await PostModel.find({ _id: postId }).select('comments')
+      const foundComments = await PostModel.find({ _id: postId })
+         .select('comments')
+         .populate({
+            path: 'comments.userId',
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
+         .populate({
+            path: 'comments.commentAnswers.userId',
+            select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+            match: {
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            },
+         })
+         .lean()
 
-      res.status(200).json({ foundComments })
+      res.status(200).json({ comments: foundComments[0].comments })
    }
 }
