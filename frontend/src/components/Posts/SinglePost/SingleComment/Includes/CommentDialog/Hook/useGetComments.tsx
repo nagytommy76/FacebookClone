@@ -9,22 +9,24 @@ const useGetComments = (
    isDialogOpen: boolean
 ) => {
    const queryFunction = async () => {
-      const result = await axios.get('/post/get-post-comments', { params: { postId } })
+      const result = (await axios.get('/post/get-post-comments', { params: { postId } })) as AxiosResponse<{
+         comments: IPostComment[]
+      }>
       return result
    }
 
-   const { data } = useQuery({
+   const { isLoading } = useQuery({
       queryKey: ['getPostComments', { postId, isDialogOpen }],
       queryFn: queryFunction,
+      enabled: isDialogOpen,
       onSuccess(data) {
-         console.log(data)
-         setComments(data.data)
+         setComments(data.data.comments)
       },
       onError(err) {
          console.log(err)
       },
    })
-   return data
+   return isLoading
 }
 
 export default useGetComments
