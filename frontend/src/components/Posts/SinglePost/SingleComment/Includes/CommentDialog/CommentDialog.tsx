@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 import CommentContextProvider from '../../Context/CommentContext'
 import useGetComments from './Hook/useGetComments'
-import type { IPostComment } from '@/src/types/LikeTypes'
 
 import Divider from '@mui/material/Divider'
 import Dialog from '@mui/material/Dialog'
@@ -17,8 +17,12 @@ const CommentDialog: React.FC<{
    isDialogOpen: boolean
    postId: string
 }> = ({ onCloseFn, isDialogOpen, postId, commentRef, children }) => {
-   const [comments, setComments] = useState<IPostComment[]>([])
-   const isLoading = useGetComments(setComments, postId, isDialogOpen)
+   const {
+      postsReducer: {
+         singlePost: { comments },
+      },
+   } = useContext(PostContext)
+   const isLoading = useGetComments(postId, isDialogOpen)
 
    return (
       <Dialog
