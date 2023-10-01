@@ -21,3 +21,11 @@ export const LikeAndCommentContainer = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
 })
+
+export const CommentsParagraph = styled('p')({
+   transition: 'all .3s ease',
+   cursor: 'pointer',
+   '&:hover': {
+      textDecoration: 'underline',
+   },
+})

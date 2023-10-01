@@ -10,6 +10,7 @@ import {
    ButtonGroupStyle,
    BodyDescriptionSection,
    LikeAndCommentContainer,
+   CommentsParagraph,
 } from './Styles'
 
 const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'))
@@ -32,6 +33,10 @@ const SinglePost: React.FC<{
    const commentRef = useRef(null)
    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
+   const handleOpenDialog = () => {
+      if (!isTextFieldActive) setIsDialogOpen(true)
+   }
+
    return (
       <>
          <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px' }}>
@@ -47,7 +52,11 @@ const SinglePost: React.FC<{
                   {singlePost.likes.length > 0 && (
                      <ReactionsContainer likes={singlePost.likes} postId={singlePost._id} />
                   )}
-                  {singlePost.comments.length > 0 && <p>{singlePost.comments.length} hozzászólás</p>}
+                  {singlePost.comments.length > 0 && (
+                     <CommentsParagraph onClick={handleOpenDialog}>
+                        {singlePost.comments.length} hozzászólás
+                     </CommentsParagraph>
+                  )}
                </LikeAndCommentContainer>
                <Divider sx={{ mt: 1, mb: 1 }} />
                <ButtonGroupStyle>
