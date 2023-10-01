@@ -4,7 +4,7 @@ import type { IPostLike } from '@/src/types/LikeTypes'
 
 import useGetComment from './Hook/useGetComment'
 
-import { StyledCommentPaper } from './Styles'
+import { StyledCommentPaper, StyledCommentParagraph } from './Styles'
 
 const Reactions = dynamic(() => import('../../../Reatcions/Reactions'))
 const LikeModal = dynamic(() => import('../../../Reatcions/LikeModal/LikeModal'))
@@ -20,7 +20,7 @@ const CommentBody: React.FC<{ answerId: string; postId: string; likes: IPostLike
 
    return (
       <StyledCommentPaper>
-         <p>{comment}</p>
+         <StyledCommentParagraph>{comment}</StyledCommentParagraph>
          {likes.length !== 0 && (
             <Reactions likes={likes} setIsModalOpen={setIsModalOpen}>
                <LikeModal

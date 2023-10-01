@@ -10,3 +10,5 @@ export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
 
    position: 'relative',
 }))
+
+export const StyledCommentParagraph = styled('p')({ lineHeight: '1.25rem', fontSize: '1rem' })
