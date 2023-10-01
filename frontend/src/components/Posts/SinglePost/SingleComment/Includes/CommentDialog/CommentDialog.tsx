@@ -18,11 +18,11 @@ const CommentDialog: React.FC<{
    postId: string
 }> = ({ onCloseFn, isDialogOpen, postId, commentRef, children }) => {
    const [comments, setComments] = useState<IPostComment[]>([])
-   const data = useGetComments(setComments, postId, isDialogOpen)
+   const isLoading = useGetComments(setComments, postId, isDialogOpen)
 
    return (
       <Dialog
-         maxWidth='md'
+         maxWidth='xl'
          scroll='body'
          sx={{ width: '100%', margin: 'auto' }}
          open={isDialogOpen}
@@ -36,12 +36,22 @@ const CommentDialog: React.FC<{
                CommentsComponent={
                   <>
                      <Divider sx={{ mt: 1, mb: 1 }} />
-                     {comments.length > 0 &&
-                        comments.map((comment) => (
-                           <CommentContextProvider key={comment._id} singleComment={comment} postId={postId}>
-                              <SingleComment />
-                           </CommentContextProvider>
-                        ))}
+                     {isLoading ? (
+                        <h1>Töltés...</h1>
+                     ) : (
+                        <>
+                           {comments.map((comment) => (
+                              <CommentContextProvider
+                                 key={comment._id}
+                                 singleComment={comment}
+                                 postId={postId}
+                              >
+                                 <SingleComment />
+                              </CommentContextProvider>
+                           ))}
+                        </>
+                     )}
+
                      <AddComment postId={postId} reference={commentRef} />
                   </>
                }
