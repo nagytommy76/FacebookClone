@@ -8,6 +8,7 @@ export default class GetPostsController extends BasePostController {
          const allPosts = await this.returnPostModelWithPopulated()
          res.status(200).json({ allPosts })
       } catch (error) {
+         console.log(error)
          res.status(500).json({ error, msg: 'internal server error' })
       }
    }
