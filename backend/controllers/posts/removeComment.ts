@@ -48,6 +48,23 @@ export const removeCommentAnswerController = async (request: IRemoveAnswerReques
          (answer) => answer._id == answerId
       ) as ICommentAnswer
 
+      // Azokat kell kitörölni amelyeknek a parentCommentId-je megegyezik
+      // fel kell építeni egy comment fát, megviszgálni hogy van-e utána "CHILD" comment még és azoknak id-jét kigyüjteni
+      let foundChilds = []
+      const test = foundPostsComment[0].comments[0].commentAnswers.map((answer) => {
+         let firstParentId = foundAnswerToDelete._id
+         // Ezzel megkeresem az összes 1-gyel lejjebb lévő commentet -> most kéne lejjebb menni.
+         if (
+            answer.parentCommentId == firstParentId &&
+            foundAnswerToDelete.commentDepth < answer.commentDepth
+         ) {
+            firstParentId = answer._id
+            console.log(firstParentId)
+            console.log('')
+            console.log(answer.parentCommentId)
+         }
+      })
+
       foundPostsComment[0].comments[0].commentAnswers =
          foundPostsComment[0].comments[0].commentAnswers?.filter((answer) => {
             return (
@@ -56,6 +73,7 @@ export const removeCommentAnswerController = async (request: IRemoveAnswerReques
                answer.parentCommentId != answerId
             )
          })
+
       // A commentDepth + 1 et vizsgálnom kell, hogy a parentComentId-je az megegyezik-e a törlendővel,
       // Ha igen azt is törölnöm kell
 
