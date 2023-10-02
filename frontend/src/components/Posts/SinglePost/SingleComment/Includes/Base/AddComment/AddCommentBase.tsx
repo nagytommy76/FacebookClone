@@ -12,6 +12,7 @@ const AddCommentBase: React.FC<{
    updateCommentMutate: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
    handleUpdateCommentAnswerMutate: (answerId: string) => void
+   setAnswerText: React.Dispatch<React.SetStateAction<string>>
    handleAddSinglePostComment: () => void
    commentAnswerId: string
    reference: React.MutableRefObject<null>
@@ -26,6 +27,7 @@ const AddCommentBase: React.FC<{
    handleSendCommentAnswer,
    updateCommentMutate,
    handleChangeText,
+   setAnswerText,
    commentAnswerId,
    reference,
    commentText,
@@ -62,7 +64,7 @@ const AddCommentBase: React.FC<{
                   variant='standard'
                   fullWidth
                />
-               <AddEmojiButton />
+               <AddEmojiButton setAnswerText={setAnswerText} handleChangeText={handleChangeText} />
                <Tooltip title={isUpdate ? 'Módosítás' : 'Küldés'} placement='top' arrow>
                   <span>
                      <IconButton

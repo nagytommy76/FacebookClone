@@ -34,6 +34,7 @@ const BaseAnswerAndComment: React.FC<{
       saveAnswerMutate,
       updateCommentMutate,
       handleChangeText,
+      setAnswerText,
       handleSetAnswerOpen,
       handleSetAnswerOpenForUpdate,
       handleUpdateCommentAnswerMutate,
@@ -74,6 +75,7 @@ const BaseAnswerAndComment: React.FC<{
                      handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
                      updateCommentMutate={updateCommentMutate}
                      handleSendCommentAnswer={saveAnswerMutate}
+                     setAnswerText={setAnswerText}
                      handleAddSinglePostComment={() => {}}
                      handleChangeText={handleChangeText}
                      commentAnswerId={answer._id}
