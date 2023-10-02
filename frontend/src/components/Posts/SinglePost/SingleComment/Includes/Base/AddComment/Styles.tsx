@@ -1,4 +1,6 @@
 import { styled } from '@mui/material'
+
+import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
@@ -29,3 +31,11 @@ export const StyledTextInput = styled(TextField)({
       fontSize: '14px',
    },
 })
+
+export const StyledEmojiTooltip = styled(({ className, ...props }: TooltipProps) => (
+   <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+   [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: 'transparent',
+   },
+}))
