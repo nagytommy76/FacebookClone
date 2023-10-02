@@ -56,6 +56,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       handleUpdateCommentAnswerMutate,
       handleChangeText,
       handleSetAnswerOpen,
+      setAnswerText,
       isAnswerOpen,
       answerText,
       isSendDisabled,
