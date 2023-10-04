@@ -7,7 +7,8 @@ const AddComment: React.FC<{
    reference: React.MutableRefObject<null>
    postId: string
 }> = ({ reference, postId }) => {
-   const { commentText, isSendDisabled, handleChangeText, handleSendComment } = useAddComment(postId)
+   const { commentText, isSendDisabled, handleChangeText, handleSendComment, handleChangeTextWithEmoji } =
+      useAddComment(postId)
    return (
       <>
          <AddCommentBase
@@ -16,6 +17,7 @@ const AddComment: React.FC<{
             isSendDisabled={isSendDisabled}
             isUpdate={false}
             isAddPostComment={true}
+            handleChangeTextWithEmoji={handleChangeTextWithEmoji}
             handleChangeText={handleChangeText}
             handleAddSinglePostComment={handleSendComment}
             updateCommentMutate={() => {}}
