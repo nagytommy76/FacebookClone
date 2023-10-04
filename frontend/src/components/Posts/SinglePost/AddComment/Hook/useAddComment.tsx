@@ -29,12 +29,18 @@ const useAddComment = (postId: string) => {
       setCommentText(event.target.value)
    }
 
+   const handleChangeTextWithEmoji = (emoji: string = '') => {
+      if (commentText.length === 0) setIsSendDisabled(true)
+      else setIsSendDisabled(false)
+      setCommentText(`${commentText} ${emoji}`)
+   }
+
    const handleSendComment = () => {
       mutate()
       setCommentText('')
    }
 
-   return { handleChangeText, handleSendComment, commentText, isSendDisabled }
+   return { handleChangeText, handleSendComment, handleChangeTextWithEmoji, commentText, isSendDisabled }
 }
 
 export default useAddComment

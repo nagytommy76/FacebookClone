@@ -38,6 +38,12 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       setAnswerText(event.target.value)
    }
 
+   const handleChangeTextWithEmoji = (emoji: string = '') => {
+      if (answerText.length === 0) setIsSendDisabled(true)
+      else setIsSendDisabled(false)
+      setAnswerText(`${answerText} ${emoji}`)
+   }
+
    const handleSetAnswerOpenForUpdate = (commentText: string) => {
       setAnswerText(commentText)
       handleSetAnswerOpen()
@@ -55,8 +61,8 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       updateCommentMutate,
       handleUpdateCommentAnswerMutate,
       handleChangeText,
+      handleChangeTextWithEmoji,
       handleSetAnswerOpen,
-      setAnswerText,
       isAnswerOpen,
       answerText,
       isSendDisabled,
