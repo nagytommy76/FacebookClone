@@ -8,9 +8,8 @@ import EmojiTooltipTitle from './EmojiTooltipTitle'
 import { StyledEmojiTooltip } from '../Styles'
 
 const AddEmojiButton: React.FC<{
-   handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
-   setAnswerText: React.Dispatch<React.SetStateAction<string>>
-}> = ({ handleChangeText, setAnswerText }) => {
+   handleChangeTextWithEmoji: (emoji?: string) => void
+}> = ({ handleChangeTextWithEmoji }) => {
    const [openTooltip, setOpenTooltip] = useState<boolean>(false)
    const handleCloseTooltip = () => setOpenTooltip(false)
    const handleOpenTooltip = () => setOpenTooltip(true)
@@ -20,8 +19,7 @@ const AddEmojiButton: React.FC<{
          open={openTooltip}
          title={
             <EmojiTooltipTitle
-               setAnswerText={setAnswerText}
-               handleChangeText={handleChangeText}
+               handleChangeTextWithEmoji={handleChangeTextWithEmoji}
                handleCloseTooltip={handleCloseTooltip}
             />
          }
