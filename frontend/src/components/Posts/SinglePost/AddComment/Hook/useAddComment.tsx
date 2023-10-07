@@ -32,7 +32,7 @@ const useAddComment = (postId: string) => {
    const handleChangeTextWithEmoji = (emoji: string = '') => {
       if (commentText.length === 0) setIsSendDisabled(true)
       else setIsSendDisabled(false)
-      setCommentText(`${commentText} ${emoji}`)
+      setCommentText(`${commentText}${emoji}`)
    }
 
    const handleSendComment = () => {

@@ -41,7 +41,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const handleChangeTextWithEmoji = (emoji: string = '') => {
       if (answerText.length === 0) setIsSendDisabled(true)
       else setIsSendDisabled(false)
-      setAnswerText(`${answerText} ${emoji}`)
+      setAnswerText(`${answerText}${emoji}`)
    }
 
    const handleSetAnswerOpenForUpdate = (commentText: string) => {
