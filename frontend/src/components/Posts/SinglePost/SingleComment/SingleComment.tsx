@@ -1,9 +1,10 @@
 import dynamic from 'next/dynamic'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CommentContext } from './Context/CommentContext'
 
 const BaseCommentComponent = dynamic(() => import('./Includes/Base/BaseAnswerAndComment'))
 const AnswerList = dynamic(() => import('./Includes/AnswerList/AnswerList'))
+const OpenCommentAnswer = dynamic(() => import('./Includes/OpenCommentAnswers/OpenCommentAnswers'))
 
 const SingleComment = () => {
    const {
@@ -18,7 +19,12 @@ const SingleComment = () => {
          isChild={singleComment.commentAnswers && singleComment.commentAnswers?.length > 0}
          isChildComment={false}
       >
-         {parentRootAnswers ? <AnswerList answer={parentRootAnswers} /> : <></>}
+         <OpenCommentAnswer
+            answerLength={singleComment.commentAnswers?.length}
+            isFirstAnswer={singleComment.commentAnswers.length > 0}
+         >
+            {parentRootAnswers ? <AnswerList answer={parentRootAnswers} /> : <></>}
+         </OpenCommentAnswer>
       </BaseCommentComponent>
    )
 }
