@@ -15,7 +15,7 @@ const OpenCommentAnswers: React.FC<{
          {isFirstAnswer && (
             <>
                <Button
-                  onClick={() => setIsAnswerOpened(true)}
+                  onClick={() => setIsAnswerOpened((prev) => !prev)}
                   variant='text'
                   startIcon={<SubdirectoryArrowRightIcon />}
                >

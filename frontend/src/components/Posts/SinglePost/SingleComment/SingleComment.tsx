@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { CommentContext } from './Context/CommentContext'
 
 const BaseCommentComponent = dynamic(() => import('./Includes/Base/BaseAnswerAndComment'))
@@ -21,7 +21,7 @@ const SingleComment = () => {
       >
          <OpenCommentAnswer
             answerLength={singleComment.commentAnswers?.length}
-            isFirstAnswer={singleComment.commentAnswers.length > 0}
+            isFirstAnswer={singleComment.commentAnswers?.length > 0}
          >
             {parentRootAnswers ? <AnswerList answer={parentRootAnswers} /> : <></>}
          </OpenCommentAnswer>
