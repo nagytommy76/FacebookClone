@@ -55,6 +55,13 @@ export interface IGetLikesRequest extends IJWTUserType {
       commentId: string
    }
 }
+export interface IGetAnswerLikesRequest extends IJWTUserType {
+   body: {
+      postId: string
+      commentId: string
+      answerId: string
+   }
+}
 
 export interface ICommentLikeRequest extends IJWTUserType {
    body: {
