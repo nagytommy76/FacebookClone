@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../../models/posts/posts'
-import type { IPostLikeRequest, IGetLikesRequest } from '../types/PostTypes'
+import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
 
 import BaseLikeController from '../Base/baseLike'
 
@@ -49,6 +49,43 @@ export default class LikePost extends BaseLikeController {
 
          response.status(200).json({ reactionTypes, totalReactionCount })
       } catch (error) {
+         response.status(500).json({ msg: 'Internal server error', error })
+      }
+   }
+
+   getPostCommentAnswersLikesByTypeAndCountController = async (
+      request: IGetAnswerLikesRequest,
+      response: Response
+   ) => {
+      const { postId, answerId, commentId } = request.body
+      try {
+         const postCommentAnswerLikes = await PostModel.findOne({
+            _id: postId,
+            comments: { $elemMatch: { _id: commentId, 'commentAnswers._id': answerId } },
+         })
+            .select('comments.commentAnswers.$')
+            .populate({
+               path: 'comments.commentAnswers.likes.userId',
+               select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+               match: {
+                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+               },
+            })
+            .exec()
+
+         if (!postCommentAnswerLikes) return response.status(404).json({ msg: 'post not found' })
+
+         const foundCommentAnswer = postCommentAnswerLikes.comments[0].commentAnswers.find((answer) => {
+            return answer._id == answerId
+         })
+         if (!foundCommentAnswer) return response.status(404).json({ msg: 'commentAnswer not found' })
+
+         const reactionTypes = this.getLikesByReactionType(foundCommentAnswer.likes)
+         const totalReactionCount = this.countLikeReactions(reactionTypes)
+
+         response.status(200).json({ reactionTypes, totalReactionCount })
+      } catch (error) {
+         console.log(error)
          response.status(500).json({ msg: 'Internal server error', error })
       }
    }
