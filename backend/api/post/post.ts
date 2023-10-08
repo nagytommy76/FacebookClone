@@ -38,7 +38,7 @@ router.get(
 router.post('/post-comment-add', authenticateAccessTokenForApi, savePostComment)
 router.post('/add-comment-answer', authenticateAccessTokenForApi, PostComment.answerToCommentController)
 
-// Likolás
+// Like COUNT ----------------------------------------------------------
 router.post(
    '/get-post-like-count',
    authenticateAccessTokenForApi,
@@ -49,6 +49,12 @@ router.post(
    authenticateAccessTokenForApi,
    LikePostClass.getPostCommentsLikesByTypeAndCountController
 )
+router.post(
+   '/get-answer-like-count',
+   authenticateAccessTokenForApi,
+   LikePostClass.getPostCommentAnswersLikesByTypeAndCountController
+)
+// Likeolás ----------------------------------------
 router.post('/post-like', authenticateAccessTokenForApi, LikePostClass.likePostController)
 router.post(
    '/post-comment-like',
