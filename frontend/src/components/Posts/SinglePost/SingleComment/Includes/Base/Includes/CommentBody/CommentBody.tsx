@@ -9,14 +9,16 @@ import { StyledCommentPaper, StyledCommentParagraph } from './Styles'
 const Reactions = dynamic(() => import('../../../Reatcions/Reactions'))
 const LikeModal = dynamic(() => import('../../../Reatcions/LikeModal/LikeModal'))
 
-const CommentBody: React.FC<{ answerId: string; postId: string; likes: IPostLike[]; comment: string }> = ({
-   answerId,
-   postId,
-   likes,
-   comment,
-}) => {
+const CommentBody: React.FC<{
+   answerId: string
+   commentId: string | undefined
+   postId: string
+   likes: IPostLike[]
+   comment: string
+   isChildComment?: boolean
+}> = ({ answerId, postId, likes, comment, isChildComment = false, commentId }) => {
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-   const { commentLikeCount } = useGetComment(answerId, postId, isModalOpen)
+   const { commentLikeCount } = useGetComment(answerId, commentId, postId, isModalOpen, isChildComment)
 
    return (
       <StyledCommentPaper>

@@ -16,12 +16,13 @@ const AddCommentBase = dynamic(() => import('./AddComment/AddCommentBase'))
 // Erre a mappa szintre áthozni a style-okat
 
 const BaseAnswerAndComment: React.FC<{
+   commentId?: string
    answer: ICommentAnswers | IPostComment
    children: React.ReactNode
    postId: string
    isChildComment: boolean
    isChild?: boolean
-}> = ({ answer, children, postId, isChild = false, isChildComment = false }) => {
+}> = ({ commentId, answer, children, postId, isChild = false, isChildComment = false }) => {
    const functionParams = answer.hasOwnProperty('commentDepth')
       ? [answer.commentDepth + 1, answer._id]
       : [1, null]
@@ -50,10 +51,12 @@ const BaseAnswerAndComment: React.FC<{
             <StyledRightSide>
                <StyledRightContainer>
                   <CommentBody
+                     commentId={commentId}
                      answerId={answer._id}
                      comment={answer.comment}
                      likes={answer.likes}
                      postId={postId}
+                     isChildComment={isChildComment}
                   />
                   <Options
                      handleSetAnswerOpenForUpdate={() => handleSetAnswerOpenForUpdate(answer.comment)}

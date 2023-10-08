@@ -12,7 +12,10 @@ const BaseAnswerComponent = dynamic(() => import('../Base/BaseAnswerAndComment')
 
 const SingleAnswer: React.FC<{ answer: ICommentAnswers }> = ({ answer }) => {
    const {
-      commentReducer: { postId },
+      commentReducer: {
+         postId,
+         singleComment: { _id },
+      },
       getAnswerReplies,
    } = useContext(CommentContext)
    const [childAnswers, setChildAnswers] = useState<ICommentAnswers[] | null>(null)
@@ -22,7 +25,13 @@ const SingleAnswer: React.FC<{ answer: ICommentAnswers }> = ({ answer }) => {
    }, [answer.parentCommentId, getAnswerReplies, answer._id])
 
    return (
-      <BaseAnswerComponent answer={answer} postId={postId} isChild={true} isChildComment={true}>
+      <BaseAnswerComponent
+         answer={answer}
+         commentId={_id}
+         postId={postId}
+         isChild={true}
+         isChildComment={true}
+      >
          {childAnswers ? <AnswerList answer={childAnswers} /> : <></>}
       </BaseAnswerComponent>
    )
