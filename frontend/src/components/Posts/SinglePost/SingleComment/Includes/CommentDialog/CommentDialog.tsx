@@ -1,28 +1,25 @@
 import React, { useContext } from 'react'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
-import CommentContextProvider from '../../Context/CommentContext'
-import useGetComments from './Hook/useGetComments'
 
-import Divider from '@mui/material/Divider'
 import Dialog from '@mui/material/Dialog'
 
 import SinglePost from '../../../SinglePost'
-import SingleComment from '../../SingleComment'
 import AddComment from '../../../AddComment/AddComment'
+import AllCommentsComponent from './AllComments'
+import useGetComments from './Hook/useGetComments'
 
 const CommentDialog: React.FC<{
    onCloseFn: () => void
    children: React.ReactNode
    commentRef: React.MutableRefObject<null>
    isDialogOpen: boolean
-   postId: string
-}> = ({ onCloseFn, isDialogOpen, postId, commentRef, children }) => {
+}> = ({ onCloseFn, isDialogOpen, commentRef, children }) => {
    const {
       postsReducer: {
-         singlePost: { comments },
+         singlePost: { _id },
       },
    } = useContext(PostContext)
-   const isLoading = useGetComments(postId, isDialogOpen)
+   const isLoading = useGetComments(_id, isDialogOpen)
 
    return (
       <Dialog
@@ -39,24 +36,8 @@ const CommentDialog: React.FC<{
                isTextFieldActive={true}
                CommentsComponent={
                   <>
-                     <Divider sx={{ mt: 1, mb: 1 }} />
-                     {isLoading ? (
-                        <h1>Töltés...</h1>
-                     ) : (
-                        <>
-                           {comments.map((comment) => (
-                              <CommentContextProvider
-                                 key={comment._id}
-                                 singleComment={comment}
-                                 postId={postId}
-                              >
-                                 <SingleComment />
-                              </CommentContextProvider>
-                           ))}
-                        </>
-                     )}
-
-                     <AddComment postId={postId} reference={commentRef} />
+                     <AllCommentsComponent isLoading={isLoading} />
+                     <AddComment postId={_id} reference={commentRef} />
                   </>
                }
             >
