@@ -47,7 +47,6 @@ export default function AllCommentsReducer(
 ): InitialAllCommentsState {
    switch (type) {
       case 'SET_COMMENTS':
-         console.log('csé')
          const nextComment = produce(state, (draft) => {
             draft.AllComments = payload
          })
@@ -64,6 +63,5 @@ export default function AllCommentsReducer(
          return removedComments
       default:
          return state
-         break
    }
 }
