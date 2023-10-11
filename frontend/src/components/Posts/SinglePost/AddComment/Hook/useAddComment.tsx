@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
-import { PostContext } from '@/PostContext/PostContextProvider'
 import { IPostComment } from '@/src/types/LikeTypes'
+import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
 
 const useAddComment = (postId: string) => {
-   const { postsDispatch } = useContext(PostContext)
+   const { commentsDispatch } = useContext(AllCommentsContext)
    const [commentText, setCommentText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
    const { mutate } = useMutation({
@@ -19,7 +19,7 @@ const useAddComment = (postId: string) => {
          return response.data
       },
       onSuccess: (data) => {
-         postsDispatch({ type: 'ADD_NEW_COMMENT', payload: data.comments })
+         commentsDispatch({ type: 'ADD_NEW_COMMENT', payload: data.comments })
       },
    })
 

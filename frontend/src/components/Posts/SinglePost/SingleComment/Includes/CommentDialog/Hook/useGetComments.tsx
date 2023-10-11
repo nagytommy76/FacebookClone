@@ -1,11 +1,12 @@
 import { useContext } from 'react'
-import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
+import { AllCommentsContext } from '@/src/components/Posts/Context/AllCommentsContext'
+
 import type { IPostComment } from '@/src/types/LikeTypes'
 
 const useGetComments = (postId: string, isDialogOpen: boolean) => {
-   const { postsDispatch } = useContext(PostContext)
+   const { commentsDispatch } = useContext(AllCommentsContext)
 
    const queryFunction = async () => {
       const result = (await axios.get('/post/get-post-comments', { params: { postId } })) as AxiosResponse<{
@@ -19,7 +20,7 @@ const useGetComments = (postId: string, isDialogOpen: boolean) => {
       queryFn: queryFunction,
       enabled: isDialogOpen,
       onSuccess(data) {
-         postsDispatch({ type: 'SET_COMMENTS', payload: data.data.comments })
+         commentsDispatch({ type: 'SET_COMMENTS', payload: data.data.comments })
       },
       onError(err) {
          console.log(err)
