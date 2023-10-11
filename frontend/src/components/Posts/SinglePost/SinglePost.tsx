@@ -1,6 +1,7 @@
 import React, { useRef, useContext, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
+import AllCommentContextProvider from '@/src/components/Posts/Context/AllCommentsContext'
 
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -71,14 +72,15 @@ const SinglePost: React.FC<{
                {CommentsComponent}
             </FooterSectionStyle>
          </Paper>
-         <CommentsDialog
-            commentRef={commentRef}
-            isDialogOpen={isDialogOpen}
-            onCloseFn={() => setIsDialogOpen(false)}
-            postId={singlePost._id}
-         >
-            {children}
-         </CommentsDialog>
+         <AllCommentContextProvider>
+            <CommentsDialog
+               commentRef={commentRef}
+               isDialogOpen={isDialogOpen}
+               onCloseFn={() => setIsDialogOpen(false)}
+            >
+               {children}
+            </CommentsDialog>
+         </AllCommentContextProvider>
       </>
    )
 }
