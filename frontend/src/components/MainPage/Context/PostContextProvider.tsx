@@ -9,7 +9,10 @@ interface IPostsContext {
 
 export const PostContext = createContext<IPostsContext>({
    postsDispatch: () => {},
-   postsReducer: { singlePost: initialPostsState.singlePost },
+   postsReducer: {
+      singlePost: initialPostsState.singlePost,
+      commentsLength: initialPostsState.commentsLength,
+   },
 })
 
 export default function PostContextProvider({
@@ -21,7 +24,10 @@ export default function PostContextProvider({
 }) {
    const [postsReducer, postsDispatch] = useReducer(PostsReducer, initialPostsState)
    useEffect(() => {
-      if (singlePost) postsDispatch({ type: 'SET_SINGLE_POST', payload: singlePost })
+      if (singlePost) {
+         postsDispatch({ type: 'SET_SINGLE_POST', payload: singlePost })
+         postsDispatch({ type: 'SET_COMMENTS_LENGTH', payload: singlePost.comments.length })
+      }
    }, [singlePost])
    return <PostContext.Provider value={{ postsDispatch, postsReducer }}>{children}</PostContext.Provider>
 }

@@ -1,7 +1,7 @@
 import { produce } from 'immer'
 import type { IPost } from '@/types/PostTypes'
 
-export type PostAction = 'REMOVE_SINGLE_LIKE' | 'ADD_POST_LIKE' | 'SET_SINGLE_POST'
+export type PostAction = 'REMOVE_SINGLE_LIKE' | 'ADD_POST_LIKE' | 'SET_SINGLE_POST' | 'SET_COMMENTS_LENGTH'
 
 export interface IPostsAction {
    type: PostAction
@@ -10,6 +10,7 @@ export interface IPostsAction {
 
 export interface InitialPostsState {
    singlePost: IPost
+   commentsLength: number
 }
 
 export const initialSinglePostData: IPost = {
@@ -49,6 +50,7 @@ export const initialSinglePostData: IPost = {
 
 export const initialPostsState: InitialPostsState = {
    singlePost: initialSinglePostData,
+   commentsLength: 0,
 }
 
 export default function PostsReducer(state: InitialPostsState, action: IPostsAction): InitialPostsState {
@@ -71,6 +73,11 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.singlePost.likes = modified
          })
          return removedPostLikes
+      case 'SET_COMMENTS_LENGTH':
+         const newLength = produce(state, (draft) => {
+            draft.commentsLength = action.payload
+         })
+         return newLength
       default:
          return state
    }

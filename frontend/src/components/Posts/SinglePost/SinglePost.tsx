@@ -29,7 +29,7 @@ const SinglePost: React.FC<{
    isTextFieldActive?: boolean
 }> = ({ children, CommentsComponent, isTextFieldActive = false }) => {
    const {
-      postsReducer: { singlePost },
+      postsReducer: { singlePost, commentsLength },
    } = useContext(PostContext)
    const commentRef = useRef(null)
    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
@@ -53,9 +53,9 @@ const SinglePost: React.FC<{
                   {singlePost.likes.length > 0 && (
                      <ReactionsContainer likes={singlePost.likes} postId={singlePost._id} />
                   )}
-                  {singlePost.comments.length > 0 && (
+                  {commentsLength > 0 && (
                      <CommentsParagraph onClick={handleOpenDialog}>
-                        {singlePost.comments.length} hozzászólás
+                        {commentsLength} hozzászólás
                      </CommentsParagraph>
                   )}
                </LikeAndCommentContainer>
