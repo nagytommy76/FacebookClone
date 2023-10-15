@@ -30,8 +30,6 @@ Esetleg egy commentAnswers-be a commentAnswers-t belerakni, tehát a CommentAnsw
 És így lehet jobb törölni, mert egységben vannak
 
 
-EGY KIS HIBA: A Hozzászólás számlálója nem reaktív, vagyis nem követi a kommentek valós számát ha törlök, vagy hozzáadok,
-a componens mélységét kéne változtani?
 
 
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
@@ -40,3 +38,6 @@ A refreshToken ellenőrzésnél csak azt nézem, hogy valid-e, ha nem kilép -> 
 
 AZ OWNPOST-nál redundáns az adat, a post nál is meg amúgy is van UserDetails, Megoldani
 
+2023.10.15
+EGY KIS HIBA: A Hozzászólás számlálója nem reaktív, vagyis nem követi a kommentek valós számát ha törlök, vagy hozzáadok,
+a componens mélységét kéne változtani?
