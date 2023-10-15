@@ -6,7 +6,11 @@ import useGetComment from './Hook/useGetComment'
 
 import { StyledCommentPaper, StyledCommentParagraph } from './Styles'
 
-const Reactions = dynamic(() => import('../../../Reatcions/Reactions'))
+import ReactionsSkeleton from '@/src/skeletons/Comments/Includes/ReactionsSkeleton'
+
+const Reactions = dynamic(() => import('../../../Reatcions/Reactions'), {
+   loading: () => <ReactionsSkeleton />,
+})
 const LikeModal = dynamic(() => import('../../../Reatcions/LikeModal/LikeModal'))
 
 const CommentBody: React.FC<{

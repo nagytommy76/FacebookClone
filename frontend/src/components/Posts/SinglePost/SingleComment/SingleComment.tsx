@@ -2,7 +2,11 @@ import dynamic from 'next/dynamic'
 import React, { useContext } from 'react'
 import { CommentContext } from './Context/CommentContext'
 
-const BaseCommentComponent = dynamic(() => import('./Includes/Base/BaseAnswerAndComment'))
+import SingleCommentSkeleton from '@/Skeletons/Comments/SingleComment'
+
+const BaseCommentComponent = dynamic(() => import('./Includes/Base/BaseAnswerAndComment'), {
+   loading: () => <SingleCommentSkeleton />,
+})
 const AnswerList = dynamic(() => import('./Includes/AnswerList/AnswerList'))
 const OpenCommentAnswer = dynamic(() => import('./Includes/OpenCommentAnswers/OpenCommentAnswers'))
 

@@ -7,10 +7,20 @@ import { StyledRightContainer } from './Styles/Styles'
 import { StyledCommentContainer, StyledListElement, StyledRightSide } from './Styles/ContainerStyles'
 import Collapse from '@mui/material/Collapse'
 
+import LeftSideSkeleton from '@/Skeletons/Comments/Includes/LeftSideSkeleton'
+import BodySkeleton from '@/src/skeletons/Comments/Includes/BodySkeleton'
+import FooterSkeleton from '@/src/skeletons/Comments/Includes/FooterSkeleton'
+
 import Options from './Includes/Options/Options'
-const LeftSide = dynamic(() => import('./Includes/LeftImageSide/LeftImage'))
-const CommentBody = dynamic(() => import('./Includes/CommentBody/CommentBody'))
-const CommentFooter = dynamic(() => import('./Includes/CommentFooter/CommentFooter'))
+const LeftSide = dynamic(() => import('./Includes/LeftImageSide/LeftImage'), {
+   loading: () => <LeftSideSkeleton />,
+})
+const CommentBody = dynamic(() => import('./Includes/CommentBody/CommentBody'), {
+   loading: () => <BodySkeleton />,
+})
+const CommentFooter = dynamic(() => import('./Includes/CommentFooter/CommentFooter'), {
+   loading: () => <FooterSkeleton />,
+})
 const AddCommentBase = dynamic(() => import('./AddComment/AddCommentBase'))
 
 // Erre a mappa szintre áthozni a style-okat

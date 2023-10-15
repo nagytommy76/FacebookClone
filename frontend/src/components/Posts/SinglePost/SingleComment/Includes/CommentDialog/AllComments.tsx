@@ -6,6 +6,8 @@ import { PostContext } from '@/src/components/MainPage/Context/PostContextProvid
 import SingleComment from '../../SingleComment'
 import Divider from '@mui/material/Divider'
 
+import SingleCommentSkeleton from '@/Skeletons/Comments/SingleComment'
+
 const AllComments: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
    const {
       postsReducer: {
@@ -20,7 +22,7 @@ const AllComments: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
       <>
          <Divider sx={{ mt: 1, mb: 1 }} />
          {isLoading ? (
-            <h1>Töltés...</h1>
+            <SingleCommentSkeleton />
          ) : (
             <>
                {AllComments.map((comment) => (
