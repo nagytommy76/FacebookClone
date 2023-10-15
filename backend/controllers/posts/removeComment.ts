@@ -29,7 +29,7 @@ export const removeCommentController = async (request: IRemoveCommentRequest, re
          (comment) => comment._id?.toString() != commentId.toString()
       )
       foundPostsComment[0].save()
-      response.status(200).json({ msg: 'success' })
+      response.status(200).json({ msg: 'success', commentsLength: foundPostsComment[0].comments.length })
    } catch (error) {
       response.status(500).json({ error, msg: 'internal server error' })
    }
