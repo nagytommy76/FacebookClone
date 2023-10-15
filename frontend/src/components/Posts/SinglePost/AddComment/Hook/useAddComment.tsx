@@ -3,11 +3,14 @@ import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 import { IPostComment } from '@/src/types/LikeTypes'
 import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
+import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 
 const useAddComment = (postId: string) => {
    const { commentsDispatch } = useContext(AllCommentsContext)
+   const { postsDispatch } = useContext(PostContext)
    const [commentText, setCommentText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
+
    const { mutate } = useMutation({
       mutationKey: ['sendPostComment'],
       mutationFn: async () => {
@@ -20,6 +23,7 @@ const useAddComment = (postId: string) => {
       },
       onSuccess: (data) => {
          commentsDispatch({ type: 'ADD_NEW_COMMENT', payload: data.comments })
+         postsDispatch({ type: 'SET_COMMENTS_LENGTH', payload: data.comments.length })
       },
    })
 
