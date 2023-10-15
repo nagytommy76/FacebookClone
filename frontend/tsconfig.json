@@ -32,7 +32,8 @@
          "@/axios/*": ["./src/utils/axiosSetup/*"],
          "@/PostContext/*": ["./src/components/MainPage/Context/*"],
          "@/CommentContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/*"],
-         "@/AllCommentContext/*": ["./src/components/Posts/Context/*"]
+         "@/AllCommentContext/*": ["./src/components/Posts/Context/*"],
+         "@/Skeletons/*": ["./src/skeletons/*"]
       }
    },
    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
