@@ -14,9 +14,12 @@ import {
    CommentsParagraph,
 } from './Styles'
 
-import ReactionsSkeleton from '@/src/skeletons/Comments/Includes/ReactionsSkeleton'
+import ReactionsSkeleton from '@/Skeletons/Comments/Includes/ReactionsSkeleton'
+import ImageSlideSkeleton from '@/Skeletons/SinglePost/ImageSlide'
 
-const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'))
+const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'), {
+   loading: () => <ImageSlideSkeleton />,
+})
 const ReactionsContainer = dynamic(
    () => import('./SingleComment/Includes/Reatcions/Container/ReactionsContainer'),
    { loading: () => <ReactionsSkeleton /> }
