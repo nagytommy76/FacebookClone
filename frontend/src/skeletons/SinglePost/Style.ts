@@ -15,8 +15,12 @@ export const StyledFlexContainer = styled('div')(({ theme }) => ({
    justifyContent: 'space-between',
 }))
 
-export const BodySectionPlaceholderStyle = styled('div')({
-   height: '150px',
+export const BodySectionStyle = styled('div')({
+   display: 'flex',
+   flexWrap: 'wrap',
+   flexDirection: 'column',
+   // justifyContent: 'space-between',
+   minHeight: '350px',
 })
 
 export const LikeAndCommentSection = styled('div')({
