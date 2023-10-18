@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+'use client'
+import React from 'react'
 import {
    StyledImageGridContainer,
    StyledImage,
@@ -6,42 +7,30 @@ import {
    OverlayedContent,
    OverlayedContainer,
 } from './Styles'
-import StockImage from '@/assets/facebook-profile.jpg'
 
 const ImageContainer: React.FC<{
    postedPicturesPath: string[]
    setCurrentPicIndex: React.Dispatch<React.SetStateAction<number>>
    setIsImgSliderOpen: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ postedPicturesPath, setCurrentPicIndex, setIsImgSliderOpen }) => {
-   const [loading, setLoading] = useState(true)
    const setPicIndexAndOpenModal = (index: number) => {
       setCurrentPicIndex(index)
       setIsImgSliderOpen(true)
    }
 
-   const buffer = async () => {
-      const result = fetch(postedPicturesPath[0]).then(async (result) => {
-         return Buffer.from(await result.arrayBuffer()).toString('base64')
-      })
-      return result
-   }
-
-   //https://www.youtube.com/watch?v=6zDb1kh52nM&ab_channel=OlivierLarose
-   // https://dev.to/nicolaserny/blurred-image-placeholder-with-nextjs-image-and-cloudinary-4dhm
-
-   // const data = await buffer()
-   // console.log(data)
    return (
       <StyledImageGridContainer>
          {postedPicturesPath.map((image, index) =>
             index === 0 ? (
                <FirstGridImage
                   loading='lazy'
-                  // placeholder='blur'
-                  onLoadingComplete={() => setLoading(false)}
+                  placeholder='blur'
+                  blurDataURL={
+                     'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/4gKwSUNDX1BST0ZJTEUAAQEAAAKgbGNtcwRAAABtbnRyUkdCIFhZWiAH5wAKABIAEQALABFhY3NwTVNGVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1kZXNjAAABIAAAAEBjcHJ0AAABYAAAADZ3dHB0AAABmAAAABRjaGFkAAABrAAAACxyWFlaAAAB2AAAABRiWFlaAAAB7AAAABRnWFlaAAACAAAAABRyVFJDAAACFAAAACBnVFJDAAACFAAAACBiVFJDAAACFAAAACBjaHJtAAACNAAAACRkbW5kAAACWAAAACRkbWRkAAACfAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACQAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABzAFIARwBCbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA9tYAAQAAAADTLXNmMzIAAAAAAAEMQgAABd7///MlAAAHkwAA/ZD///uh///9ogAAA9wAAMBuWFlaIAAAAAAAAG+gAAA49QAAA5BYWVogAAAAAAAAJJ8AAA+EAAC2xFhZWiAAAAAAAABilwAAt4cAABjZcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltjaHJtAAAAAAADAAAAAKPXAABUfAAATM0AAJmaAAAmZwAAD1xtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAEcASQBNAFBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEL/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAoAEcDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAIEAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB8cUu+6Z538pcS4oADRqw6JNDjyWONxQADoFQEAA//8QAHBAAAgICAwAAAAAAAAAAAAAAAAEREgIgAxAh/9oACAEBAAEFAu4KkbYKwsHNWPBj143Bcv4+RNZ+vRCfTHtJYnT/xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAEDAQE/AX//xAAWEQADAAAAAAAAAAAAAAAAAAAQETD/2gAIAQIBAT8BDr//xAAcEAACAAcAAAAAAAAAAAAAAAAAMQEQESAwQGH/2gAIAQEABj8CyUEKN65Ja3//xAAfEAEAAQQDAAMAAAAAAAAAAAABABEgITEQQVFhcZH/2gAIAQEAAT8h5Iqjc0sTSs7nzIpx+UNoJqYSkGbrxo9TpCoRCPasVR9tfA0fuL2K0YcTZ//aAAwDAQACAAMAAAAQAtMgAATEAAAgcgA//8QAFxEBAAMAAAAAAAAAAAAAAAAAARARMP/aAAgBAwEBPxCAvX//xAAWEQADAAAAAAAAAAAAAAAAAAARIDD/2gAIAQIBAT8QcIf/xAAeEAEBAQACAgMBAAAAAAAAAAABEQAhMSBREGHB0f/aAAgBAQABPxD4C53IHJMpkni7SiFVZDFFWOnNPeWawDufWecB65aK+B3qINSMdI4g6hy0IGCCtThP3dgcQM9/3UcBSoZ78Ju4+8uQ49jT+3s13xhmNU7zOW/P/9k='
+                  }
                   onClick={() => setPicIndexAndOpenModal(index)}
                   key={index}
-                  src={image == '' ? StockImage : image}
+                  src={image}
                   alt='Kép'
                   width={800}
                   height={500}
@@ -50,17 +39,19 @@ const ImageContainer: React.FC<{
                index < 4 &&
                (index === 3 ? (
                   <OverlayedContainer onClick={() => setPicIndexAndOpenModal(index)} key={index}>
-                     <StyledImage src={image == '' ? StockImage : image} alt='Kép' width={500} height={500} />
+                     <StyledImage src={image} alt='Kép' width={500} height={500} />
                      <OverlayedContent>+{postedPicturesPath.length - index - 1}</OverlayedContent>
                   </OverlayedContainer>
                ) : (
                   <StyledImage
                      loading='lazy'
-                     // placeholder='blur'
-                     onLoadingComplete={() => setLoading(false)}
+                     placeholder='blur'
+                     blurDataURL={
+                        'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/4gKwSUNDX1BST0ZJTEUAAQEAAAKgbGNtcwRAAABtbnRyUkdCIFhZWiAH5wAKABIAEQALABFhY3NwTVNGVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1kZXNjAAABIAAAAEBjcHJ0AAABYAAAADZ3dHB0AAABmAAAABRjaGFkAAABrAAAACxyWFlaAAAB2AAAABRiWFlaAAAB7AAAABRnWFlaAAACAAAAABRyVFJDAAACFAAAACBnVFJDAAACFAAAACBiVFJDAAACFAAAACBjaHJtAAACNAAAACRkbW5kAAACWAAAACRkbWRkAAACfAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACQAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABzAFIARwBCbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA9tYAAQAAAADTLXNmMzIAAAAAAAEMQgAABd7///MlAAAHkwAA/ZD///uh///9ogAAA9wAAMBuWFlaIAAAAAAAAG+gAAA49QAAA5BYWVogAAAAAAAAJJ8AAA+EAAC2xFhZWiAAAAAAAABilwAAt4cAABjZcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltjaHJtAAAAAAADAAAAAKPXAABUfAAATM0AAJmaAAAmZwAAD1xtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAEcASQBNAFBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEL/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAoAEcDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAIEAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB8cUu+6Z538pcS4oADRqw6JNDjyWONxQADoFQEAA//8QAHBAAAgICAwAAAAAAAAAAAAAAAAEREgIgAxAh/9oACAEBAAEFAu4KkbYKwsHNWPBj143Bcv4+RNZ+vRCfTHtJYnT/xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAEDAQE/AX//xAAWEQADAAAAAAAAAAAAAAAAAAAQETD/2gAIAQIBAT8BDr//xAAcEAACAAcAAAAAAAAAAAAAAAAAMQEQESAwQGH/2gAIAQEABj8CyUEKN65Ja3//xAAfEAEAAQQDAAMAAAAAAAAAAAABABEgITEQQVFhcZH/2gAIAQEAAT8h5Iqjc0sTSs7nzIpx+UNoJqYSkGbrxo9TpCoRCPasVR9tfA0fuL2K0YcTZ//aAAwDAQACAAMAAAAQAtMgAATEAAAgcgA//8QAFxEBAAMAAAAAAAAAAAAAAAAAARARMP/aAAgBAwEBPxCAvX//xAAWEQADAAAAAAAAAAAAAAAAAAARIDD/2gAIAQIBAT8QcIf/xAAeEAEBAQACAgMBAAAAAAAAAAABEQAhMSBREGHB0f/aAAgBAQABPxD4C53IHJMpkni7SiFVZDFFWOnNPeWawDufWecB65aK+B3qINSMdI4g6hy0IGCCtThP3dgcQM9/3UcBSoZ78Ju4+8uQ49jT+3s13xhmNU7zOW/P/9k='
+                     }
                      onClick={() => setPicIndexAndOpenModal(index)}
                      key={index}
-                     src={image == '' ? StockImage : image}
+                     src={image}
                      alt='Kép'
                      width={400}
                      height={250}
