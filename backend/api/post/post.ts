@@ -13,6 +13,7 @@ import CommentLikeController from '../../controllers/posts/like/likeComment'
 import DeleteLikePost from '../../controllers/posts/like/delete/deletePostLike'
 import DeleteCommentLike from '../../controllers/posts/like/delete/deleteCommentLike'
 import DeleteAnswerLike from '../../controllers/posts/like/delete/deleteAnswerLike'
+import RemovePostsController from '../../controllers/posts/removePost'
 
 const GetCommentControllerClass = new GetCommentController()
 const LikePostClass = new LikePost()
@@ -21,7 +22,8 @@ const PostComment = new PostCommentController()
 const GetPosts = new GetPostsController()
 const DeleteLike = new DeleteLikePost()
 const DeleteCommentLikeClass = new DeleteCommentLike()
-const deleteAnswerLikeClass = new DeleteAnswerLike()
+const DeleteAnswerLikeClass = new DeleteAnswerLike()
+const RemovePostsClass = new RemovePostsController()
 
 const router = Router()
 // Ide kell egy api route protection (accessTokennel, middleware)
@@ -72,6 +74,8 @@ router.put('/update-post-comment', authenticateAccessTokenForApi, updateCommentC
 router.put('/update-post-comment-answer', authenticateAccessTokenForApi, updateCommentAnswerController)
 
 // LIKE TÖRLÉS ----------------------------------
+router.delete('/post-delete', authenticateAccessTokenForApi, RemovePostsClass.removePostController)
+
 router.delete('/post-like-delete', authenticateAccessTokenForApi, DeleteLike.deleteLikeFromPostController)
 router.delete(
    '/post-comment-like-delete',
@@ -81,7 +85,7 @@ router.delete(
 router.delete(
    '/post-answer-like-delete',
    authenticateAccessTokenForApi,
-   deleteAnswerLikeClass.deleteLikeAnswerController
+   DeleteAnswerLikeClass.deleteLikeAnswerController
 )
 
 // KOMMENT TÖRLÉS -------------------
