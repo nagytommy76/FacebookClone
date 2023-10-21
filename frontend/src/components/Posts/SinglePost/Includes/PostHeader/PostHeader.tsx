@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAppSelector } from '@/reduxStore/store'
 import moment from 'moment'
 import 'moment/locale/hu'
 
@@ -14,11 +15,14 @@ import Typography from '@mui/material/Typography'
 import CustomTooltipTitle from '@/Base/CustomTooltipTitle'
 import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
 import type { IPopulatedUserId } from '@/types/PostTypes'
+import OptionsMenu from './Includes/OptionsMenu'
 
 const PostHeader: React.FC<{
    userInfo: IPopulatedUserId
    createdAt: string
 }> = ({ userInfo, createdAt }) => {
+   const userId = useAppSelector((state) => state.auth.userId)
+
    return (
       <PostHeaderStyle>
          <StyledProfileImage
@@ -35,6 +39,7 @@ const PostHeader: React.FC<{
             </CustomTooltipTitle>
             <Typography variant='caption'>{moment(createdAt).format('YYYY MMMM D dddd, kk:mm')}</Typography>
          </HeaderRightTitleSection>
+         {userId === userInfo._id && <OptionsMenu />}
       </PostHeaderStyle>
    )
 }
