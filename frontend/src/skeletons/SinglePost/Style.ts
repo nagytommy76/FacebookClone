@@ -9,6 +9,7 @@ export const StyledPostHeadSkeleton = styled('header')(({ theme }) => ({
 
 export const StyledFlexContainer = styled('div')(({ theme }) => ({
    width: '100%',
+   height: '55px',
    display: 'flex',
    flexDirection: 'row',
    alignItems: 'center',
@@ -19,8 +20,8 @@ export const BodySectionStyle = styled('div')({
    display: 'flex',
    flexWrap: 'wrap',
    flexDirection: 'column',
-   // justifyContent: 'space-between',
-   minHeight: '350px',
+   justifyContent: 'center',
+   minHeight: '200px',
 })
 
 export const LikeAndCommentSection = styled('div')({

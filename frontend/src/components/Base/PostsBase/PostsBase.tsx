@@ -5,13 +5,16 @@ import type { IPost } from '@/types/PostTypes'
 
 import SinglePostSkeleton from '@/src/skeletons/SinglePost/SinglePost'
 import AddPostSkeleton from '@/src/skeletons/AddPostSkeleton/AddPostSkeleton'
+import PostHeaderSkeleton from '@/Skeletons/SinglePost/PostHeader'
 const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'), {
-   loading: () => SinglePostSkeleton(),
+   loading: () => <SinglePostSkeleton />,
 })
 const AddPostComponent = dynamic(() => import('../../Posts/AddPost/AddPost'), {
-   loading: () => AddPostSkeleton(),
+   loading: () => <AddPostSkeleton />,
 })
-const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHeader/PostHeader'))
+const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHeader/PostHeader'), {
+   loading: () => <PostHeaderSkeleton asStandalone={true} />,
+})
 
 const PostsBase: React.FC<{ addNewPost: (newPost: IPost) => void; allPostsData: IPost[] | undefined }> = ({
    addNewPost,
