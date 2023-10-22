@@ -1,13 +1,9 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
-const useDialog = () => {
+const useDialog = (setAddDialogOpen: Dispatch<SetStateAction<boolean>>) => {
    const [postDescription, setPostDescription] = useState<string>('')
    const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
-   const [addDialogOpen, setAddDialogOpen] = useState<boolean>(false)
 
-   const handleDialogClickOpen = () => {
-      setAddDialogOpen(true)
-   }
    const handleDialogClose = () => {
       setAddDialogOpen(false)
    }
@@ -19,13 +15,11 @@ const useDialog = () => {
    }
 
    return {
-      handleDialogClickOpen,
       handleDialogClose,
       handleDialogCloseOnSuccess,
       setPostDescription,
       setUploadedPictures,
       postDescription,
-      addDialogOpen,
       uploadedPictures,
    }
 }

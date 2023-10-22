@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import usePostMutationFn from './usePostMutationFn'
 import type { IPost } from '@/types/PostTypes'
@@ -7,6 +8,7 @@ const usePostMutate = (
    postedPicturesPath: FileList | null,
    handleSnackOpenIfSuccess: () => void,
    handleDialogCloseOnSuccess: () => void,
+   setIsSendBtnDisabled: Dispatch<SetStateAction<boolean>>,
    addNewPost: (newPost: IPost) => void
 ) => {
    const handlePostSend = usePostMutationFn(description, postedPicturesPath)
@@ -16,10 +18,11 @@ const usePostMutate = (
       mutationFn: handlePostSend,
       onSuccess: async (data) => {
          handleSnackOpenIfSuccess()
+         setIsSendBtnDisabled(true)
          addNewPost(data.data.createdPost)
          setTimeout(() => {
             handleDialogCloseOnSuccess()
-         }, 5000)
+         }, 3000)
       },
    })
 

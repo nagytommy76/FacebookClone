@@ -14,8 +14,9 @@ const InformSnackbar: React.FC<{ isOpen: boolean; message: string; handleClose: 
          sx={{ width: '400px' }}
          open={isOpen}
          onClose={handleClose}
-         autoHideDuration={5000}
-         TransitionComponent={Fade}>
+         autoHideDuration={3000}
+         TransitionComponent={Fade}
+      >
          <Alert onClose={handleClose} severity='success' variant='filled' sx={{ width: '100%' }}>
             {message}
          </Alert>
