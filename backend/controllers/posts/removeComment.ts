@@ -18,11 +18,12 @@ interface IRemoveAnswerRequest extends IJWTUserType {
 
 export const removeCommentController = async (request: IRemoveCommentRequest, response: Response) => {
    const { postId, commentId } = request.body
+   const currentUserId = request.user?.userId
    try {
       // ha egy "fő" komment:
       const foundPostsComment = await PostModel.find({
          _id: postId,
-         comments: { $elemMatch: { _id: commentId } },
+         comments: { $elemMatch: { _id: commentId, userId: currentUserId } },
       }).select('comments')
 
       foundPostsComment[0].comments = foundPostsComment[0].comments.filter(

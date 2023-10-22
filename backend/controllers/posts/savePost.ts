@@ -22,7 +22,10 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
       })
       await createdPost.populate({
          path: 'userId',
-         select: ['email', '_id', 'sureName', 'firstName', 'userDetails'],
+         select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath.$'],
+         match: {
+            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+         },
       })
       postingUser.posts.push(createdPost._id)
       await postingUser.save()
