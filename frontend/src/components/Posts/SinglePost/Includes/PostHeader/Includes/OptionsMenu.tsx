@@ -6,7 +6,9 @@ import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
-const OptionsMenu = () => {
+const OptionsMenu: React.FC<{ removeSinglePostById: (toDeletePostId: string) => void }> = ({
+   removeSinglePostById,
+}) => {
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
    const open = Boolean(anchorEl)
    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -15,7 +17,7 @@ const OptionsMenu = () => {
    const handleClose = () => {
       setAnchorEl(null)
    }
-   const { postDeleteMutation } = useDeletePost()
+   const { postDeleteMutation } = useDeletePost(removeSinglePostById)
 
    const handleDeleteClick = () => {
       postDeleteMutation()
@@ -23,7 +25,7 @@ const OptionsMenu = () => {
    }
 
    return (
-      <>
+      <div style={{ position: 'absolute', right: 5 }}>
          <IconButton onClick={handleClick}>
             <MoreHorizIcon fontSize='inherit' />
          </IconButton>
@@ -31,7 +33,7 @@ const OptionsMenu = () => {
             <MenuItem onClick={handleClose}>Módosítás</MenuItem>
             <MenuItem onClick={handleDeleteClick}>Törlés</MenuItem>
          </Menu>
-      </>
+      </div>
    )
 }
 

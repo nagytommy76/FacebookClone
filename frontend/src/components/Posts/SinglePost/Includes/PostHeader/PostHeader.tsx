@@ -20,7 +20,8 @@ import OptionsMenu from './Includes/OptionsMenu'
 const PostHeader: React.FC<{
    userInfo: IPopulatedUserId
    createdAt: string
-}> = ({ userInfo, createdAt }) => {
+   removeSinglePostById: (toDeletePostId: string) => void
+}> = ({ userInfo, createdAt, removeSinglePostById }) => {
    const userId = useAppSelector((state) => state.auth.userId)
 
    return (
@@ -39,7 +40,7 @@ const PostHeader: React.FC<{
             </CustomTooltipTitle>
             <Typography variant='caption'>{moment(createdAt).format('YYYY MMMM D dddd, kk:mm')}</Typography>
          </HeaderRightTitleSection>
-         {userId === userInfo._id && <OptionsMenu />}
+         {userId === userInfo._id && <OptionsMenu removeSinglePostById={removeSinglePostById} />}
       </PostHeaderStyle>
    )
 }
