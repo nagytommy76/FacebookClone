@@ -2,7 +2,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { MainPageContainer } from './Style'
 
-const AllPostsComponent = dynamic(() => import('./AllPosts/AllPosts'))
+const AllPostsComponent = dynamic(() => import('@/Base/PostsBase/PostsBase'))
 
 const MainPage = () => {
    return (
