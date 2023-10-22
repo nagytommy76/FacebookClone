@@ -12,7 +12,7 @@ const fetchAllQueries = async () => {
 }
 
 const useGetAllPosts = (setAllPosts: React.Dispatch<React.SetStateAction<IPost[]>>) => {
-   const { isLoading, data } = useQuery({
+   const { isLoading } = useQuery({
       queryKey: ['getAllPosts'],
       queryFn: fetchAllQueries,
       onSuccess(data) {
@@ -21,7 +21,6 @@ const useGetAllPosts = (setAllPosts: React.Dispatch<React.SetStateAction<IPost[]
    })
    return {
       isLoading,
-      allPostsData: data?.data.allPosts,
    }
 }
 
