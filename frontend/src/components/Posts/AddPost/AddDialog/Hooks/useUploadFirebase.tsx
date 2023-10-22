@@ -1,8 +1,8 @@
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { firebaseStorage } from '../../../../../utils/firebase/firebase'
+import { firebaseStorage } from '@/utils/firebase/firebase'
 import { v4 } from 'uuid'
 
-import { useAppSelector } from '../../../../../utils/redux/store'
+import { useAppSelector } from '@/reduxStore/store'
 
 const useUploadFirebase = () => {
    const userId = useAppSelector((state) => state.auth.userId)
