@@ -1,11 +1,13 @@
 import dynamic from 'next/dynamic'
-import React from 'react'
+import React, { useState } from 'react'
 import PostContextProvider from '../../MainPage/Context/PostContextProvider'
+import useGetAllPosts from './Hooks/useGetAllPosts'
 import type { IPost } from '@/types/PostTypes'
 
 import SinglePostSkeleton from '@/src/skeletons/SinglePost/SinglePost'
 import AddPostSkeleton from '@/src/skeletons/AddPostSkeleton/AddPostSkeleton'
 import PostHeaderSkeleton from '@/Skeletons/SinglePost/PostHeader'
+
 const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'), {
    loading: () => <SinglePostSkeleton />,
 })
@@ -16,21 +18,36 @@ const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHea
    loading: () => <PostHeaderSkeleton asStandalone={true} />,
 })
 
-const PostsBase: React.FC<{ addNewPost: (newPost: IPost) => void; allPostsData: IPost[] | undefined }> = ({
-   addNewPost,
-   allPostsData,
-}) => {
+const PostsBase = () => {
+   const [allPosts, setAllPosts] = useState<IPost[]>([])
+   const addNewPost = (newPost: IPost) => {
+      setAllPosts([...allPosts, newPost])
+   }
+   const removeSinglePostById = (toDeletePostId: string) => {
+      setAllPosts((prevPosts) => {
+         return prevPosts.filter((post) => post._id !== toDeletePostId)
+      })
+   }
+   const { isLoading } = useGetAllPosts(setAllPosts)
+
    return (
       <>
          <AddPostComponent addNewPost={addNewPost} />
-         {allPostsData &&
-            allPostsData.map((post: IPost) => (
+         {!isLoading ? (
+            allPosts.map((post: IPost) => (
                <PostContextProvider key={post._id} singlePost={post}>
                   <SinglePostComponent>
-                     <PostHeader createdAt={post.createdAt} userInfo={post.userId} />
+                     <PostHeader
+                        removeSinglePostById={removeSinglePostById}
+                        createdAt={post.createdAt}
+                        userInfo={post.userId}
+                     />
                   </SinglePostComponent>
                </PostContextProvider>
-            ))}
+            ))
+         ) : (
+            <SinglePostSkeleton />
+         )}
       </>
    )
 }

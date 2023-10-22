@@ -29,7 +29,7 @@ amikor rámegyek a HOZZÁSZÓLÁS gombra akkor lekérni az adatbázisból a komm
 Esetleg egy commentAnswers-be a commentAnswers-t belerakni, tehát a CommentAnswers-nek van commentAnswers-e stb???
 És így lehet jobb törölni, mert egységben vannak
 
-
+Ha hozzáadok egy posztot, nem jelenik meg azonnal, ezt orvosolni.
 
 
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
