@@ -30,7 +30,7 @@ const ImageContainer: React.FC<{
                   }
                   onClick={() => setPicIndexAndOpenModal(index)}
                   key={index}
-                  src={image}
+                  src={image ? image : ''}
                   alt='Kép'
                   width={800}
                   height={500}
@@ -51,7 +51,7 @@ const ImageContainer: React.FC<{
                      }
                      onClick={() => setPicIndexAndOpenModal(index)}
                      key={index}
-                     src={image}
+                     src={image ? image : ''}
                      alt='Kép'
                      width={400}
                      height={250}
