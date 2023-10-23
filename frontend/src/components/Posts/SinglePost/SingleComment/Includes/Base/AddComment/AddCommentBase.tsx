@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/Send'
 
-import AddEmojiButton from './Includes/AddEmojiButton'
+import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
 
 const AddCommentBase: React.FC<{
    handleSendCommentAnswer: () => void

@@ -9,6 +9,7 @@ import type { IPost } from '@/src/types/PostTypes'
 import TextInputField from './Includes/TextInputField'
 import AddImage from '../../../Base/ImagePreview/AddImage'
 import DialogHeader from './Includes/DialogHeader'
+import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -42,9 +43,13 @@ const AddDialog: React.FC<{
       addNewPost
    )
 
-   const chancgeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
+   const changeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
       setPostDescription(event.target.value)
       setIsSendBtnDisabled(event.target.value.length <= 1)
+   }
+
+   const changeTextWithEmoji = (emoji: string = '') => {
+      setPostDescription(`${postDescription}${emoji}`)
    }
 
    return (
@@ -52,8 +57,11 @@ const AddDialog: React.FC<{
          <Dialog fullWidth maxWidth='sm' open={openAddDialog} onClose={handleDialogClose}>
             <DialogHeader handleCloseAddDialog={handleDialogClose} />
             <DialogContent>
-               <TextInputField onChange={chancgeTextField} textValue={postDescription} />
-               <AddImage setUploadedPictures={setUploadedPictures} uploadedPictures={uploadedPictures} />
+               <TextInputField onChange={changeTextField} textValue={postDescription} />
+               <div style={{ display: 'flex' }}>
+                  <AddImage setUploadedPictures={setUploadedPictures} uploadedPictures={uploadedPictures} />
+                  <AddEmojiButton size='large' handleChangeTextWithEmoji={changeTextWithEmoji} />
+               </div>
             </DialogContent>
             <DialogActions>
                <LoadingButton
