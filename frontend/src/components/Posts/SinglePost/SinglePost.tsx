@@ -46,7 +46,7 @@ const SinglePost: React.FC<{
 
    return (
       <>
-         <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px' }}>
+         <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px', position: 'relative' }}>
             {children}
             <BodyDescriptionSection>
                <Typography variant='subtitle1'>{singlePost.description}</Typography>
@@ -57,7 +57,10 @@ const SinglePost: React.FC<{
             <FooterSectionStyle>
                <LikeAndCommentContainer>
                   {singlePost.likes.length > 0 && (
-                     <ReactionsContainer likes={singlePost.likes} postId={singlePost._id} />
+                     <ReactionsContainer
+                        likes={singlePost.likes}
+                        postId={singlePost._id}
+                     />
                   )}
                   {commentsLength > 0 && (
                      <CommentsParagraph onClick={handleOpenDialog}>
@@ -67,7 +70,11 @@ const SinglePost: React.FC<{
                </LikeAndCommentContainer>
                <Divider sx={{ mt: 1, mb: 1 }} />
                <ButtonGroupStyle>
-                  <Like commentId='' postLikes={singlePost.likes} postId={singlePost._id}>
+                  <Like
+                     commentId=''
+                     postLikes={singlePost.likes}
+                     postId={singlePost._id}
+                  >
                      <CommentButton
                         isTextFieldActive={isTextFieldActive}
                         handleOpenFn={() => setIsDialogOpen(true)}

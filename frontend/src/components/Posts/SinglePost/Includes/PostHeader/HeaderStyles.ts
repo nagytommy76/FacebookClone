@@ -5,10 +5,13 @@ import Typography from '@mui/material/Typography'
 
 // Header section
 export const PostHeaderStyle = styled('div')(({ theme }) => ({
-   maxWidth: '100%',
+   maxWidth: '40%',
    padding: '1rem',
    display: 'flex',
    alignItems: 'center',
+   [theme.breakpoints.down('md')]: {
+      maxWidth: '90%',
+   },
 }))
 
 export const StyledProfileImage = styled(Image)({
