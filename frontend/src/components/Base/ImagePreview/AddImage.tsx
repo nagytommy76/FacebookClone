@@ -30,7 +30,14 @@ const AddImage: React.FC<{
 
    return (
       <>
-         {!selectedFilePreview ? <></> : <ImagePreview selectedFilePreview={selectedFilePreview} />}
+         {!selectedFilePreview ? (
+            <></>
+         ) : (
+            <ImagePreview
+               setSelectedFilePreview={setSelectedFilePreview}
+               selectedFilePreview={selectedFilePreview}
+            />
+         )}
          <ImageSelector
             multiple={multiple}
             maxFileCount={maxFileCount}
