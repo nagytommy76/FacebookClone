@@ -5,11 +5,12 @@ import AddReactionIcon from '@mui/icons-material/AddReaction'
 
 import EmojiTooltipTitle from './EmojiTooltipTitle'
 
-import { StyledEmojiTooltip } from '../Styles'
+import { StyledEmojiTooltip } from '../../Posts/SinglePost/SingleComment/Includes/Base/AddComment/Styles'
 
 const AddEmojiButton: React.FC<{
+   size?: 'small' | 'medium' | 'large'
    handleChangeTextWithEmoji: (emoji?: string) => void
-}> = ({ handleChangeTextWithEmoji }) => {
+}> = ({ handleChangeTextWithEmoji, size = 'small' }) => {
    const [openTooltip, setOpenTooltip] = useState<boolean>(false)
    const handleCloseTooltip = () => setOpenTooltip(false)
    const handleOpenTooltip = () => setOpenTooltip(true)
@@ -32,7 +33,7 @@ const AddEmojiButton: React.FC<{
             }}
             onClick={handleOpenTooltip}
             type='button'
-            size='small'
+            size={size}
             aria-label='add-reaction-emoji'
          >
             <AddReactionIcon fontSize='inherit' />
