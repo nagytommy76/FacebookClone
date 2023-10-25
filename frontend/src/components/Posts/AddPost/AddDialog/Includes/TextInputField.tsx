@@ -16,7 +16,7 @@ const TextInputField: React.FC<{
          variant='standard'
          fullWidth
          multiline
-         rows={4}
+         rows={6}
          placeholder='Mi jár a fejedben?'
       />
    )

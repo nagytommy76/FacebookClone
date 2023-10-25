@@ -5,15 +5,11 @@ import usePostMutate from './Hooks/usePostMutate'
 import useSnack from '../Hooks/useSnack'
 
 import type { IPost } from '@/src/types/PostTypes'
-
-import TextInputField from './Includes/TextInputField'
-import AddImage from '../../../Base/ImagePreview/AddImage'
 import DialogHeader from './Includes/DialogHeader'
-import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
+import DialogBody from './Includes/DialogBody'
 
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
 
@@ -28,11 +24,12 @@ const AddDialog: React.FC<{
    const {
       postDescription,
       uploadedPictures,
-      setPostDescription,
       setUploadedPictures,
+      changeTextField,
+      changeTextWithEmoji,
       handleDialogCloseOnSuccess,
       handleDialogClose,
-   } = useDialog(setAddDialogOpen)
+   } = useDialog(setAddDialogOpen, setIsSendBtnDisabled)
    const { handleSnackClose, handleSnackOpenIfSuccess, isSnackOpen } = useSnack()
    const { isLoading, postMutate } = usePostMutate(
       postDescription,
@@ -43,26 +40,17 @@ const AddDialog: React.FC<{
       addNewPost
    )
 
-   const changeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPostDescription(event.target.value)
-      setIsSendBtnDisabled(event.target.value.length <= 1)
-   }
-
-   const changeTextWithEmoji = (emoji: string = '') => {
-      setPostDescription(`${postDescription}${emoji}`)
-   }
-
    return (
       <>
          <Dialog fullWidth maxWidth='sm' open={openAddDialog} onClose={handleDialogClose}>
             <DialogHeader handleCloseAddDialog={handleDialogClose} />
-            <DialogContent>
-               <TextInputField onChange={changeTextField} textValue={postDescription} />
-               <div style={{ display: 'flex' }}>
-                  <AddImage setUploadedPictures={setUploadedPictures} uploadedPictures={uploadedPictures} />
-                  <AddEmojiButton size='large' handleChangeTextWithEmoji={changeTextWithEmoji} />
-               </div>
-            </DialogContent>
+            <DialogBody
+               changeTextField={changeTextField}
+               changeTextWithEmoji={changeTextWithEmoji}
+               setUploadedPictures={setUploadedPictures}
+               uploadedPictures={uploadedPictures}
+               postDescription={postDescription}
+            />
             <DialogActions>
                <LoadingButton
                   disabled={isSendBtnDisabled}
