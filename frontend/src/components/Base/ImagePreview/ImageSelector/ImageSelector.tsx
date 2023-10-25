@@ -1,6 +1,9 @@
 import React from 'react'
-import { StyledImageInputField, StyledLabelAsButton } from './Style'
+import { StyledImageInputField } from './Style'
+
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
 const ImageSelector: React.FC<{
    maxFileCount: number
@@ -9,21 +12,20 @@ const ImageSelector: React.FC<{
    selectedFilePreview?: string[]
 }> = ({ maxFileCount, handleSetUploadPictures, multiple = true, selectedFilePreview = [] }) => {
    return (
-      <>
-         <StyledLabelAsButton htmlFor='uploadImage'>
+      <Tooltip title='Fénykép hozzáadása' placement='top' arrow>
+         <IconButton component='label'>
             <AddPhotoAlternateIcon />
-            Válassz fényképeket {selectedFilePreview?.length}
-         </StyledLabelAsButton>
-         <StyledImageInputField
-            type='file'
-            accept='image/*'
-            multiple={multiple}
-            max={maxFileCount}
-            onChange={handleSetUploadPictures}
-            name='imageUpload'
-            id='uploadImage'
-         />
-      </>
+            <StyledImageInputField
+               type='file'
+               accept='image/*'
+               multiple={multiple}
+               max={maxFileCount}
+               onChange={handleSetUploadPictures}
+               name='imageUpload'
+               id='uploadImage'
+            />
+         </IconButton>
+      </Tooltip>
    )
 }
 
