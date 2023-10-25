@@ -19,20 +19,21 @@ Kell most már az axios interceptor, hogy ellenőrizzem az accessToken meglété
 
 A NAVBAR-nál redux-ot? használni,h ogy a kép változzon mikor a profilképet megváltoztatom
 
-
 Egy BUG: A meglévő comment-nél ha hozzáadok egy comment answert- az nem jelenik meg, még refresh-nél sem. MEGOLDANI!!!!!!
 
-
-A singlePost-nál esetleg kiváltani a commentContextet és a post context-ben változtatni a Statet VAGY-
-amikor rámegyek a HOZZÁSZÓLÁS gombra akkor lekérni az adatbázisból a kommenteket és úgy viszont maradthat a comentContext - TALÁN JOBB MEGOLDÁS
 
 Esetleg egy commentAnswers-be a commentAnswers-t belerakni, tehát a CommentAnswers-nek van commentAnswers-e stb???
 És így lehet jobb törölni, mert egységben vannak
 
-Ha hozzáadok egy posztot, nem jelenik meg azonnal, ezt orvosolni.
-
+A Poszt text-nél (illetve kommentnél is) megoldani, hogy a szöveg közé is tehessek EMOJI-t ne csak a végére
+Ehhez meg kell találnom a kurzor poziját
 
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
+
+
+A singlePost-nál esetleg kiváltani a commentContextet és a post context-ben változtatni a Statet VAGY-
+amikor rámegyek a HOZZÁSZÓLÁS gombra akkor lekérni az adatbázisból a kommenteket és úgy viszont maradthat a comentContext - TALÁN JOBB MEGOLDÁS
+Ha hozzáadok egy posztot, nem jelenik meg azonnal, ezt orvosolni.
 
 A refreshToken ellenőrzésnél csak azt nézem, hogy valid-e, ha nem kilép -> login oldal
 

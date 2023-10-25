@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 
-const useDialog = (setAddDialogOpen: Dispatch<SetStateAction<boolean>>) => {
+const useDialog = (
+   setAddDialogOpen: Dispatch<SetStateAction<boolean>>,
+   setIsSendBtnDisabled: Dispatch<SetStateAction<boolean>>
+) => {
    const [postDescription, setPostDescription] = useState<string>('')
    const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
 
@@ -14,10 +17,20 @@ const useDialog = (setAddDialogOpen: Dispatch<SetStateAction<boolean>>) => {
       setAddDialogOpen(false)
    }
 
+   const changeTextWithEmoji = (emoji: string = '') => {
+      setPostDescription(`${postDescription}${emoji}`)
+   }
+
+   const changeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPostDescription(event.target.value)
+      setIsSendBtnDisabled(event.target.value.length <= 1)
+   }
+
    return {
+      changeTextWithEmoji,
+      changeTextField,
       handleDialogClose,
       handleDialogCloseOnSuccess,
-      setPostDescription,
       setUploadedPictures,
       postDescription,
       uploadedPictures,
