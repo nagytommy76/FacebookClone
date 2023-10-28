@@ -3,11 +3,12 @@ import dynamic from 'next/dynamic'
 import useDialog from '../Hooks/useDialog'
 import usePostMutate from './Hooks/usePostMutate'
 import useSnack from '../Hooks/useSnack'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
 import type { IPost } from '@/src/types/PostTypes'
 import DialogHeader from './Includes/DialogHeader'
 import DialogBody from './Includes/DialogBody'
-
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -21,6 +22,8 @@ const AddDialog: React.FC<{
    setAddDialogOpen: Dispatch<SetStateAction<boolean>>
 }> = ({ openAddDialog, addNewPost, setAddDialogOpen }) => {
    const [isSendBtnDisabled, setIsSendBtnDisabled] = useState<boolean>(true)
+   const theme = useTheme()
+   const isFullScreen = useMediaQuery(theme.breakpoints.down('md'))
    const {
       postDescription,
       uploadedPictures,
@@ -42,7 +45,13 @@ const AddDialog: React.FC<{
 
    return (
       <>
-         <Dialog fullWidth maxWidth='sm' open={openAddDialog} onClose={handleDialogClose}>
+         <Dialog
+            fullWidth
+            fullScreen={isFullScreen}
+            maxWidth='sm'
+            open={openAddDialog}
+            onClose={handleDialogClose}
+         >
             <DialogHeader handleCloseAddDialog={handleDialogClose} />
             <DialogBody
                changeTextField={changeTextField}
