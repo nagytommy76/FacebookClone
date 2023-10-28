@@ -18,10 +18,12 @@ const useDialog = (
    }
 
    const changeTextWithEmoji = (emoji: string = '') => {
+      // console.log(event.target.selectionStart)
       setPostDescription(`${postDescription}${emoji}`)
    }
 
    const changeTextField = (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(event.target.selectionStart)
       setPostDescription(event.target.value)
       setIsSendBtnDisabled(event.target.value.length <= 1)
    }

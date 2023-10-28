@@ -28,6 +28,8 @@ Esetleg egy commentAnswers-be a commentAnswers-t belerakni, tehát a CommentAnsw
 A Poszt text-nél (illetve kommentnél is) megoldani, hogy a szöveg közé is tehessek EMOJI-t ne csak a végére
 Ehhez meg kell találnom a kurzor poziját
 
+A képeket amíg töltenek helyettesíteni egy Skeleton componensel, fetch API/Axios sal betölteni őket amíg loading mutatni???
+
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
 
 
