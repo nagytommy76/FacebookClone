@@ -16,7 +16,7 @@ const EmojiTooltipTitle: React.FC<{
    return (
       <ClickAwayListener onClickAway={handleCloseTooltip}>
          <div>
-            <Picker data={data} onEmojiSelect={handleEmojiSelect} />
+            <Picker data={data} onEmojiSelect={handleEmojiSelect} emojiSize={32} />
          </div>
       </ClickAwayListener>
    )
