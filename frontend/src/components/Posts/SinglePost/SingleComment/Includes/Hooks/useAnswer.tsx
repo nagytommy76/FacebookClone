@@ -2,13 +2,15 @@ import React, { useRef, useState } from 'react'
 import useAnswerCreateMutate from './useAnswerCreateMutate'
 import useUpdateCommentMutate from './useUpdateCommentMutate'
 import useUpdateAnswer from './useUpdateAnswer'
+import useEmojiText from '@/src/hooks/useEmojiText'
 
 const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
-   const reference = useRef<null | HTMLInputElement>(null)
+   const reference = useRef<HTMLInputElement>()
    const [isUpdate, setIsUpdate] = useState<boolean>(false)
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const [answerText, setAnswerText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
+   const handleChangeEmoji = useEmojiText(reference, setAnswerText)
    const setStatesToDefault = () => {
       setAnswerText('')
       setIsSendDisabled(true)
@@ -27,10 +29,6 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
 
    const handleSetAnswerOpen = () => {
       setIsAnswerOpen(true)
-      // Azért kell, hogy miután kinyílik a collapse, az után állítsa be.
-      setTimeout(() => {
-         if (reference) reference.current?.focus()
-      }, 200)
    }
    const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value.length === 0) setIsSendDisabled(true)
@@ -41,7 +39,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const handleChangeTextWithEmoji = (emoji: string = '') => {
       if (answerText.length === 0) setIsSendDisabled(true)
       else setIsSendDisabled(false)
-      setAnswerText(`${answerText}${emoji}`)
+      handleChangeEmoji(emoji)
    }
 
    const handleSetAnswerOpenForUpdate = (commentText: string) => {
