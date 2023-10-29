@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 
 import TextField from '@mui/material/TextField'
 
 const TextInputField: React.FC<{
    textValue: string
+   textAreaRef: React.MutableRefObject<HTMLTextAreaElement | undefined>
    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}> = ({ textValue, onChange }) => {
+}> = ({ textValue, textAreaRef, onChange }) => {
+   useEffect(() => {
+      if (textAreaRef.current) {
+         textAreaRef.current.focus()
+      }
+   }, [])
+
    return (
       <TextField
          sx={{ mt: 1, mb: 2 }}
+         inputRef={textAreaRef}
          id='outlined-post-input'
          value={textValue}
          onChange={onChange}

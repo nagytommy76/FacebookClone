@@ -27,6 +27,7 @@ const AddDialog: React.FC<{
    const {
       postDescription,
       uploadedPictures,
+      textAreaRef,
       setUploadedPictures,
       changeTextField,
       changeTextWithEmoji,
@@ -57,6 +58,7 @@ const AddDialog: React.FC<{
                changeTextField={changeTextField}
                changeTextWithEmoji={changeTextWithEmoji}
                setUploadedPictures={setUploadedPictures}
+               textAreaRef={textAreaRef}
                uploadedPictures={uploadedPictures}
                postDescription={postDescription}
             />

@@ -14,10 +14,18 @@ const DialogBody: React.FC<{
    changeTextWithEmoji: (emoji?: string) => void
    postDescription: string
    uploadedPictures: FileList | null
-}> = ({ setUploadedPictures, changeTextField, changeTextWithEmoji, postDescription, uploadedPictures }) => {
+   textAreaRef: React.MutableRefObject<HTMLTextAreaElement | undefined>
+}> = ({
+   setUploadedPictures,
+   changeTextField,
+   changeTextWithEmoji,
+   postDescription,
+   uploadedPictures,
+   textAreaRef,
+}) => {
    return (
       <DialogContent>
-         <TextInputField onChange={changeTextField} textValue={postDescription} />
+         <TextInputField textAreaRef={textAreaRef} onChange={changeTextField} textValue={postDescription} />
          <IconsFooterStyle>
             <ImageSelector
                maxFileCount={3}
