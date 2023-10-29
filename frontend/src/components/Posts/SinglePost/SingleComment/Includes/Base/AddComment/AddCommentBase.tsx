@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { StyledPaperContainer, StyledTextContainer, StyledTextInput } from './Styles'
 import IconButton from '@mui/material/IconButton'
@@ -15,7 +15,7 @@ const AddCommentBase: React.FC<{
    handleChangeTextWithEmoji: (emoji?: string) => void
    handleAddSinglePostComment: () => void
    commentAnswerId: string
-   reference: React.MutableRefObject<null>
+   reference: React.MutableRefObject<HTMLInputElement | undefined>
    commentText: string
    isUpdate: boolean
    isSendDisabled?: boolean
@@ -47,6 +47,12 @@ const AddCommentBase: React.FC<{
             : handleSendCommentAnswer()
       }
    }
+
+   useEffect(() => {
+      if (reference.current) {
+         reference.current.focus()
+      }
+   }, [])
 
    return (
       <>

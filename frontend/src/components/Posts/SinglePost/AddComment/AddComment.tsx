@@ -4,11 +4,11 @@ import useAddComment from './Hook/useAddComment'
 import AddCommentBase from '../SingleComment/Includes/Base/AddComment/AddCommentBase'
 
 const AddComment: React.FC<{
-   reference: React.MutableRefObject<null>
+   reference: React.MutableRefObject<HTMLInputElement | undefined>
    postId: string
 }> = ({ reference, postId }) => {
    const { commentText, isSendDisabled, handleChangeText, handleSendComment, handleChangeTextWithEmoji } =
-      useAddComment(postId)
+      useAddComment(postId, reference)
    return (
       <>
          <AddCommentBase

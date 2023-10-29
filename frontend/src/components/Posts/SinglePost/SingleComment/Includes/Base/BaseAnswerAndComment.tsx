@@ -92,7 +92,7 @@ const BaseAnswerAndComment: React.FC<{
                      handleAddSinglePostComment={() => {}}
                      handleChangeText={handleChangeText}
                      commentAnswerId={answer._id}
-                     reference={reference as React.MutableRefObject<null>}
+                     reference={reference}
                      commentText={answerText}
                      isUpdate={isUpdate}
                      isChildComment={isChildComment}
