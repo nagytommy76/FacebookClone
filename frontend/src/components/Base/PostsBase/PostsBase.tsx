@@ -35,13 +35,13 @@ const PostsBase = () => {
          <AddPostComponent addNewPost={addNewPost} />
          {!isLoading ? (
             allPosts.map((post: IPost) => (
-               <PostContextProvider key={post._id} singlePost={post}>
+               <PostContextProvider
+                  removeSinglePostById={removeSinglePostById}
+                  key={post._id}
+                  singlePost={post}
+               >
                   <SinglePostComponent>
-                     <PostHeader
-                        removeSinglePostById={removeSinglePostById}
-                        createdAt={post.createdAt}
-                        userInfo={post.userId}
-                     />
+                     <PostHeader />
                   </SinglePostComponent>
                </PostContextProvider>
             ))
