@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 import { useAppSelector } from '@/reduxStore/store'
 import moment from 'moment'
 import 'moment/locale/hu'
@@ -14,14 +15,14 @@ import Typography from '@mui/material/Typography'
 
 import CustomTooltipTitle from '@/Base/CustomTooltipTitle'
 import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
-import type { IPopulatedUserId } from '@/types/PostTypes'
 import OptionsMenu from './Includes/OptionsMenu'
 
-const PostHeader: React.FC<{
-   userInfo: IPopulatedUserId
-   createdAt: string
-   removeSinglePostById: (toDeletePostId: string) => void
-}> = ({ userInfo, createdAt, removeSinglePostById }) => {
+const PostHeader = () => {
+   const {
+      postsReducer: {
+         singlePost: { createdAt, userId: userInfo },
+      },
+   } = useContext(PostContext)
    const userId = useAppSelector((state) => state.auth.userId)
 
    return (
@@ -40,7 +41,7 @@ const PostHeader: React.FC<{
             </CustomTooltipTitle>
             <Typography variant='caption'>{moment(createdAt).format('YYYY MMMM D dddd, kk:mm')}</Typography>
          </HeaderRightTitleSection>
-         {userId === userInfo._id && <OptionsMenu removeSinglePostById={removeSinglePostById} />}
+         {userId === userInfo._id && <OptionsMenu />}
       </PostHeaderStyle>
    )
 }
