@@ -1,15 +1,16 @@
-import React, { useContext } from 'react'
-import { CommentContext } from '../../../../Context/CommentContext'
-
+import React, { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { useAppSelector } from '@/reduxStore/store'
-import useRemoveComment from './Hooks/useRemoveComment'
-import useRemoveAnswer from './Hooks/useRemoveAnswer'
 
 import { StyledOptions } from './Style'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+
+const ConfirmDeleteDialog = dynamic(() => import('./Includes/ConfirmDeleteDialog'), {
+   loading: () => <h1>Töltés egyelőre</h1>,
+})
 
 const Options: React.FC<{
    answeredUserId: string
@@ -18,11 +19,7 @@ const Options: React.FC<{
    handleSetAnswerOpenForUpdate: () => void
 }> = ({ answeredUserId, commentId, isChildComment = false, handleSetAnswerOpenForUpdate }) => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const {
-      commentReducer: { postId },
-   } = useContext(CommentContext)
-   const mutateRemoveComment = useRemoveComment()
-   const mutateRemoveCommentAnswer = useRemoveAnswer()
+   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
    const open = Boolean(anchorEl)
@@ -30,8 +27,7 @@ const Options: React.FC<{
       setAnchorEl(event.currentTarget)
    }
    const handleCloseAndDelete = () => {
-      if (!isChildComment) mutateRemoveComment({ commentId, postId })
-      else mutateRemoveCommentAnswer({ answerId: commentId, postId })
+      setIsDialogOpen(true)
       setAnchorEl(null)
    }
    const handleCloseAndUpdate = () => {
@@ -56,6 +52,12 @@ const Options: React.FC<{
          ) : (
             <></>
          )}
+         <ConfirmDeleteDialog
+            commentId={commentId}
+            isChildComment={isChildComment}
+            isOpen={isDialogOpen}
+            setIsDialogOpen={setIsDialogOpen}
+         />
       </>
    )
 }
