@@ -28,6 +28,11 @@ Esetleg egy commentAnswers-be a commentAnswers-t belerakni, tehát a CommentAnsw
 
 A képeket amíg töltenek helyettesíteni egy Skeleton componensel, fetch API/Axios sal betölteni őket amíg loading mutatni???
 
+Linket is tudjak beszúrni a Post/Comment/Answer input mezőbe - lásd facebok/reddit
+
+A képekhez lesessen kommentelni (ami amúgy a poszt alá meg, csak jelenjen meg jobb oldalt)
+ meg azokat is likeolni (viszont likeolni azt lehessen külön a képeket) -> FACEBOOK
+
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
 
 A singlePost-nál esetleg kiváltani a commentContextet és a post context-ben változtatni a Statet VAGY-
