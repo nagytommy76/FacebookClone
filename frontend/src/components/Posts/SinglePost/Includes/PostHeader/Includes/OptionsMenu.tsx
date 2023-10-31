@@ -9,15 +9,20 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 const ConfirmDeletePost = dynamic(() => import('./ConfirmDeletePost'), {
    loading: () => <h1>Töltés egyelőre</h1>,
 })
+const ModifyPost = dynamic(() => import('../../../../ModifyPost/ModifyPost'), {
+   loading: () => <h1>Töltés egyelőre</h1>,
+})
 
 const OptionsMenu = () => {
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+   const [isModifyDialogOpen, setIsModifyDialogOpen] = useState<boolean>(false)
    const open = Boolean(anchorEl)
    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget)
    }
    const handleClose = () => {
+      setIsModifyDialogOpen(true)
       setAnchorEl(null)
    }
    const openConfirmDialog = () => {
@@ -37,6 +42,7 @@ const OptionsMenu = () => {
             </Menu>
          </div>
          <ConfirmDeletePost isOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
+         <ModifyPost isOpen={isModifyDialogOpen} setIsModifyDialogOpen={setIsModifyDialogOpen} />
       </>
    )
 }
