@@ -37,6 +37,7 @@ const useDialog = (
       handleDialogClose,
       handleDialogCloseOnSuccess,
       setUploadedPictures,
+      setPostDescription,
       postDescription,
       uploadedPictures,
       textAreaRef,
