@@ -3,12 +3,13 @@ import { PostContext } from '@/PostContext/PostContextProvider'
 
 import useDialog from '../AddPost/Hooks/useDialog'
 
+import LoadingButton from '@mui/lab/LoadingButton'
+import EditIcon from '@mui/icons-material/Edit'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
-import DialogTitle from '@mui/material/DialogTitle'
-import Button from '@mui/material/Button'
 
 import DialogBody from '../AddPost/AddDialog/Includes/DialogBody'
+import DialogHeader from '../AddPost/AddDialog/Includes/DialogHeader'
 
 const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<SetStateAction<boolean>> }> = ({
    isOpen,
@@ -16,7 +17,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
 }) => {
    const {
       postsReducer: {
-         singlePost: { description },
+         singlePost: { description, postedPicturesPath },
       },
    } = useContext(PostContext)
    const {
@@ -33,10 +34,6 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
    // Megoldani esetleg, hogy a textAreaRef legyen egyben a postDescription is? Lehetne egyben a 2!??!
    useEffect(() => {
       setPostDescription(description)
-      //   if (textAreaRef.current) {
-      //      textAreaRef.current.value = postDescription
-      //   }
-      //   console.log(textAreaRef.current?.value)
    }, [description, setPostDescription])
 
    return (
@@ -48,7 +45,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
          aria-labelledby='alert-dialog-title'
          aria-describedby='alert-dialog-description'
       >
-         <DialogTitle id='alert-dialog-title'>{"Use Google's location service?"}</DialogTitle>
+         <DialogHeader handleCloseAddDialog={handleDialogClose} headerText='módosítása' />
          <DialogBody
             changeTextField={changeTextField}
             changeTextWithEmoji={changeTextWithEmoji}
@@ -58,10 +55,18 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
             uploadedPictures={uploadedPictures}
          />
          <DialogActions>
-            <Button onClick={() => {}}>Disagree</Button>
-            <Button onClick={() => {}} autoFocus>
-               Agree
-            </Button>
+            <LoadingButton
+               // disabled={isSendBtnDisabled}
+               // onClick={(event) => postMutate(event)}
+               loading={false}
+               loadingPosition='start'
+               startIcon={<EditIcon />}
+               fullWidth
+               variant='contained'
+               color='primary'
+            >
+               Közzététel
+            </LoadingButton>
          </DialogActions>
       </Dialog>
    )
