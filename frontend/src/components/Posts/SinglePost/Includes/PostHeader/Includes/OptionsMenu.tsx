@@ -21,7 +21,7 @@ const OptionsMenu = () => {
    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget)
    }
-   const handleClose = () => {
+   const openModifyDialog = () => {
       setIsModifyDialogOpen(true)
       setAnchorEl(null)
    }
@@ -36,8 +36,8 @@ const OptionsMenu = () => {
             <IconButton onClick={handleClick}>
                <MoreHorizIcon fontSize='inherit' />
             </IconButton>
-            <Menu id='delete-post-menu' anchorEl={anchorEl} open={open} onClose={handleClose}>
-               <MenuItem onClick={handleClose}>Módosítás</MenuItem>
+            <Menu id='delete-post-menu' anchorEl={anchorEl} open={open} onClose={openModifyDialog}>
+               <MenuItem onClick={openModifyDialog}>Módosítás</MenuItem>
                <MenuItem onClick={openConfirmDialog}>Törlés</MenuItem>
             </Menu>
          </div>
