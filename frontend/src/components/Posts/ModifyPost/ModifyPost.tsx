@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useContext } from 'react'
 import { PostContext } from '@/PostContext/PostContextProvider'
 
 import useDialog from '../AddPost/Hooks/useDialog'
+import useModifyPost from './Hooks/useModifyPost'
 
 import LoadingButton from '@mui/lab/LoadingButton'
 import EditIcon from '@mui/icons-material/Edit'
@@ -17,7 +18,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
 }) => {
    const {
       postsReducer: {
-         singlePost: { description, postedPicturesPath },
+         singlePost: { description },
       },
    } = useContext(PostContext)
    const {
@@ -31,6 +32,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
       handleDialogCloseOnSuccess,
       handleDialogClose,
    } = useDialog(setIsModifyDialogOpen, () => {})
+   const { updatePostMutate } = useModifyPost()
    // Megoldani esetleg, hogy a textAreaRef legyen egyben a postDescription is? Lehetne egyben a 2!??!
    useEffect(() => {
       setPostDescription(description)
@@ -57,7 +59,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
          <DialogActions>
             <LoadingButton
                // disabled={isSendBtnDisabled}
-               // onClick={(event) => postMutate(event)}
+               onClick={() => updatePostMutate(postDescription)}
                loading={false}
                loadingPosition='start'
                startIcon={<EditIcon />}
