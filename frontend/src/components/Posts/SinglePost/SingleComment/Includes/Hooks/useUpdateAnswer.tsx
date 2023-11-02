@@ -14,7 +14,7 @@ const useUpdateAnswer = (modifiedText: string, setStatesToDefault: () => void) =
    } = useContext(CommentContext)
 
    const updateAnswerMutateFn = async (answerId: string) => {
-      const response = (await axios.put('/post/update-post-comment-answer', {
+      const response = (await axios.put('/post/edit/update-post-comment-answer', {
          postId,
          commentId: _id,
          modifiedText,

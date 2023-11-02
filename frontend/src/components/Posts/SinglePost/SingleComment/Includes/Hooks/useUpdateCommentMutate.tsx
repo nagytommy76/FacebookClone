@@ -14,7 +14,7 @@ const useUpdateCommentMutate = (modifiedText: string, setStatesToDefault: () => 
    } = useContext(CommentContext)
 
    const updateMutateFn = async () => {
-      const response = (await axios.put('/post/update-post-comment', {
+      const response = (await axios.put('/post/edit/update-post-comment', {
          postId,
          commentId: _id,
          modifiedText,
