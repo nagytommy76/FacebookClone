@@ -7,18 +7,24 @@ import { useAppSelector } from '@/reduxStore/store'
 const useUploadFirebase = () => {
    const userId = useAppSelector((state) => state.auth.userId)
 
-   const handleMultipleImageUploadToFirebase = async (uploadImage: FileList) => {
+   const handleMultipleImageUploadToFirebase = async (uploadImage: string[]) => {
       const uploadedImagesArray: string[] = []
       for (let index = 0; index < uploadImage.length; index++) {
-         const singleImageFile = uploadImage[index]
-         const imagesPath = await handleSingleImageUploadToFirebase(singleImageFile)
+         // const singleImageFile = new Blob([uploadImage[index]], { type: 'text/plain' })
+         const response = await fetch(uploadImage[index])
+         const blob = await response.blob()
+
+         const file = new File([blob], 'test', { type: blob.type })
+
+         console.log(file)
+         const imagesPath = await handleSingleImageUploadToFirebase(file)
          uploadedImagesArray.push(imagesPath as string)
       }
       return uploadedImagesArray
    }
 
    const handleSingleImageUploadToFirebase = async (
-      singleImageFile: File,
+      singleImageFile: Blob | File,
       subFolderName: string = 'posts'
    ) => {
       try {
