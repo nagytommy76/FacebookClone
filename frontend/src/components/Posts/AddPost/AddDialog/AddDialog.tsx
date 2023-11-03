@@ -26,9 +26,7 @@ const AddDialog: React.FC<{
    const isFullScreen = useMediaQuery(theme.breakpoints.down('md'))
    const {
       postDescription,
-      uploadedPictures,
       textAreaRef,
-      setUploadedPictures,
       changeTextField,
       changeTextWithEmoji,
       handleDialogCloseOnSuccess,
@@ -37,7 +35,6 @@ const AddDialog: React.FC<{
    const { handleSnackClose, handleSnackOpenIfSuccess, isSnackOpen } = useSnack()
    const { isLoading, postMutate } = usePostMutate(
       postDescription,
-      uploadedPictures,
       handleSnackOpenIfSuccess,
       handleDialogCloseOnSuccess,
       setIsSendBtnDisabled,
@@ -57,9 +54,7 @@ const AddDialog: React.FC<{
             <DialogBody
                changeTextField={changeTextField}
                changeTextWithEmoji={changeTextWithEmoji}
-               setUploadedPictures={setUploadedPictures}
                textAreaRef={textAreaRef}
-               uploadedPictures={uploadedPictures}
                postDescription={postDescription}
             />
             <DialogActions>

@@ -23,9 +23,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
    } = useContext(PostContext)
    const {
       postDescription,
-      uploadedPictures,
       textAreaRef,
-      setUploadedPictures,
       changeTextField,
       changeTextWithEmoji,
       setPostDescription,
@@ -51,10 +49,8 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
          <DialogBody
             changeTextField={changeTextField}
             changeTextWithEmoji={changeTextWithEmoji}
-            setUploadedPictures={setUploadedPictures}
             postDescription={postDescription}
             textAreaRef={textAreaRef}
-            uploadedPictures={uploadedPictures}
          />
          <DialogActions>
             <LoadingButton
