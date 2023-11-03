@@ -6,7 +6,6 @@ const useDialog = (
    setIsSendBtnDisabled: Dispatch<SetStateAction<boolean>>
 ) => {
    const [postDescription, setPostDescription] = useState<string>('')
-   const [uploadedPictures, setUploadedPictures] = useState<FileList | null>(null)
    const textAreaRef = useRef<HTMLTextAreaElement>()
    const changeTextEmoji = useEmojiText(textAreaRef, setPostDescription)
 
@@ -16,7 +15,6 @@ const useDialog = (
 
    const handleDialogCloseOnSuccess = () => {
       setPostDescription('')
-      setUploadedPictures(null)
       setAddDialogOpen(false)
    }
 
@@ -36,10 +34,8 @@ const useDialog = (
       changeTextField,
       handleDialogClose,
       handleDialogCloseOnSuccess,
-      setUploadedPictures,
       setPostDescription,
       postDescription,
-      uploadedPictures,
       textAreaRef,
    }
 }
