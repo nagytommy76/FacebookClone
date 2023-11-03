@@ -5,12 +5,8 @@ import { StyledImagePreview, StyledImagePreviewContainer, StyledRemoveIcon } fro
 
 const ImageView: React.FC<{
    selectedFilePreview: string[]
-   setSelectedFilePreview: React.Dispatch<React.SetStateAction<string[] | null>>
-}> = ({ selectedFilePreview, setSelectedFilePreview }) => {
-   const removeSingleImgOnClick = (filePreview: string) => {
-      setSelectedFilePreview(selectedFilePreview.filter((image) => image != filePreview))
-   }
-
+   handleRemoveFromImages: (filePreview: string) => void
+}> = ({ selectedFilePreview, handleRemoveFromImages }) => {
    return (
       <StyledImagePreviewContainer>
          {selectedFilePreview.map((filePreview, index) => (
@@ -22,7 +18,7 @@ const ImageView: React.FC<{
             >
                <StyledImagePreview key={index} width={500} height={200} alt={filePreview} src={filePreview} />
                <StyledRemoveIcon
-                  onClick={() => removeSingleImgOnClick(filePreview)}
+                  onClick={() => handleRemoveFromImages(filePreview)}
                   color='info'
                   sx={{
                      backgroundColor: '#555',

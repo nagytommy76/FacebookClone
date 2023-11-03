@@ -1,43 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { PostContext } from '@/PostContext/PostContextProvider'
+import React, { useContext } from 'react'
+import { ImageContext } from '../../Posts/HandlePosts/Context/ImageContextProvider'
 
 import ImageView from './Includes/ImageView'
 
-const ImagePreview: React.FC<{
-   uploadedPictures: FileList | null
-}> = ({ uploadedPictures }) => {
+const ImagePreview = () => {
    const {
-      postsReducer: {
-         singlePost: { postedPicturesPath },
-      },
-   } = useContext(PostContext)
-   const [selectedFilePreview, setSelectedFilePreview] = useState<string[] | null>(null)
-   const [currentFilePreview, setCurrentFilePreview] = useState<string[] | null>(postedPicturesPath)
+      imageReducer: { uploadedImages, newUploadedImages },
+      imageDispatch,
+   } = useContext(ImageContext)
 
-   useEffect(() => {
-      if (!uploadedPictures) {
-         setSelectedFilePreview(null)
-         return
-      }
-      let objectUrl: string[] = []
-      for (let index = 0; index < uploadedPictures.length; index++) {
-         objectUrl.push(URL.createObjectURL(uploadedPictures[index]))
-      }
-      setSelectedFilePreview(objectUrl)
-   }, [uploadedPictures])
+   const handleRemoveFromNewImages = (filePreview: string) => {
+      console.log(filePreview)
+      imageDispatch({ type: 'REMOVE_NEW_SINGLE_IMAGE', payload: filePreview })
+   }
+   const handleRemoveFromUploadedImages = (filePreview: string) => {
+      imageDispatch({ type: 'REMOVE_SINGLE_IMAGE', payload: filePreview })
+   }
 
    return (
       <>
-         {selectedFilePreview !== null && (
+         {newUploadedImages !== null && (
             <ImageView
-               selectedFilePreview={selectedFilePreview}
-               setSelectedFilePreview={setSelectedFilePreview}
+               selectedFilePreview={newUploadedImages}
+               handleRemoveFromImages={handleRemoveFromNewImages}
             />
          )}
-         {currentFilePreview !== null && (
+         {uploadedImages !== null && (
             <ImageView
-               selectedFilePreview={currentFilePreview}
-               setSelectedFilePreview={setCurrentFilePreview}
+               selectedFilePreview={uploadedImages}
+               handleRemoveFromImages={handleRemoveFromUploadedImages}
             />
          )}
       </>
