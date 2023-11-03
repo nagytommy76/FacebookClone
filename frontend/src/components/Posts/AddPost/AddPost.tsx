@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ImageContextProvider from '../HandlePosts/Context/ImageContextProvider'
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '../../../utils/redux/store'
 
@@ -31,11 +32,13 @@ const AddPost: React.FC<{
                Mi jár a fejedben?
             </CustomAddPostButton>
          </AddPostStyle>
-         <AddPostDialog
-            addNewPost={addNewPost}
-            setAddDialogOpen={setAddDialogOpen}
-            openAddDialog={addDialogOpen}
-         />
+         <ImageContextProvider>
+            <AddPostDialog
+               addNewPost={addNewPost}
+               setAddDialogOpen={setAddDialogOpen}
+               openAddDialog={addDialogOpen}
+            />
+         </ImageContextProvider>
       </>
    )
 }

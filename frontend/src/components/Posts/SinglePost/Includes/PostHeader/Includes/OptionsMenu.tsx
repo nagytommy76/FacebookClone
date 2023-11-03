@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import ImageContextProvider from '@/src/components/Posts/HandlePosts/Context/ImageContextProvider'
 
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -42,7 +43,9 @@ const OptionsMenu = () => {
             </Menu>
          </div>
          <ConfirmDeletePost isOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
-         <ModifyPost isOpen={isModifyDialogOpen} setIsModifyDialogOpen={setIsModifyDialogOpen} />
+         <ImageContextProvider>
+            <ModifyPost isOpen={isModifyDialogOpen} setIsModifyDialogOpen={setIsModifyDialogOpen} />
+         </ImageContextProvider>
       </>
    )
 }
