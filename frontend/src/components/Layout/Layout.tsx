@@ -17,7 +17,7 @@ const Layout: React.FC<{ children: React.ReactNode; className: string }> = ({ ch
             <meta name='description' content='Hobby project, cloning facebook' />
             <meta name='viewport' content='width=device-width, initial-scale=1' />
             <meta name='author' content='Nagy Tamás' />
-            <link rel='icon' href='/favicon.ico' />
+            <link rel='icon' href='/facebook-96.svg' />
          </Head>
          <GlobalThemeProvider>
             <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>

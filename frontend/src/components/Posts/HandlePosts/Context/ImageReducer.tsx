@@ -8,12 +8,11 @@ export type ImageAction =
 
 export interface IImageAction {
    type: ImageAction
-   payload: string[] | FileList | string
+   payload: string[] | File[] | string
 }
 
 export interface InitialImageState {
-   //    newUploadedImages: FileList | null
-   newUploadedImages: string[] | null
+   newUploadedImages: File[] | null
    uploadedImages: string[] | null
 }
 
@@ -28,16 +27,7 @@ export default function PostsReducer(state: InitialImageState, action: IImageAct
    switch (action.type) {
       case 'SET_IMAGES':
          const newImages = produce(state, (draft) => {
-            if (action.payload instanceof FileList) {
-               let objectUrl: string[] = []
-               for (let index = 0; index < action.payload.length; index++) {
-                  objectUrl.push(URL.createObjectURL(action.payload[index]))
-               }
-               draft.newUploadedImages = objectUrl
-            } else {
-               draft.newUploadedImages = action.payload as string[]
-            }
-            // draft.newUploadedImages = action.payload as FileList
+            draft.newUploadedImages = action.payload as File[]
          })
          return newImages
       case 'SET_UPLOADED_IMAGES':
@@ -55,11 +45,8 @@ export default function PostsReducer(state: InitialImageState, action: IImageAct
       case 'REMOVE_NEW_SINGLE_IMAGE':
          const removedImage = produce(state, (draft) => {
             if (!draft.newUploadedImages) return draft
-            // const file = Array.from(draft.newUploadedImages).filter(function (image) {
-            //    return image != action.payload
-            // })
-            const mod = draft.newUploadedImages.filter((image) => image != action.payload)
-            draft.newUploadedImages = mod
+            const file = draft.newUploadedImages.filter((image) => image.name != action.payload)
+            draft.newUploadedImages = file
          })
          return removedImage
       default:
