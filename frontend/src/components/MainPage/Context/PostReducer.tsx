@@ -34,7 +34,7 @@ export const initialSinglePostData: IPost = {
          },
       },
    ],
-   postedPicturesPath: [''],
+   postedPicturesPath: null,
    userId: {
       _id: '',
       email: '',

@@ -4,7 +4,7 @@ import { axiosInstance as axios, AxiosResponse } from '@/utils/axiosSetup/AxiosI
 import useUploadFirebase from './useUploadFirebase'
 import type { IPost } from '@/types/PostTypes'
 
-const usePostMutationFn = (description: string, postedPicturesPath: string[] | null) => {
+const usePostMutationFn = (description: string, postedPicturesPath: File[] | null) => {
    const { handleMultipleImageUploadToFirebase } = useUploadFirebase()
    const handleAddPostSend = async (
       event: React.FormEvent

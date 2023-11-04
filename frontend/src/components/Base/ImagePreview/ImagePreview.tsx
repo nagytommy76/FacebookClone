@@ -9,9 +9,8 @@ const ImagePreview = () => {
       imageDispatch,
    } = useContext(ImageContext)
 
-   const handleRemoveFromNewImages = (filePreview: string) => {
-      console.log(filePreview)
-      imageDispatch({ type: 'REMOVE_NEW_SINGLE_IMAGE', payload: filePreview })
+   const handleRemoveFromNewImages = (fileName: string) => {
+      imageDispatch({ type: 'REMOVE_NEW_SINGLE_IMAGE', payload: fileName })
    }
    const handleRemoveFromUploadedImages = (filePreview: string) => {
       imageDispatch({ type: 'REMOVE_SINGLE_IMAGE', payload: filePreview })
