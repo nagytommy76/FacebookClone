@@ -1,33 +1,34 @@
-import React from 'react'
-import CloseIcon from '@mui/icons-material/Close'
+import useImage from './Hook/useImage'
 
-import { StyledImagePreview, StyledImagePreviewContainer, StyledRemoveIcon } from './Style'
+import { StyledImagePreviewContainer } from './Style'
+import SingleImage from './SingleImage'
 
 const ImageView: React.FC<{
-   selectedFilePreview: string[]
+   selectedFilePreview: File[] | string[]
    handleRemoveFromImages: (filePreview: string) => void
 }> = ({ selectedFilePreview, handleRemoveFromImages }) => {
+   const { displayImages, imageUrls } = useImage(selectedFilePreview)
+
    return (
       <StyledImagePreviewContainer>
-         {selectedFilePreview.map((filePreview, index) => (
-            <div
-               key={index}
-               style={{
-                  position: 'relative',
-               }}
-            >
-               <StyledImagePreview key={index} width={500} height={200} alt={filePreview} src={filePreview} />
-               <StyledRemoveIcon
-                  onClick={() => handleRemoveFromImages(filePreview)}
-                  color='info'
-                  sx={{
-                     backgroundColor: '#555',
-                  }}
-               >
-                  <CloseIcon fontSize='inherit' />
-               </StyledRemoveIcon>
-            </div>
-         ))}
+         {displayImages &&
+            displayImages.map((filePreview, index) => (
+               <SingleImage
+                  key={index}
+                  filePreviewUrl={filePreview.url}
+                  fileName={filePreview.name}
+                  handleRemoveFromImages={handleRemoveFromImages}
+               />
+            ))}
+         {imageUrls &&
+            imageUrls.map((image, index) => (
+               <SingleImage
+                  key={index}
+                  fileName={image}
+                  filePreviewUrl={image}
+                  handleRemoveFromImages={handleRemoveFromImages}
+               />
+            ))}
       </StyledImagePreviewContainer>
    )
 }
