@@ -45,7 +45,8 @@ export default function PostsReducer(state: InitialImageState, action: IImageAct
       case 'REMOVE_NEW_SINGLE_IMAGE':
          const removedImage = produce(state, (draft) => {
             if (!draft.newUploadedImages) return draft
-            const file = draft.newUploadedImages.filter((image) => image.name != action.payload)
+            const fileName = action.payload as string
+            const file = draft.newUploadedImages.filter((image) => image.name != fileName)
             draft.newUploadedImages = file
          })
          return removedImage

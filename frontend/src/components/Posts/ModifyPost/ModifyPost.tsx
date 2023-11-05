@@ -61,9 +61,9 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
                startIcon={<EditIcon />}
                fullWidth
                variant='contained'
-               color='primary'
+               color='success'
             >
-               Közzététel
+               Módosítás
             </LoadingButton>
          </DialogActions>
       </Dialog>
