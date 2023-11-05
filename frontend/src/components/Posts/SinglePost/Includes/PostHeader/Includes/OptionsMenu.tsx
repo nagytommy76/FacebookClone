@@ -10,7 +10,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 const ConfirmDeletePost = dynamic(() => import('./ConfirmDeletePost'), {
    loading: () => <h1>Töltés egyelőre</h1>,
 })
-const ModifyPost = dynamic(() => import('../../../../ModifyPost/ModifyPost'), {
+const ModifyPost = dynamic(() => import('../../../../HandlePosts/ModifyPost/ModifyPost'), {
    loading: () => <h1>Töltés egyelőre</h1>,
 })
 

@@ -7,14 +7,14 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
 import type { IPost } from '@/src/types/PostTypes'
-import DialogHeader from './Includes/DialogHeader'
-import DialogBody from './Includes/DialogBody'
+import DialogHeader from '../../Includes/DialogHeader'
+import DialogBody from '../../Includes/DialogBody'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
 
-const InformSnackbar = dynamic(() => import('../Includes/InformSnackbar'))
+const InformSnackbar = dynamic(() => import('../../Includes/InformSnackbar'))
 
 const AddDialog: React.FC<{
    openAddDialog: boolean

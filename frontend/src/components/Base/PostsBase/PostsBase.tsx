@@ -11,7 +11,7 @@ import PostHeaderSkeleton from '@/Skeletons/SinglePost/PostHeader'
 const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SinglePost'), {
    loading: () => <SinglePostSkeleton />,
 })
-const AddPostComponent = dynamic(() => import('../../Posts/AddPost/AddPost'), {
+const AddPostComponent = dynamic(() => import('../../Posts/HandlePosts/AddPost/AddPost'), {
    loading: () => <AddPostSkeleton />,
 })
 const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHeader/PostHeader'), {

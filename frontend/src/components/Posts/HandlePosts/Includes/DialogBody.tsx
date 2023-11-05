@@ -5,7 +5,7 @@ import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
 import ImageSelector from '@/Base/ImagePreview/ImageSelector/ImageSelector'
 import ImagePreview from '@/Base/ImagePreview/ImagePreview'
 
-import { IconsFooterStyle } from '../Styles'
+import { IconsFooterStyle } from '../AddPost/AddDialog/Styles'
 import DialogContent from '@mui/material/DialogContent'
 
 const DialogBody: React.FC<{

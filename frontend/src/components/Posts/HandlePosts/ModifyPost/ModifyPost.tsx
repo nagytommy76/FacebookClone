@@ -9,8 +9,8 @@ import EditIcon from '@mui/icons-material/Edit'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 
-import DialogBody from '../AddPost/AddDialog/Includes/DialogBody'
-import DialogHeader from '../AddPost/AddDialog/Includes/DialogHeader'
+import DialogBody from '../Includes/DialogBody'
+import DialogHeader from '../Includes/DialogHeader'
 
 const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<SetStateAction<boolean>> }> = ({
    isOpen,

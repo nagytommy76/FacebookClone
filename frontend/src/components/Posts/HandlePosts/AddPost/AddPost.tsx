@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import ImageContextProvider from '../HandlePosts/Context/ImageContextProvider'
+import ImageContextProvider from '../Context/ImageContextProvider'
 import dynamic from 'next/dynamic'
-import { useAppSelector } from '../../../utils/redux/store'
+import { useAppSelector } from '../../../../utils/redux/store'
 
 import StockImage from '@/assets/facebook-profile.jpg'
 import { AddPostStyle, CustomAddPostButton, CustomNextImage } from './AddPostStyle'

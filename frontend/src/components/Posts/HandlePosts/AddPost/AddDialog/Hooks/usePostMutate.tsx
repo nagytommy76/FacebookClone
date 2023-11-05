@@ -1,5 +1,5 @@
 import { useContext, Dispatch, SetStateAction } from 'react'
-import { ImageContext } from '../../../HandlePosts/Context/ImageContextProvider'
+import { ImageContext } from '../../../Context/ImageContextProvider'
 import { useMutation } from '@tanstack/react-query'
 import usePostMutationFn from './usePostMutationFn'
 import type { IPost } from '@/types/PostTypes'
