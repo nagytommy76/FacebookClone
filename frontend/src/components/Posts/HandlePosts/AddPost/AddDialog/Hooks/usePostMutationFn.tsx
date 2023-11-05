@@ -1,7 +1,7 @@
 import React from 'react'
 import { axiosInstance as axios, AxiosResponse } from '@/utils/axiosSetup/AxiosInstance'
 
-import useUploadFirebase from './useUploadFirebase'
+import useUploadFirebase from '../../../Hooks/useUploadFirebase'
 import type { IPost } from '@/types/PostTypes'
 
 const usePostMutationFn = (description: string, postedPicturesPath: File[] | null) => {

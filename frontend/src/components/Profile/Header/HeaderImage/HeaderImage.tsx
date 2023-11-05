@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { ProfileContext } from '../../Context/ProfileContextProvider'
 import dynamic from 'next/dynamic'
-import useUploadFirebase from '../../../Posts/HandlePosts/AddPost/AddDialog/Hooks/useUploadFirebase'
+import useUploadFirebase from '../../../Posts/HandlePosts/Hooks/useUploadFirebase'
 import useCheckPicture from './Hooks/useCheckPicture'
 import useModalControl from './Hooks/useModalControl'
 import usePictureMutate from './Hooks/usePictureMutate'

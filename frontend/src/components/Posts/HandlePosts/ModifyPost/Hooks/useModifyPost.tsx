@@ -1,15 +1,22 @@
-import React from 'react'
-import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
+import useModifyPostFn from './useModifyPostFn'
 
-const updatePostFn = async (postDescription: string) => {
-   return await axios.put('/post/edit/update-post', { postDescription })
+interface IMutationFn {
+   postDescription: string
+   modifiedImageLinks: string[] | null
+   newUploadedImages: File[] | null
 }
 
-const useModifyPost = () => {
+const useModifyPost = ({ modifiedImageLinks, postDescription, newUploadedImages }: IMutationFn) => {
+   const mutatePostFn = useModifyPostFn(modifiedImageLinks, postDescription, newUploadedImages)
+
    const { mutate } = useMutation({
       mutationKey: ['postUpdate'],
-      mutationFn: updatePostFn,
+      mutationFn: mutatePostFn,
+      onSuccess(data, variables, context) {
+         //  Itt ki kell törölnöm a már meglévő képekből kitörölteket firebaseről
+         console.log(data.data)
+      },
    })
    return { updatePostMutate: mutate }
 }
