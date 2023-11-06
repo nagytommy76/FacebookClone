@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import useModifyPostFn from './useModifyPostFn'
+import useDeleteFirebase from '../../Hooks/useDeleteFirebase'
 
 interface IMutationFn {
    postDescription: string
@@ -9,6 +10,7 @@ interface IMutationFn {
 
 const useModifyPost = ({ modifiedImageLinks, postDescription, newUploadedImages }: IMutationFn) => {
    const mutatePostFn = useModifyPostFn(modifiedImageLinks, postDescription, newUploadedImages)
+   const deleteFirebase = useDeleteFirebase()
 
    const { mutate } = useMutation({
       mutationKey: ['postUpdate'],
@@ -18,7 +20,7 @@ const useModifyPost = ({ modifiedImageLinks, postDescription, newUploadedImages 
          console.log(data.data)
       },
    })
-   return { updatePostMutate: mutate }
+   return { updatePostMutate: mutate, deleteFirebase }
 }
 
 export default useModifyPost
