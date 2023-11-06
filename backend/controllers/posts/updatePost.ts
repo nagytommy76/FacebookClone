@@ -20,10 +20,12 @@ export const updatePostController = async (request: IPostUpdateRequest, response
       if (modifiedImageLinks !== null) {
          console.log(modifiedImageLinks)
          mergedImages = mergedImages.concat(modifiedImageLinks)
-      } else if (newAddedImageLinks !== null) {
+      }
+      if (newAddedImageLinks !== null) {
          console.log(newAddedImageLinks)
          mergedImages = mergedImages.concat(newAddedImageLinks)
-      } else {
+      }
+      if (newAddedImageLinks && modifiedImageLinks === null) {
          console.log(mergedImages)
          mergedImages = null
       }
