@@ -39,7 +39,8 @@ export default function PostsReducer(state: InitialImageState, action: IImageAct
          const remove = produce(state, (draft) => {
             if (!draft.uploadedImages) return draft
             const mod = draft.uploadedImages.filter((image) => image != action.payload)
-            draft.uploadedImages = mod
+            if (mod.length === 0) draft.uploadedImages = null
+            else draft.uploadedImages = mod
          })
          return remove
       case 'REMOVE_NEW_SINGLE_IMAGE':
@@ -47,7 +48,8 @@ export default function PostsReducer(state: InitialImageState, action: IImageAct
             if (!draft.newUploadedImages) return draft
             const fileName = action.payload as string
             const file = draft.newUploadedImages.filter((image) => image.name != fileName)
-            draft.newUploadedImages = file
+            if (file.length === 0) draft.newUploadedImages = null
+            else draft.newUploadedImages = file
          })
          return removedImage
       default:
