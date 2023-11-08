@@ -11,7 +11,7 @@ const ModifyButton: React.FC<{ modifiedDescription: string }> = ({ modifiedDescr
    const {
       imageReducer: { uploadedImages, newUploadedImages },
    } = useContext(ImageContext)
-   const { updatePostMutate, deleteFirebase } = useModifyPost({
+   const { updatePostMutate } = useModifyPost({
       modifiedImageLinks: uploadedImages,
       postDescription: modifiedDescription,
       newUploadedImages,
@@ -21,8 +21,7 @@ const ModifyButton: React.FC<{ modifiedDescription: string }> = ({ modifiedDescr
       <DialogActions>
          <LoadingButton
             // disabled={isSendBtnDisabled}
-            // onClick={() => updatePostMutate()}
-            onClick={() => deleteFirebase()}
+            onClick={() => updatePostMutate()}
             loading={false}
             loadingPosition='start'
             startIcon={<EditIcon />}
