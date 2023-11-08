@@ -2,8 +2,24 @@ import { useContext } from 'react'
 import { ImageContext } from '../Context/ImageContextProvider'
 import { PostContext } from '@/PostContext/PostContextProvider'
 
-import { ref, uploadBytes, getDownloadURL, getStorage } from 'firebase/storage'
-import { firebaseStorage } from '@/utils/firebase/firebase'
+import { ref, getStorage, deleteObject } from 'firebase/storage'
+
+const returnDeletedImages = (
+   postedPicturesPath: string[] | null,
+   uploadedImages: string[] | null
+): string[] | null => {
+   // Ezzel megvannak a kitörölt elemek amiket a firebase-en törölnöm kell az onSucecss-ben
+   // Ha NULL akkkor simán nem hívom meg ezt a hookot
+   if (postedPicturesPath === null) return null
+   let deletedImages: string[] = []
+   for (const postedImage of postedPicturesPath as string[]) {
+      if (!uploadedImages?.includes(postedImage)) {
+         deletedImages.push(postedImage)
+      }
+   }
+   console.log(deletedImages)
+   return deletedImages
+}
 
 const useDeleteFirebase = () => {
    const {
@@ -18,21 +34,16 @@ const useDeleteFirebase = () => {
 
    const storage = getStorage()
 
-   const desertRef = ref(storage, 'images/desert.jpg')
-
-   const returnDeletedImages = async () => {
-      // Ezzel megvannak a kitörölt elemek amiket a firebase-en törölnöm kell az onSucecss-ben
-      // Ha NULL akkkor simán nem hívom meg ezt a hookot
-      let deletedImages: string[] = []
-      for (const iterator of postedPicturesPath as string[]) {
-         if (!uploadedImages?.includes(iterator)) {
-            deletedImages.push(iterator)
-         }
+   const deleteImagesFromFirebase = async () => {
+      const deletedImages = returnDeletedImages(postedPicturesPath, uploadedImages)
+      if (deletedImages === null) return null
+      for (const currentImage of deletedImages) {
+         const currentImageRef = ref(storage, currentImage)
+         await deleteObject(currentImageRef)
       }
-      console.log(deletedImages)
    }
 
-   return returnDeletedImages
+   return { deleteImagesFromFirebase }
 }
 
 export default useDeleteFirebase
