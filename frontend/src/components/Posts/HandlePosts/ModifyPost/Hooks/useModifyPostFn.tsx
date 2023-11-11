@@ -10,6 +10,7 @@ const useModifyPostFn = (
    newUploadedImages: File[] | null
 ) => {
    const {
+      postsDispatch,
       postsReducer: {
          singlePost: { _id },
       },
@@ -19,15 +20,16 @@ const useModifyPostFn = (
       let returnedImagePaths: string[] | null = null
       if (newUploadedImages) {
          returnedImagePaths = await handleMultipleImageUploadToFirebase(newUploadedImages)
+         postsDispatch({ type: 'ADD_UPLOADED_IMAGES', payload: returnedImagePaths })
       }
       return await axios.put('/post/edit/update-post', {
          postId: _id,
          postDescription,
          modifiedImageLinks,
-         newAddedImageLinks: returnedImagePaths || null,
+         newAddedImageLinks: returnedImagePaths,
       })
    }
-   return handlePostMutateFn
+   return { handlePostMutateFn }
 }
 
 export default useModifyPostFn
