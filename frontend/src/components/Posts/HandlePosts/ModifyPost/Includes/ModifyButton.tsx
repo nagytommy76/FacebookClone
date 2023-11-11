@@ -7,7 +7,10 @@ import DialogActions from '@mui/material/DialogActions'
 import LoadingButton from '@mui/lab/LoadingButton'
 import EditIcon from '@mui/icons-material/Edit'
 
-const ModifyButton: React.FC<{ modifiedDescription: string }> = ({ modifiedDescription }) => {
+const ModifyButton: React.FC<{ modifiedDescription: string; handleDialogCloseOnSuccess: () => void }> = ({
+   modifiedDescription,
+   handleDialogCloseOnSuccess,
+}) => {
    const {
       imageReducer: { uploadedImages, newUploadedImages },
    } = useContext(ImageContext)
@@ -15,6 +18,7 @@ const ModifyButton: React.FC<{ modifiedDescription: string }> = ({ modifiedDescr
       modifiedImageLinks: uploadedImages,
       postDescription: modifiedDescription,
       newUploadedImages,
+      handleDialogCloseOnSuccess,
    })
 
    return (
