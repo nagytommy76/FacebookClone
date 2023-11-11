@@ -1,7 +1,14 @@
 import { produce } from 'immer'
 import type { IPost } from '@/types/PostTypes'
 
-export type PostAction = 'REMOVE_SINGLE_LIKE' | 'ADD_POST_LIKE' | 'SET_SINGLE_POST' | 'SET_COMMENTS_LENGTH'
+export type PostAction =
+   | 'REMOVE_SINGLE_LIKE'
+   | 'ADD_POST_LIKE'
+   | 'SET_SINGLE_POST'
+   | 'SET_COMMENTS_LENGTH'
+   | 'ADD_UPLOADED_IMAGES'
+   | 'UPDATE_POSTED_PICTURES'
+   | 'UPDATE_POST_DESCRIPTION'
 
 export interface IPostsAction {
    type: PostAction
@@ -78,6 +85,24 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.commentsLength = action.payload
          })
          return newLength
+      case 'ADD_UPLOADED_IMAGES':
+         const uploadedImgs = produce(state, (draft) => {
+            if (!draft.singlePost.postedPicturesPath) return draft
+            const newImgs = draft.singlePost.postedPicturesPath.concat(action.payload as string[])
+            console.log(newImgs)
+            draft.singlePost.postedPicturesPath = newImgs
+         })
+         return uploadedImgs
+      case 'UPDATE_POSTED_PICTURES':
+         const updatedPictures = produce(state, (draft) => {
+            draft.singlePost.postedPicturesPath = action.payload
+         })
+         return updatedPictures
+      case 'UPDATE_POST_DESCRIPTION':
+         const updatedDescription = produce(state, (draft) => {
+            draft.singlePost.description = action.payload
+         })
+         return updatedDescription
       default:
          return state
    }
