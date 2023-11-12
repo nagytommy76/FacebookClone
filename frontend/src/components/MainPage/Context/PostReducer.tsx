@@ -89,7 +89,6 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
          const uploadedImgs = produce(state, (draft) => {
             if (!draft.singlePost.postedPicturesPath) return draft
             const newImgs = draft.singlePost.postedPicturesPath.concat(action.payload as string[])
-            console.log(newImgs)
             draft.singlePost.postedPicturesPath = newImgs
          })
          return uploadedImgs
