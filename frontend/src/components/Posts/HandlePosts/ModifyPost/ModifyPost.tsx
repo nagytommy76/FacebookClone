@@ -24,7 +24,6 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
       changeTextField,
       changeTextWithEmoji,
       setPostDescription,
-      handleDialogCloseOnSuccess,
       handleDialogClose,
    } = useDialog(setIsModifyDialogOpen, () => {})
    // Megoldani esetleg, hogy a textAreaRef legyen egyben a postDescription is? Lehetne egyben a 2!??!
@@ -48,7 +47,7 @@ const ModifyPost: React.FC<{ isOpen: boolean; setIsModifyDialogOpen: Dispatch<Se
             postDescription={postDescription}
             textAreaRef={textAreaRef}
          />
-         <ModifyButton modifiedDescription={postDescription} />
+         <ModifyButton handleDialogCloseOnSuccess={handleDialogClose} modifiedDescription={postDescription} />
       </Dialog>
    )
 }

@@ -14,9 +14,9 @@ const ModifyButton: React.FC<{ modifiedDescription: string; handleDialogCloseOnS
    const {
       imageReducer: { uploadedImages, newUploadedImages },
    } = useContext(ImageContext)
-   const { updatePostMutate } = useModifyPost({
+   const { updatePostMutate, isLoading } = useModifyPost({
       modifiedImageLinks: uploadedImages,
-      postDescription: modifiedDescription,
+      modifiedDescription,
       newUploadedImages,
       handleDialogCloseOnSuccess,
    })
@@ -26,7 +26,7 @@ const ModifyButton: React.FC<{ modifiedDescription: string; handleDialogCloseOnS
          <LoadingButton
             // disabled={isSendBtnDisabled}
             onClick={() => updatePostMutate()}
-            loading={false}
+            loading={isLoading}
             loadingPosition='start'
             startIcon={<EditIcon />}
             fullWidth
