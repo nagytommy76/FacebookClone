@@ -1,6 +1,3 @@
-import React, { useContext } from 'react'
-import { ImageContext } from '../../Context/ImageContextProvider'
-
 import useModifyPost from '../Hooks/useModifyPost'
 
 import DialogActions from '@mui/material/DialogActions'
@@ -11,13 +8,8 @@ const ModifyButton: React.FC<{ modifiedDescription: string; handleDialogCloseOnS
    modifiedDescription,
    handleDialogCloseOnSuccess,
 }) => {
-   const {
-      imageReducer: { uploadedImages, newUploadedImages },
-   } = useContext(ImageContext)
    const { updatePostMutate, isLoading } = useModifyPost({
-      modifiedImageLinks: uploadedImages,
       modifiedDescription,
-      newUploadedImages,
       handleDialogCloseOnSuccess,
    })
 
