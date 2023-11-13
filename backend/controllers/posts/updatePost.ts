@@ -18,15 +18,12 @@ export const updatePostController = async (request: IPostUpdateRequest, response
       let mergedImages: string[] | null = []
 
       if (modifiedImageLinks !== null) {
-         console.log('modifiedImageLinks', modifiedImageLinks)
          mergedImages = mergedImages.concat(modifiedImageLinks)
       }
       if (newAddedImageLinks !== null) {
-         console.log('newAddedImageLinks', newAddedImageLinks)
          mergedImages = mergedImages.concat(newAddedImageLinks)
       }
       if (newAddedImageLinks === null && modifiedImageLinks === null) {
-         console.log('mergedImages', mergedImages)
          mergedImages = null
       }
 
@@ -35,7 +32,7 @@ export const updatePostController = async (request: IPostUpdateRequest, response
          { $set: { postedPicturesPath: mergedImages } },
       ])
 
-      response.status(200).json({ modifiedImageLinks, postDescription, foundPost })
+      response.status(200).json({ newImagesLinks: mergedImages })
    } catch (error) {
       console.log(error)
       response.status(500).json({ error })
