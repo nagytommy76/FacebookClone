@@ -6,44 +6,32 @@ import useModifyPostFn from './useModifyPostFn'
 import useDeleteFirebase from '../../Hooks/useDeleteFirebase'
 interface IMutationFn {
    modifiedDescription: string
-   modifiedImageLinks: string[] | null
-   newUploadedImages: File[] | null
    handleDialogCloseOnSuccess: () => void
 }
 
-const useModifyPost = ({
-   modifiedImageLinks,
-   modifiedDescription,
-   newUploadedImages,
-   handleDialogCloseOnSuccess,
-}: IMutationFn) => {
+const useModifyPost = ({ modifiedDescription, handleDialogCloseOnSuccess }: IMutationFn) => {
    const { postsDispatch } = useContext(PostContext)
    const {
-      imageReducer: { uploadedImages },
+      imageReducer: { uploadedImages, newUploadedImages },
    } = useContext(ImageContext)
-   const [newFirebaseImageLinks, setNewFirebaseImageLinks] = useState<string[] | null>(null)
    const [isLoading, setIsLoading] = useState<boolean>(false)
-   const { handlePostMutateFn } = useModifyPostFn(
-      modifiedImageLinks,
-      modifiedDescription,
-      newUploadedImages,
-      setNewFirebaseImageLinks
-   )
+
+   const { handlePostMutateFn } = useModifyPostFn(modifiedDescription)
    const { deleteImagesFromFirebase } = useDeleteFirebase()
 
    const { mutate } = useMutation({
       mutationKey: ['postUpdate'],
       mutationFn: handlePostMutateFn,
-      onMutate(variables) {
+      onMutate() {
          setIsLoading(true)
       },
-      async onSuccess(data, variables, context) {
+      async onSuccess(data) {
          //  Itt ki kell törölnöm a már meglévő képekből kitörölteket firebaseről
          await deleteImagesFromFirebase()
-         console.log(newFirebaseImageLinks)
+         console.log(data.data.newImagesLinks)
+         // Meg kell oldanom, ha az utolsó képet törlöm és nincs új akkor törölje firebase-ről... ez most nem müxik
 
-         // if (newUploadedImages === null)
-         postsDispatch({ type: 'UPDATE_POSTED_PICTURES', payload: uploadedImages })
+         postsDispatch({ type: 'UPDATE_POSTED_PICTURES', payload: data.data.newImagesLinks })
          postsDispatch({ type: 'UPDATE_POST_DESCRIPTION', payload: modifiedDescription })
 
          setIsLoading(false)
