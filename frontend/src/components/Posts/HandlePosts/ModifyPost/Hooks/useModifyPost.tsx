@@ -15,7 +15,7 @@ const useModifyPost = ({ modifiedDescription, handleDialogCloseOnSuccess }: IMut
    const [isLoading, setIsLoading] = useState<boolean>(false)
 
    const { handlePostMutateFn } = useModifyPostFn(modifiedDescription)
-   const { deleteImagesFromFirebase } = useDeleteFirebase()
+   const { deleteImagesFromFirebase, deleteAllImagesFromFirebase } = useDeleteFirebase()
 
    const { mutate } = useMutation({
       mutationKey: ['postUpdate'],
@@ -26,7 +26,7 @@ const useModifyPost = ({ modifiedDescription, handleDialogCloseOnSuccess }: IMut
       async onSuccess(data) {
          //  Itt ki kell törölnöm a már meglévő képekből kitörölteket firebaseről
          await deleteImagesFromFirebase()
-         console.log(data.data.newImagesLinks)
+         await deleteAllImagesFromFirebase()
          // Meg kell oldanom, ha az utolsó képet törlöm és nincs új akkor törölje firebase-ről... ez most nem müxik
 
          postsDispatch({ type: 'UPDATE_POSTED_PICTURES', payload: data.data.newImagesLinks })
