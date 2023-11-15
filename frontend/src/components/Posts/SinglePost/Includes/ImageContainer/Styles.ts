@@ -1,12 +1,18 @@
 import { styled } from '@mui/material'
 import Image from 'next/image'
 
-export const StyledImageGridContainer = styled('section')({
+export const StyledImageGridContainer = styled('section', {
+   shouldForwardProp: (prop) => prop !== 'imageLength',
+})(({ imageLength = 0 }: { imageLength: number }) => ({
    width: '100%',
+   // gridTemplateColumns: 'auto auto auto',
+   gridTemplateColumns: `${
+      (imageLength === 2 ? '100%' : 'unset') || (imageLength <= 3 ? 'auto auto auto' : 'unset')
+   }`,
+   gridTemplateRows: `${imageLength === 2 ? 'auto auto' : 'unset'}`,
    display: 'grid',
-   gridTemplateColumns: 'auto auto auto',
    gap: '2px',
-})
+}))
 
 export const FirstGridImage = styled(Image)({
    cursor: 'pointer',
@@ -16,13 +22,15 @@ export const FirstGridImage = styled(Image)({
    width: '100%',
 })
 
-export const StyledImage = styled(Image)({
+export const StyledImage = styled(Image, {
+   shouldForwardProp: (prop) => prop !== 'imageLength',
+})(({ imageLength = 0 }: { imageLength: number }) => ({
    cursor: 'pointer',
    objectFit: 'cover',
    width: '100%',
-   height: '250px',
+   height: `${imageLength === 2 ? '500px' : '250px'}`,
    zIndex: 1,
-})
+}))
 
 export const OverlayedContainer = styled('div')({
    position: 'relative',
