@@ -11,9 +11,7 @@ interface IMutationFn {
 
 const useModifyPost = ({ modifiedDescription, handleDialogCloseOnSuccess }: IMutationFn) => {
    const { postsDispatch } = useContext(PostContext)
-   const {
-      imageReducer: { uploadedImages, newUploadedImages },
-   } = useContext(ImageContext)
+   const { imageDispatch } = useContext(ImageContext)
    const [isLoading, setIsLoading] = useState<boolean>(false)
 
    const { handlePostMutateFn } = useModifyPostFn(modifiedDescription)
@@ -33,6 +31,7 @@ const useModifyPost = ({ modifiedDescription, handleDialogCloseOnSuccess }: IMut
 
          postsDispatch({ type: 'UPDATE_POSTED_PICTURES', payload: data.data.newImagesLinks })
          postsDispatch({ type: 'UPDATE_POST_DESCRIPTION', payload: modifiedDescription })
+         imageDispatch({ type: 'UNSET_NEW_IMAGES' })
 
          setIsLoading(false)
          handleDialogCloseOnSuccess()

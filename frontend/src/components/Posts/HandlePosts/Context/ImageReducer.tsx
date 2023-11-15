@@ -5,10 +5,11 @@ export type ImageAction =
    | 'SET_UPLOADED_IMAGES'
    | 'REMOVE_SINGLE_IMAGE'
    | 'REMOVE_NEW_SINGLE_IMAGE'
+   | 'UNSET_NEW_IMAGES'
 
 export interface IImageAction {
    type: ImageAction
-   payload: string[] | File[] | string
+   payload?: string[] | File[] | string
 }
 
 export interface InitialImageState {
@@ -52,6 +53,11 @@ export default function PostsReducer(state: InitialImageState, action: IImageAct
             else draft.newUploadedImages = file
          })
          return removedImage
+      case 'UNSET_NEW_IMAGES':
+         const removedNewImages = produce(state, (draft) => {
+            draft.newUploadedImages = null
+         })
+         return removedNewImages
       default:
          return state
    }
