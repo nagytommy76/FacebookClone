@@ -19,7 +19,7 @@ const ImageContainer: React.FC<{
    }
 
    return (
-      <StyledImageGridContainer>
+      <StyledImageGridContainer imageLength={postedPicturesPath.length}>
          {postedPicturesPath.map((image, index) =>
             index === 0 ? (
                <FirstGridImage
@@ -37,13 +37,20 @@ const ImageContainer: React.FC<{
                />
             ) : (
                index < 4 &&
-               (index === 3 ? (
+               (index === 3 && postedPicturesPath.length >= 5 ? (
                   <OverlayedContainer onClick={() => setPicIndexAndOpenModal(index)} key={index}>
-                     <StyledImage src={image} alt='Kép' width={500} height={500} />
+                     <StyledImage
+                        imageLength={postedPicturesPath.length}
+                        src={image}
+                        alt='Kép'
+                        width={500}
+                        height={500}
+                     />
                      <OverlayedContent>+{postedPicturesPath.length - index - 1}</OverlayedContent>
                   </OverlayedContainer>
                ) : (
                   <StyledImage
+                     imageLength={postedPicturesPath.length}
                      loading='lazy'
                      placeholder='blur'
                      blurDataURL={

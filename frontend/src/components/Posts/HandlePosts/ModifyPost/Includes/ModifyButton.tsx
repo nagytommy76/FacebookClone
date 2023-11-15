@@ -16,7 +16,6 @@ const ModifyButton: React.FC<{ modifiedDescription: string; handleDialogCloseOnS
    return (
       <DialogActions>
          <LoadingButton
-            // disabled={isSendBtnDisabled}
             onClick={() => updatePostMutate()}
             loading={isLoading}
             loadingPosition='start'
