@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { savePostController } from '../../controllers/posts/savePost'
+import { savePostController, savePostImageController } from '../../controllers/posts/savePost'
 import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefresh'
 import { savePostComment } from '../../controllers/posts/postComment'
 import { removeCommentController, removeCommentAnswerController } from '../../controllers/posts/removeComment'
@@ -29,6 +29,7 @@ const router = Router()
 router.get('/get-posts', authenticateAccessTokenForApi, GetPosts.getAllPosts)
 router.get('/get-user-posts', authenticateAccessTokenForApi, GetPosts.getUsersAllPosts)
 router.post('/save-post', authenticateAccessTokenForApi, savePostController)
+router.put('/save-post-image', authenticateAccessTokenForApi, savePostImageController)
 
 // Komment
 router.get(

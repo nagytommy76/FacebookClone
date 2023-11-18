@@ -34,8 +34,13 @@ export interface IPostTypes {
 export interface IPostRequest extends IJWTUserType {
    body: {
       description: string
-      postedPicturesPath?: string[]
       createdAt: string
+   }
+}
+export interface IPostImageRequest extends IJWTUserType {
+   body: {
+      postId: string
+      postedPicturesPath?: string[]
    }
 }
 
