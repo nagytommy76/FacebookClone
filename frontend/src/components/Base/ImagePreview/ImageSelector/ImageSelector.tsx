@@ -1,5 +1,4 @@
-import { useContext, ChangeEvent } from 'react'
-import { ImageContext } from '@/src/components/Posts/HandlePosts/Context/ImageContextProvider'
+import { ChangeEvent } from 'react'
 import { StyledImageInputField } from './Style'
 
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
@@ -8,17 +7,14 @@ import Tooltip from '@mui/material/Tooltip'
 
 const ImageSelector: React.FC<{
    maxFileCount: number
+   addPictures: (e: ChangeEvent<HTMLInputElement>) => void
    multiple?: boolean
-}> = ({ maxFileCount, multiple = true }) => {
-   const { imageDispatch } = useContext(ImageContext)
-   const addPictures = (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) imageDispatch({ type: 'SET_IMAGES', payload: [...e.target.files] })
-   }
-
+   size?: 'small' | 'medium' | 'large'
+}> = ({ maxFileCount, addPictures, multiple = true, size = 'medium' }) => {
    return (
       <Tooltip title='Fénykép hozzáadása' placement='top' arrow>
-         <IconButton component='label'>
-            <AddPhotoAlternateIcon />
+         <IconButton component='label' size={size}>
+            <AddPhotoAlternateIcon fontSize='inherit' />
             <StyledImageInputField
                type='file'
                accept='image/*'
