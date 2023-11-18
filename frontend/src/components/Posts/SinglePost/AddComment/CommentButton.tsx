@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 
 const CommentButton: React.FC<{
-   commentRef: React.MutableRefObject<null | HTMLInputElement>
+   commentRef: React.MutableRefObject<undefined | HTMLTextAreaElement>
    handleOpenFn: () => void
    isTextFieldActive?: boolean
 }> = ({ commentRef, handleOpenFn, isTextFieldActive = false }) => {

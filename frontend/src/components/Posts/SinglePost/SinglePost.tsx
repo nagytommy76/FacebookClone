@@ -37,7 +37,7 @@ const SinglePost: React.FC<{
    const {
       postsReducer: { singlePost, commentsLength },
    } = useContext(PostContext)
-   const commentRef = useRef(null)
+   const commentRef = useRef<HTMLTextAreaElement | undefined>()
    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
    const handleOpenDialog = () => {
@@ -57,10 +57,7 @@ const SinglePost: React.FC<{
             <FooterSectionStyle>
                <LikeAndCommentContainer>
                   {singlePost.likes.length > 0 && (
-                     <ReactionsContainer
-                        likes={singlePost.likes}
-                        postId={singlePost._id}
-                     />
+                     <ReactionsContainer likes={singlePost.likes} postId={singlePost._id} />
                   )}
                   {commentsLength > 0 && (
                      <CommentsParagraph onClick={handleOpenDialog}>
@@ -70,11 +67,7 @@ const SinglePost: React.FC<{
                </LikeAndCommentContainer>
                <Divider sx={{ mt: 1, mb: 1 }} />
                <ButtonGroupStyle>
-                  <Like
-                     commentId=''
-                     postLikes={singlePost.likes}
-                     postId={singlePost._id}
-                  >
+                  <Like commentId='' postLikes={singlePost.likes} postId={singlePost._id}>
                      <CommentButton
                         isTextFieldActive={isTextFieldActive}
                         handleOpenFn={() => setIsDialogOpen(true)}

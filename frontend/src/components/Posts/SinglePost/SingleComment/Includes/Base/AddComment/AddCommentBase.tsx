@@ -15,7 +15,7 @@ const AddCommentBase: React.FC<{
    handleChangeTextWithEmoji: (emoji?: string) => void
    handleAddSinglePostComment: () => void
    commentAnswerId: string
-   reference: React.MutableRefObject<HTMLInputElement | undefined>
+   reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
    commentText: string
    isUpdate: boolean
    isSendDisabled?: boolean

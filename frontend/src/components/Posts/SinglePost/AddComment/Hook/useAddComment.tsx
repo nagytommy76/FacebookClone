@@ -7,7 +7,10 @@ import { IPostComment } from '@/src/types/LikeTypes'
 import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 
-const useAddComment = (postId: string, reference: React.MutableRefObject<HTMLInputElement | undefined>) => {
+const useAddComment = (
+   postId: string,
+   reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
+) => {
    const { commentsDispatch } = useContext(AllCommentsContext)
    const { postsDispatch } = useContext(PostContext)
    const [commentText, setCommentText] = useState<string>('')
