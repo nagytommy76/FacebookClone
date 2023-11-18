@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/Send'
 
 import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
+import AddCommentImage from './Includes/AddCommentImage'
 
 const AddCommentBase: React.FC<{
    handleSendCommentAnswer: () => void
@@ -70,6 +71,7 @@ const AddCommentBase: React.FC<{
                   variant='standard'
                   fullWidth
                />
+               <AddCommentImage />
                <AddEmojiButton handleChangeTextWithEmoji={handleChangeTextWithEmoji} />
                <Tooltip title={isUpdate ? 'Módosítás' : 'Küldés'} placement='top' arrow>
                   <span>
