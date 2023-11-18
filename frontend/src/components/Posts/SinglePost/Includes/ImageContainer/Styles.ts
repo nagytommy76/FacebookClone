@@ -4,8 +4,7 @@ import Image from 'next/image'
 export const StyledImageGridContainer = styled('section', {
    shouldForwardProp: (prop) => prop !== 'imageLength',
 })(({ imageLength = 0 }: { imageLength: number }) => ({
-   width: '100%',
-   // gridTemplateColumns: 'auto auto auto',
+   maxWidth: '100%',
    gridTemplateColumns: `${
       (imageLength === 2 ? '100%' : 'unset') || (imageLength <= 3 ? 'auto auto auto' : 'unset')
    }`,
@@ -19,7 +18,7 @@ export const FirstGridImage = styled(Image)({
    objectFit: 'cover',
    gridColumnStart: 1,
    gridColumnEnd: 4,
-   width: '100%',
+   maxWidth: '100%',
 })
 
 export const StyledImage = styled(Image, {
