@@ -46,7 +46,7 @@ const PostsSchema = new Schema(
                userId: { type: Schema.Types.ObjectId, ref: 'User' },
                comment: { type: String, required: true },
                answeredAt: { type: Date, required: false },
-               commentImage: { type: String, required: false, default: '' },
+               commentImage: { type: String, required: false, default: null },
                commentAnswers,
                likes,
             },

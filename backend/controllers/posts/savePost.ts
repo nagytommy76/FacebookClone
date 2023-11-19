@@ -41,7 +41,7 @@ export const savePostImageController = async (req: IPostImageRequest, res: Respo
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
       const post = await PostModel.updateOne({ _id: postId, userId }, [{ $set: { postedPicturesPath } }])
-      res.status(201)
+      res.status(201).json({ msg: 'success' })
    } catch (error) {
       res.status(500).json({ error })
    }

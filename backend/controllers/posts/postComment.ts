@@ -42,7 +42,7 @@ export default class PostCommentController extends BasePostController {
 
 export const savePostComment = async (request: ISavePostRequest, response: Response) => {
    const userId = request.user?.userId
-   const { comment, postId, answeredAt } = request.body
+   const { comment, commentImage, postId, answeredAt } = request.body
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
       const foundPost = await PostModel.findById(postId)
@@ -53,6 +53,7 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          commentDepth: 1,
          likes: [],
          answeredAt,
+         commentImage,
          commentAnswers: [],
       })
       await foundPost?.save()
@@ -80,6 +81,7 @@ interface ISavePostRequest extends IJWTUserType {
    body: {
       postId: string
       comment: string
+      commentImage: string | null
       answeredAt: string
    }
 }

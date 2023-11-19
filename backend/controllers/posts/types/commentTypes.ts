@@ -24,7 +24,7 @@ export interface IPostComment {
         }
    comment: string
    answeredAt?: Date | string
-   commentImage?: string
+   commentImage?: string | null
    parentCommentId: string | null
    commentDepth: number
    commentAnswers: ICommentAnswer[]
