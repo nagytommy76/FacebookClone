@@ -20,12 +20,15 @@ const useUploadFirebase = () => {
    const handleSingleImageUploadToFirebase = async (
       singleImageFile: Blob | File,
       postID: string,
+      isCommentImage: boolean = false,
       subFolderName: string = 'posts'
    ) => {
       try {
          const imageReference = ref(
             firebaseStorage,
-            `${userId}/${subFolderName}/${postID}/${v4()}_${singleImageFile.name}`
+            `${userId}/${subFolderName}/${postID}/${isCommentImage ? 'comments/' : ''}${v4()}_${
+               singleImageFile.name
+            }`
          )
          await uploadBytes(imageReference, singleImageFile)
          const currentImageLink = await getDownloadURL(imageReference)
@@ -33,6 +36,7 @@ const useUploadFirebase = () => {
          return currentImageLink
       } catch (error) {
          console.log(error)
+         return null
       }
    }
    return { handleMultipleImageUploadToFirebase, handleSingleImageUploadToFirebase }
