@@ -19,7 +19,7 @@ const useModifyPostFn = (modifiedDescription: string | null) => {
    const handlePostMutateFn = async () => {
       let returnedImagePaths: string[] | null = null
       if (newUploadedImages) {
-         returnedImagePaths = await handleMultipleImageUploadToFirebase(newUploadedImages)
+         returnedImagePaths = await handleMultipleImageUploadToFirebase(newUploadedImages, _id)
       }
       return (await axios.put('/post/edit/update-post', {
          postId: _id,

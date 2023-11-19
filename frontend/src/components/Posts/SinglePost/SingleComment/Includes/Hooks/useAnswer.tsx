@@ -5,7 +5,7 @@ import useUpdateAnswer from './useUpdateAnswer'
 import useEmojiText from '@/src/hooks/useEmojiText'
 
 const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
-   const reference = useRef<HTMLInputElement>()
+   const reference = useRef<HTMLTextAreaElement>()
    const [isUpdate, setIsUpdate] = useState<boolean>(false)
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const [answerText, setAnswerText] = useState<string>('')
