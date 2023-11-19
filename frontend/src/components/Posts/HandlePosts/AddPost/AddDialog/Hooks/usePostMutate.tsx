@@ -1,7 +1,8 @@
-import { useContext, Dispatch, SetStateAction } from 'react'
-import { ImageContext } from '../../../Context/ImageContextProvider'
+import { Dispatch, SetStateAction } from 'react'
 import { useMutation } from '@tanstack/react-query'
+
 import usePostMutationFn from './usePostMutationFn'
+import useUploadImage from './useUploadImage'
 import type { IPost } from '@/types/PostTypes'
 
 const usePostMutate = (
@@ -11,10 +12,8 @@ const usePostMutate = (
    setIsSendBtnDisabled: Dispatch<SetStateAction<boolean>>,
    addNewPost: (newPost: IPost) => void
 ) => {
-   const {
-      imageReducer: { newUploadedImages },
-   } = useContext(ImageContext)
-   const handlePostSend = usePostMutationFn(description, newUploadedImages)
+   const handlePostSend = usePostMutationFn(description)
+   const handleUploadNewImages = useUploadImage()
 
    const { mutate, isLoading } = useMutation({
       mutationKey: ['post'],
@@ -22,7 +21,11 @@ const usePostMutate = (
       onSuccess: async (data) => {
          handleSnackOpenIfSuccess()
          setIsSendBtnDisabled(true)
-         addNewPost(data.data.createdPost)
+
+         let createdPost = data.data.createdPost
+         await handleUploadNewImages(createdPost)
+
+         addNewPost(createdPost)
          setTimeout(() => {
             handleDialogCloseOnSuccess()
          }, 3000)
