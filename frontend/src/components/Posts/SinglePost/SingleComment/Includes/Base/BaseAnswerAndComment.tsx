@@ -90,7 +90,9 @@ const BaseAnswerAndComment: React.FC<{
                      handleSendCommentAnswer={saveAnswerMutate}
                      handleChangeTextWithEmoji={handleChangeTextWithEmoji}
                      handleAddSinglePostComment={() => {}}
+                     commentImagePath={null}
                      handleChangeText={handleChangeText}
+                     setCommentImagePath={() => {}}
                      commentAnswerId={answer._id}
                      reference={reference}
                      commentText={answerText}

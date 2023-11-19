@@ -5,10 +5,16 @@ import AddCommentBase from '../SingleComment/Includes/Base/AddComment/AddComment
 
 const AddComment: React.FC<{
    reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
-   postId: string
-}> = ({ reference, postId }) => {
-   const { commentText, isSendDisabled, handleChangeText, handleSendComment, handleChangeTextWithEmoji } =
-      useAddComment(postId, reference)
+}> = ({ reference }) => {
+   const {
+      commentText,
+      isSendDisabled,
+      commentImagePath,
+      setCommentImagePath,
+      handleChangeText,
+      handleSendComment,
+      handleChangeTextWithEmoji,
+   } = useAddComment(reference)
    return (
       <>
          <AddCommentBase
@@ -20,6 +26,8 @@ const AddComment: React.FC<{
             handleChangeTextWithEmoji={handleChangeTextWithEmoji}
             handleChangeText={handleChangeText}
             handleAddSinglePostComment={handleSendComment}
+            setCommentImagePath={setCommentImagePath}
+            commentImagePath={commentImagePath}
             updateCommentMutate={() => {}}
             commentAnswerId=''
             handleSendCommentAnswer={() => {}}

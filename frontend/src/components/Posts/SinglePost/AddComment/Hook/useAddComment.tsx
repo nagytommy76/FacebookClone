@@ -1,32 +1,29 @@
 import { useContext, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import useEmojiText from '@/src/hooks/useEmojiText'
+import useCommentMutation from './useCommentMutation'
 
-import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
-import { IPostComment } from '@/src/types/LikeTypes'
 import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 
-const useAddComment = (
-   postId: string,
-   reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
-) => {
+const useAddComment = (reference: React.MutableRefObject<HTMLTextAreaElement | undefined>) => {
    const { commentsDispatch } = useContext(AllCommentsContext)
-   const { postsDispatch } = useContext(PostContext)
+   const {
+      postsDispatch,
+      postsReducer: {
+         singlePost: { _id: postID },
+      },
+   } = useContext(PostContext)
    const [commentText, setCommentText] = useState<string>('')
+   const [commentImagePath, setCommentImagePath] = useState<FileList | null>(null)
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
+
+   const commentMutationFn = useCommentMutation(commentImagePath, commentText, postID)
    const handleChangeEmoji = useEmojiText(reference, setCommentText)
 
    const { mutate } = useMutation({
       mutationKey: ['sendPostComment'],
-      mutationFn: async () => {
-         const response = (await axios.post('/post/post-comment-add', {
-            answeredAt: new Date(),
-            comment: commentText,
-            postId,
-         })) as AxiosResponse<{ comments: IPostComment[] }>
-         return response.data
-      },
+      mutationFn: commentMutationFn,
       onSuccess: (data) => {
          commentsDispatch({ type: 'ADD_NEW_COMMENT', payload: data.comments })
          postsDispatch({ type: 'SET_COMMENTS_LENGTH', payload: data.comments.length })
@@ -50,7 +47,15 @@ const useAddComment = (
       setCommentText('')
    }
 
-   return { handleChangeText, handleSendComment, handleChangeTextWithEmoji, commentText, isSendDisabled }
+   return {
+      handleChangeText,
+      handleSendComment,
+      handleChangeTextWithEmoji,
+      setCommentImagePath,
+      commentImagePath,
+      commentText,
+      isSendDisabled,
+   }
 }
 
 export default useAddComment

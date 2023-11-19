@@ -37,7 +37,7 @@ const CommentDialog: React.FC<{
                CommentsComponent={
                   <>
                      <AllCommentsComponent isLoading={isLoading} />
-                     <AddComment postId={_id} reference={commentRef} />
+                     <AddComment reference={commentRef} />
                   </>
                }
             >
