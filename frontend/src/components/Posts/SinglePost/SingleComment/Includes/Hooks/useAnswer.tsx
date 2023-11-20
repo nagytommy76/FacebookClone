@@ -10,6 +10,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const [answerText, setAnswerText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
+   const [commentImagePath, setCommentImagePath] = useState<FileList | null>(null)
    const handleChangeEmoji = useEmojiText(reference, setAnswerText)
    const setStatesToDefault = () => {
       setAnswerText('')
@@ -21,6 +22,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const updateCommentMutate = useUpdateCommentMutate(answerText, setStatesToDefault)
    const updateCommentAnswerMutate = useUpdateAnswer(answerText, setStatesToDefault)
    const saveAnswerMutate = useAnswerCreateMutate(
+      commentImagePath,
       commentDepth,
       parentCommentId,
       answerText,
@@ -61,6 +63,8 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       handleChangeText,
       handleChangeTextWithEmoji,
       handleSetAnswerOpen,
+      setCommentImagePath,
+      commentImagePath,
       isAnswerOpen,
       answerText,
       isSendDisabled,
