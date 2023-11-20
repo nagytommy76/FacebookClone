@@ -6,7 +6,8 @@ import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/Send'
 
 import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
-import AddCommentImage from './Includes/AddCommentImage'
+import ImageSelector from '@/Base/ImagePreview/ImageSelector/ImageSelector'
+import DisplayCommentImage from './Includes/DisplayCommentImage'
 
 const AddCommentBase: React.FC<{
    handleSendCommentAnswer: () => void
@@ -15,6 +16,8 @@ const AddCommentBase: React.FC<{
    handleUpdateCommentAnswerMutate: (answerId: string) => void
    handleChangeTextWithEmoji: (emoji?: string) => void
    handleAddSinglePostComment: () => void
+   setCommentImagePath: React.Dispatch<React.SetStateAction<FileList | null>>
+   commentImagePath: FileList | null
    commentAnswerId: string
    reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
    commentText: string
@@ -29,6 +32,8 @@ const AddCommentBase: React.FC<{
    updateCommentMutate,
    handleChangeText,
    handleChangeTextWithEmoji,
+   setCommentImagePath,
+   commentImagePath,
    commentAnswerId,
    reference,
    commentText,
@@ -71,7 +76,12 @@ const AddCommentBase: React.FC<{
                   variant='standard'
                   fullWidth
                />
-               <AddCommentImage />
+               <ImageSelector
+                  addPictures={(event) => setCommentImagePath(event.target.files)}
+                  maxFileCount={1}
+                  multiple={false}
+                  size='small'
+               />
                <AddEmojiButton handleChangeTextWithEmoji={handleChangeTextWithEmoji} />
                <Tooltip title={isUpdate ? 'Módosítás' : 'Küldés'} placement='top' arrow>
                   <span>
@@ -94,6 +104,12 @@ const AddCommentBase: React.FC<{
                </Tooltip>
             </StyledTextContainer>
          </StyledPaperContainer>
+         {commentImagePath && (
+            <DisplayCommentImage
+               setCommentImagePath={setCommentImagePath}
+               commentImagePath={commentImagePath}
+            />
+         )}
       </>
    )
 }
