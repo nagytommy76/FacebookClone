@@ -8,7 +8,7 @@ export interface ICommentAnswer {
    parentCommentId: string
    commentDepth: number
    answeredAt: string
-   commentImage: string
+   commentImage: string | null
    likes: IPostLike[]
 }
 
@@ -24,7 +24,7 @@ export interface IPostComment {
         }
    comment: string
    answeredAt?: Date | string
-   commentImage?: string | null
+   commentImage: string | null
    parentCommentId: string | null
    commentDepth: number
    commentAnswers: ICommentAnswer[]

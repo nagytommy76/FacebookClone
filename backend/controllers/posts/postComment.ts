@@ -7,7 +7,8 @@ export default class PostCommentController extends BasePostController {
    answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
       const userId = request.user?.userId
       if (!userId) return response.status(404).json({ msg: 'User not found' })
-      const { answeredAt, commentAnswer, postId, commentId, parentCommentId, commentDepth } = request.body
+      const { answeredAt, commentAnswer, postId, commentId, parentCommentId, commentDepth, commentImage } =
+         request.body
       try {
          const foundPostComment = await this.findPostModelByPostId(postId)
          if (!foundPostComment) return response.status(404).json({ msg: `post not found by id: ${postId}` })
@@ -17,7 +18,7 @@ export default class PostCommentController extends BasePostController {
             answeredAt,
             comment: commentAnswer,
             commentDepth,
-            commentImage: '',
+            commentImage,
             parentCommentId,
             likes: [],
             userId,
@@ -94,5 +95,6 @@ interface ISavePostCommentAnswerRequest extends IJWTUserType {
       parentCommentId: string
       commentAnswer: string
       answeredAt: string
+      commentImage: string | null
    }
 }

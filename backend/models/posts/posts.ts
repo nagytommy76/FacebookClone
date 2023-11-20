@@ -27,7 +27,7 @@ const commentAnswers = {
          parentCommentId: { type: String, required: false, default: null },
          commentDepth: { type: Number, required: true, default: 1 },
          answeredAt: { type: Date, required: false },
-         commentImage: { type: String, required: false, default: '' },
+         commentImage: { type: String, required: false, default: null },
          likes,
       },
    ],
