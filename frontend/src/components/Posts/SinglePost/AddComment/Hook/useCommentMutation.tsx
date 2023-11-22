@@ -1,6 +1,5 @@
-import React from 'react'
 import { AxiosResponse, axiosInstance as axios } from '@/axios/AxiosInstance'
-import useUploadFirebase from '../../../HandlePosts/Hooks/useUploadFirebase'
+import useUploadFirebase from '@/hooks/useUploadFirebase'
 import type { IPostComment } from '@/src/types/LikeTypes'
 
 const useCommentMutation = (commentImagePath: FileList | null, commentText: string, postID: string) => {

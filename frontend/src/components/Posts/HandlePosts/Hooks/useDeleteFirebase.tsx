@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { ImageContext } from '../Context/ImageContextProvider'
 import { PostContext } from '@/PostContext/PostContextProvider'
 
-import useDeleteImage from './useDeleteImage'
+import useDeleteImage from '@/hooks/useDeleteImage'
 import useGetDeletedImages from './useGetDeletedImages'
 
 const useDeleteFirebase = () => {

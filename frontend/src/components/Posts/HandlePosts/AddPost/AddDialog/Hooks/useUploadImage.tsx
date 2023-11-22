@@ -3,7 +3,7 @@ import { axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 
 import type { IPost } from '@/src/types/PostTypes'
 import { ImageContext } from '../../../Context/ImageContextProvider'
-import useUploadFirebase from '../../../Hooks/useUploadFirebase'
+import useUploadFirebase from '@/hooks/useUploadFirebase'
 
 const useUploadImage = () => {
    const {

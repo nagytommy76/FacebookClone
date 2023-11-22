@@ -3,7 +3,7 @@ import { PostContext } from '@/PostContext/PostContextProvider'
 import { ImageContext } from '../../Context/ImageContextProvider'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 
-import useUploadFirebase from '../../Hooks/useUploadFirebase'
+import useUploadFirebase from '@/hooks/useUploadFirebase'
 
 const useModifyPostFn = (modifiedDescription: string | null) => {
    const {
