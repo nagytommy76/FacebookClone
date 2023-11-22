@@ -27,6 +27,7 @@ const useAddComment = (reference: React.MutableRefObject<HTMLTextAreaElement | u
       onSuccess: (data) => {
          commentsDispatch({ type: 'ADD_NEW_COMMENT', payload: data.comments })
          postsDispatch({ type: 'SET_COMMENTS_LENGTH', payload: data.comments.length })
+         setCommentImagePath(null)
       },
    })
 
