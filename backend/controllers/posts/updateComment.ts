@@ -7,6 +7,7 @@ interface IRemoveCommentRequest extends IJWTUserType {
       postId: string
       commentId: string
       modifiedText: string
+      commentImage: string | null
    }
 }
 
@@ -20,7 +21,7 @@ interface IRemoveCommentAnswerRequest extends IJWTUserType {
 }
 
 export const updateCommentController = async (request: IRemoveCommentRequest, response: Response) => {
-   const { commentId, modifiedText, postId } = request.body
+   const { commentId, modifiedText, postId, commentImage } = request.body
 
    try {
       const foundPostComment = await PostModel.updateOne(
@@ -28,11 +29,19 @@ export const updateCommentController = async (request: IRemoveCommentRequest, re
             _id: postId,
             comments: { $elemMatch: { _id: commentId } },
          },
-         { $set: { 'comments.$.comment': modifiedText } }
+         [
+            { $set: { 'comments.$[outer].comment': modifiedText } },
+            { $set: { 'comments.$[outer].commentImage': commentImage } },
+         ],
+         {
+            arrayFilters: [{ 'outer._id': commentId }],
+            upsert: true,
+         }
       )
 
       response.status(201).json({ modifiedComment: modifiedText, foundPostComment })
    } catch (error) {
+      console.log(error)
       response.status(500).json({ msg: 'internal server error', error })
    }
 }
