@@ -19,7 +19,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       setIsUpdate(false)
    }
 
-   const updateCommentMutate = useUpdateCommentMutate(answerText, setStatesToDefault)
+   const updateCommentMutate = useUpdateCommentMutate(answerText, commentImagePath, setStatesToDefault)
    const updateCommentAnswerMutate = useUpdateAnswer(answerText, setStatesToDefault)
    const saveAnswerMutate = useAnswerCreateMutate(
       commentImagePath,
@@ -28,8 +28,9 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       answerText,
       setStatesToDefault
    )
-
+   // ezt használom a válasz kinyitására és beállítom default-ra, pl ha a módosítás után nyomom meg
    const handleSetAnswerOpen = () => {
+      setStatesToDefault()
       setIsAnswerOpen(true)
    }
    const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +47,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
 
    const handleSetAnswerOpenForUpdate = (commentText: string) => {
       setAnswerText(commentText)
-      handleSetAnswerOpen()
+      setIsAnswerOpen(true)
       setIsUpdate(true)
    }
 
