@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
 import useAnswer from '../Hooks/useAnswer'
@@ -22,7 +23,7 @@ const CommentFooter = dynamic(() => import('./Includes/CommentFooter/CommentFoot
    loading: () => <FooterSkeleton />,
 })
 const AddCommentBase = dynamic(() => import('./AddComment/AddCommentBase'))
-
+const CommentImage = dynamic(() => import('./Includes/CommentImage/CommentImage'))
 // Erre a mappa szintre áthozni a style-okat
 
 const BaseAnswerAndComment: React.FC<{
@@ -42,6 +43,8 @@ const BaseAnswerAndComment: React.FC<{
       isAnswerOpen,
       isSendDisabled,
       reference,
+      commentImagePath,
+      setCommentImagePath,
       saveAnswerMutate,
       updateCommentMutate,
       handleChangeText,
@@ -83,6 +86,7 @@ const BaseAnswerAndComment: React.FC<{
                   postId={postId}
                   isChildComment={isChildComment}
                />
+               <CommentImage commentImage={answer.commentImage} isUpdateActive={isUpdate} />
                <Collapse in={isAnswerOpen} timeout={100}>
                   <AddCommentBase
                      handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
@@ -90,9 +94,9 @@ const BaseAnswerAndComment: React.FC<{
                      handleSendCommentAnswer={saveAnswerMutate}
                      handleChangeTextWithEmoji={handleChangeTextWithEmoji}
                      handleAddSinglePostComment={() => {}}
-                     commentImagePath={null}
                      handleChangeText={handleChangeText}
-                     setCommentImagePath={() => {}}
+                     commentImagePath={commentImagePath}
+                     setCommentImagePath={setCommentImagePath}
                      commentAnswerId={answer._id}
                      reference={reference}
                      commentText={answerText}
