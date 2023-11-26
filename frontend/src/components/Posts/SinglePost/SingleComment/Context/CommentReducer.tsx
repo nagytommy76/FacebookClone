@@ -5,6 +5,8 @@ type CommentAction =
    | 'SET_POSTID'
    | 'SET_COMMENT'
    | 'SET_COMMENT_LIKE'
+   | 'SET_COMMENT_IMAGE'
+   | 'SET_REMOVED_IMG_LINK'
    | 'ADD_ANSWER_LIKE'
    | 'SET_CHILD_ANSWERS'
    | 'ADD_SINGLE_COMMENT_ANSWER'
@@ -12,6 +14,7 @@ type CommentAction =
    | 'UPDATE_COMMENT_TEXT'
    | 'REMOVE_SINGLE_COMMENT_LIKE'
    | 'REMOVE_ANSWER_LIKE'
+   | 'REMOVE_COMMENT_IMAGE'
 
 export interface ICommentAction {
    type: CommentAction
@@ -20,6 +23,7 @@ export interface ICommentAction {
 
 export interface InitialCommentState {
    singleComment: IPostComment
+   removedImageLink: string | null
    postId: string
    childAnswers: ICommentAnswers[]
 }
@@ -29,6 +33,7 @@ export const initialCommentData: IPostComment = {
    comment: 'teszt',
    _id: '',
    likes: [],
+   commentImage: null,
    commentAnswers: [],
    userId: {
       _id: '',
@@ -48,6 +53,7 @@ export const initialCommentData: IPostComment = {
 }
 export const initialCommentState: InitialCommentState = {
    singleComment: initialCommentData,
+   removedImageLink: null,
    postId: '',
    childAnswers: [],
 }
@@ -86,6 +92,11 @@ export default function CommentReducer(
             draft.singleComment.commentAnswers = payload
          })
          return newComments
+      case 'SET_COMMENT_IMAGE':
+         const addedImage = produce(state, (draft) => {
+            draft.singleComment.commentImage = payload
+         })
+         return addedImage
       case 'UPDATE_SINGLE_COMMENT_ANSWER':
          const { answerID, modifiedText } = payload as { answerID: string; modifiedText: string }
          const UpdatedComments = produce(state, (draft) => {
@@ -123,6 +134,17 @@ export default function CommentReducer(
             draft.singleComment.commentAnswers[foundAnswerIndex].likes = modifiedAnswerLike
          })
          return removedAnswerLikes
+      case 'REMOVE_COMMENT_IMAGE':
+         const removedImage = produce(state, (draft) => {
+            draft.removedImageLink = draft.singleComment.commentImage
+            draft.singleComment.commentImage = null
+         })
+         return removedImage
+      case 'SET_REMOVED_IMG_LINK':
+         const removedImgLink = produce(state, (draft) => {
+            draft.removedImageLink = null
+         })
+         return removedImgLink
       default:
          return state
    }
