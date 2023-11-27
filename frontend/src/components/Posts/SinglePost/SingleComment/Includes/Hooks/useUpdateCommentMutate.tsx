@@ -19,6 +19,7 @@ const useUpdateCommentMutate = (
          singleComment: { _id, commentImage },
       },
    } = useContext(CommentContext)
+
    const { handleSingleImageUploadToFirebase } = useUploadFirebase()
    const deleteImageFromFirebase = useDeleteImage()
 
@@ -37,8 +38,7 @@ const useUpdateCommentMutate = (
          commentId: _id,
          modifiedText,
          commentImage: modifiedImageLink !== null ? newUploadedImage : commentImage,
-         // newUploadedImage,
-      })) as AxiosResponse<{ modifiedComment: string }>
+      })) as AxiosResponse<{ modifiedComment: string; uploadedImageLink: string }>
       return response.data
    }
 
@@ -47,7 +47,11 @@ const useUpdateCommentMutate = (
       mutationFn: updateMutateFn,
       onSuccess(data) {
          commentDispatch({ payload: modifiedText, type: 'UPDATE_COMMENT_TEXT' })
+         commentDispatch({ payload: data.uploadedImageLink, type: 'SET_COMMENT_IMAGE' })
          setStatesToDefault()
+      },
+      onError(error, variables, context) {
+         //  Esetleg itt egy kép törlése firebase-ről, ha nem sikerül a backend-en valami
       },
    })
 
