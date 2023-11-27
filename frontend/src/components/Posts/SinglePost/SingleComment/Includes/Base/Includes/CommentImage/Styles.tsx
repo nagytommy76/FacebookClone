@@ -8,6 +8,9 @@ export const StyledCommentImgContainer = styled('div')({
 
 export const StyledCommentImg = styled(Image)({
    objectFit: 'cover',
+   borderRadius: '10px',
+
+   cursor: 'pointer',
 })
 
 export const IconButtonStyle = styled('span')({

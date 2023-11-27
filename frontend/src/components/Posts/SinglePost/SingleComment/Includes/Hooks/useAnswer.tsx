@@ -17,6 +17,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       setIsSendDisabled(true)
       setIsAnswerOpen(false)
       setIsUpdate(false)
+      setCommentImagePath(null)
    }
 
    const updateCommentMutate = useUpdateCommentMutate(answerText, commentImagePath, setStatesToDefault)
