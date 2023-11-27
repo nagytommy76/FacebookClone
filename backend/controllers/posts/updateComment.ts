@@ -29,17 +29,11 @@ export const updateCommentController = async (request: IRemoveCommentRequest, re
             _id: postId,
             comments: { $elemMatch: { _id: commentId } },
          },
-         [
-            { $set: { 'comments.$[outer].comment': modifiedText } },
-            { $set: { 'comments.$[outer].commentImage': commentImage } },
-         ],
-         {
-            arrayFilters: [{ 'outer._id': commentId }],
-            upsert: true,
-         }
+         { $set: { 'comments.$.comment': modifiedText, 'comments.$.commentImage': commentImage } }
       )
-
-      response.status(201).json({ modifiedComment: modifiedText, foundPostComment })
+      response
+         .status(201)
+         .json({ modifiedComment: modifiedText, uploadedImageLink: commentImage, foundPostComment })
    } catch (error) {
       console.log(error)
       response.status(500).json({ msg: 'internal server error', error })
