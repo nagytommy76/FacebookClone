@@ -9,7 +9,8 @@ import { CommentContext } from '../../Context/CommentContext'
 const useUpdateCommentMutate = (
    modifiedText: string,
    modifiedImageLink: FileList | null,
-   setStatesToDefault: () => void
+   setStatesToDefault: () => void,
+   setIsError: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
    const {
       commentDispatch,
@@ -19,18 +20,14 @@ const useUpdateCommentMutate = (
          singleComment: { _id, commentImage },
       },
    } = useContext(CommentContext)
+   // Egyelőre. Ezt inkább state-tel kéne!?
+   let newUploadedImage: string | null = null
 
    const { handleSingleImageUploadToFirebase } = useUploadFirebase()
    const deleteImageFromFirebase = useDeleteImage()
 
    const updateMutateFn = async () => {
-      let newUploadedImage: string | null = null
-      if (removedImageLink !== null) deleteImageFromFirebase([removedImageLink])
-      commentDispatch({ type: 'SET_REMOVED_IMG_LINK', payload: null })
       if (modifiedImageLink !== null) {
-         // Itt letörlöm a meglévő képet ha esetleg nem törölte volna le a user
-         if (commentImage !== null) deleteImageFromFirebase([commentImage])
-         // Feltölteni a képet mert van új és kicserélni ha nem törli a régit!?
          newUploadedImage = await handleSingleImageUploadToFirebase(modifiedImageLink[0], postId, true)
       }
       const response = (await axios.put('/post/edit/update-post-comment', {
@@ -45,13 +42,23 @@ const useUpdateCommentMutate = (
    const { mutate } = useMutation({
       mutationKey: ['updateComment'],
       mutationFn: updateMutateFn,
-      onSuccess(data) {
+      onSuccess: async (data) => {
+         // Feltölteni a képet mert van új és kicserélni ha nem törli a régit!?
+         if (removedImageLink !== null) deleteImageFromFirebase([removedImageLink])
+         commentDispatch({ type: 'SET_REMOVED_IMG_LINK', payload: null })
+         // Itt letörlöm a meglévő képet ha esetleg nem törölte volna le a user
+         if (commentImage !== null) await deleteImageFromFirebase([commentImage])
+
          commentDispatch({ payload: modifiedText, type: 'UPDATE_COMMENT_TEXT' })
          commentDispatch({ payload: data.uploadedImageLink, type: 'SET_COMMENT_IMAGE' })
          setStatesToDefault()
       },
-      onError(error, variables, context) {
+      onError: async (error, variables, context) => {
          //  Esetleg itt egy kép törlése firebase-ről, ha nem sikerül a backend-en valami
+         setIsError(true)
+         if (newUploadedImage !== null) await deleteImageFromFirebase([newUploadedImage])
+         setStatesToDefault()
+         setTimeout(() => setIsError(false), 7500)
       },
    })
 
