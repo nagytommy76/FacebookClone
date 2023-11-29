@@ -7,6 +7,7 @@ import useEmojiText from '@/src/hooks/useEmojiText'
 const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
    const reference = useRef<HTMLTextAreaElement>()
    const [isUpdate, setIsUpdate] = useState<boolean>(false)
+   const [isError, setIsError] = useState<boolean>(false)
    const [isAnswerOpen, setIsAnswerOpen] = useState<boolean>(false)
    const [answerText, setAnswerText] = useState<string>('')
    const [isSendDisabled, setIsSendDisabled] = useState<boolean>(true)
@@ -19,8 +20,13 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       setIsUpdate(false)
       setCommentImagePath(null)
    }
-
-   const updateCommentMutate = useUpdateCommentMutate(answerText, commentImagePath, setStatesToDefault)
+   // A többi mutation-hoz is hozzáadni az error snackbar-t. Esetleg vezényleni a szöveget is!!!!!!!!!!!!!!!!!!!!!!!!
+   const updateCommentMutate = useUpdateCommentMutate(
+      answerText,
+      commentImagePath,
+      setStatesToDefault,
+      setIsError
+   )
    const updateCommentAnswerMutate = useUpdateAnswer(answerText, setStatesToDefault)
    const saveAnswerMutate = useAnswerCreateMutate(
       commentImagePath,
@@ -71,6 +77,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       answerText,
       isSendDisabled,
       isUpdate,
+      isError,
       reference,
    }
 }
