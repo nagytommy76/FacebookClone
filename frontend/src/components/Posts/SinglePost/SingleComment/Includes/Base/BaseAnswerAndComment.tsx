@@ -13,6 +13,7 @@ import BodySkeleton from '@/src/skeletons/Comments/Includes/BodySkeleton'
 import FooterSkeleton from '@/src/skeletons/Comments/Includes/FooterSkeleton'
 
 import Options from './Includes/Options/Options'
+import ErrorSnackbar from './Includes/Error/ErrorSnackbar'
 const LeftSide = dynamic(() => import('./Includes/LeftImageSide/LeftImage'), {
    loading: () => <LeftSideSkeleton />,
 })
@@ -38,6 +39,7 @@ const BaseAnswerAndComment: React.FC<{
       ? [answer.commentDepth + 1, answer._id]
       : [1, null]
    const {
+      isError,
       isUpdate,
       answerText,
       isAnswerOpen,
@@ -55,60 +57,63 @@ const BaseAnswerAndComment: React.FC<{
    } = useAnswer(functionParams[0], functionParams[1])
    // Az isChildComment-et fel tudom használni, hogy eldöntsem answer-ről van-e szó, és úgy tudom módosítani
    return (
-      <StyledCommentContainer isChildComment={isChildComment}>
-         <StyledListElement>
-            <LeftSide
-               isChild={isChild}
-               profilePicturePath={answer.userId.userDetails.profilePicturePath[0].path}
-            />
-            <StyledRightSide>
-               <StyledRightContainer>
-                  <CommentBody
-                     commentId={commentId}
+      <>
+         <StyledCommentContainer isChildComment={isChildComment}>
+            <StyledListElement>
+               <LeftSide
+                  isChild={isChild}
+                  profilePicturePath={answer.userId.userDetails.profilePicturePath[0].path}
+               />
+               <StyledRightSide>
+                  <StyledRightContainer>
+                     <CommentBody
+                        commentId={commentId}
+                        answerId={answer._id}
+                        comment={answer.comment}
+                        likes={answer.likes}
+                        postId={postId}
+                        isChildComment={isChildComment}
+                     />
+                     <Options
+                        handleSetAnswerOpenForUpdate={() => handleSetAnswerOpenForUpdate(answer.comment)}
+                        isChildComment={isChildComment}
+                        answeredUserId={answer.userId._id}
+                        commentId={answer._id}
+                     />
+                  </StyledRightContainer>
+                  <CommentFooter
                      answerId={answer._id}
-                     comment={answer.comment}
+                     answeredAt={answer.answeredAt}
+                     handleSetAnswerOpen={handleSetAnswerOpen}
                      likes={answer.likes}
                      postId={postId}
                      isChildComment={isChildComment}
                   />
-                  <Options
-                     handleSetAnswerOpenForUpdate={() => handleSetAnswerOpenForUpdate(answer.comment)}
-                     isChildComment={isChildComment}
-                     answeredUserId={answer.userId._id}
-                     commentId={answer._id}
-                  />
-               </StyledRightContainer>
-               <CommentFooter
-                  answerId={answer._id}
-                  answeredAt={answer.answeredAt}
-                  handleSetAnswerOpen={handleSetAnswerOpen}
-                  likes={answer.likes}
-                  postId={postId}
-                  isChildComment={isChildComment}
-               />
-               <CommentImage commentImage={answer.commentImage} isUpdateActive={isUpdate} />
-               <Collapse in={isAnswerOpen} timeout={100}>
-                  <AddCommentBase
-                     handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
-                     updateCommentMutate={updateCommentMutate}
-                     handleSendCommentAnswer={saveAnswerMutate}
-                     handleChangeTextWithEmoji={handleChangeTextWithEmoji}
-                     handleAddSinglePostComment={() => {}}
-                     handleChangeText={handleChangeText}
-                     commentImagePath={commentImagePath}
-                     setCommentImagePath={setCommentImagePath}
-                     commentAnswerId={answer._id}
-                     reference={reference}
-                     commentText={answerText}
-                     isUpdate={isUpdate}
-                     isChildComment={isChildComment}
-                     isSendDisabled={isSendDisabled}
-                  />
-               </Collapse>
-               {children}
-            </StyledRightSide>
-         </StyledListElement>
-      </StyledCommentContainer>
+                  <CommentImage commentImage={answer.commentImage} isUpdateActive={isUpdate} />
+                  <Collapse in={isAnswerOpen} timeout={100}>
+                     <AddCommentBase
+                        handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
+                        updateCommentMutate={updateCommentMutate}
+                        handleSendCommentAnswer={saveAnswerMutate}
+                        handleChangeTextWithEmoji={handleChangeTextWithEmoji}
+                        handleAddSinglePostComment={() => {}}
+                        handleChangeText={handleChangeText}
+                        commentImagePath={commentImagePath}
+                        setCommentImagePath={setCommentImagePath}
+                        commentAnswerId={answer._id}
+                        reference={reference}
+                        commentText={answerText}
+                        isUpdate={isUpdate}
+                        isChildComment={isChildComment}
+                        isSendDisabled={isSendDisabled}
+                     />
+                  </Collapse>
+                  {children}
+               </StyledRightSide>
+            </StyledListElement>
+         </StyledCommentContainer>
+         <ErrorSnackbar isError={isError} />
+      </>
    )
 }
 
