@@ -27,7 +27,7 @@ const useAnswer = (commentDepth: number, parentCommentId: string | null) => {
       setStatesToDefault,
       setIsError
    )
-   const updateCommentAnswerMutate = useUpdateAnswer(answerText, setStatesToDefault)
+   const updateCommentAnswerMutate = useUpdateAnswer(answerText, commentImagePath, setStatesToDefault)
    const saveAnswerMutate = useAnswerCreateMutate(
       commentImagePath,
       commentDepth,

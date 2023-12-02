@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
 import useAnswer from '../Hooks/useAnswer'

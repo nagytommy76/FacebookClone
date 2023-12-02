@@ -16,7 +16,7 @@ export interface ICommentAnswers {
    parentCommentId: string
    commentDepth: number
    answeredAt: string
-   commentImage: string
+   commentImage: string | null
    likes: IPostLike[]
 }
 
