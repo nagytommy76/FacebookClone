@@ -98,11 +98,16 @@ export default function CommentReducer(
          })
          return addedImage
       case 'UPDATE_SINGLE_COMMENT_ANSWER':
-         const { answerID, modifiedText } = payload as { answerID: string; modifiedText: string }
+         const { answerID, modifiedText, commentImage } = payload as {
+            answerID: string
+            modifiedText: string
+            commentImage: string | null
+         }
          const UpdatedComments = produce(state, (draft) => {
             const foundAnswer = draft.singleComment.commentAnswers?.find((answer) => answer._id == answerID)
             if (foundAnswer) {
                foundAnswer.comment = modifiedText
+               foundAnswer.commentImage = commentImage
             }
          })
          return UpdatedComments

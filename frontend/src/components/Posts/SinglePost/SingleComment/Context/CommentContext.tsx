@@ -11,7 +11,12 @@ interface ICommentContext {
 }
 
 export const CommentContext = createContext<ICommentContext>({
-   commentReducer: { singleComment: initialCommentState.singleComment, postId: '', childAnswers: [] },
+   commentReducer: {
+      singleComment: initialCommentState.singleComment,
+      postId: '',
+      childAnswers: [],
+      removedImageLink: null,
+   },
    parentRootAnswers: [],
    commentDispatch: () => {},
    getAnswerReplies(parentId) {},
