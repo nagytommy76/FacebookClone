@@ -8,6 +8,9 @@ import Divider from '@mui/material/Divider'
 
 import SingleCommentSkeleton from '@/Skeletons/Comments/SingleComment'
 
+import { TransitionGroup } from 'react-transition-group'
+import Collapse from '@mui/material/Collapse'
+
 const AllComments: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
    const {
       postsReducer: {
@@ -24,13 +27,15 @@ const AllComments: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
          {isLoading ? (
             <SingleCommentSkeleton />
          ) : (
-            <>
+            <TransitionGroup>
                {AllComments.map((comment) => (
-                  <CommentContextProvider key={comment._id} singleComment={comment} postId={_id}>
-                     <SingleComment />
-                  </CommentContextProvider>
+                  <Collapse key={comment._id} timeout={150}>
+                     <CommentContextProvider singleComment={comment} postId={_id}>
+                        <SingleComment />
+                     </CommentContextProvider>
+                  </Collapse>
                ))}
-            </>
+            </TransitionGroup>
          )}
       </>
    )
