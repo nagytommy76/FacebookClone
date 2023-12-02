@@ -23,7 +23,7 @@ export interface IPostComment {
            userDetails: { profilePicturePath: { _id: string; path: string; isSelected: boolean }[] }
         }
    comment: string
-   answeredAt?: Date | string
+   answeredAt: Date | string
    commentImage: string | null
    parentCommentId: string | null
    commentDepth: number

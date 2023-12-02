@@ -17,6 +17,7 @@ interface IRemoveCommentAnswerRequest extends IJWTUserType {
       commentId: string
       modifiedText: string
       commentAnswerId: string
+      commentImage: string | null
    }
 }
 
@@ -24,12 +25,18 @@ export const updateCommentController = async (request: IRemoveCommentRequest, re
    const { commentId, modifiedText, postId, commentImage } = request.body
 
    try {
+      // return response.status(500).json({ modifiedComment: modifiedText, uploadedImageLink: commentImage })
       const foundPostComment = await PostModel.updateOne(
          {
             _id: postId,
             comments: { $elemMatch: { _id: commentId } },
          },
-         { $set: { 'comments.$.comment': modifiedText, 'comments.$.commentImage': commentImage } }
+         {
+            $set: {
+               'comments.$.comment': modifiedText,
+               'comments.$.commentImage': commentImage,
+            },
+         }
       )
       response
          .status(201)
@@ -44,7 +51,7 @@ export const updateCommentAnswerController = async (
    request: IRemoveCommentAnswerRequest,
    response: Response
 ) => {
-   const { commentAnswerId, commentId, modifiedText, postId } = request.body
+   const { commentAnswerId, commentId, commentImage, modifiedText, postId } = request.body
    try {
       const found = await PostModel.updateOne(
          {
@@ -54,6 +61,7 @@ export const updateCommentAnswerController = async (
          {
             $set: {
                'comments.$[outer].commentAnswers.$[inner].comment': modifiedText,
+               'comments.$[outer].commentAnswers.$[inner].commentImage': commentImage,
             },
          },
          {
@@ -61,7 +69,7 @@ export const updateCommentAnswerController = async (
             upsert: true,
          }
       )
-      response.status(201).json(found)
+      response.status(201).json({ modifiedComment: modifiedText, uploadedImageLink: commentImage })
    } catch (error) {
       response.status(500).json({ msg: 'internal server error', error })
    }
