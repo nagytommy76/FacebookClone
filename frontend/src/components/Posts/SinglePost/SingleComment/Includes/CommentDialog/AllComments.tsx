@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import CommentContextProvider from '@/CommentContext/CommentContext'
-import { AllCommentsContext } from '@/src/components/Posts/Context/AllCommentsContext'
+import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 
 import SingleComment from '../../SingleComment'

@@ -31,7 +31,7 @@
          "@/styles/*": ["./src/styles/*"],
          "@/axios/*": ["./src/utils/axiosSetup/*"],
          "@/PostContext/*": ["./src/components/MainPage/Context/*"],
-         "@/CommentContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/*"],
+         "@/CommentContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/Comment/*"],
          "@/AllCommentContext/*": ["./src/components/Posts/Context/*"],
          "@/Skeletons/*": ["./src/skeletons/*"]
       }

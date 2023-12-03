@@ -6,7 +6,7 @@ import useDeleteImage from '@/hooks/useDeleteImage'
 
 import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
-import { CommentContext } from '../../../../../Context/CommentContext'
+import { CommentContext } from '../../../../../Context/Comment/CommentContext'
 
 const mutationFunction = async ({ commentId, postId }: { commentId: string; postId: string }) => {
    const response = (await axios.delete('/post/post-comment-delete', {

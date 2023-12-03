@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
+import { AxiosResponse, axiosInstance as axios } from '@/axios/AxiosInstance'
 import useUploadFirebase from '@/src/hooks/useUploadFirebase'
 import useDeleteImage from '@/src/hooks/useDeleteImage'
 
-import { CommentContext } from '../../Context/CommentContext'
+import { CommentContext } from '@/CommentContext/CommentContext'
 
 const useUpdateCommentMutate = (
    modifiedText: string,

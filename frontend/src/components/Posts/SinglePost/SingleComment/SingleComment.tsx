@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import React, { useContext } from 'react'
-import { CommentContext } from './Context/CommentContext'
+import { CommentContext } from '@/CommentContext/CommentContext'
 
 import SingleCommentSkeleton from '@/Skeletons/Comments/SingleComment'
 

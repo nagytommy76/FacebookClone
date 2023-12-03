@@ -13,6 +13,7 @@ interface ICommentContext {
 export const CommentContext = createContext<ICommentContext>({
    commentReducer: {
       singleComment: initialCommentState.singleComment,
+      removedAnswerImageLink: null,
       postId: '',
       childAnswers: [],
       removedImageLink: null,

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { CommentContext } from '../../../../../Context/CommentContext'
+import { CommentContext } from '../../../../../Context/Comment/CommentContext'
 
 import useRemoveComment from '../Hooks/useRemoveComment'
 import useRemoveAnswer from '../Hooks/useRemoveAnswer'

@@ -1,6 +1,4 @@
-import React from 'react'
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
-
 import SingleAnswer from '../SingleAnswer/SingleAnswer'
 
 const AnswerList: React.FC<{ answer: ICommentAnswers[] }> = ({ answer }) => {
