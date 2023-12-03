@@ -4,10 +4,12 @@ import useCommentImage from './Hooks/useCommentImage'
 import { StyledCommentImg, StyledCommentImgContainer } from './Styles'
 import RemoveImgBtn from './Includes/RemoveImgBtn'
 
-const CommentImage: React.FC<{ commentImage: string | null; isUpdateActive?: boolean }> = ({
-   commentImage,
-   isUpdateActive = false,
-}) => {
+const CommentImage: React.FC<{
+   commentImage: string | null
+   answerId: string
+   isUpdateActive?: boolean
+   isAnswer?: boolean
+}> = ({ commentImage, answerId, isAnswer = false, isUpdateActive = false }) => {
    const { isImgSliderOpen, openImgSlide, setIsImgSliderOpen } = useCommentImage()
 
    return (
@@ -32,7 +34,12 @@ const CommentImage: React.FC<{ commentImage: string | null; isUpdateActive?: boo
                   />
                </>
             )}
-            <RemoveImgBtn commentImage={commentImage} isUpdateActive={isUpdateActive} />
+            <RemoveImgBtn
+               answerId={answerId}
+               isAnswer={isAnswer}
+               commentImage={commentImage}
+               isUpdateActive={isUpdateActive}
+            />
          </StyledCommentImgContainer>
       </>
    )

@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { CommentContext } from '@/CommentContext/CommentContext'
+import { AnswerContext } from '@/AnswerContext/AnswerContext'
 
 import { IconButtonStyle } from '../Styles'
 import IconButton from '@mui/material/IconButton'
@@ -8,11 +9,15 @@ import Fade from '@mui/material/Fade'
 
 const RemoveImgBtn: React.FC<{
    isUpdateActive: boolean
+   answerId: string
    commentImage: string | null
-}> = ({ commentImage, isUpdateActive }) => {
+   isAnswer?: boolean
+}> = ({ commentImage, isUpdateActive, answerId, isAnswer = false }) => {
    const { commentDispatch } = useContext(CommentContext)
+   const { answerDispatch } = useContext(AnswerContext)
    const removeExistedImg = () => {
-      commentDispatch({ type: 'REMOVE_COMMENT_IMAGE', payload: null })
+      if (!isAnswer) commentDispatch({ type: 'REMOVE_COMMENT_IMAGE', payload: null })
+      else answerDispatch({ type: 'REMOVE_ANSWER_IMAGE', payload: answerId })
    }
 
    return (
