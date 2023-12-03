@@ -47,7 +47,7 @@ const useUpdateCommentMutate = (
          if (removedImageLink !== null) deleteImageFromFirebase([removedImageLink])
          commentDispatch({ type: 'SET_REMOVED_IMG_LINK', payload: null })
          // Itt letörlöm a meglévő képet ha esetleg nem törölte volna le a user
-         if (commentImage !== null) await deleteImageFromFirebase([commentImage])
+         if (newUploadedImage !== null && commentImage !== null) await deleteImageFromFirebase([commentImage])
 
          commentDispatch({ payload: modifiedText, type: 'UPDATE_COMMENT_TEXT' })
          commentDispatch({ payload: data.uploadedImageLink, type: 'SET_COMMENT_IMAGE' })
