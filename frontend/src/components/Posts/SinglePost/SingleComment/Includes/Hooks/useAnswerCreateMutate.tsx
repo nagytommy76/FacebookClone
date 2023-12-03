@@ -2,9 +2,10 @@ import React, { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 import useUploadFirbase from '@/hooks/useUploadFirebase'
+import { CommentContext } from '@/CommentContext/CommentContext'
+import { AnswerContext } from '@/AnswerContext/AnswerContext'
 
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
-import { CommentContext } from '@/CommentContext/CommentContext'
 
 const useAnswerCreateMutate = (
    commentImagePath: FileList | null,
@@ -14,12 +15,12 @@ const useAnswerCreateMutate = (
    setStatesToDefault: () => void
 ) => {
    const {
-      commentDispatch,
       commentReducer: {
          postId,
          singleComment: { _id },
       },
    } = useContext(CommentContext)
+   const { answerDispatch } = useContext(AnswerContext)
    const { handleSingleImageUploadToFirebase } = useUploadFirbase()
 
    const handleCreateMutate = async () => {
@@ -43,7 +44,7 @@ const useAnswerCreateMutate = (
       mutationKey: ['saveAnswerText'],
       mutationFn: handleCreateMutate,
       onSuccess(data) {
-         commentDispatch({
+         answerDispatch({
             type: 'ADD_SINGLE_COMMENT_ANSWER',
             payload: data.data.createdCommentAnswer,
          })
