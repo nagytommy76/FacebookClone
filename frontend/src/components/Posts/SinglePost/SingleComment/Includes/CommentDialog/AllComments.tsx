@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import CommentContextProvider from '@/CommentContext/CommentContext'
+import AnswerContextProvider from '@/AnswerContext/AnswerContext'
 import { AllCommentsContext } from '@/AllCommentContext/AllCommentsContext'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 
@@ -31,7 +32,9 @@ const AllComments: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                {AllComments.map((comment) => (
                   <Collapse key={comment._id} timeout={150}>
                      <CommentContextProvider singleComment={comment} postId={_id}>
-                        <SingleComment />
+                        <AnswerContextProvider allCommentAnswers={comment.commentAnswers}>
+                           <SingleComment />
+                        </AnswerContextProvider>
                      </CommentContextProvider>
                   </Collapse>
                ))}

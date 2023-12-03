@@ -33,6 +33,8 @@ Linket is tudjak beszúrni a Post/Comment/Answer input mezőbe - lásd facebok/r
 A képekhez lesessen kommentelni (ami amúgy a poszt alá meg, csak jelenjen meg jobb oldalt)
  meg azokat is likeolni (viszont likeolni azt lehessen külön a képeket) -> FACEBOOK
 
+BUG: A likeolásnál az ikonok nem frissülnek, de az answerContext meg igen
+
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
 
 A singlePost-nál esetleg kiváltani a commentContextet és a post context-ben változtatni a Statet VAGY-

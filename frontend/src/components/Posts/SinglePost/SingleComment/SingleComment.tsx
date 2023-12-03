@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import React, { useContext } from 'react'
 import { CommentContext } from '@/CommentContext/CommentContext'
+import { AnswerContext } from '@/AnswerContext/AnswerContext'
 
 import SingleCommentSkeleton from '@/Skeletons/Comments/SingleComment'
 
@@ -13,8 +14,8 @@ const OpenCommentAnswer = dynamic(() => import('./Includes/OpenCommentAnswers/Op
 const SingleComment = () => {
    const {
       commentReducer: { singleComment, postId },
-      parentRootAnswers,
    } = useContext(CommentContext)
+   const { parentRootAnswers } = useContext(AnswerContext)
 
    return (
       <BaseCommentComponent

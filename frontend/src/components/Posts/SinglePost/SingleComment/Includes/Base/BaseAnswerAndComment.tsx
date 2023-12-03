@@ -88,7 +88,12 @@ const BaseAnswerAndComment: React.FC<{
                      postId={postId}
                      isChildComment={isChildComment}
                   />
-                  <CommentImage commentImage={answer.commentImage} isUpdateActive={isUpdate} />
+                  <CommentImage
+                     answerId={answer._id}
+                     isAnswer={isChildComment}
+                     commentImage={answer.commentImage}
+                     isUpdateActive={isUpdate}
+                  />
                   <Collapse in={isAnswerOpen} timeout={100}>
                      <AddCommentBase
                         handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}

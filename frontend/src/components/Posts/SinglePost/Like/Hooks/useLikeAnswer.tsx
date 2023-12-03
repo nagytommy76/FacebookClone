@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import { CommentContext } from '@/CommentContext/CommentContext'
+import { AnswerContext } from '@/AnswerContext/AnswerContext'
 import type { IPostLike } from '@/src/types/LikeTypes'
 
 interface IAnswerLike {
@@ -30,14 +30,14 @@ const handleSendAnswerLike = async ({ commentId, postId, commentAnswerId, reacti
 }
 
 const useLikeAnswer = () => {
-   const { commentDispatch } = useContext(CommentContext)
+   const { answerDispatch } = useContext(AnswerContext)
 
    const { mutate } = useMutation({
       mutationKey: ['likeCommentAnswer'],
       mutationFn: handleSendAnswerLike,
       onSuccess(data) {
          if (data?.status === 200)
-            commentDispatch({
+            answerDispatch({
                type: 'ADD_ANSWER_LIKE',
                payload: {
                   commentAnswersIndex: data.data.commentAnswersIndex,
