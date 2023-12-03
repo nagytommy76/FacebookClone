@@ -24,6 +24,7 @@ export interface ICommentAction {
 export interface InitialCommentState {
    singleComment: IPostComment
    removedImageLink: string | null
+   removedAnswerImageLink: string | null
    postId: string
    childAnswers: ICommentAnswers[]
 }
@@ -54,6 +55,7 @@ export const initialCommentData: IPostComment = {
 export const initialCommentState: InitialCommentState = {
    singleComment: initialCommentData,
    removedImageLink: null,
+   removedAnswerImageLink: null,
    postId: '',
    childAnswers: [],
 }
