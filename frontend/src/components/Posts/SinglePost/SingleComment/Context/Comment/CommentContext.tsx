@@ -1,13 +1,11 @@
-import React, { createContext, useEffect, useReducer, useMemo } from 'react'
+import React, { createContext, useEffect, useReducer } from 'react'
 
-import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
+import type { IPostComment } from '@/types/LikeTypes'
 import CommentReducer, { initialCommentState, InitialCommentState, ICommentAction } from './CommentReducer'
 
 interface ICommentContext {
    commentReducer: InitialCommentState
-   parentRootAnswers: ICommentAnswers[]
    commentDispatch: React.Dispatch<ICommentAction>
-   getAnswerReplies(parentId: string): any
 }
 
 export const CommentContext = createContext<ICommentContext>({
@@ -18,9 +16,7 @@ export const CommentContext = createContext<ICommentContext>({
       childAnswers: [],
       removedImageLink: null,
    },
-   parentRootAnswers: [],
    commentDispatch: () => {},
-   getAnswerReplies(parentId) {},
 })
 
 const CommentContextProvider: React.FC<{
@@ -36,26 +32,11 @@ const CommentContextProvider: React.FC<{
       commentDispatch({ type: 'SET_POSTID', payload: postId })
    }, [postId])
 
-   const getCommentsByParentId = useMemo(() => {
-      const grouppedAnswers: any = {}
-      commentReducer.singleComment.commentAnswers?.map((answer) => {
-         grouppedAnswers[answer.parentCommentId] ||= []
-         grouppedAnswers[answer.parentCommentId].push(answer)
-      })
-      return grouppedAnswers
-   }, [commentReducer.singleComment])
-
-   function getAnswerReplies(parentId: string) {
-      return getCommentsByParentId[parentId]
-   }
-
    return (
       <CommentContext.Provider
          value={{
             commentReducer,
-            parentRootAnswers: getCommentsByParentId['null'],
             commentDispatch,
-            getAnswerReplies,
          }}
       >
          {children}

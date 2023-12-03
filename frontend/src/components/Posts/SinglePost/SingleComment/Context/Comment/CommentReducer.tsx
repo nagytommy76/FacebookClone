@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { ICommentAnswers, IPostComment, IPostLike } from '@/types/LikeTypes'
+import type { ICommentAnswers, IPostComment } from '@/types/LikeTypes'
 
 type CommentAction =
    | 'SET_POSTID'
@@ -7,13 +7,8 @@ type CommentAction =
    | 'SET_COMMENT_LIKE'
    | 'SET_COMMENT_IMAGE'
    | 'SET_REMOVED_IMG_LINK'
-   | 'ADD_ANSWER_LIKE'
-   | 'SET_CHILD_ANSWERS'
-   | 'ADD_SINGLE_COMMENT_ANSWER'
-   | 'UPDATE_SINGLE_COMMENT_ANSWER'
    | 'UPDATE_COMMENT_TEXT'
    | 'REMOVE_SINGLE_COMMENT_LIKE'
-   | 'REMOVE_ANSWER_LIKE'
    | 'REMOVE_COMMENT_IMAGE'
 
 export interface ICommentAction {
@@ -80,44 +75,11 @@ export default function CommentReducer(
             draft.singleComment.likes = payload
          })
          return nextLikeState
-      case 'ADD_ANSWER_LIKE':
-         const { commentAnswersIndex, updatedCommentAnswerLikes } = payload as {
-            commentAnswersIndex: number
-            updatedCommentAnswerLikes: IPostLike[]
-         }
-         const newAnswerLikes = produce(state, (draft) => {
-            draft.singleComment.commentAnswers[commentAnswersIndex].likes = updatedCommentAnswerLikes
-         })
-         return newAnswerLikes
-      case 'ADD_SINGLE_COMMENT_ANSWER':
-         const newComments = produce(state, (draft) => {
-            draft.singleComment.commentAnswers = payload
-         })
-         return newComments
       case 'SET_COMMENT_IMAGE':
          const addedImage = produce(state, (draft) => {
             draft.singleComment.commentImage = payload
          })
          return addedImage
-      case 'UPDATE_SINGLE_COMMENT_ANSWER':
-         const { answerID, modifiedText, commentImage } = payload as {
-            answerID: string
-            modifiedText: string
-            commentImage: string | null
-         }
-         const UpdatedComments = produce(state, (draft) => {
-            const foundAnswer = draft.singleComment.commentAnswers?.find((answer) => answer._id == answerID)
-            if (foundAnswer) {
-               foundAnswer.comment = modifiedText
-               foundAnswer.commentImage = commentImage
-            }
-         })
-         return UpdatedComments
-      case 'SET_CHILD_ANSWERS':
-         const newAnswers = produce(state, (draft) => {
-            draft.childAnswers = payload
-         })
-         return newAnswers
       case 'UPDATE_COMMENT_TEXT':
          const updatedCommentText = produce(state, (draft) => {
             draft.singleComment.comment = payload
@@ -129,18 +91,6 @@ export default function CommentReducer(
             draft.singleComment.likes = removed
          })
          return removedLikes
-      case 'REMOVE_ANSWER_LIKE':
-         const { answerId, likeIdToDelete } = payload
-         const removedAnswerLikes = produce(state, (draft) => {
-            const foundAnswerIndex = draft.singleComment.commentAnswers.findIndex(
-               (answer) => answer._id.toString() === answerId.toString()
-            )
-            const modifiedAnswerLike = draft.singleComment.commentAnswers[foundAnswerIndex].likes.filter(
-               (like) => like._id !== likeIdToDelete
-            )
-            draft.singleComment.commentAnswers[foundAnswerIndex].likes = modifiedAnswerLike
-         })
-         return removedAnswerLikes
       case 'REMOVE_COMMENT_IMAGE':
          const removedImage = produce(state, (draft) => {
             draft.removedImageLink = draft.singleComment.commentImage
