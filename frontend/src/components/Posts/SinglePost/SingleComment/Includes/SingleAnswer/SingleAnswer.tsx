@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { CommentContext } from '@/CommentContext/CommentContext'
-import { AnswerContext } from '@/AnswerContext/AnswerContext'
+import { AnswerContext } from '@/AnswersContext/AnswersContext'
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
 
 import AnswerList from '../AnswerList/AnswerList'

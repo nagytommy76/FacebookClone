@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios } from '@/axios/AxiosInstance'
-import { AnswerContext } from '@/AnswerContext/AnswerContext'
+import { AnswerContext } from '@/AnswersContext/AnswersContext'
 
 interface IAnswerLikeDelete {
    postId: string

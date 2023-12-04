@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { CommentContext } from '@/CommentContext/CommentContext'
-import { AnswerContext } from '@/AnswerContext/AnswerContext'
+import { AnswerContext } from '@/AnswersContext/AnswersContext'
 
 import { IconButtonStyle } from '../Styles'
 import IconButton from '@mui/material/IconButton'

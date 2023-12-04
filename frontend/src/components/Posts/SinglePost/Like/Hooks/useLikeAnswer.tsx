@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import { AnswerContext } from '@/AnswerContext/AnswerContext'
+import { AnswerContext } from '@/AnswersContext/AnswersContext'
 import type { IPostLike } from '@/src/types/LikeTypes'
 
 interface IAnswerLike {

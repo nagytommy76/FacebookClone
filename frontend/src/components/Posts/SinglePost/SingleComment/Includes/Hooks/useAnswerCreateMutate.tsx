@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 import useUploadFirbase from '@/hooks/useUploadFirebase'
 import { CommentContext } from '@/CommentContext/CommentContext'
-import { AnswerContext } from '@/AnswerContext/AnswerContext'
+import { AnswerContext } from '@/src/components/Posts/SinglePost/SingleComment/Context/Answers/AnswersContext'
 
 import type { ICommentAnswers } from '@/src/types/LikeTypes'
 

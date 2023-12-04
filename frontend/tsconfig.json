@@ -32,7 +32,7 @@
          "@/axios/*": ["./src/utils/axiosSetup/*"],
          "@/PostContext/*": ["./src/components/MainPage/Context/*"],
          "@/CommentContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/Comment/*"],
-         "@/AnswerContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/Answer/*"],
+         "@/AnswersContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/Answers/*"],
          "@/AllCommentContext/*": ["./src/components/Posts/Context/*"],
          "@/Skeletons/*": ["./src/skeletons/*"]
       }
