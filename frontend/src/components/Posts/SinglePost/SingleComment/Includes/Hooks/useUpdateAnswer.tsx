@@ -2,8 +2,7 @@ import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/axios/AxiosInstance'
 
-import { CommentContext } from '@/CommentContext/CommentContext'
-import { AnswerContext } from '@/AnswerContext/AnswerContext'
+import { AnswerContext } from '@/AnswersContext/AnswersContext'
 import useUploadFirebase from '@/src/hooks/useUploadFirebase'
 import useDeleteImage from '@/src/hooks/useDeleteImage'
 
@@ -16,15 +15,8 @@ const useUpdateAnswer = (
    const deleteImageFromFirebase = useDeleteImage()
 
    const {
-      commentReducer: {
-         postId,
-         removedImageLink,
-         singleComment: { _id },
-      },
-   } = useContext(CommentContext)
-   const {
       answerDispatch,
-      answerReducer: {},
+      answerReducer: { removedAnswerImageLink, postId, commentId },
    } = useContext(AnswerContext)
    let newUploadedImage: string | null = null
 
@@ -34,10 +26,10 @@ const useUpdateAnswer = (
       }
       const response = (await axios.put('/post/edit/update-post-comment-answer', {
          postId,
-         commentId: _id,
+         commentId,
          modifiedText,
          commentAnswerId: answerId,
-         // commentImage: modifiedImageLink !== null ? newUploadedImage : commentImage,
+         commentImage: modifiedImageLink !== null ? newUploadedImage : null,
       })) as AxiosResponse<{ modifiedComment: string; uploadedImageLink: string }>
       return response.data
    }
@@ -47,7 +39,7 @@ const useUpdateAnswer = (
       mutationFn: updateAnswerMutateFn,
       onSuccess: async (data, variables) => {
          // Feltölteni a képet mert van új és kicserélni ha nem törli a régit!?
-         if (removedImageLink !== null) deleteImageFromFirebase([removedImageLink])
+         if (removedAnswerImageLink !== null) deleteImageFromFirebase([removedAnswerImageLink])
          answerDispatch({ type: 'SET_REMOVED_ANSWER_IMG_LINK', payload: null })
          // Itt letörlöm a meglévő képet ha esetleg nem törölte volna le a user
          //   if (commentImage !== null) await deleteImageFromFirebase([commentImage])
