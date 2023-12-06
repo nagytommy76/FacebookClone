@@ -1,11 +1,8 @@
 import dynamic from 'next/dynamic'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
-import useAnswer from '../Hooks/useAnswer'
-
 import { StyledRightContainer } from './Styles/Styles'
 import { StyledCommentContainer, StyledListElement, StyledRightSide } from './Styles/ContainerStyles'
-import Collapse from '@mui/material/Collapse'
 
 import LeftSideSkeleton from '@/Skeletons/Comments/Includes/LeftSideSkeleton'
 import BodySkeleton from '@/src/skeletons/Comments/Includes/BodySkeleton'
@@ -22,38 +19,33 @@ const CommentBody = dynamic(() => import('./Includes/CommentBody/CommentBody'), 
 const CommentFooter = dynamic(() => import('./Includes/CommentFooter/CommentFooter'), {
    loading: () => <FooterSkeleton />,
 })
-const AddCommentBase = dynamic(() => import('./AddComment/AddCommentBase'))
 const CommentImage = dynamic(() => import('./Includes/CommentImage/CommentImage'))
-// Erre a mappa szintre áthozni a style-okat
 
 const BaseAnswerAndComment: React.FC<{
    commentId?: string
    answer: ICommentAnswers | IPostComment
    children: React.ReactNode
+   AddComment: React.ReactNode
    postId: string
+   isUpdate: boolean
+   isError: boolean
    isChildComment: boolean
    isChild?: boolean
-}> = ({ commentId, answer, children, postId, isChild = false, isChildComment = false }) => {
-   const functionParams = answer.hasOwnProperty('commentDepth')
-      ? [answer.commentDepth + 1, answer._id]
-      : [1, null]
-   const {
-      isError,
-      isUpdate,
-      answerText,
-      isAnswerOpen,
-      isSendDisabled,
-      reference,
-      commentImagePath,
-      setCommentImagePath,
-      saveAnswerMutate,
-      updateCommentMutate,
-      handleChangeText,
-      handleSetAnswerOpen,
-      handleSetAnswerOpenForUpdate,
-      handleUpdateCommentAnswerMutate,
-      handleChangeTextWithEmoji,
-   } = useAnswer(functionParams[0], functionParams[1])
+   handleSetOpen: () => void
+   handleSetOpenForUpdate: (commentText: string) => void
+}> = ({
+   commentId,
+   answer,
+   children,
+   AddComment,
+   postId,
+   isError,
+   isUpdate,
+   isChild = false,
+   isChildComment = false,
+   handleSetOpen,
+   handleSetOpenForUpdate,
+}) => {
    // Az isChildComment-et fel tudom használni, hogy eldöntsem answer-ről van-e szó, és úgy tudom módosítani
    return (
       <>
@@ -74,7 +66,7 @@ const BaseAnswerAndComment: React.FC<{
                         isChildComment={isChildComment}
                      />
                      <Options
-                        handleSetAnswerOpenForUpdate={() => handleSetAnswerOpenForUpdate(answer.comment)}
+                        handleSetAnswerOpenForUpdate={() => handleSetOpenForUpdate(answer.comment)}
                         isChildComment={isChildComment}
                         answeredUserId={answer.userId._id}
                         commentId={answer._id}
@@ -83,7 +75,7 @@ const BaseAnswerAndComment: React.FC<{
                   <CommentFooter
                      answerId={answer._id}
                      answeredAt={answer.answeredAt}
-                     handleSetAnswerOpen={handleSetAnswerOpen}
+                     handleSetAnswerOpen={handleSetOpen}
                      likes={answer.likes}
                      postId={postId}
                      isChildComment={isChildComment}
@@ -94,24 +86,7 @@ const BaseAnswerAndComment: React.FC<{
                      commentImage={answer.commentImage}
                      isUpdateActive={isUpdate}
                   />
-                  <Collapse in={isAnswerOpen} timeout={100}>
-                     <AddCommentBase
-                        handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
-                        updateCommentMutate={updateCommentMutate}
-                        handleSendCommentAnswer={saveAnswerMutate}
-                        handleChangeTextWithEmoji={handleChangeTextWithEmoji}
-                        handleAddSinglePostComment={() => {}}
-                        handleChangeText={handleChangeText}
-                        commentImagePath={commentImagePath}
-                        setCommentImagePath={setCommentImagePath}
-                        commentAnswerId={answer._id}
-                        reference={reference}
-                        commentText={answerText}
-                        isUpdate={isUpdate}
-                        isChildComment={isChildComment}
-                        isSendDisabled={isSendDisabled}
-                     />
-                  </Collapse>
+                  {AddComment}
                   {children}
                </StyledRightSide>
             </StyledListElement>
