@@ -7,7 +7,6 @@ import SendIcon from '@mui/icons-material/Send'
 
 import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
 import ImageSelector from '@/Base/ImagePreview/ImageSelector/ImageSelector'
-import DisplayCommentImage from './Includes/DisplayCommentImage'
 
 const AddCommentBase: React.FC<{
    handleSendCommentAnswer: () => void
@@ -25,7 +24,10 @@ const AddCommentBase: React.FC<{
    isSendDisabled?: boolean
    isChildComment?: boolean
    isAddPostComment?: boolean
+   children?: React.ReactNode
+   // handleSendClick: () => void
 }> = ({
+   // handleSendClick,
    handleAddSinglePostComment,
    handleUpdateCommentAnswerMutate,
    handleSendCommentAnswer,
@@ -34,6 +36,7 @@ const AddCommentBase: React.FC<{
    handleChangeTextWithEmoji,
    setCommentImagePath,
    commentImagePath,
+   children,
    commentAnswerId,
    reference,
    commentText,
@@ -104,12 +107,7 @@ const AddCommentBase: React.FC<{
                </Tooltip>
             </StyledTextContainer>
          </StyledPaperContainer>
-         {commentImagePath && (
-            <DisplayCommentImage
-               setCommentImagePath={setCommentImagePath}
-               commentImagePath={commentImagePath}
-            />
-         )}
+         {children}
       </>
    )
 }
