@@ -49,21 +49,17 @@ const SingleComment = () => {
          AddComment={
             <Collapse in={isOpen} timeout={100}>
                <AddCommentBase
-                  isAddPostComment={true}
-                  // saveAnswerMutate={saveAnswerMutate}
                   handleChangeTextWithEmoji={handleChangeTextWithEmoji}
                   handleChangeText={handleChangeText}
                   setCommentImagePath={setImagePath}
-                  handleUpdateCommentAnswerMutate={() => {}}
                   updateCommentMutate={updateCommentMutate}
-                  handleSendCommentAnswer={() => {}}
+                  handleSendCommentAnswer={saveAnswerMutate}
+                  handleUpdateCommentAnswerMutate={() => {}}
                   handleAddSinglePostComment={() => {}}
                   commentImagePath={imagePath}
-                  commentAnswerId={singleComment._id}
                   reference={reference}
                   commentText={text}
                   isUpdate={isUpdate}
-                  isChildComment={false}
                   isSendDisabled={isSendDisabled}
                />
             </Collapse>
