@@ -50,6 +50,7 @@ const useAnswerAndComment = () => {
       isOpen,
       text,
       setIsError,
+      setIsUpdate,
       setImagePath,
       handleSetOpen,
       handleChangeText,

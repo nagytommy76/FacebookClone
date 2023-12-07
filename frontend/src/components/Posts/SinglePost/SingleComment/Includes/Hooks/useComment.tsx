@@ -1,4 +1,4 @@
-import useAnswerAndComment from '../Base/Hooks/useAnswerAndComment'
+import useAnswerAndComment from './useAnswerAndComment'
 import useUpdateCommentMutate from './useUpdateCommentMutate'
 import useAnswerCreateMutate from './useAnswerCreateMutate'
 
