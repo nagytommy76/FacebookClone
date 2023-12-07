@@ -7,27 +7,24 @@ import SendIcon from '@mui/icons-material/Send'
 
 import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
 import ImageSelector from '@/Base/ImagePreview/ImageSelector/ImageSelector'
+import DisplayCommentImage from './Includes/DisplayCommentImage'
 
 const AddCommentBase: React.FC<{
    handleSendCommentAnswer: () => void
    updateCommentMutate: () => void
    handleChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void
-   handleUpdateCommentAnswerMutate: (answerId: string) => void
+   handleUpdateCommentAnswerMutate: () => void
    handleChangeTextWithEmoji: (emoji?: string) => void
    handleAddSinglePostComment: () => void
    setCommentImagePath: React.Dispatch<React.SetStateAction<FileList | null>>
    commentImagePath: FileList | null
-   commentAnswerId: string
    reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
    commentText: string
    isUpdate: boolean
    isSendDisabled?: boolean
    isChildComment?: boolean
    isAddPostComment?: boolean
-   children?: React.ReactNode
-   // handleSendClick: () => void
 }> = ({
-   // handleSendClick,
    handleAddSinglePostComment,
    handleUpdateCommentAnswerMutate,
    handleSendCommentAnswer,
@@ -36,8 +33,6 @@ const AddCommentBase: React.FC<{
    handleChangeTextWithEmoji,
    setCommentImagePath,
    commentImagePath,
-   children,
-   commentAnswerId,
    reference,
    commentText,
    isSendDisabled,
@@ -47,7 +42,7 @@ const AddCommentBase: React.FC<{
 }) => {
    const handleClick = () => {
       if (isChildComment) {
-         isUpdate ? handleUpdateCommentAnswerMutate(commentAnswerId) : handleSendCommentAnswer()
+         isUpdate ? handleUpdateCommentAnswerMutate() : handleSendCommentAnswer()
       } else {
          isUpdate
             ? updateCommentMutate()
@@ -107,7 +102,12 @@ const AddCommentBase: React.FC<{
                </Tooltip>
             </StyledTextContainer>
          </StyledPaperContainer>
-         {children}
+         {commentImagePath && (
+            <DisplayCommentImage
+               setCommentImagePath={setCommentImagePath}
+               commentImagePath={commentImagePath}
+            />
+         )}
       </>
    )
 }
