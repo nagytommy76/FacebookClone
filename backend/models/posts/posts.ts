@@ -19,16 +19,30 @@ const likes = {
    required: false,
 }
 
+const answerBase = {
+   userId: { type: Schema.Types.ObjectId, ref: 'User' },
+   comment: { type: String, required: true },
+   parentCommentId: { type: String, required: false, default: null },
+   commentDepth: { type: Number, required: true, default: 1 },
+   answeredAt: { type: Date, required: false, default: new Date() },
+   commentImage: { type: String, required: false, default: null },
+   likes,
+}
+
+const childAnswers = {
+   type: [
+      {
+         ...answerBase,
+         childAnswers: { type: [answerBase], required: false },
+      },
+   ],
+}
+
 const commentAnswers = {
    type: [
       {
-         userId: { type: Schema.Types.ObjectId, ref: 'User' },
-         comment: { type: String, required: true },
-         parentCommentId: { type: String, required: false, default: null },
-         commentDepth: { type: Number, required: true, default: 1 },
-         answeredAt: { type: Date, required: false, default: new Date() },
-         commentImage: { type: String, required: false, default: null },
-         likes,
+         ...answerBase,
+         childAnswers: { type: [childAnswers], required: false },
       },
    ],
    required: false,
