@@ -14,15 +14,34 @@ export default class PostCommentController extends BasePostController {
          if (!foundPostComment) return response.status(404).json({ msg: `post not found by id: ${postId}` })
 
          const foundCommentIndex = foundPostComment.comments.findIndex((comment) => comment._id == commentId)
-         foundPostComment.comments[foundCommentIndex].commentAnswers?.push({
-            answeredAt,
-            comment: commentAnswer,
-            commentDepth,
-            commentImage,
-            parentCommentId,
-            likes: [],
-            userId,
-         })
+
+         if (parentCommentId === null) {
+            foundPostComment.comments[foundCommentIndex].commentAnswers.push({
+               answeredAt,
+               comment: commentAnswer,
+               commentDepth,
+               commentImage,
+               parentCommentId,
+               likes: [],
+               childAnswers: [],
+               userId,
+            })
+         } else {
+            const foundAnswerIndex = foundPostComment.comments[foundCommentIndex].commentAnswers.findIndex(
+               (answer) => answer._id == parentCommentId
+            )
+            foundPostComment.comments[foundCommentIndex].commentAnswers[foundAnswerIndex].childAnswers.push({
+               answeredAt,
+               comment: commentAnswer,
+               commentDepth,
+               commentImage,
+               parentCommentId,
+               likes: [],
+               childAnswers: [],
+               userId,
+            })
+         }
+
          await foundPostComment.save()
          await foundPostComment.populate({
             path: 'comments.commentAnswers.userId',
@@ -92,7 +111,7 @@ interface ISavePostCommentAnswerRequest extends IJWTUserType {
       postId: string
       commentId: string
       commentDepth: number
-      parentCommentId: string
+      parentCommentId: string | null
       commentAnswer: string
       answeredAt: string
       commentImage: string | null
