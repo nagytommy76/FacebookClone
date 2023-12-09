@@ -5,11 +5,12 @@ export interface ICommentAnswer {
    _id?: string | ObjectId
    userId: string
    comment: string
-   parentCommentId: string
+   parentCommentId: string | null
    commentDepth: number
    answeredAt: string
    commentImage: string | null
    likes: IPostLike[]
+   childAnswers: ICommentAnswer[]
 }
 
 export interface IPostComment {
