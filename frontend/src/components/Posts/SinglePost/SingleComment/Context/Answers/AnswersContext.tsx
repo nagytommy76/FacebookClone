@@ -8,6 +8,7 @@ interface IAnswerContext {
    answerDispatch: React.Dispatch<IAnswerAction>
    getAnswerReplies(parentId: string): ICommentAnswers[]
    getAnswerImageById: (answerId: string) => string | null | undefined
+   getAnswesChildAnswers: (answerId: string) => ICommentAnswers[] | null
 }
 
 export const AnswerContext = createContext<IAnswerContext>({
@@ -21,6 +22,9 @@ export const AnswerContext = createContext<IAnswerContext>({
    parentRootAnswers: [],
    answerDispatch: () => {},
    getAnswerImageById: () => {
+      return null
+   },
+   getAnswesChildAnswers: (answerId: string) => {
       return null
    },
    getAnswerReplies: (parentId: string) => {
@@ -57,6 +61,11 @@ const AnswersContextProvider: React.FC<{
       return getCommentsByParentId[parentId]
    }
 
+   const getAnswesChildAnswers = (answerId: string) => {
+      const found = answerReducer.commentAnswers.find((answer) => answer._id === answerId)?.childAnswers
+      return found ? found : null
+   }
+
    const getAnswerImageById = (answerId: string) => {
       return answerReducer.commentAnswers.find((answer) => answer._id === answerId)?.commentImage
    }
@@ -67,6 +76,7 @@ const AnswersContextProvider: React.FC<{
             getAnswerReplies,
             answerDispatch,
             getAnswerImageById,
+            getAnswesChildAnswers,
             parentRootAnswers: getCommentsByParentId['null'],
             answerReducer,
          }}
