@@ -28,13 +28,6 @@ export default class GetCommentController {
                   'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
                },
             })
-            .populate({
-               path: 'comments.commentAnswers.childAnswers.userId',
-               select: ['_id', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-               match: {
-                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-               },
-            })
             .lean()
 
          res.status(200).json({ comments: foundComments[0].comments })
