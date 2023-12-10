@@ -8,7 +8,7 @@ interface IAnswerContext {
    answerDispatch: React.Dispatch<IAnswerAction>
    getAnswerReplies(parentId: string): ICommentAnswers[]
    getAnswerImageById: (answerId: string) => string | null | undefined
-   getAnswesChildAnswers: (answerId: string) => ICommentAnswers[] | null
+   // getAnswersChildAnswers: (answerId: string) => ICommentAnswers[] | null
 }
 
 export const AnswerContext = createContext<IAnswerContext>({
@@ -24,9 +24,9 @@ export const AnswerContext = createContext<IAnswerContext>({
    getAnswerImageById: () => {
       return null
    },
-   getAnswesChildAnswers: (answerId: string) => {
-      return null
-   },
+   // getAnswersChildAnswers: (answerId: string) => {
+   //    return null
+   // },
    getAnswerReplies: (parentId: string) => {
       return []
    },
@@ -49,22 +49,48 @@ const AnswersContextProvider: React.FC<{
    }, [allCommentAnswers])
 
    const getCommentsByParentId = useMemo(() => {
-      const grouppedAnswers: any = {}
+      const grouppedAnswers: { [index: string]: ICommentAnswers[] } = {}
       answerReducer.commentAnswers.map((answer) => {
          grouppedAnswers[answer.parentCommentId] ||= []
          grouppedAnswers[answer.parentCommentId].push(answer)
       })
+      // console.log(grouppedAnswers)
       return grouppedAnswers
    }, [answerReducer.commentAnswers])
 
    function getAnswerReplies(parentId: string): ICommentAnswers[] {
       return getCommentsByParentId[parentId]
    }
+   const getAllChildRepliesToDelete = (toDeleteAnswerId: string) => {
+      if (getCommentsByParentId[toDeleteAnswerId] !== undefined) {
+         // Ezzel így megkapom azt amit törölni szeretnék, majd megnézem,
+         // hogy az answer._id (a trölendő) benne van-e a getCommentsByParentId[parentId]
+         let toDeleteIds: string[] = []
+         for (const answer of Object.values(getCommentsByParentId[toDeleteAnswerId])) {
+            toDeleteIds.push(answer._id)
+            let toWatchAnswerId: string = ''
+            // if (getCommentsByParentId[answer._id] !== undefined)
+            //    for (const childAnswer of Object.values(getCommentsByParentId[answer._id])) {
+            //       console.log(childAnswer)
+            //       toDeleteIds.push(childAnswer._id)
+            //    }
+            // console.log(`${answerId}: ${answer}`)
+         }
+         // let toWatchAnswerId: string | null = toDeleteAnswerId
+         // while (toWatchAnswerId !== null) {
+         //    for (const answer of Object.values(getCommentsByParentId[toWatchAnswerId])) {
+         //       toDeleteIds.push(answer._id)
 
-   const getAnswesChildAnswers = (answerId: string) => {
-      const found = answerReducer.commentAnswers.find((answer) => answer._id === answerId)?.childAnswers
-      return found ? found : null
+         //       // console.log(answer)
+         //       toWatchAnswerId = answer._id
+         //       // console.log(toWatchAnswerId)
+         //    }
+         //    toWatchAnswerId = null
+         // }
+      }
    }
+   console.log(getCommentsByParentId)
+   getAllChildRepliesToDelete('65102dcb9f91c84b6d20f47c')
 
    const getAnswerImageById = (answerId: string) => {
       return answerReducer.commentAnswers.find((answer) => answer._id === answerId)?.commentImage
@@ -76,7 +102,7 @@ const AnswersContextProvider: React.FC<{
             getAnswerReplies,
             answerDispatch,
             getAnswerImageById,
-            getAnswesChildAnswers,
+            // getAnswersChildAnswers,
             parentRootAnswers: getCommentsByParentId['null'],
             answerReducer,
          }}
