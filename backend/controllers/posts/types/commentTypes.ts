@@ -10,7 +10,6 @@ export interface ICommentAnswer {
    answeredAt: string
    commentImage: string | null
    likes: IPostLike[]
-   childAnswers: ICommentAnswer[]
 }
 
 export interface IPostComment {
