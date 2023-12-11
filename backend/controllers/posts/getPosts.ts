@@ -18,7 +18,7 @@ export default class GetPostsController extends BasePostController {
       if (!userId) return res.status(404).json({ msg: 'User not found' })
       try {
          const allUsersPosts = await this.returnPostModelWithPopulated(userId)
-         res.status(200).json(allUsersPosts)
+         res.status(200).json({ allPosts: allUsersPosts })
       } catch (error) {
          res.status(500).json(error)
       }
