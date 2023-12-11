@@ -4,14 +4,16 @@ import dynamic from 'next/dynamic'
 
 import TabPanel from './Includes/TabPanel'
 const AboutMeComponent = dynamic(() => import('./AboutMe/AboutMe'), { loading: () => <h2>Töltés...</h2> })
-const PostsComponent = dynamic(() => import('./Posts/Posts'), { loading: () => <h2>Töltés!!!4444...</h2> })
+const PostsBase = dynamic(() => import('@/Base/PostsBase/PostsBase'), {
+   loading: () => <h2>Töltés!!!4444...</h2>,
+})
 
 const Body = () => {
    const tabValue = useContext(ProfileContext).tabValue
    return (
       <>
          <TabPanel value={tabValue} index={0}>
-            <PostsComponent />
+            <PostsBase isGetUsersPosts={true} />
          </TabPanel>
          <TabPanel value={tabValue} index={1}>
             <AboutMeComponent />
