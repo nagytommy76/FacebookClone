@@ -54,43 +54,58 @@ const AnswersContextProvider: React.FC<{
          grouppedAnswers[answer.parentCommentId] ||= []
          grouppedAnswers[answer.parentCommentId].push(answer)
       })
-      // console.log(grouppedAnswers)
       return grouppedAnswers
    }, [answerReducer.commentAnswers])
 
    function getAnswerReplies(parentId: string): ICommentAnswers[] {
       return getCommentsByParentId[parentId]
    }
+
+   // Végigmegyek a 65102dcb9f91c84b6d20f47c-n, majd ezekből ki kell gíyűjtenem az id-kat,
+   // és azokkal ellenőrizni getCommentsByParentId[id],
+   // Ha ez undefined vége,
+   // Ha nem undefined akkor van még childComment -> azoknak az ID-jét is begyűjteni majd azokon is végigmenni és így tovább....
+
+   const test = () => {}
+
    const getAllChildRepliesToDelete = (toDeleteAnswerId: string) => {
       if (getCommentsByParentId[toDeleteAnswerId] !== undefined) {
          // Ezzel így megkapom azt amit törölni szeretnék, majd megnézem,
          // hogy az answer._id (a trölendő) benne van-e a getCommentsByParentId[parentId]
          let toDeleteIds: string[] = []
+         let hasChildCommentIds: string[] = []
          for (const answer of Object.values(getCommentsByParentId[toDeleteAnswerId])) {
             toDeleteIds.push(answer._id)
             let toWatchAnswerId: string = ''
-            // if (getCommentsByParentId[answer._id] !== undefined)
-            //    for (const childAnswer of Object.values(getCommentsByParentId[answer._id])) {
-            //       console.log(childAnswer)
-            //       toDeleteIds.push(childAnswer._id)
-            //    }
-            // console.log(`${answerId}: ${answer}`)
-         }
-         // let toWatchAnswerId: string | null = toDeleteAnswerId
-         // while (toWatchAnswerId !== null) {
-         //    for (const answer of Object.values(getCommentsByParentId[toWatchAnswerId])) {
-         //       toDeleteIds.push(answer._id)
 
-         //       // console.log(answer)
-         //       toWatchAnswerId = answer._id
-         //       // console.log(toWatchAnswerId)
+            if (getCommentsByParentId[answer._id] !== undefined) {
+               hasChildCommentIds.push(answer._id)
+               // Ebben az esetben nincs child -> uccsó a comment ágon
+            }
+         }
+         // console.log(hasChildCommentIds)
+         // let isWhileRun = true
+         // while (isWhileRun) {
+         //    let newchildCommentIds: string[] = []
+         //    for (const commentId of hasChildCommentIds) {
+         //       for (const answer of Object.values(getCommentsByParentId[commentId])) {
+         //          if (getCommentsByParentId[answer._id] !== undefined) {
+         //             newchildCommentIds.push(commentId)
+         //          }
+         //          console.log(answer)
+         //       }
+         //       toDeleteIds.push(commentId)
+         //       // console.log(newchildCommentIds)
          //    }
-         //    toWatchAnswerId = null
+         //    hasChildCommentIds = []
+
+         //    isWhileRun = false
          // }
       }
    }
-   console.log(getCommentsByParentId)
-   getAllChildRepliesToDelete('65102dcb9f91c84b6d20f47c')
+   // console.log(getCommentsByParentId['jolsdflks'])
+   // console.log(getCommentsByParentId)
+   // getAllChildRepliesToDelete('65102dcb9f91c84b6d20f47c')
 
    const getAnswerImageById = (answerId: string) => {
       return answerReducer.commentAnswers.find((answer) => answer._id === answerId)?.commentImage
