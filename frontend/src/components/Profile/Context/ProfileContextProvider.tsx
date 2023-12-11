@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useReducer } from 'react'
 import useGetUserData from '../Hooks/useGetUserData'
-import useGetUserPosts from '../Hooks/useGetUserPosts'
 
 import UserDetailsReducer, {
    initialProfileState,
@@ -32,7 +31,6 @@ const ProfileContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
    const [profileReducer, profileDispatch] = useReducer(UserDetailsReducer, initialProfileState)
    const [tabValue, setTabValue] = useState<number>(0)
    const { data, isLoading } = useGetUserData()
-   const { userPosts } = useGetUserPosts()
 
    const selectSelectedProfilePicture = (): IProfilePicture | undefined => {
       return profileReducer.initialUserDataState.userDetails?.profilePicturePath.find(
@@ -49,10 +47,6 @@ const ProfileContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
          profileDispatch({ payload: data, type: UserDataActions.SET_INITIAL_USER_DATA })
       }
    }, [data])
-
-   useEffect(() => {
-      if (userPosts) profileDispatch({ type: UserDataActions.SET_USERS_POSTS, payload: userPosts })
-   }, [userPosts])
 
    return (
       <ProfileContext.Provider
