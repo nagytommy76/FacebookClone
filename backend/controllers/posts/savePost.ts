@@ -1,6 +1,5 @@
 import { Response, response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
-import { User as UserModel } from '../../models/user/user'
 
 import { IPostRequest, IPostImageRequest } from './types/PostTypes'
 
@@ -12,13 +11,10 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
    const userId = req.user?.userId
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
-      const postingUser = await UserModel.findById(userId)
-      if (!postingUser) return res.status(404).json({ msg: 'user not found' })
       const createdPost = await PostModel.create({
          userId: userId,
          createdAt,
          description,
-         // postedPicturesPath,
       })
       await createdPost.populate({
          path: 'userId',
@@ -27,10 +23,9 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
             'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          },
       })
-      postingUser.posts.push(createdPost._id)
-      await postingUser.save()
       res.status(201).json({ createdPost })
    } catch (error) {
+      console.log(error)
       res.status(500).json(error)
    }
 }
@@ -40,7 +35,7 @@ export const savePostImageController = async (req: IPostImageRequest, res: Respo
    const userId = req.user?.userId
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
-      const post = await PostModel.updateOne({ _id: postId, userId }, [{ $set: { postedPicturesPath } }])
+      await PostModel.updateOne({ _id: postId, userId }, [{ $set: { postedPicturesPath } }])
       res.status(201).json({ msg: 'success' })
    } catch (error) {
       res.status(500).json({ error })

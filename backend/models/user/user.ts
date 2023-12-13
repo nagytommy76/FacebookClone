@@ -68,7 +68,6 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
             },
          ],
       },
-      posts: [{ type: Schema.Types.ObjectId, ref: 'Posts' }],
    },
    { timestamps: true }
 )
