@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
 import PostContextProvider from '../../MainPage/Context/PostContextProvider'
 import useGetAllPosts from './Hooks/useGetAllPosts'
 import type { IPost } from '@/types/PostTypes'
@@ -18,8 +19,19 @@ const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHea
    loading: () => <PostHeaderSkeleton asStandalone={true} />,
 })
 
-const PostsBase = () => {
+const PostsBase: React.FC<{ isGetUsersPosts?: boolean }> = ({ isGetUsersPosts = false }) => {
+   const router = useRouter()
    const [allPosts, setAllPosts] = useState<IPost[]>([])
+   const [isUrlChanged, setIsUrlChanged] = useState<boolean>(false)
+
+   useEffect(() => {
+      console.log('route change with dependency', router.pathname)
+      setIsUrlChanged((prev) => !prev)
+      setTimeout(() => {
+         console.log(isUrlChanged)
+      }, 1500)
+   }, [router])
+
    const addNewPost = (newPost: IPost) => {
       setAllPosts([...allPosts, newPost])
    }
@@ -28,7 +40,7 @@ const PostsBase = () => {
          return prevPosts.filter((post) => post._id !== toDeletePostId)
       })
    }
-   const { isLoading } = useGetAllPosts(setAllPosts)
+   const { isLoading } = useGetAllPosts(setAllPosts, isGetUsersPosts, isUrlChanged)
 
    return (
       <>

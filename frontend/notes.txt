@@ -22,10 +22,6 @@ A NAVBAR-nál redux-ot? használni,h ogy a kép változzon mikor a profilképet 
 Egy BUG: A meglévő comment-nél ha hozzáadok egy comment answert- az nem jelenik meg, még refresh-nél sem. MEGOLDANI!!!!!!
 
 
-Esetleg egy commentAnswers-be a commentAnswers-t belerakni, tehát a CommentAnswers-nek van commentAnswers-e stb???
-És így lehet jobb törölni, mert egységben vannak
-
-
 A képeket amíg töltenek helyettesíteni egy Skeleton componensel, fetch API/Axios sal betölteni őket amíg loading mutatni???
 
 Linket is tudjak beszúrni a Post/Comment/Answer input mezőbe - lásd facebok/reddit
