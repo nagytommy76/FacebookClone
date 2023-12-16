@@ -11,13 +11,13 @@ import { HeaderImage as HeaderImageStyle } from './Style'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
 
-import AddImage from '../../../Base/ImagePreview/AddImage'
+import ImageSelector from '../../../Base/ImagePreview/ImageSelector/ImageSelector'
 const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
 const HeaderImage = () => {
    const { handleSingleImageUploadToFirebase } = useUploadFirebase()
    const { selectSelectedProfilePicture } = useContext(ProfileContext)
-   const { isButtonDisabled, setUploadedPictures, uploadedPictures } = useCheckPicture()
+   const { isButtonDisabled, setUploadedPictures, addPictures, uploadedPictures } = useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
    const mutationFunction = usePictureMutate()
 
@@ -44,13 +44,7 @@ const HeaderImage = () => {
          <ImageModal
             isModalOpen={isModalOpen}
             handleCloseDialog={handleCloseDialog}
-            AddImage={
-               <AddImage
-                  multiple={false}
-                  setUploadedPictures={setUploadedPictures}
-                  uploadedPictures={uploadedPictures}
-               />
-            }
+            AddImage={<ImageSelector addPictures={addPictures} maxFileCount={1} multiple={false} />}
          >
             <Button
                onClick={handleSetUploadPictures}
