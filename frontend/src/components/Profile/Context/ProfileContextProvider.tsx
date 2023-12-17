@@ -1,12 +1,7 @@
 import React, { createContext, useState, useEffect, useReducer } from 'react'
 import useGetUserData from '../Hooks/useGetUserData'
 
-import UserDetailsReducer, {
-   initialProfileState,
-   InitialState,
-   IBaseListAction,
-   UserDataActions,
-} from './ProfileReducer'
+import UserDetailsReducer, { initialProfileState, InitialState, IBaseListAction } from './ProfileReducer'
 import type { IProfilePicture } from '@/types/PostTypes'
 
 interface IProfileContext {
@@ -44,7 +39,7 @@ const ProfileContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
    useEffect(() => {
       if (data) {
-         profileDispatch({ payload: data, type: UserDataActions.SET_INITIAL_USER_DATA })
+         profileDispatch({ payload: data, type: 'SET_INITIAL_USER_DATA' })
       }
    }, [data])
 

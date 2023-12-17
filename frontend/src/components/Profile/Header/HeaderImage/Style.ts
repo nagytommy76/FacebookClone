@@ -36,8 +36,9 @@ export const StyledDialog = styled(Dialog)(({ theme }) => ({
 
 export const StyledImageContainer = styled('section')({
    display: 'grid',
+   justifyContent: 'center',
    gridTemplateColumns: 'auto auto auto',
-   gap: '.25rem',
+   gap: '.5rem',
 })
 
 export const StyledUploadedPic = styled(Image, {

@@ -1,18 +1,21 @@
 import React, { useContext } from 'react'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'
 
+import useMutateSelectedPic from '../Hooks/useMutateSelectedPic'
+
 import { StyledDialog, StyledUploadedPic, StyledImageContainer } from '../Style'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
-import useMutateSelectedPic from '../Hooks/useMutateSelectedPic'
+import ImagePreview from './ImagePreview'
 
 const ImageModal: React.FC<{
    isModalOpen: boolean
    AddImage: React.ReactNode
    children: React.ReactNode
+   uploadedPictures?: FileList | null
    handleCloseDialog: () => void
-}> = ({ isModalOpen, AddImage, children, handleCloseDialog }) => {
+}> = ({ isModalOpen, AddImage, children, uploadedPictures = null, handleCloseDialog }) => {
    const {
       profileReducer: { initialUserDataState },
       selectSelectedProfilePicture,
@@ -24,8 +27,8 @@ const ImageModal: React.FC<{
 
    return (
       <StyledDialog open={isModalOpen} onClose={handleCloseDialog}>
-         <DialogTitle>Profilkép feltöltése</DialogTitle>
-         <DialogContent dividers>{AddImage}</DialogContent>
+         <DialogTitle variant='h4'>Profilkép feltöltése: {AddImage}</DialogTitle>
+         <ImagePreview uploadedPictures={uploadedPictures} />
          <DialogTitle>Jelenlegi profilkép módosítása</DialogTitle>
          <DialogContent>
             <StyledImageContainer>
