@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
-import { ProfileContext } from '../../Context/ProfileContextProvider'
 import dynamic from 'next/dynamic'
-import useUploadFirebase from '../../../../hooks/useUploadFirebase'
+
+import { ProfileContext } from '../../Context/ProfileContextProvider'
 import useCheckPicture from './Hooks/useCheckPicture'
 import useModalControl from './Hooks/useModalControl'
-import usePictureMutate from './Hooks/usePictureMutate'
 
 import ProfilePic from '../../../../assets/facebook-profile.jpg'
 import { HeaderImage as HeaderImageStyle } from './Style'
@@ -15,23 +14,10 @@ import ImageSelector from '../../../Base/ImagePreview/ImageSelector/ImageSelecto
 const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
 const HeaderImage = () => {
-   const { handleSingleImageUploadToFirebase } = useUploadFirebase()
    const { selectSelectedProfilePicture } = useContext(ProfileContext)
-   const { isButtonDisabled, setUploadedPictures, addPictures, uploadedPictures } = useCheckPicture()
+   const { isButtonDisabled, addPictures, handleSetUploadPictures } = useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
-   const mutationFunction = usePictureMutate()
 
-   const handleSetUploadPictures = async () => {
-      if (!uploadedPictures) return
-      // Először feltöltöm az 1DB képet firebase/userId/profileImage mappába ha ez megvan ->
-      const uploadedPicturePath = await handleSingleImageUploadToFirebase(
-         uploadedPictures.item(0) as File,
-         'profilePicture'
-      )
-      // Elküldöm az adatbázisnak a visszakapott url-t
-      mutationFunction(uploadedPicturePath as string)
-      setUploadedPictures(null)
-   }
    return (
       <>
          <HeaderImageStyle
