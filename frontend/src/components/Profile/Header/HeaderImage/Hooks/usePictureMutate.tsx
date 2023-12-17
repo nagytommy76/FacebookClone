@@ -4,7 +4,6 @@ import type { IProfilePicture } from '@/types/PostTypes'
 
 import { useAppDispatch } from '@/utils/redux/store'
 import { setCurrentImage } from '@/utils/redux/slices/AuthSlice'
-import { UserDataActions } from '../../../Context/ProfileReducer'
 import { useContext } from 'react'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'
 
@@ -21,7 +20,7 @@ const usePictureMutate = () => {
          const selectedPic = data.data.profilePicturePath.find((image) => image.isSelected)
          if (selectedPic) dispatch(setCurrentImage(selectedPic))
          profileDispatch({
-            type: UserDataActions.SET_USER_PROFILE_PICUTRES,
+            type: 'SET_USER_PROFILE_PICUTRES',
             payload: data.data.profilePicturePath,
          })
       },
