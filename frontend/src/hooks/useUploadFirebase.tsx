@@ -17,6 +17,22 @@ const useUploadFirebase = () => {
       return uploadedImagesArray
    }
 
+   const handleSingleProfileImageUploadToFirebase = async (singleImageFile: Blob | File, userId: string) => {
+      try {
+         const imageReference = ref(
+            firebaseStorage,
+            `${userId}/profilePicture/${v4()}_${singleImageFile.name}`
+         )
+         await uploadBytes(imageReference, singleImageFile)
+         const currentImageLink = await getDownloadURL(imageReference)
+
+         return currentImageLink
+      } catch (error) {
+         console.log(error)
+         return null
+      }
+   }
+
    const handleSingleImageUploadToFirebase = async (
       singleImageFile: Blob | File,
       postID: string,
@@ -39,7 +55,11 @@ const useUploadFirebase = () => {
          return null
       }
    }
-   return { handleMultipleImageUploadToFirebase, handleSingleImageUploadToFirebase }
+   return {
+      handleMultipleImageUploadToFirebase,
+      handleSingleImageUploadToFirebase,
+      handleSingleProfileImageUploadToFirebase,
+   }
 }
 
 export default useUploadFirebase
