@@ -10,12 +10,14 @@ import { HeaderImage as HeaderImageStyle } from './Style'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
 
+import ImagePreview from './ImageModal/ImagePreview'
 import ImageSelector from '../../../Base/ImagePreview/ImageSelector/ImageSelector'
 const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
 const HeaderImage = () => {
    const { selectSelectedProfilePicture } = useContext(ProfileContext)
-   const { isButtonDisabled, addPictures, handleSetUploadPictures } = useCheckPicture()
+   const { isButtonDisabled, uploadedPictures, addPicture, removePicture, handleSetUploadPictures } =
+      useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
 
    return (
@@ -30,7 +32,10 @@ const HeaderImage = () => {
          <ImageModal
             isModalOpen={isModalOpen}
             handleCloseDialog={handleCloseDialog}
-            AddImage={<ImageSelector addPictures={addPictures} maxFileCount={1} multiple={false} />}
+            AddImageComponent={<ImageSelector addPictures={addPicture} maxFileCount={1} multiple={false} />}
+            ImagePreviewComponent={
+               <ImagePreview removePicture={removePicture} uploadedPictures={uploadedPictures} />
+            }
          >
             <Button
                onClick={handleSetUploadPictures}
