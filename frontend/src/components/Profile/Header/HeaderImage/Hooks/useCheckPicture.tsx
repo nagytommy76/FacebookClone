@@ -18,8 +18,12 @@ const useCheckPicture = () => {
       if (!uploadedPictures) setIsButtonDisabled(true)
       else setIsButtonDisabled(false)
    }, [uploadedPictures])
-   const addPictures = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+   const addPicture = (e: React.ChangeEvent<HTMLInputElement>) => {
       setUploadedPictures(e.target.files)
+   }
+   const removePicture = () => {
+      setUploadedPictures(null)
    }
 
    const handleSetUploadPictures = async () => {
@@ -36,7 +40,9 @@ const useCheckPicture = () => {
 
    return {
       isButtonDisabled,
-      addPictures,
+      uploadedPictures,
+      addPicture,
+      removePicture,
       handleSetUploadPictures,
    }
 }
