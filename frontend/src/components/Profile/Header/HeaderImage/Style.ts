@@ -27,19 +27,24 @@ export const StyledDialog = styled(Dialog)(({ theme }) => ({
    },
    [theme.breakpoints.down('sm')]: {
       '& .MuiPaper-root': {
-         width: '85%',
+         width: '95%',
+         margin: 0,
       },
+      width: '100%',
    },
 }))
 
 // MODAL IMAGE LIST STYLE ---------------------------------------------------------------------------------------------------------
 
-export const StyledImageContainer = styled('section')({
+export const StyledImageContainer = styled('section')(({ theme }) => ({
    display: 'grid',
    justifyContent: 'center',
    gridTemplateColumns: 'auto auto auto',
    gap: '.5rem',
-})
+   [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: 'auto auto',
+   },
+}))
 
 export const StyledUploadedPic = styled(Image, {
    shouldForwardProp: (propName) => propName !== 'isHighlighted',
