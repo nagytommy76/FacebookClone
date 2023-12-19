@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DialogContent from '@mui/material/DialogContent'
+import Collapse from '@mui/material/Collapse'
 
 const ImagePreview: React.FC<{ uploadedPictures: FileList | null; removePicture: () => void }> = ({
    uploadedPictures = null,
@@ -14,15 +15,15 @@ const ImagePreview: React.FC<{ uploadedPictures: FileList | null; removePicture:
 }) => {
    const imagePreview = useGetImgURL(uploadedPictures)
    return (
-      <>
-         {imagePreview && uploadedPictures && (
-            <DialogContent dividers sx={{ position: 'relative' }}>
+      <Collapse timeout={180} in={uploadedPictures !== null}>
+         {imagePreview && (
+            <DialogContent sx={{ position: 'relative', width: '275px', minHeight: '200px' }}>
                <Tooltip title='Fénykép törlése' arrow placement='top'>
                   <IconButton
                      onClick={removePicture}
-                     sx={{ position: 'absolute', right: 15, top: 15 }}
+                     sx={{ position: 'absolute', right: 10, top: 12 }}
                      aria-label='delete'
-                     size='large'
+                     size='medium'
                      color='warning'
                   >
                      <DeleteIcon fontSize='inherit' />
@@ -37,7 +38,7 @@ const ImagePreview: React.FC<{ uploadedPictures: FileList | null; removePicture:
                />
             </DialogContent>
          )}
-      </>
+      </Collapse>
    )
 }
 
