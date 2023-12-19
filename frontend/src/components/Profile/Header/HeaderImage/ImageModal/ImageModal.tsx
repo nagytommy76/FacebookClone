@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useAppSelector } from '@/reduxStore/store'
 import { ProfileContext } from '../../../Context/ProfileContextProvider'
 
 import useMutateSelectedPic from '../Hooks/useMutateSelectedPic'
@@ -15,13 +16,13 @@ const ImageModal: React.FC<{
    ImagePreviewComponent: React.ReactNode
    children: React.ReactNode
 }> = ({ isModalOpen, AddImageComponent, ImagePreviewComponent, children, handleCloseDialog }) => {
+   const userProfileImage = useAppSelector((state) => state.auth.currentImage)
    const {
       profileReducer: { initialUserDataState },
-      selectSelectedProfilePicture,
    } = useContext(ProfileContext)
    const { mutate } = useMutateSelectedPic()
    const handleSetCurrentPic = (modifyId: string) => {
-      if (selectSelectedProfilePicture()?._id != modifyId) mutate(modifyId)
+      if (userProfileImage._id != modifyId) mutate(modifyId)
    }
 
    return (

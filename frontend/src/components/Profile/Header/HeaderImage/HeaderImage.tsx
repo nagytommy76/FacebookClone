@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import dynamic from 'next/dynamic'
+import { useAppSelector } from '@/reduxStore/store'
 
-import { ProfileContext } from '../../Context/ProfileContextProvider'
 import useCheckPicture from './Hooks/useCheckPicture'
 import useModalControl from './Hooks/useModalControl'
 
@@ -15,7 +15,7 @@ import ImageSelector from '../../../Base/ImagePreview/ImageSelector/ImageSelecto
 const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
 const HeaderImage = () => {
-   const { selectSelectedProfilePicture } = useContext(ProfileContext)
+   const userProfileImage = useAppSelector((state) => state.auth.currentImage.path)
    const { isButtonDisabled, uploadedPictures, addPicture, removePicture, handleSetUploadPictures } =
       useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
@@ -24,7 +24,7 @@ const HeaderImage = () => {
       <>
          <HeaderImageStyle
             onClick={handleOpenDialog}
-            src={selectSelectedProfilePicture()?.path || ProfilePic}
+            src={userProfileImage || ProfilePic}
             alt='Profil kép'
             width={100}
             height={100}

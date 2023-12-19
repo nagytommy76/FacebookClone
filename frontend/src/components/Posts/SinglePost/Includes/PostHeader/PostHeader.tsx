@@ -24,12 +24,17 @@ const PostHeader = () => {
       },
    } = useContext(PostContext)
    const userId = useAppSelector((state) => state.auth.userId)
+   const userProfileImage = useAppSelector((state) => state.auth.currentImage)
 
    return (
       <PostHeaderStyle>
          <StyledProfileImage
             alt='My picture'
-            src={userInfo.userDetails.profilePicturePath[0].path || ProfilePic}
+            src={
+               userInfo._id === userId
+                  ? userProfileImage.path
+                  : userInfo.userDetails.profilePicturePath[0].path || ProfilePic
+            }
             width={45}
             height={45}
          />
