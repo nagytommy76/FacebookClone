@@ -6,9 +6,13 @@ import Avatar from './Includes/Avatar/Avatar'
 
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import Badge from '@mui/material/Badge'
+import Tooltip from '@mui/material/Tooltip'
 
 import LeftSide from './Includes/LeftSide/LeftSide'
-import { StyledNavbarToolbar } from './Style'
+import { StyledNavbarToolbar, RightSideContainer } from './Style'
 
 const Navbar = () => {
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
@@ -22,7 +26,16 @@ const Navbar = () => {
                   <Button color='inherit'>Belépés</Button>
                </Link>
             ) : (
-               <Avatar />
+               <RightSideContainer>
+                  <Tooltip title='Értesítések' placement='bottom'>
+                     <IconButton aria-label='notification' size='large'>
+                        <Badge badgeContent={2} color='error'>
+                           <NotificationsIcon fontSize='inherit' />
+                        </Badge>
+                     </IconButton>
+                  </Tooltip>
+                  <Avatar />
+               </RightSideContainer>
             )}
          </StyledNavbarToolbar>
       </AppBar>
