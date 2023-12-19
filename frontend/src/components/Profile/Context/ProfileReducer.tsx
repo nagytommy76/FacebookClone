@@ -2,10 +2,10 @@ import type { IUserTypes } from '@/types/AuthTypes'
 import type { IPost, IProfilePicture } from '@/types/PostTypes'
 import { produce } from 'immer'
 
-type UserDataActions = 'SET_USER_PROFILE_PICUTRES' | 'SET_INITIAL_USER_DATA'
+type UserDataActions = 'SET_INITIAL_USER_DATA'
 export interface IBaseListAction {
    type: UserDataActions
-   payload: IUserTypes | IProfilePicture[] | any
+   payload: IUserTypes
 }
 
 export interface InitialState {
@@ -52,11 +52,6 @@ export default function UserDetailsReducer(state: InitialState, action: IBaseLis
             ...state,
             initialUserDataState: action.payload,
          }
-      case 'SET_USER_PROFILE_PICUTRES':
-         const nextState = produce(state, (draft) => {
-            draft.initialUserDataState.userDetails.profilePicturePath = action.payload
-         })
-         return nextState
       default:
          return state
    }
