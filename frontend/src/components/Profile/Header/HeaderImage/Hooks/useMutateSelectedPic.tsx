@@ -1,14 +1,11 @@
-import { useContext } from 'react'
-import { ProfileContext } from '../../../Context/ProfileContextProvider'
 import { useMutation } from '@tanstack/react-query'
-import { axiosInstance as axios, AxiosResponse } from '../../../../../utils/axiosSetup/AxiosInstance'
+import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 
-import { useAppDispatch } from '../../../../../utils/redux/store'
-import { setCurrentImage } from '../../../../../utils/redux/slices/AuthSlice'
+import { useAppDispatch } from '@/reduxStore/store'
+import { setCurrentImage } from '@/reduxStore/slices/AuthSlice'
 
 const useMutateSelectedPic = () => {
    const dispatch = useAppDispatch()
-   const { profileDispatch } = useContext(ProfileContext)
    const handleRequest = async (modifyPictureId: string) => {
       return (await axios.put('/user/edit-profile-picture', {
          modifyId: modifyPictureId,
@@ -19,10 +16,6 @@ const useMutateSelectedPic = () => {
    const { mutate } = useMutation({
       mutationFn: handleRequest,
       onSuccess: (data) => {
-         profileDispatch({
-            type: 'SET_USER_PROFILE_PICUTRES',
-            payload: data.data.profilePicturePath,
-         })
          const selectedPic = data.data.profilePicturePath.find((image) => image.isSelected)
          if (selectedPic) dispatch(setCurrentImage(selectedPic))
       },
