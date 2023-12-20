@@ -4,6 +4,7 @@ import connectDB from './config/connectDB'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import { initSocketIO } from './config/socketIo'
 
 import morgan from 'morgan'
 import path, { resolve } from 'path'
@@ -11,6 +12,7 @@ import fs from 'fs'
 
 config({ path: resolve(__dirname, './.env') })
 const app: Application = express()
+
 const PORT = process.env.PORT || 5050
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 connectDB().then(() => {
@@ -22,7 +24,7 @@ connectDB().then(() => {
 app.use(
    cors({
       credentials: true,
-      origin: ['http://localhost:3000'],
+      origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:6060'],
    })
 )
 app.use(cookieParser())
@@ -34,3 +36,4 @@ app.use('/api/auth', require('./api/user/user'))
 
 app.use('/api/post', require('./api/post/post'))
 app.use('/api/post/edit', require('./api/post/modify/modify'))
+initSocketIO(app)
