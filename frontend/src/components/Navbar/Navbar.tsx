@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { useAppSelector } from '../../utils/redux/store'
+import { socket } from '@/src/utils/socketIo'
 
 import Menu from './Includes/Menu/Menu'
 import Avatar from './Includes/Avatar/Avatar'
@@ -16,6 +18,33 @@ import { StyledNavbarToolbar, RightSideContainer } from './Style'
 
 const Navbar = () => {
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+
+   useEffect(() => {
+      function onConnect(inObject: any) {
+         console.log('CONNECTED')
+         console.log(inObject)
+      }
+
+      function onDisconnect() {
+         console.log('DISCONNECT')
+      }
+
+      function onFooEvent() {
+         console.log('EVENT TÖRTÉNIK')
+      }
+      socket.connect()
+      // socket.on('test', onConnect)
+      socket.emit('get-message', { person: { age: 1245, name: 'Pista' } })
+      // socket.on('disconnect', onDisconnect)
+      // socket.on('foo', onFooEvent)
+
+      return () => {
+         socket.off('test', onConnect)
+         //    socket.off('disconnect', onDisconnect)
+         //    socket.off('foo', onFooEvent)
+      }
+   }, [])
+
    return (
       <AppBar position='sticky'>
          <StyledNavbarToolbar disableGutters>
