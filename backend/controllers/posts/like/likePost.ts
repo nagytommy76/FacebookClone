@@ -1,5 +1,6 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../../models/posts/posts'
+import { User as UserModel } from '../../../models/user/user'
 import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
 
 import BaseLikeController from '../Base/baseLike'
@@ -100,10 +101,29 @@ export default class LikePost extends BaseLikeController {
 
          const userLike = this.findUsersLikeByUserID(foundPostToModifyLike.likes, userId)
          this.checkUserLike(userLike, reactionType, foundPostToModifyLike.likes, userId)
-
          await foundPostToModifyLike.save()
 
          response.status(200).json(foundPostToModifyLike.likes)
+
+         const likedUser = await UserModel.findById(userId).select([
+            'email',
+            'firstName',
+            'sureName',
+            'userdetails.profilePicturePath',
+         ])
+
+         // Esetleg, hogy ne blokkoljam -> a response után emitelek
+         // request.ioSocket?.emit('likedPost', [{ kinek: foundPostToModifyLike.userId, kicsoda: userId }])
+         request.ioSocket?.emit('likedPost', [
+            {
+               likeType: userLike?.reactionType,
+               userId: likedUser,
+               postData: {
+                  _id: foundPostToModifyLike._id,
+                  description: foundPostToModifyLike.description,
+               },
+            },
+         ])
       } catch (error) {
          response.status(500).json({ msg: 'Internal server error', error })
       }
