@@ -12,15 +12,23 @@ export const initSocketIO = (app: Application) => {
       },
       /* options */
    })
+
    io.listen(3001)
 
-   io.on('connect', (socket) => {
+   io.on('connection', (socket) => {
       // console.log(socket.connected)
-      //   console.log('Helló SOCKET.IO')
-      io.on('get-message', (params) => {
-         console.log(params)
-      })
-      io.emit('test', { test: { name: 'semmi', age: 567, isMale: false } })
+      // Ezzel küldök minden client felé egy üzenetet
+      // io.emit('notifications', [
+      //    { name: 'liked', who: 'Pista' },
+      //    { name: 'liked', who: 'Béla' },
+      //    { name: 'liked', who: 'Alma' },
+      //    { name: 'liked', who: 'Tomi' },
+      // ])
+      // Ezzel pedig fogadom az üzit frontendről
+      // io.on('add-message', (args) => {
+      //    console.log(args)
+      // })
+      // io.on('disconnect', () => console.log('DISCONNECT'))
    })
    return io
 }

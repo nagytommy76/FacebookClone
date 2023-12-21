@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { ACCESS_TOKEN_SECRET } from '../config/endpoints.config'
+import type { ISocketRequest } from '../types'
 
-export interface IJWTUserType extends Request {
+export interface IJWTUserType extends ISocketRequest {
    user?: {
       userId: string
       email: string
