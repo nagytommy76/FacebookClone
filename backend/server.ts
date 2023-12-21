@@ -1,10 +1,11 @@
-import express, { Application } from 'express'
+import express, { Application, NextFunction, Response } from 'express'
 import { config } from 'dotenv'
 import connectDB from './config/connectDB'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import { initSocketIO } from './config/socketIo'
+import type { ISocketRequest } from './types'
 
 import morgan from 'morgan'
 import path, { resolve } from 'path'
@@ -31,9 +32,13 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
+const io = initSocketIO(app)
+app.use((request: ISocketRequest, response: Response, next: NextFunction) => {
+   request.ioSocket = io
+   next()
+})
 app.use('/api/user', require('./api/user/userData'))
 app.use('/api/auth', require('./api/user/user'))
 
 app.use('/api/post', require('./api/post/post'))
 app.use('/api/post/edit', require('./api/post/modify/modify'))
-initSocketIO(app)
