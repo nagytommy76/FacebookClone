@@ -19,6 +19,19 @@ export default class DeleteLikePost extends BaseLikeController {
          foundPost.likes = filteredLikes
          await foundPost.save()
 
+         if (request.getUser !== undefined) {
+            const toSendUser = request.getUser(foundPost.userId.toString()) as any
+            request.ioSocket?.to(toSendUser.socketId).emit('likedPost', [
+               {
+                  likeType: foundPost.likes,
+                  // userId: likedUser,
+                  postData: {
+                     _id: foundPost._id,
+                     description: foundPost.description,
+                  },
+               },
+            ])
+         }
          response.status(200).json(removedUserLikesID)
       } catch (error) {
          response.status(500).json({ msg: 'Internal server error' })

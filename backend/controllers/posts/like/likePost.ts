@@ -109,21 +109,24 @@ export default class LikePost extends BaseLikeController {
             'email',
             'firstName',
             'sureName',
-            'userdetails.profilePicturePath',
+            'userDetails.profilePicturePath',
          ])
-
          // Esetleg, hogy ne blokkoljam -> a response után emitelek
          // request.ioSocket?.emit('likedPost', [{ kinek: foundPostToModifyLike.userId, kicsoda: userId }])
-         request.ioSocket?.emit('likedPost', [
-            {
-               likeType: userLike?.reactionType,
-               userId: likedUser,
-               postData: {
-                  _id: foundPostToModifyLike._id,
-                  description: foundPostToModifyLike.description,
+         if (request.getUser !== undefined) {
+            const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as any
+
+            request.ioSocket?.to(toSendUser.socketId).emit('likedPost', [
+               {
+                  likeType: foundPostToModifyLike.likes,
+                  userId: likedUser,
+                  postData: {
+                     _id: foundPostToModifyLike._id,
+                     description: foundPostToModifyLike.description,
+                  },
                },
-            },
-         ])
+            ])
+         }
       } catch (error) {
          response.status(500).json({ msg: 'Internal server error', error })
       }
