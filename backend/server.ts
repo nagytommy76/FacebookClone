@@ -32,9 +32,11 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
-const io = initSocketIO(app)
+const { io, onlineFriends, getUser } = initSocketIO(app)
 app.use((request: ISocketRequest, response: Response, next: NextFunction) => {
    request.ioSocket = io
+   request.onlineFriends = onlineFriends
+   request.getUser = getUser
    next()
 })
 app.use('/api/user', require('./api/user/userData'))
