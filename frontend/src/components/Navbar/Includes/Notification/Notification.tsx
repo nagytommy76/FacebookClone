@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { socket } from '@/src/utils/socketIo'
+import { useAppSelector } from '@/src/utils/redux/store'
 
 import IconButton from '@mui/material/IconButton'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -10,7 +11,7 @@ import NotificationsMenu from './NotificationsMenu/NotificationsMenu'
 
 const Notification = () => {
    const [notifications, setNotifications] = useState<{ postData: { description: string } }[]>([])
-
+   const userId = useAppSelector((state) => state.auth.userId)
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorEl(event.currentTarget)
@@ -24,6 +25,7 @@ const Notification = () => {
       // Ez azért kell mert ki van kapcsolva az automata connect: autoConnect
       socket.connect()
       socket.on('connect', () => {
+         socket.emit('newUser', userId)
          // Ezzel küldök adatot a szerver felé
          // socket.emit('add-message', { person: { age: 1245, name: 'Pista' } })
 
@@ -31,14 +33,14 @@ const Notification = () => {
          socket.on('notifications', onNotifications)
          socket.on('likedPost', (args) => {
             setNotifications(args)
-            console.log(args)
          })
       })
 
       return () => {
          socket.off('notifications', onNotifications)
+         socket.disconnect()
       }
-   }, [])
+   }, [userId])
 
    return (
       <>
