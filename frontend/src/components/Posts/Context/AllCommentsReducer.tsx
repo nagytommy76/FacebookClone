@@ -19,6 +19,7 @@ export const initialAllCommentsData: IPostComment[] = [
       _id: '',
       likes: [],
       commentAnswers: [],
+      commentImage: '',
       userId: {
          _id: '',
          email: '',

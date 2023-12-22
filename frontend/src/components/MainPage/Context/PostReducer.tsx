@@ -4,6 +4,7 @@ import type { IPost } from '@/types/PostTypes'
 export type PostAction =
    | 'REMOVE_SINGLE_LIKE'
    | 'ADD_POST_LIKE'
+   | 'ADD_SINGLE_SOCKET_POST_LIKE'
    | 'SET_SINGLE_POST'
    | 'SET_COMMENTS_LENGTH'
    | 'ADD_UPLOADED_IMAGES'
@@ -72,11 +73,17 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
             draft.singlePost.likes = action.payload
          })
          return newPostLikes
+      case 'ADD_SINGLE_SOCKET_POST_LIKE':
+         const socketPostLikes = produce(state, (draft) => {
+            const { likes, toModifyPostId } = action.payload
+            if (draft.singlePost._id === toModifyPostId) {
+               draft.singlePost.likes = likes
+            }
+         })
+         return socketPostLikes
       case 'REMOVE_SINGLE_LIKE':
          const removedPostLikes = produce(state, (draft) => {
-            const modified = draft.singlePost.likes.filter(
-               (like) => like._id.toString() === action.payload.toString()
-            )
+            const modified = draft.singlePost.likes.filter((like) => like._id.toString() === action.payload)
             draft.singlePost.likes = modified
          })
          return removedPostLikes
