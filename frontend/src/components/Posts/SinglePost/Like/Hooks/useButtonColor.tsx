@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import Image from 'next/image'
 import type { LikeTypes } from '@/types/LikeTypes'
 
@@ -32,7 +32,7 @@ const useButtonColor = () => {
       'Like' | 'Imádom' | 'Ölelés' | 'Vicces' | 'Hűha' | 'Szomorú' | 'Dühítő'
    >('Like')
 
-   const setButtonColor = (currentLikeType: LikeTypes | undefined) => {
+   const setButtonColor = useCallback((currentLikeType: LikeTypes | undefined) => {
       switch (currentLikeType) {
          case 'isLike':
             setLikeButtonColor(buttonColor.isLike)
@@ -75,7 +75,7 @@ const useButtonColor = () => {
             setLikeBtnText('Like')
             break
       }
-   }
+   }, [])
    return {
       likeButtonColor,
       likeBtnIcon,

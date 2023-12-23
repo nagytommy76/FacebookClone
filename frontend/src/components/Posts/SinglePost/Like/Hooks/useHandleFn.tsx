@@ -1,18 +1,21 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { CommentContext } from '@/CommentContext/CommentContext'
+
 import useLikeMutate from './useLikeMutate'
 import useLikeComment from './useLikeComment'
 import useLikeAnswer from './useLikeAnswer'
 import useLikeDelete from './delete/useLikeDelete'
 import useLikeCommentDelete from './delete/useLikeCommentDelete'
 import useAnswerLikeDelete from './delete/useAnswerLikeDelete'
-import type { LikeTypes } from '@/types/LikeTypes'
+import useLikeIdDelete from './useLikeIdDelete'
+import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
 
 // A commentId az lehet answerId is
 const useHandleFn = (
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void,
    postId: string,
-   commentId: string
+   commentId: string,
+   postLikes: IPostLike[]
 ) => {
    const {
       commentReducer: { singleComment },
@@ -23,9 +26,7 @@ const useHandleFn = (
    const { deleteMutation } = useLikeDelete()
    const { deleteCommentLikeMutation } = useLikeCommentDelete()
    const { deleteAnswerLikeMutation } = useAnswerLikeDelete()
-
-   const [like, setLike] = useState<LikeTypes | undefined>(undefined)
-   const [likeIdToDelete, setLikeIdToDelete] = useState<string>('')
+   const { like, likeIdToDelete, setLike } = useLikeIdDelete(setButtonColor, postLikes)
 
    const handleUnsetLike = () => {
       // ide egy remove post like mutate kell
@@ -96,8 +97,6 @@ const useHandleFn = (
 
    return {
       handleLikeBtnClick,
-      handleSetLikeAndButtonColor,
-      setLikeIdToDelete,
       handleCommentLikeBtnClick,
       handleCommentAnswerLikeClick,
       handleSendPostLike,
