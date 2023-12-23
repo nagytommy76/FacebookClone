@@ -1,10 +1,7 @@
-import React, { useEffect, useContext, useCallback } from 'react'
-import { PostContext } from '@/PostContext/PostContextProvider'
 import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
-import { useAppSelector } from '@/utils/redux/store'
-import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
-import { socket } from '@/src/utils/socketIo'
+import useSocket from './Hooks/useSocket'
+import type { IPostLike } from '@/types/LikeTypes'
 
 import Button from '@mui/material/Button'
 import { StyledCommentLikeButton } from './Styles'
@@ -20,49 +17,16 @@ const Like: React.FC<{
    children?: React.ReactNode
    isChildComment?: boolean
 }> = ({ postId, postLikes, isPostLike = true, children, commentId, isChildComment = false }) => {
-   const { postsDispatch } = useContext(PostContext)
-   const userId = useAppSelector((state) => state.auth.userId)
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
+   useSocket()
    const {
-      setLikeIdToDelete,
       handleLikeBtnClick,
-      handleSetLikeAndButtonColor,
       handleCommentLikeBtnClick,
       handleCommentAnswerLikeClick,
       handleSendPostLike,
       handleSendCommentLike,
       handleSendAnswerLike,
-   } = useHandleFn(setButtonColor, postId, commentId)
-
-   const onLikePost = useCallback(
-      (args: { likeType: IPostLike; postData: { _id: string } }[]) => {
-         postsDispatch({
-            type: 'ADD_SINGLE_SOCKET_POST_LIKE',
-            payload: { likes: args[0].likeType, toModifyPostId: args[0].postData._id },
-         })
-      },
-      [postsDispatch]
-   )
-
-   useEffect(() => {
-      socket.on('likedPost', onLikePost)
-      return () => {
-         socket.off('likedPost', onLikePost)
-      }
-   }, [onLikePost])
-
-   useEffect(() => {
-      postLikes.map((like) => {
-         // Itt kiválasztom, hogy a belépett user mit nyomott (isLike, isAngry stb...)
-         if (userId === like.userId) {
-            setLikeIdToDelete(like._id)
-            const likeType = Object.keys(like.reactionType).filter(
-               (key) => like.reactionType[key]
-            )[0] as LikeTypes
-            handleSetLikeAndButtonColor(likeType)
-         }
-      })
-   }, [postLikes, userId])
+   } = useHandleFn(setButtonColor, postId, commentId, postLikes)
 
    return (
       <>
