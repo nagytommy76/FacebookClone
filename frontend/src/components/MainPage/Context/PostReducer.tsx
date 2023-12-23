@@ -83,8 +83,7 @@ export default function PostsReducer(state: InitialPostsState, action: IPostsAct
          return socketPostLikes
       case 'REMOVE_SINGLE_LIKE':
          const removedPostLikes = produce(state, (draft) => {
-            const modified = draft.singlePost.likes.filter((like) => like._id.toString() === action.payload)
-            draft.singlePost.likes = modified
+            draft.singlePost.likes = action.payload
          })
          return removedPostLikes
       case 'SET_COMMENTS_LENGTH':
