@@ -103,31 +103,32 @@ export default class LikePost extends BaseLikeController {
          this.checkUserLike(userLike, reactionType, foundPostToModifyLike.likes, userId)
          await foundPostToModifyLike.save()
 
-         response.status(200).json(foundPostToModifyLike.likes)
+         const likedUser = await UserModel.find({
+            _id: userId,
+            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+         }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
 
-         const likedUser = await UserModel.findById(userId).select([
-            'email',
-            'firstName',
-            'sureName',
-            'userDetails.profilePicturePath',
-         ])
          // Esetleg, hogy ne blokkoljam -> a response után emitelek
          // request.ioSocket?.emit('likedPost', [{ kinek: foundPostToModifyLike.userId, kicsoda: userId }])
          if (request.getUser !== undefined) {
             const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as any
-
-            request.ioSocket?.to(toSendUser.socketId).emit('likedPost', [
-               {
-                  likeType: foundPostToModifyLike.likes,
-                  userId: likedUser,
-                  postData: {
-                     _id: foundPostToModifyLike._id,
-                     description: foundPostToModifyLike.description,
+            if (toSendUser !== undefined) {
+               request.ioSocket?.to(toSendUser.socketId).emit('likedPost', [
+                  {
+                     likeType: foundPostToModifyLike.likes,
+                     notificationType: 'isLike',
+                     userId: likedUser,
+                     postData: {
+                        _id: foundPostToModifyLike._id,
+                        description: foundPostToModifyLike.description,
+                     },
                   },
-               },
-            ])
+               ])
+            }
          }
+         response.status(200).json(foundPostToModifyLike.likes)
       } catch (error) {
+         console.log(error)
          response.status(500).json({ msg: 'Internal server error', error })
       }
    }
