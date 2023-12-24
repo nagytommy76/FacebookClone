@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { socket } from '@/src/utils/socketIo'
 import { useAppSelector } from '@/src/utils/redux/store'
+import type { NotificationType } from './Types'
 
 import IconButton from '@mui/material/IconButton'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -10,15 +11,13 @@ import Tooltip from '@mui/material/Tooltip'
 import NotificationsMenu from './NotificationsMenu/NotificationsMenu'
 
 const Notification = () => {
-   const [notifications, setNotifications] = useState<{ postData: { description: string } }[]>([])
+   const [notifications, setNotifications] = useState<NotificationType[]>([])
    const userId = useAppSelector((state) => state.auth.userId)
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget)
-   }
 
    useEffect(() => {
-      function onNotifications(inObject: any) {
+      function onNotifications(inObject: NotificationType[]) {
+         console.log(inObject)
          setNotifications(inObject)
       }
 
@@ -32,6 +31,7 @@ const Notification = () => {
          // Ezzel fogadok adatokat a szerverről, az 1. paraméter a neve
          socket.on('notifications', onNotifications)
          socket.on('likedPost', (args) => {
+            console.log(args)
             setNotifications(args)
          })
       })
@@ -45,18 +45,17 @@ const Notification = () => {
    return (
       <>
          <Tooltip title='Értesítések' placement='bottom'>
-            <IconButton onClick={handleClick} aria-label='notification' size='large'>
+            <IconButton
+               onClick={(event) => setAnchorEl(event.currentTarget)}
+               aria-label='notification'
+               size='large'
+            >
                <Badge badgeContent={notifications.length} color='error'>
                   <NotificationsIcon fontSize='inherit' />
                </Badge>
             </IconButton>
          </Tooltip>
-         <NotificationsMenu
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            handleClick={handleClick}
-            notifications={notifications}
-         />
+         <NotificationsMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} notifications={notifications} />
       </>
    )
 }
