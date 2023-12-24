@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
 import AllCommentContextProvider from '@/src/components/Posts/Context/AllCommentsContext'
 
-import Paper from '@mui/material/Paper'
+import Paper, { PaperProps } from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import {
@@ -46,7 +46,10 @@ const SinglePost: React.FC<{
 
    return (
       <>
-         <Paper sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px', position: 'relative' }}>
+         <Paper
+            id={singlePost._id}
+            sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px', position: 'relative' }}
+         >
             {children}
             <BodyDescriptionSection>
                <Typography variant='subtitle1'>{singlePost.description}</Typography>
