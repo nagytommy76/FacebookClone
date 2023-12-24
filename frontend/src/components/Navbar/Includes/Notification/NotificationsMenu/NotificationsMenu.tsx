@@ -1,21 +1,26 @@
 import { SetStateAction } from 'react'
+import Link from 'next/link'
+import type { NotificationType } from '../Types'
 
+import { StyledImage } from './Style'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
 
 const NotificationsMenu: React.FC<{
-   notifications: any[]
+   notifications: NotificationType[]
    anchorEl: HTMLElement | null
    setAnchorEl: (value: SetStateAction<HTMLElement | null>) => void
-   handleClick: (event: React.MouseEvent<HTMLElement>) => void
-}> = ({ notifications, anchorEl, setAnchorEl, handleClick }) => {
+}> = ({ notifications, anchorEl, setAnchorEl }) => {
    const open = Boolean(anchorEl)
+
    const handleClose = () => {
       setAnchorEl(null)
    }
+
    return (
       <>
-         {notifications.length > 0 && (
+         {notifications && notifications.length > 0 && (
             <Menu
                anchorEl={anchorEl}
                id='notifications-menu'
@@ -26,9 +31,25 @@ const NotificationsMenu: React.FC<{
                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                {notifications.map((notification, index) => (
-                  <MenuItem key={index} onClick={handleClose}>
-                     {notification.postData.description}
-                  </MenuItem>
+                  <Link key={index} href={`#${notification.postData._id}`}>
+                     <MenuItem key={index} onClick={handleClose} sx={{ maxWidth: '400px' }}>
+                        <StyledImage
+                           src={notification.userId.userDetails?.profilePicturePath[0].path}
+                           alt='Profile IMG'
+                           height={65}
+                           width={65}
+                        />
+                        <Typography variant='caption'>
+                           <Typography variant='h6' gutterBottom>
+                              {notification.userId.firstName} {notification.userId.sureName}
+                           </Typography>{' '}
+                           Likeolta a bejegyzésedet:
+                           <Typography noWrap sx={{ width: '300px' }}>
+                              {notification.postData.description}
+                           </Typography>
+                        </Typography>
+                     </MenuItem>
+                  </Link>
                ))}
             </Menu>
          )}
