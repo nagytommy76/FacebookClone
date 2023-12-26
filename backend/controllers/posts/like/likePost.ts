@@ -108,8 +108,6 @@ export default class LikePost extends BaseLikeController {
             'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
 
-         // Esetleg, hogy ne blokkoljam -> a response után emitelek
-         // request.ioSocket?.emit('likedPost', [{ kinek: foundPostToModifyLike.userId, kicsoda: userId }])
          if (request.getUser !== undefined) {
             const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as any
             if (toSendUser !== undefined) {

@@ -1,7 +1,9 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
+import { User as UserModel } from '../../models/user/user'
 import BasePostController from './Base/basePost'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import type { IOnlineFriends } from '../../config/socketIo'
 
 export default class PostCommentController extends BasePostController {
    answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
@@ -48,7 +50,8 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
    if (!userId) return response.status(404).json({ msg: 'User not found' })
    try {
       const foundPost = await PostModel.findById(postId)
-      foundPost?.comments.push({
+      if (!foundPost) return response.status(404).json({ msg: 'Post not found' })
+      foundPost.comments.push({
          comment,
          userId,
          parentCommentId: null,
@@ -58,22 +61,45 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          commentImage,
          commentAnswers: [],
       })
-      await foundPost?.save()
-      await foundPost?.populate({
+      await foundPost.save()
+      await foundPost.populate({
          path: 'comments.userId',
          select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
          match: {
             'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          },
       })
-      await foundPost?.populate({
+      await foundPost.populate({
          path: 'comments.commentAnswers.userId',
          select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
          match: {
             'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          },
       })
-      response.status(200).json({ comments: foundPost?.comments })
+
+      const likedUser = await UserModel.findOne({
+         _id: userId,
+         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+      }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
+
+      if (request.getUser !== undefined) {
+         const toSendUser = request.getUser(foundPost.userId.toString() as any) as IOnlineFriends
+         if (toSendUser !== undefined) {
+            request.ioSocket?.to(toSendUser.socketId).emit('addComment', [
+               {
+                  notificationType: 'isComment',
+                  newComments: foundPost.comments,
+                  userId: likedUser,
+                  postData: {
+                     _id: foundPost._id,
+                     description: foundPost.description,
+                  },
+               },
+            ])
+         }
+      }
+
+      response.status(200).json({ comments: foundPost.comments })
    } catch (error) {
       response.status(500).json({ error })
    }

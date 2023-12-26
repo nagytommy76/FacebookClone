@@ -23,10 +23,9 @@ export default class DeleteLikePost extends BaseLikeController {
          if (request.getUser !== undefined) {
             const toSendUser = request.getUser(foundPost.userId.toString()) as any
             if (toSendUser !== undefined) {
-               request.ioSocket?.to(toSendUser.socketId).emit('likedPost', [
+               request.ioSocket?.to(toSendUser.socketId).emit('dislikedPost', [
                   {
                      likeType: foundPost.likes,
-                     // userId: likedUser,
                      postData: {
                         _id: foundPost._id,
                         description: foundPost.description,
