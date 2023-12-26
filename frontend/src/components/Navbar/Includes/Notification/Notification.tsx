@@ -16,28 +16,23 @@ const Notification = () => {
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
    useEffect(() => {
-      function onNotifications(inObject: NotificationType[]) {
-         console.log(inObject)
-         setNotifications(inObject)
-      }
-
       // Ez azért kell mert ki van kapcsolva az automata connect: autoConnect
       socket.connect()
       socket.on('connect', () => {
          socket.emit('newUser', userId)
-         // Ezzel küldök adatot a szerver felé
-         // socket.emit('add-message', { person: { age: 1245, name: 'Pista' } })
 
-         // Ezzel fogadok adatokat a szerverről, az 1. paraméter a neve
-         socket.on('notifications', onNotifications)
          socket.on('likedPost', (args) => {
+            setNotifications((prev) => [...prev, args])
+         })
+         socket.on('addComment', (args) => {
             console.log(args)
             setNotifications(args)
          })
       })
-
+      console.log(notifications)
       return () => {
-         socket.off('notifications', onNotifications)
+         socket.off('likedPost')
+         socket.off('addComment')
          socket.disconnect()
       }
    }, [userId])
