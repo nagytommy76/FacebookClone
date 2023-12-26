@@ -29,7 +29,6 @@ const AddComment: React.FC<{
             setCommentImagePath={setCommentImagePath}
             commentImagePath={commentImagePath}
             updateCommentMutate={() => {}}
-            commentAnswerId=''
             handleSendCommentAnswer={() => {}}
             handleUpdateCommentAnswerMutate={() => {}}
          />

@@ -9,6 +9,8 @@ import AddEmojiButton from '@/Base/EmojiPicker/AddEmojiButton'
 import ImageSelector from '@/Base/ImagePreview/ImageSelector/ImageSelector'
 import DisplayCommentImage from './Includes/DisplayCommentImage'
 
+import useAddCommentSocket from './Hooks/useAddCommentSocket'
+
 const AddCommentBase: React.FC<{
    handleSendCommentAnswer: () => void
    updateCommentMutate: () => void
@@ -40,6 +42,7 @@ const AddCommentBase: React.FC<{
    isChildComment = false,
    isAddPostComment = false,
 }) => {
+   useAddCommentSocket()
    const handleClick = () => {
       if (isChildComment) {
          isUpdate ? handleUpdateCommentAnswerMutate() : handleSendCommentAnswer()

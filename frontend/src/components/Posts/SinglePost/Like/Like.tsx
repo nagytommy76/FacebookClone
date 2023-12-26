@@ -1,6 +1,7 @@
 import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
-import useSocket from './Hooks/useSocket'
+import useLikePostSocket from './Hooks/Sockets/useLikePostSocket'
+import useRemoveLikeSocket from './Hooks/Sockets/useRemoveLikeSocket'
 import type { IPostLike } from '@/types/LikeTypes'
 
 import Button from '@mui/material/Button'
@@ -18,7 +19,8 @@ const Like: React.FC<{
    isChildComment?: boolean
 }> = ({ postId, postLikes, isPostLike = true, children, commentId, isChildComment = false }) => {
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
-   useSocket()
+   useLikePostSocket()
+   useRemoveLikeSocket()
    const {
       handleLikeBtnClick,
       handleCommentLikeBtnClick,
