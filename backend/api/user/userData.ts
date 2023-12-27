@@ -7,8 +7,11 @@ import {
    editSelectedProfilePicture,
    getCurrentSelectedProfileImage,
 } from '../../controllers/users/userDetails'
+import { getNotifications } from '../../controllers/users/notifications'
 
 const router = Router()
+
+router.get('/notifications', authenticateAccessTokenForApi, getNotifications)
 
 router.get('/get-details', authenticateAccessTokenForApi, getUserDetailsWithOwnPosts)
 router.get('/get-profile-pictures', authenticateAccessTokenForApi, getCurrentProfilePictures)
