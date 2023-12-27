@@ -114,14 +114,37 @@ export default class LikePost extends BaseLikeController {
                request.ioSocket?.to(toSendUser.socketId).emit('likedPost', [
                   {
                      likeType: foundPostToModifyLike.likes,
-                     notificationType: 'isLike',
+                     notificationType: 'isPostLike',
                      userId: likedUser[0],
+                     createdAt: new Date(),
                      postData: {
                         _id: foundPostToModifyLike._id,
                         description: foundPostToModifyLike.description,
                      },
                   },
                ])
+               const toSaveNotification = await UserModel.findById(foundPostToModifyLike.userId).select([
+                  'notifications',
+               ])
+
+               if (toSaveNotification) {
+                  toSaveNotification.notifications.push({
+                     isRead: false,
+                     notificationType: 'isPostLike',
+                     createdAt: new Date(),
+                     postData: {
+                        postId: foundPostToModifyLike._id,
+                        description: foundPostToModifyLike.description,
+                     },
+                     userDetails: {
+                        firstName: likedUser[0].firstName,
+                        sureName: likedUser[0].sureName,
+                        userId: likedUser[0].id,
+                        profilePicture: likedUser[0].userDetails.profilePicturePath[0].path,
+                     },
+                  })
+                  toSaveNotification.save()
+               }
             }
          }
          response.status(200).json(foundPostToModifyLike.likes)
