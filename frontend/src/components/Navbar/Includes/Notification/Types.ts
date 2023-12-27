@@ -1,12 +1,15 @@
-import type { IProfilePicture } from '@/src/types/PostTypes'
-
 export type NotificationType = {
-   notificationType: 'isLike' | 'isComment'
-   postData: { description: string; _id: string }
-   userId: {
-      email: string
+   notificationType: 'isComment' | 'isPostLike' | 'isCommentLike'
+   isRead: boolean
+   createdAt: Date
+   postData: {
+      postId: string
+      description: string
+   }
+   userDetails: {
+      userId: String
       firstName: string
       sureName: string
-      userDetails: { profilePicturePath: IProfilePicture[] }
+      profilePicture: string
    }
 }
