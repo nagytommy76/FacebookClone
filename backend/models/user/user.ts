@@ -71,6 +71,25 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
    },
    { timestamps: true }
 )
+UserSchema.add({
+   notifications: [
+      {
+         notificationType: String,
+         isRead: Boolean,
+         createdAt: Date,
+         postData: {
+            description: String,
+            postId: String,
+         },
+         userDetails: {
+            userId: String,
+            firstName: String,
+            sureName: String,
+            profilePicture: String,
+         },
+      },
+   ],
+})
 
 UserStatics(UserSchema)
 

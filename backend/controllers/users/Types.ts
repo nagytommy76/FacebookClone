@@ -1,5 +1,5 @@
 import { Model, ObjectId } from 'mongoose'
-import { Request } from 'express'
+import type { Request } from 'express'
 export interface IRegisterRequest extends Request {
    body: {
       email: string
@@ -18,6 +18,22 @@ export interface ILoginRequest extends Request {
    }
 }
 
+export interface INotifications {
+   notificationType: 'isComment' | 'isPostLike' | 'isCommentLike'
+   isRead: boolean
+   createdAt: Date
+   postData: {
+      postId: string | ObjectId
+      description: string
+   }
+   userDetails: {
+      userId: String | ObjectId
+      firstName: string
+      sureName: string
+      profilePicture: string
+   }
+}
+
 export interface IUserTypes {
    _id: ObjectId
    email: string
@@ -26,6 +42,7 @@ export interface IUserTypes {
    password: string
    isEmailConfirmed: boolean
    friends: { userId: ObjectId }[]
+   notifications: INotifications[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
       gender: 'male' | 'female'
