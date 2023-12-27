@@ -19,41 +19,37 @@ const NotificationsMenu: React.FC<{
    }
 
    return (
-      <>
-         {notifications && notifications.length > 0 && (
-            <Menu
-               anchorEl={anchorEl}
-               id='notifications-menu'
-               open={open}
-               onClose={handleClose}
-               onClick={handleClose}
-               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-               {notifications.map((notification, index) => (
-                  <Link key={index} href={`#${notification.postData._id}`}>
-                     <MenuItem key={index} onClick={handleClose} sx={{ maxWidth: '400px' }}>
-                        <StyledImage
-                           src={notification.userId.userDetails?.profilePicturePath[0].path}
-                           alt='Profile IMG'
-                           height={65}
-                           width={65}
-                        />
-                        <Typography variant='caption'>
-                           <Typography variant='h6' gutterBottom>
-                              {notification.userId.firstName} {notification.userId.sureName}
-                           </Typography>{' '}
-                           Likeolta a bejegyzésedet:
-                           <Typography noWrap sx={{ width: '300px' }}>
-                              {notification.postData.description}
-                           </Typography>
-                        </Typography>
-                     </MenuItem>
-                  </Link>
-               ))}
-            </Menu>
-         )}
-      </>
+      <Menu
+         anchorEl={anchorEl}
+         id='notifications-menu'
+         open={open}
+         onClose={handleClose}
+         onClick={handleClose}
+         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+         {notifications.map((notification, index) => (
+            <Link key={index} href={`#${notification.postData.postId}`}>
+               <MenuItem key={index} onClick={handleClose} sx={{ maxWidth: '400px' }}>
+                  <StyledImage
+                     src={notification.userDetails.profilePicture}
+                     alt='Profile IMG'
+                     height={65}
+                     width={65}
+                  />
+                  <Typography variant='caption'>
+                     <Typography variant='h6' gutterBottom>
+                        {notification.userDetails.firstName} {notification.userDetails.sureName}
+                     </Typography>{' '}
+                     Likeolta a bejegyzésedet:
+                     <Typography noWrap sx={{ width: '300px' }}>
+                        {notification.postData.description}
+                     </Typography>
+                  </Typography>
+               </MenuItem>
+            </Link>
+         ))}
+      </Menu>
    )
 }
 
