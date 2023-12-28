@@ -1,4 +1,5 @@
 export type NotificationType = {
+   _id: string
    notificationType: 'isComment' | 'isPostLike' | 'isCommentLike'
    isRead: boolean
    createdAt: Date

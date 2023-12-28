@@ -16,7 +16,7 @@ const Notification = () => {
    const [notifications, setNotifications] = useState<NotificationType[] | null>(null)
    const userId = useAppSelector((state) => state.auth.userId)
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-   useGetNotifications(setNotifications)
+   const activeNotifications = useGetNotifications(setNotifications)
 
    useEffect(() => {
       // Ez azért kell mert ki van kapcsolva az automata connect: autoConnect
@@ -48,7 +48,7 @@ const Notification = () => {
                aria-label='notification'
                size='large'
             >
-               <Badge badgeContent={notifications?.length} color='error'>
+               <Badge badgeContent={activeNotifications} color='error'>
                   <NotificationsIcon fontSize='inherit' />
                </Badge>
             </IconButton>
