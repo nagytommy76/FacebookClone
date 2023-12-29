@@ -13,3 +13,26 @@ export const getNotifications = async (request: IJWTUserType, response: Response
       response.status(500).json(error)
    }
 }
+
+export const setActiveNotifications = async (request: IJWTUserType, response: Response) => {
+   try {
+      const userId = request.user?.userId
+      const notificationId = request.body.notificationId as string
+
+      const foundUsersNotification = await UserModel.updateOne(
+         {
+            _id: userId,
+            notifications: { $elemMatch: { _id: notificationId } },
+         },
+         {
+            $set: {
+               'notifications.$.isRead': true,
+            },
+         }
+      )
+      response.status(200).json({ csá: 'csá', foundUsersNotification })
+   } catch (error) {
+      console.log(error)
+      response.status(500).json(error)
+   }
+}
