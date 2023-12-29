@@ -115,10 +115,16 @@ export default class LikePost extends BaseLikeController {
                   {
                      likeType: foundPostToModifyLike.likes,
                      notificationType: 'isPostLike',
-                     userId: likedUser[0],
+                     isRead: false,
+                     userDetails: {
+                        userId: likedUser[0].id,
+                        firstName: likedUser[0].firstName,
+                        sureName: likedUser[0].sureName,
+                        profilePicture: likedUser[0].userDetails.profilePicturePath[0].path,
+                     },
                      createdAt: new Date(),
                      postData: {
-                        _id: foundPostToModifyLike._id,
+                        postId: foundPostToModifyLike._id,
                         description: foundPostToModifyLike.description,
                      },
                   },
