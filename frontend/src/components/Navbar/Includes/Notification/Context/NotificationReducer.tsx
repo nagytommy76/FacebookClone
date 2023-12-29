@@ -1,7 +1,11 @@
 import { produce } from 'immer'
 import type { NotificationType } from '../Types'
 
-export type NotificationsAction = 'SET_ALL_NOTIFICATIONS' | 'SET_ACTIVE' | 'UPDATE_ISREAD_BYID'
+export type NotificationsAction =
+   | 'SET_ALL_NOTIFICATIONS'
+   | 'ADD_NOTIFICATION'
+   | 'SET_ACTIVE'
+   | 'UPDATE_ISREAD_BYID'
 
 export interface INotificationsAction {
    type: NotificationsAction
@@ -28,6 +32,11 @@ export default function PostsReducer(
             draft.notifications = action.payload
          })
          return allNot
+      case 'ADD_NOTIFICATION':
+         const addedNot = produce(state, (draft) => {
+            draft.notifications?.push(action.payload)
+         })
+         return addedNot
       case 'SET_ACTIVE':
          const active = produce(state, (draft) => {
             draft.activeNotifications = action.payload

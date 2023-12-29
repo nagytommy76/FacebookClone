@@ -3,7 +3,7 @@ import { useAppSelector } from '../../utils/redux/store'
 
 import Menu from './Includes/Menu/Menu'
 import Avatar from './Includes/Avatar/Avatar'
-import Notification from './Includes/Notification/Notification'
+import NotificationContextProvider from './Includes/Notification/Context/NotificationContextProvider'
 import LeftSide from './Includes/LeftSide/LeftSide'
 import { StyledNavbarToolbar, RightSideContainer } from './Style'
 
@@ -23,7 +23,7 @@ const Navbar = () => {
                </Link>
             ) : (
                <RightSideContainer>
-                  <Notification />
+                  <NotificationContextProvider />
                   <Avatar />
                </RightSideContainer>
             )}
