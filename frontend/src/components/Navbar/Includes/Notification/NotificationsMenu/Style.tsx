@@ -16,15 +16,39 @@ export const StyledTextArea = styled('div')({
 export const StyledIsActive = styled('span', {
    shouldForwardProp: (prop) => prop !== 'isRead',
 })(({ isRead = false }: { isRead: boolean }) => ({
+   display: `${isRead ? 'none' : 'flex'}`,
+   width: '12px',
+   height: '12px',
+
    position: 'absolute',
    top: 10,
    right: 10,
 
-   width: '10px',
-   height: '10px',
-   backgroundColor: 'green',
+   backgroundColor: '#09F905',
    borderRadius: '50%',
-   display: `${isRead ? 'none' : 'block'}`,
+   boxShadow: `none`,
+
+   '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '10px',
+      height: '10px',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid #09F905',
+      content: '""',
+   },
+   '@keyframes ripple': {
+      '0%': {
+         transform: 'scale(.5)',
+         opacity: 1,
+      },
+      '100%': {
+         transform: 'scale(2.4)',
+         opacity: 0,
+      },
+   },
 }))
 
 export const StyledImage = styled(Image)({
