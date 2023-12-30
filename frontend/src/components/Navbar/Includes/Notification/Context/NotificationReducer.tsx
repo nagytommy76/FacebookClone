@@ -3,8 +3,7 @@ import type { NotificationType } from '../Types'
 
 export type NotificationsAction =
    | 'SET_ALL_NOTIFICATIONS'
-   | 'ADD_NOTIFICATION'
-   | 'SET_ACTIVE'
+   | 'SET_ACTIVE_NOTIFICATIONS_COUNT'
    | 'UPDATE_ISREAD_BYID'
 
 export interface INotificationsAction {
@@ -32,14 +31,16 @@ export default function PostsReducer(
             draft.notifications = action.payload
          })
          return allNot
-      case 'ADD_NOTIFICATION':
-         const addedNot = produce(state, (draft) => {
-            draft.notifications?.push(action.payload)
-         })
-         return addedNot
-      case 'SET_ACTIVE':
+      case 'SET_ACTIVE_NOTIFICATIONS_COUNT':
+         const notifications = action.payload as NotificationType[]
          const active = produce(state, (draft) => {
-            draft.activeNotifications = action.payload
+            let activeNotifications: number = 0
+            notifications.map((notification) => {
+               if (!notification.isRead) {
+                  activeNotifications += 1
+               }
+            })
+            draft.activeNotifications = activeNotifications
          })
          return active
       case 'UPDATE_ISREAD_BYID':
@@ -51,7 +52,7 @@ export default function PostsReducer(
                }
                return notif
             })
-            if (updatedArray !== undefined) {
+            if (updatedArray !== undefined && draft.activeNotifications > 0) {
                draft.notifications = updatedArray
                draft.activeNotifications = draft.activeNotifications -= 1
             }
