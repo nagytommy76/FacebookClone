@@ -15,7 +15,6 @@ const useSetActiveNotifications = (handleClose: () => void) => {
       mutationFn,
       onSuccess(data, variables, context) {
          notificationsDispatch({ type: 'UPDATE_ISREAD_BYID', payload: variables })
-         console.log(variables)
       },
    })
    const handleSetInactiveAndClose = (notificationId: string) => {
