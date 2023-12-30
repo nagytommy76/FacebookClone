@@ -2,6 +2,7 @@ import { Response } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
 import { User as UserModel } from '../../models/user/user'
 import BasePostController from './Base/basePost'
+
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import type { IOnlineFriends } from '../../config/socketIo'
 
@@ -62,45 +63,49 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          commentAnswers: [],
       })
       await foundPost.save()
-      await foundPost.populate({
-         path: 'comments.userId',
-         select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-         match: {
-            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-         },
-      })
-      await foundPost.populate({
-         path: 'comments.commentAnswers.userId',
-         select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-         match: {
-            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-         },
-      })
+      await foundPost.populateCommentUserId()
+      await foundPost.populateCommentAnswerUserId()
 
-      const likedUser = await UserModel.findOne({
+      // Who liked your post
+      const likedUser = await UserModel.find({
          _id: userId,
          'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
       }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
 
+      const toSaveUsersNotification = await UserModel.findById(foundPost.userId).select(['notifications'])
+
+      if (toSaveUsersNotification) {
+         toSaveUsersNotification.notifications.push({
+            isRead: false,
+            notificationType: 'isComment',
+            createdAt: new Date(),
+            postData: {
+               postId: foundPost._id,
+               description: foundPost.description,
+            },
+            userDetails: {
+               firstName: likedUser[0].firstName,
+               sureName: likedUser[0].sureName,
+               userId: likedUser[0].id,
+               profilePicture: likedUser[0].userDetails.profilePicturePath[0].path,
+            },
+         })
+         await toSaveUsersNotification.save()
+      }
+
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(foundPost.userId.toString() as any) as IOnlineFriends
          if (toSendUser !== undefined) {
-            request.ioSocket?.to(toSendUser.socketId).emit('addComment', [
-               {
-                  notificationType: 'isComment',
-                  newComments: foundPost.comments,
-                  userId: likedUser,
-                  postData: {
-                     _id: foundPost._id,
-                     description: foundPost.description,
-                  },
-               },
-            ])
+            request.ioSocket?.to(toSendUser.socketId).emit('addComment', {
+               notifications: toSaveUsersNotification?.notifications,
+               newComments: foundPost.comments,
+            })
          }
       }
 
       response.status(200).json({ comments: foundPost.comments })
    } catch (error) {
+      console.log(error)
       response.status(500).json({ error })
    }
 }

@@ -19,6 +19,7 @@ export interface ILoginRequest extends Request {
 }
 
 export interface INotifications {
+   _id?: string
    notificationType: 'isComment' | 'isPostLike' | 'isCommentLike'
    isRead: boolean
    createdAt: Date
