@@ -7,9 +7,8 @@ const useAddCommentSocket = () => {
    const { commentsDispatch } = useContext(AllCommentsContext)
 
    useEffect(() => {
-      const onAddComment = (args: { newComments: IPostComment[] }[]) => {
-         console.log(args)
-         commentsDispatch({ type: 'ADD_NEW_COMMENT', payload: args[0].newComments })
+      const onAddComment = (args: { newComments: IPostComment[] }) => {
+         commentsDispatch({ type: 'ADD_NEW_COMMENT', payload: args.newComments })
       }
       socket.on('addComment', onAddComment)
       return () => {

@@ -59,7 +59,7 @@ const AddCommentBase: React.FC<{
       if (reference.current) {
          reference.current.focus()
       }
-   }, [])
+   }, [reference])
 
    return (
       <>
