@@ -7,10 +7,10 @@ const useSocket = () => {
    const { postsDispatch } = useContext(PostContext)
 
    useEffect(() => {
-      const onLikePost = (args: { likeType: IPostLike; postData: { _id: string } }[]) => {
+      const onLikePost = (args: { likeType: IPostLike; toModifyPostId: string }) => {
          postsDispatch({
             type: 'ADD_SINGLE_SOCKET_POST_LIKE',
-            payload: { likes: args[0].likeType, toModifyPostId: args[0].postData._id },
+            payload: { likes: args.likeType, toModifyPostId: args.toModifyPostId },
          })
       }
 
