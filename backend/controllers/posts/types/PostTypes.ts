@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose'
+import { Model, ObjectId } from 'mongoose'
 import { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
 import type { IPostComment } from './commentTypes'
 
@@ -29,6 +29,16 @@ export interface IPostTypes {
    createdAt: number
    updatedAt: number
 }
+
+export type PostModel = Model<
+   IPostTypes,
+   {},
+   {
+      populateUserId: () => Promise<void>
+      populateCommentUserId: () => Promise<void>
+      populateCommentAnswerUserId: () => Promise<void>
+   }
+>
 
 // Incoming request from Add post
 export interface IPostRequest extends IJWTUserType {

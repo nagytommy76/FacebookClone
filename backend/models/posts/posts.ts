@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import type { IPostTypes } from '../../controllers/posts/types/PostTypes'
+import type { IPostTypes, PostModel } from '../../controllers/posts/types/PostTypes'
 
 const likes = {
    type: [
@@ -57,4 +57,32 @@ const PostsSchema = new Schema(
    { timestamps: true }
 )
 
-export const Posts = model<IPostTypes>('Posts', PostsSchema)
+PostsSchema.methods.populateUserId = async function () {
+   return this.populate({
+      path: 'userId',
+      select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath.$'],
+      match: {
+         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+      },
+   })
+}
+PostsSchema.methods.populateCommentUserId = async function () {
+   return this.populate({
+      path: 'comments.userId',
+      select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
+      match: {
+         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+      },
+   })
+}
+PostsSchema.methods.populateCommentAnswerUserId = async function () {
+   return this.populate({
+      path: 'comments.commentAnswers.userId',
+      select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+      match: {
+         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+      },
+   })
+}
+
+export const Posts = model<IPostTypes, PostModel>('Posts', PostsSchema)
