@@ -16,13 +16,7 @@ export const savePostController = async (req: IPostRequest, res: Response) => {
          createdAt,
          description,
       })
-      await createdPost.populate({
-         path: 'userId',
-         select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath.$'],
-         match: {
-            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-         },
-      })
+      await createdPost.populateUserId()
       res.status(201).json({ createdPost })
    } catch (error) {
       console.log(error)

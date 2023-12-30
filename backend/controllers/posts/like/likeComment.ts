@@ -1,8 +1,7 @@
 import { Response } from 'express'
 import BasePostController from '../Base/basePost'
 import { Posts as PostModel } from '../../../models/posts/posts'
-import type { ICommentLikeRequest, ICommentAnswerLikeRequest, IPostLike } from '../types/PostTypes'
-import type { ICommentAnswer } from '../types/commentTypes'
+import type { ICommentLikeRequest, ICommentAnswerLikeRequest } from '../types/PostTypes'
 
 export default class CommentLikeController extends BasePostController {
    likeCommentController = async (request: ICommentLikeRequest, response: Response) => {
@@ -28,13 +27,6 @@ export default class CommentLikeController extends BasePostController {
          )
 
          await foundPostToModifyLike.save()
-         await foundPostToModifyLike.populate({
-            path: 'comments.userId',
-            select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
-            match: {
-               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-            },
-         })
          response.status(200).json(foundPostToModifyLike.comments[commentLikeIndex].likes)
       } catch (error) {
          console.log(error)
