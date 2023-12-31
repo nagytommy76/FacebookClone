@@ -67,31 +67,17 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
       await foundPost.populateCommentAnswerUserId()
 
       // Who liked your post
-      const likedUser = await UserModel.find({
-         _id: userId,
-         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-      }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
+      const likedUser = await UserModel.getUserByUserIdAndSelect(userId)
 
-      const toSaveUsersNotification = await UserModel.findById(foundPost.userId).select(['notifications'])
-
-      if (toSaveUsersNotification) {
-         toSaveUsersNotification.notifications.push({
-            isRead: false,
-            notificationType: 'isComment',
-            createdAt: new Date(),
-            postData: {
-               postId: foundPost._id,
-               description: foundPost.description,
-            },
-            userDetails: {
-               firstName: likedUser[0].firstName,
-               sureName: likedUser[0].sureName,
-               userId: likedUser[0].id,
-               profilePicture: likedUser[0].userDetails.profilePicturePath[0].path,
-            },
-         })
-         await toSaveUsersNotification.save()
-      }
+      const toSaveUsersNotification = await UserModel.getSaveNotification(
+         foundPost.userId,
+         foundPost.description,
+         likedUser.firstName,
+         likedUser.sureName,
+         likedUser.id,
+         likedUser.userDetails.profilePicturePath[0].path,
+         'isCommentLike'
+      )
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(foundPost.userId.toString() as any) as IOnlineFriends

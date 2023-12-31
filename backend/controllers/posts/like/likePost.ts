@@ -4,6 +4,7 @@ import { User as UserModel } from '../../../models/user/user'
 import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
 
 import BaseLikeController from '../Base/baseLike'
+import { INotifications } from '../../users/Types'
 
 export default class LikePost extends BaseLikeController {
    getPostLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
@@ -93,7 +94,7 @@ export default class LikePost extends BaseLikeController {
 
    likePostController = async (request: IPostLikeRequest, response: Response) => {
       const { postId, reactionType } = request.body
-      const userId = request.user?.userId as any
+      const userId = request.user?.userId as string
 
       try {
          const foundPostToModifyLike = await this.findPostModelByPostId(postId)
@@ -104,34 +105,18 @@ export default class LikePost extends BaseLikeController {
          await foundPostToModifyLike.save()
 
          // Who liked your post
-         const likedUser = await UserModel.find({
-            _id: userId,
-            'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-         }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
-
+         const likedUser = await UserModel.getUserByUserIdAndSelect(userId)
          // SAVE TO DB --------------------------------
-         const toSaveNotification = await UserModel.findById(foundPostToModifyLike.userId).select([
-            'notifications',
-         ])
 
-         if (toSaveNotification) {
-            toSaveNotification.notifications.push({
-               isRead: false,
-               notificationType: 'isPostLike',
-               createdAt: new Date(),
-               postData: {
-                  postId: foundPostToModifyLike._id,
-                  description: foundPostToModifyLike.description,
-               },
-               userDetails: {
-                  firstName: likedUser[0].firstName,
-                  sureName: likedUser[0].sureName,
-                  userId: likedUser[0].id,
-                  profilePicture: likedUser[0].userDetails.profilePicturePath[0].path,
-               },
-            })
-            await toSaveNotification.save()
-         }
+         const toSaveNotification = await UserModel.getSaveNotification(
+            foundPostToModifyLike.userId,
+            foundPostToModifyLike.description,
+            likedUser.firstName,
+            likedUser.sureName,
+            likedUser.id,
+            likedUser.userDetails.profilePicturePath[0].path,
+            'isPostLike'
+         )
 
          // SOCKET ---------------------------
          if (request.getUser !== undefined) {
