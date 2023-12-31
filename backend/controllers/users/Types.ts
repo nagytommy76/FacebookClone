@@ -1,4 +1,4 @@
-import { Model, ObjectId } from 'mongoose'
+import { Model, ObjectId, Document } from 'mongoose'
 import type { Request } from 'express'
 export interface IRegisterRequest extends Request {
    body: {
@@ -18,9 +18,11 @@ export interface ILoginRequest extends Request {
    }
 }
 
+export type NotificationType = 'isComment' | 'isPostLike' | 'isCommentLike'
+
 export interface INotifications {
    _id?: string
-   notificationType: 'isComment' | 'isPostLike' | 'isCommentLike'
+   notificationType: NotificationType
    isRead: boolean
    createdAt: Date
    postData: {
@@ -86,6 +88,34 @@ export interface IUserTypes {
 }
 
 export interface UserModel extends Model<IUserTypes> {
+   getUserByUserIdAndSelect: (userId: string | ObjectId) => Promise<
+      Document<unknown, any, IUserTypes> &
+         Omit<
+            IUserTypes &
+               Required<{
+                  _id: ObjectId
+               }>,
+            never
+         >
+   >
+   getSaveNotification: (
+      foundPostUserId: string | ObjectId,
+      foundPostDescription: string,
+      firstName: string,
+      sureName: string,
+      likedUserId: string,
+      profilePicture: string,
+      notificationType: NotificationType
+   ) => Promise<
+      Document<unknown, any, IUserTypes> &
+         Omit<
+            IUserTypes &
+               Required<{
+                  _id: ObjectId
+               }>,
+            never
+         >
+   >
    checkRegisterEmail(email: string): Promise<void>
    encryptPassword(nativePass: string): Promise<string>
    comparePassword(
