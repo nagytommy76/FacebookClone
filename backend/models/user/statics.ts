@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { hash, compare } from 'bcrypt'
 
 import type { DefaultSchemaOptions, ObjectId, Schema } from 'mongoose'
-import type { IUserTypes, UserModel } from '../../controllers/users/Types'
+import type { IUserTypes, NotificationType, UserModel } from '../../controllers/users/Types'
 
 export function UserStatics(
    UserSchema: Schema<IUserTypes, UserModel, {}, {}, {}, {}, DefaultSchemaOptions, IUserTypes>
@@ -33,5 +33,45 @@ export function UserStatics(
       expiresIn: string = '1day'
    ) {
       return jwt.sign({ userId, email }, REFRESH_TOKEN_SECRET, { expiresIn })
+   }
+
+   UserSchema.statics.getUserByUserIdAndSelect = async function (userId: string | ObjectId) {
+      return await this.findOne({
+         _id: userId,
+         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+      }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
+   }
+
+   UserSchema.statics.getSaveNotification = async function (
+      foundPostUserId: string,
+      foundPostDescription: string,
+      firstName: string,
+      sureName: string,
+      likedUserId: string,
+      profilePicture: string,
+      notificationType: NotificationType = 'isPostLike'
+   ) {
+      const toSaveNotification = await this.findById(foundPostUserId).select(['notifications'])
+
+      if (toSaveNotification) {
+         toSaveNotification.notifications.push({
+            isRead: false,
+            notificationType,
+            createdAt: new Date(),
+            postData: {
+               postId: foundPostUserId,
+               description: foundPostDescription,
+            },
+            userDetails: {
+               firstName: firstName,
+               sureName: sureName,
+               userId: likedUserId,
+               profilePicture,
+            },
+         })
+         await toSaveNotification.save()
+      }
+
+      return toSaveNotification
    }
 }
