@@ -39,7 +39,7 @@ const NotificationsMenu: React.FC<{
                   <Link key={notification._id} href={`#${notification.postData?.postId}`}>
                      <StyledMenuItem
                         key={notification._id}
-                        onClick={() => handleSetInactiveAndClose(notification._id)}
+                        onClick={() => handleSetInactiveAndClose(notification._id, notification.isRead)}
                         sx={{ maxWidth: '400px', marginBottom: 2 }}
                      >
                         <StyledImage

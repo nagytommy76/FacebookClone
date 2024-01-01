@@ -17,9 +17,9 @@ const useSetActiveNotifications = (handleClose: () => void) => {
          notificationsDispatch({ type: 'UPDATE_ISREAD_BYID', payload: variables })
       },
    })
-   const handleSetInactiveAndClose = (notificationId: string) => {
+   const handleSetInactiveAndClose = (notificationId: string, read: boolean) => {
       // Egy módosítás a DB felé ->
-      mutate(notificationId)
+      if (!read) mutate(notificationId)
       handleClose()
    }
 
