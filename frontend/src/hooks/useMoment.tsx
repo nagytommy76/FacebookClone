@@ -8,6 +8,25 @@ moment.relativeTimeThreshold('h', 24)
 moment.relativeTimeThreshold('d', 29)
 moment.relativeTimeThreshold('M', 11)
 
+/**
+ *  moment.updateLocale('hu', {
+         relativeTime: {
+            s: '1 másodperce',
+            ss: '%d másodperce',
+            m: '1 perce',
+            mm: '%d perce',
+            h: '1 órája.',
+            hh: '%d órája.',
+            d: '1 napja',
+            dd: '%d napja',
+            M: '1 hónapja',
+            MM: '%d hónapja',
+            y: '1 éve',
+            yy: '%d éve',
+         },
+      })
+ */
+
 moment.updateLocale('hu', {
    relativeTime: {
       s: '1 mp',

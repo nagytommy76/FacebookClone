@@ -1,35 +1,8 @@
-import { useState, useEffect } from 'react'
 import Typography from '@mui/material/Typography'
-import moment from 'moment'
-
-moment.relativeTimeThreshold('s', 59)
-moment.relativeTimeThreshold('m', 59)
-moment.relativeTimeThreshold('h', 24)
-moment.relativeTimeThreshold('d', 29)
-moment.relativeTimeThreshold('M', 11)
+import useMoment from '@/src/hooks/useMoment'
 
 const TimeAgo: React.FC<{ createdAt: string }> = ({ createdAt }) => {
-   const [currentTime, setCurrentTime] = useState('')
-
-   useEffect(() => {
-      moment.updateLocale('hu', {
-         relativeTime: {
-            s: '1 mp',
-            ss: '%d mp',
-            m: '1 perce',
-            mm: '%d perce',
-            h: '1 órája.',
-            hh: '%d órája.',
-            d: '1 napja',
-            dd: '%d napja',
-            M: '1 hónapja',
-            MM: '%d hónapja',
-            y: '1 é',
-            yy: '%d é',
-         },
-      })
-      setCurrentTime(moment(createdAt).fromNow(true))
-   }, [createdAt])
+   const currentTime = useMoment(createdAt)
 
    return (
       <Typography variant='body1' sx={{ color: '#719aeb' }}>
