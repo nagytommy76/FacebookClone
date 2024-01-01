@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 import { useAppSelector } from '@/reduxStore/store'
-import moment from 'moment'
-import 'moment/locale/hu'
 
 import ProfilePic from '@/assets/facebook-profile.jpg'
 import {
@@ -11,11 +9,11 @@ import {
    StyledClickableTypography,
    StyledProfileImage,
 } from './HeaderStyles'
-import Typography from '@mui/material/Typography'
 
 import CustomTooltipTitle from '@/Base/CustomTooltipTitle'
 import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
 import OptionsMenu from './Includes/OptionsMenu'
+import TimeAgo from './Includes/TimeAgo'
 
 const PostHeader = () => {
    const {
@@ -23,6 +21,7 @@ const PostHeader = () => {
          singlePost: { createdAt, userId: userInfo },
       },
    } = useContext(PostContext)
+
    const userId = useAppSelector((state) => state.auth.userId)
    const userProfileImage = useAppSelector((state) => state.auth.currentImage)
 
@@ -44,7 +43,7 @@ const PostHeader = () => {
                   {userInfo.firstName} {userInfo.sureName}
                </StyledClickableTypography>
             </CustomTooltipTitle>
-            <Typography variant='caption'>{moment(createdAt).format('YYYY MMMM D dddd, kk:mm')}</Typography>
+            <TimeAgo createdAt={createdAt} />
          </HeaderRightTitleSection>
          {userId === userInfo._id && <OptionsMenu />}
       </PostHeaderStyle>
