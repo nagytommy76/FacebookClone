@@ -36,3 +36,27 @@ export const setActiveNotifications = async (request: IJWTUserType, response: Re
       response.status(500).json(error)
    }
 }
+
+export const removeUsersNotification = async (request: IRemoveNotidication, response: Response) => {
+   const userId = request.user?.userId
+   const notificationId = request.body.notificationId
+   try {
+      await UserModel.updateOne({
+         _id: userId,
+         notifications: {
+            $elemMatch: { _id: notificationId },
+         },
+      })
+
+      return response.status(201)
+   } catch (error) {
+      console.log(error)
+      response.status(500).json(error)
+   }
+}
+
+interface IRemoveNotidication extends IJWTUserType {
+   body: {
+      notificationId: string
+   }
+}
