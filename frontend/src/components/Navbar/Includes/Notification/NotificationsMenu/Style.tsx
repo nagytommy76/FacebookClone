@@ -2,9 +2,14 @@ import { styled } from '@mui/material'
 import Image from 'next/image'
 import MenuItem from '@mui/material/MenuItem'
 
+export const StyledMenuContainer = styled('div')({
+   width: '100%',
+   display: 'flex',
+   position: 'relative',
+})
+
 export const StyledMenuItem = styled(MenuItem)({
    width: '450px',
-   position: 'relative',
 })
 
 export const StyledTextArea = styled('div')({
