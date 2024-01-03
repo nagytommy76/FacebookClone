@@ -7,7 +7,9 @@ export const getNotifications = async (request: IJWTUserType, response: Response
       const userId = request.user?.userId
       const user = await UserModel.findById(userId).select('notifications')
 
-      response.status(200).json({ notifications: user?.notifications })
+      response
+         .status(200)
+         .json({ notifications: user?.notifications.length === 0 ? null : user?.notifications })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
