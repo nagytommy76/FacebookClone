@@ -30,7 +30,7 @@ export const setActiveNotifications = async (request: IJWTUserType, response: Re
             },
          }
       )
-      response.status(200).json({ csá: 'csá', foundUsersNotification })
+      response.status(200).json({ foundUsersNotification })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
@@ -41,14 +41,14 @@ export const removeUsersNotification = async (request: IRemoveNotidication, resp
    const userId = request.user?.userId
    const notificationId = request.body.notificationId
    try {
-      await UserModel.updateOne({
-         _id: userId,
-         notifications: {
-            $elemMatch: { _id: notificationId },
-         },
-      })
+      const foundUser = await UserModel.findById(userId).select('notifications')
+      if (!foundUser) return response.status(404).json({ msg: 'User not found' })
 
-      return response.status(201)
+      foundUser.notifications = foundUser.notifications.filter(
+         (notification) => notification._id != notificationId
+      )
+      await foundUser.save()
+      return response.status(200).json({ notificationId, foundUser })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
