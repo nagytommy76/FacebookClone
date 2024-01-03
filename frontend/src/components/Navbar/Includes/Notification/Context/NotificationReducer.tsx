@@ -5,6 +5,7 @@ export type NotificationsAction =
    | 'SET_ALL_NOTIFICATIONS'
    | 'SET_ACTIVE_NOTIFICATIONS_COUNT'
    | 'UPDATE_ISREAD_BYID'
+   | 'REMOVE_NOTIFICATION'
 
 export interface INotificationsAction {
    type: NotificationsAction
@@ -58,6 +59,15 @@ export default function PostsReducer(
             }
          })
          return updatedIsRead
+      case 'REMOVE_NOTIFICATION':
+         const id = action.payload as string
+         const removed = produce(state, (draft) => {
+            if (draft.notifications) {
+               let returnedValue = draft.notifications.filter((notification) => notification._id !== id)
+               draft.notifications = returnedValue.length === 0 ? null : returnedValue
+            }
+         })
+         return removed
       default:
          return state
    }
