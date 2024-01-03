@@ -10,11 +10,12 @@ const RemoveNotification: React.FC<{ notificationId: string }> = ({ notification
    return (
       <Tooltip title='Értesítés törlése'>
          <IconButton
+            size='small'
             onClick={() => removeMutate()}
             aria-label='delete'
-            sx={{ position: 'absolute', right: 5, top: 5 }}
+            sx={{ position: 'absolute', right: 3, top: 5 }}
          >
-            <DeleteIcon />
+            <DeleteIcon fontSize='inherit' />
          </IconButton>
       </Tooltip>
    )

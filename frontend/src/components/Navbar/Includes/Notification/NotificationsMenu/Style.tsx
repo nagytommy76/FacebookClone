@@ -26,7 +26,7 @@ export const StyledIsActive = styled('span', {
    height: '12px',
 
    position: 'absolute',
-   top: 10,
+   top: '50%',
    right: 10,
 
    backgroundColor: '#09F905',

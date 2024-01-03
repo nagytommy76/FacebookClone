@@ -34,18 +34,14 @@ const NotificationsMenu: React.FC<{
                id='notifications-menu'
                open={open}
                onClose={handleClose}
-               // onClick={handleClose}
                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                <TransitionGroup>
                   {notifications.map((notification) => (
                      <Collapse timeout={100} key={notification._id}>
-                        <StyledMenuContainer /* key={notification._id}*/>
-                           <StyledMenuItem
-                              // onClick={() => handleSetInactiveAndClose(notification._id, notification.isRead)}
-                              sx={{ maxWidth: '400px', marginBottom: 2 }}
-                           >
+                        <StyledMenuContainer>
+                           <StyledMenuItem sx={{ maxWidth: '400px', marginBottom: 2 }}>
                               <StyledImage
                                  src={notification.userDetails.profilePicture}
                                  alt='Profile IMG'

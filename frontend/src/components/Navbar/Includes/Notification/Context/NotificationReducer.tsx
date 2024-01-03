@@ -33,10 +33,10 @@ export default function PostsReducer(
          })
          return allNot
       case 'SET_ACTIVE_NOTIFICATIONS_COUNT':
-         const notifications = action.payload as NotificationType[]
+         const notifications = action.payload as NotificationType[] | null
          const active = produce(state, (draft) => {
             let activeNotifications: number = 0
-            notifications.map((notification) => {
+            notifications?.map((notification) => {
                if (!notification.isRead) {
                   activeNotifications += 1
                }
