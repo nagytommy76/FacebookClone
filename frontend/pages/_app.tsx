@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { PersistGate } from 'redux-persist/integration/react'
-
-import { store, persistor } from '../src/utils/redux/store'
-import { Provider } from 'react-redux'
+import ReduxProvider from '@/reduxStore/ReduxProvider'
 
 import type { AppProps } from 'next/app'
 import { Work_Sans } from '@next/font/google'
@@ -32,19 +29,17 @@ export default function App({ Component, pageProps }: AppProps) {
    )
 
    return (
-      <Provider store={store}>
-         <PersistGate loading={null} persistor={persistor}>
-            <AxiosSetupProvider>
-               <QueryClientProvider client={queryClient}>
-                  <ReactQueryDevtools initialIsOpen={true} />
-                  <Hydrate state={pageProps.dehydratedState}>
-                     <Layout className={work.className}>
-                        <Component {...pageProps} />
-                     </Layout>
-                  </Hydrate>
-               </QueryClientProvider>
-            </AxiosSetupProvider>
-         </PersistGate>
-      </Provider>
+      <ReduxProvider>
+         <AxiosSetupProvider>
+            <QueryClientProvider client={queryClient}>
+               <ReactQueryDevtools initialIsOpen={true} />
+               <Hydrate state={pageProps.dehydratedState}>
+                  <Layout className={work.className}>
+                     <Component {...pageProps} />
+                  </Layout>
+               </Hydrate>
+            </QueryClientProvider>
+         </AxiosSetupProvider>
+      </ReduxProvider>
    )
 }

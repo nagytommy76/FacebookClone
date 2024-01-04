@@ -27,6 +27,7 @@
          "@/assets/*": ["./src/assets/*"],
          "@/types/*": ["./src/types/*"],
          "@/utils/*": ["./src/utils/*"],
+         "@/theme/*": ["./src/theme/*"],
          "@/hooks/*": ["./src/hooks/*"],
          "@/styles/*": ["./src/styles/*"],
          "@/axios/*": ["./src/utils/axiosSetup/*"],
