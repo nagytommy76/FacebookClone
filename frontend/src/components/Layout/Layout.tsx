@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useAppSelector } from '../../utils/redux/store'
+import { useAppSelector } from '@/reduxStore/store'
 
 import { ThemeProvider } from '@emotion/react'
 import { lightTheme, darkTheme } from '../../theme/theme'
@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer'
 const Layout: React.FC<{ children: React.ReactNode; className: string }> = ({ children, className }) => {
    const isDarkTheme = useAppSelector((state) => state.theme.isDarkTheme)
    return (
-      <>
+      <html>
          <Head>
             <title>Facebook Clone</title>
             <meta name='description' content='Hobby project, cloning facebook' />
@@ -28,7 +28,7 @@ const Layout: React.FC<{ children: React.ReactNode; className: string }> = ({ ch
                </main>
             </ThemeProvider>
          </GlobalThemeProvider>
-      </>
+      </html>
    )
 }
 

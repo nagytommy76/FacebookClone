@@ -1,5 +1,15 @@
+import AxiosSetupProvider from '@/axios/AxiosInstance'
+import ReduxProvider from '@/reduxStore/ReduxProvider'
+import '../styles/globals.css'
+
+import TanstackProvider from '@/components/Providers/TanstackProvider'
+import ThemeProvider from '@/components/Providers/ThemeProvider'
+
 import { Metadata } from 'next'
 import { Work_Sans } from '@next/font/google'
+
+import Footer from '@/components/Footer/Footer'
+import Navbar from '@/components/Navbar/Navbar'
 
 const work = Work_Sans({ subsets: ['latin'] })
 
@@ -14,8 +24,22 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
       <html className={work.className} lang='hu'>
-         <head />
-         <body>{children}</body>
+         {/* <head /> */}
+         <body>
+            <ReduxProvider>
+               <AxiosSetupProvider>
+                  <TanstackProvider>
+                     <ThemeProvider>
+                        <main>
+                           <Navbar />
+                           {children}
+                           <Footer />
+                        </main>
+                     </ThemeProvider>
+                  </TanstackProvider>
+               </AxiosSetupProvider>
+            </ReduxProvider>
+         </body>
       </html>
    )
 }
