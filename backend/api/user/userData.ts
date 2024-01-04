@@ -11,7 +11,7 @@ import {
    getNotifications,
    setActiveNotifications,
    removeUsersNotification,
-} from '../../controllers/users/notifications'
+} from '../../controllers/notifications/notifications'
 
 const router = Router()
 
