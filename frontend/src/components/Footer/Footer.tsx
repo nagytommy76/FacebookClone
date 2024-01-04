@@ -1,4 +1,6 @@
+'use client'
 import styled from '@emotion/styled'
+import Link from 'next/link'
 
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
@@ -12,12 +14,12 @@ const Footer = () => {
       <StyledFooter elevation={2}>
          <Typography variant='h6'>Készítette: © Nagy Tamás 2023</Typography>
          <Stack direction='row' spacing={1} pt={1}>
-            <a href='https://www.linkedin.com/in/tamasnagy93' target='_blank'>
+            <Link href='https://www.linkedin.com/in/tamasnagy93' target='_blank'>
                <LinkedInIcon sx={{ fontSize: 45, cursor: 'pointer', ':hover': { color: '#0a66c2' } }} />
-            </a>
-            <a href='https://github.com/nagytommy76' target='_blank'>
+            </Link>
+            <Link href='https://github.com/nagytommy76' target='_blank'>
                <GitHubIcon sx={{ fontSize: 45, cursor: 'pointer' }} />
-            </a>
+            </Link>
          </Stack>
       </StyledFooter>
    )

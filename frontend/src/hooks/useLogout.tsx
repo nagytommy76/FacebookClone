@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router'
+'use client'
+import { useRouter } from 'next/navigation'
 import { axiosInstance as axios } from '../utils/axiosSetup/AxiosInstance'
 
 import { useAppDispatch } from '../utils/redux/store'

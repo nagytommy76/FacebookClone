@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 
 import ThemeSwitch from '../ThemeSwitch'
@@ -41,7 +42,8 @@ const AvatarComponent = () => {
                },
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+         >
             <ProfileMenuLink handleClose={handleClose} />
             <Divider sx={{ mt: 1, mb: 1 }} />
             <Logout handleClose={handleClose} />

@@ -1,6 +1,7 @@
+'use client'
 import { useEffect } from 'react'
 import axios from 'axios'
-import useLogout from '../../hooks/useLogout'
+import useLogout from '@/hooks/useLogout'
 
 const DEVELOPMENT_URL = 'http://localhost:3000'
 //const PRODUCTION_URL = ''

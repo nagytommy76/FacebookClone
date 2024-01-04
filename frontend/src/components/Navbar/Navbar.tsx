@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { useAppSelector } from '../../utils/redux/store'
 
