@@ -1,3 +1,4 @@
+'use client'
 import dynamic from 'next/dynamic'
 import useLoginMutate from './Hooks/useLoginMutate'
 import useLoginState from './Hooks/useLoginState'

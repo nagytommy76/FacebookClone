@@ -1,4 +1,4 @@
-import { Work_Sans } from '@next/font/google'
+import { Work_Sans } from 'next/font/google'
 import { createTheme } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 

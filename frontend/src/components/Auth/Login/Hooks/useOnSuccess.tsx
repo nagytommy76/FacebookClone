@@ -1,7 +1,7 @@
-import { useAppDispatch } from '../../../../utils/redux/store'
-import { setAccessToken } from '../../../../utils/redux/slices/TokenSlice'
-import { useRouter } from 'next/router'
-import { setUserName, setIsLoggedIn, setUserId } from '../../../../utils/redux/slices/AuthSlice'
+import { useAppDispatch } from '@/reduxStore/store'
+import { setAccessToken } from '@/reduxStore/slices/TokenSlice'
+import { useRouter } from 'next/navigation'
+import { setUserName, setIsLoggedIn, setUserId } from '@/reduxStore/slices/AuthSlice'
 
 import type { AxiosResponse } from 'axios'
 import type { ILoginData } from '../../Register/Includes/Types'

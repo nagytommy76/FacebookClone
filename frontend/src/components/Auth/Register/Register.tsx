@@ -1,3 +1,4 @@
+'use client'
 import useRegisterMutate from './Hooks/useRegisterMutate'
 
 import { StyledAuthContainer, StyledRegisterPaper } from '../Styles'

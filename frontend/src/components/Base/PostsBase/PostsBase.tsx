@@ -1,3 +1,4 @@
+'use client'
 import dynamic from 'next/dynamic'
 import useGetAllPosts from './Hooks/useGetAllPosts'
 import useCheckUrl from './Hooks/useCheckUrl'

@@ -1,5 +1,6 @@
+'use client'
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/navigation'
 
 import Fade from '@mui/material/Fade'
 import Snackbar from '@mui/material/Snackbar'
@@ -9,12 +10,12 @@ const LoginSnackbar = () => {
       isSuccess: false,
       msg: '',
    })
-   const router = useRouter()
+   // const router = useRouter()
 
-   useEffect(() => {
-      const { isRegisterSuccess, msg } = router.query
-      if (isRegisterSuccess && msg) setIsRegister({ isSuccess: Boolean(isRegisterSuccess), msg })
-   }, [router.query.isRegisterSuccess])
+   // useEffect(() => {
+   //    const { isRegisterSuccess, msg } = router.query
+   //    if (isRegisterSuccess && msg) setIsRegister({ isSuccess: Boolean(isRegisterSuccess), msg })
+   // }, [router.query.isRegisterSuccess])
 
    return (
       <Snackbar

@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import type { IPost } from '@/src/types/PostTypes'
 /**

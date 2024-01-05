@@ -1,5 +1,5 @@
 import useRegisterState from './useRegisterState'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 import { useMutation } from '@tanstack/react-query'
 import {
@@ -38,11 +38,11 @@ const useRegisterMutate = () => {
    }
 
    const onSuccess = (data: AxiosResponse<any, any>) => {
-      if (data.status === 201)
-         router.push({
-            pathname: '/login',
-            query: { msg: `Sikeres regisztráció a(z) ${email.value} email címmel`, isRegisterSuccess: true },
-         })
+      if (data.status === 201) router.push('/login')
+      // router.push({
+      //    pathname: '/login',
+      //    query: { msg: `Sikeres regisztráció a(z) ${email.value} email címmel`, isRegisterSuccess: true },
+      // })
    }
 
    const { mutate } = useMutation({

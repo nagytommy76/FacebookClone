@@ -1,5 +1,5 @@
+'use client'
 import { css, Global } from '@emotion/react'
-import { CSSInterpolation } from '@mui/material'
 import { useAppSelector } from '../utils/redux/store'
 
 const lightGlobalTheme = {

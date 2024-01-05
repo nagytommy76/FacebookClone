@@ -1,5 +1,6 @@
+'use client'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 /**
  * @returns isUrlChanged
  * @type boolean
@@ -11,7 +12,7 @@ const useCheckUrl = () => {
 
    useEffect(() => {
       setIsUrlChanged(true)
-   }, [router.pathname])
+   }, [router])
 
    return isUrlChanged
 }
