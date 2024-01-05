@@ -1,12 +1,13 @@
 import AxiosSetupProvider from '@/axios/AxiosInstance'
 import ReduxProvider from '@/reduxStore/ReduxProvider'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import '../styles/globals.css'
 
 import TanstackProvider from '@/components/Providers/TanstackProvider'
 import ThemeProvider from '@/components/Providers/ThemeProvider'
 
 import { Metadata } from 'next'
-import { Work_Sans } from '@next/font/google'
+import { Work_Sans } from 'next/font/google'
 
 import Footer from '@/components/Footer/Footer'
 import Navbar from '@/components/Navbar/Navbar'
@@ -26,19 +27,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html className={work.className} lang='hu'>
          {/* <head /> */}
          <body>
-            <ReduxProvider>
-               <AxiosSetupProvider>
-                  <TanstackProvider>
-                     <ThemeProvider>
-                        <main>
-                           <Navbar />
-                           {children}
-                           <Footer />
-                        </main>
-                     </ThemeProvider>
-                  </TanstackProvider>
-               </AxiosSetupProvider>
-            </ReduxProvider>
+            <AppRouterCacheProvider>
+               <ReduxProvider>
+                  <AxiosSetupProvider>
+                     <TanstackProvider>
+                        <ThemeProvider>
+                           <main>
+                              <Navbar />
+                              {children}
+                              <Footer />
+                           </main>
+                        </ThemeProvider>
+                     </TanstackProvider>
+                  </AxiosSetupProvider>
+               </ReduxProvider>
+            </AppRouterCacheProvider>
          </body>
       </html>
    )
