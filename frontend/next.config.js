@@ -7,6 +7,7 @@ const nextConfig = {
    // Be tudod állítani az engedélyezett img url domain-eket
    images: {
       domains: ['scontent.fbud4-1.fna.fbcdn.net', 'firebasestorage.googleapis.com'],
+      // remotePatterns: ['scontent.fbud4-1.fna.fbcdn.net', 'firebasestorage.googleapis.com'],
    },
 }
 
