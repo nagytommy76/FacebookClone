@@ -1,14 +1,14 @@
 import Link from 'next/link'
-import { useAppSelector } from '../../../../../utils/redux/store'
+import { useAppSelector } from '@/reduxStore/store'
 
 import ImageAvatar from './ImageAvatar'
 
 import MenuItem from '@mui/material/MenuItem'
 
 const ProfileMenuLink: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
-   const userName = useAppSelector((state) => state.auth.userName)
+   const { userId, userName } = useAppSelector((state) => state.auth)
    return (
-      <Link href='/me'>
+      <Link href={`/me/${userId}`}>
          <MenuItem onClick={handleClose}>
             <ImageAvatar displayText={userName} />
          </MenuItem>
