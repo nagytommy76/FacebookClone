@@ -1,43 +1,52 @@
 'use client'
 import React from 'react'
+import moment from 'moment'
 import useGetFriends from './Hooks/useGetFriends'
+
+import Button from '@mui/material/Button'
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
+import CardActions from '@mui/material/CardActions'
 import Typography from '@mui/material/Typography'
+import { FriendsContainer, GridContainer, GridItem } from './Styles'
 
-import Grid from '@mui/material/Grid'
+import CardHeader from './Includes/CardHeader'
 
 const Friends = () => {
    const friends = useGetFriends()
-   console.log(friends[0])
    return (
-      <div style={{ minHeight: '100vh' }}>
-         <h1>Barátok komponens, szintén refreshTokennel látható. !!!!!!!444</h1>
-         <Grid container spacing={2}>
+      <FriendsContainer>
+         <GridContainer>
             {friends.map((friend) => (
-               <Grid key={friend._id} item xs={2}>
-                  <Card sx={{ maxWidth: 345 }}>
-                     <CardMedia
-                        sx={{ height: 140 }}
-                        image={friend.userDetails.profilePicturePath[0].path}
-                        title={`${friend.firstName} ${friend.sureName}`}
+               <GridItem key={friend._id}>
+                  <Card>
+                     <CardHeader
+                        userId={friend._id}
+                        profilePicture={friend.userDetails.profilePicturePath[0].path}
                      />
                      <CardContent>
-                        <Typography variant='h5'>
+                        <Typography variant='h5' gutterBottom>
                            {friend.sureName} {friend.firstName}
                         </Typography>
+                        <Typography variant='subtitle2'>Lakhely: ....</Typography>
+                        <Typography variant='subtitle2'>Munkahely: ....</Typography>
+                        <Typography variant='subtitle2'>Születés: ....</Typography>
+                        <Typography variant='subtitle2'>
+                           Létrehozva: {moment(friend.createdAt).format('YYYY MMMM D ')}
+                        </Typography>
                      </CardContent>
-                     {/* <CardActions>
-                        <Button size='small'>Share</Button>
-                        <Button size='small'>Learn More</Button>
-                     </CardActions> */}
+                     <CardActions>
+                        <Button variant='outlined' color='info' startIcon={<PersonAddAlt1Icon />}>
+                           Jelölés
+                        </Button>
+                     </CardActions>
                   </Card>
-               </Grid>
+               </GridItem>
             ))}
-         </Grid>
-      </div>
+         </GridContainer>
+      </FriendsContainer>
    )
 }
 
