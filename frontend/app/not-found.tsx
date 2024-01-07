@@ -1,6 +1,6 @@
 import React from 'react'
 
-const index = () => {
+const NotFound = () => {
    return (
       <div>
          <h1>A keresett oldal nem található</h1>
@@ -8,4 +8,4 @@ const index = () => {
    )
 }
 
-export default index
+export default NotFound
