@@ -1,30 +1,19 @@
-import { styled } from '@mui/material'
-import Image from 'next/image'
-
-export const StyledHeaderImage = styled(Image)({
-   objectFit: 'cover',
-})
-
-export const FriendsContainer = styled('section')({
-   minHeight: '95vh',
-   maxWidth: '75%',
-   margin: '2rem auto',
-})
-
-export const GridContainer = styled('div')(({ theme }) => ({
+export const gridBoxSx = {
    display: 'grid',
    gridTemplateColumns: 'auto auto auto',
    justifyContent: 'center',
    gap: '20px',
 
-   [theme.breakpoints.down('md')]: {
+   ['@media(max-width: 960px)']: {
       gridTemplateColumns: 'auto auto',
    },
-   [theme.breakpoints.down('sm')]: {
+   ['@media(max-width: 630px)']: {
       gridTemplateColumns: 'auto',
    },
-}))
+}
 
-export const GridItem = styled('div')({
-   width: '300px',
-})
+export const containerSx = {
+   minHeight: '90vh',
+   maxWidth: '75%',
+   margin: '2rem auto',
+}
