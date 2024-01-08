@@ -1,7 +1,18 @@
 import FriendsComponent from '@/components/Friends/Friends'
+import { IFriends } from '@/components/Friends/Types'
 
-const page = () => {
-   return <FriendsComponent />
+async function getAllUsers(): Promise<IFriends[]> {
+   const res = await fetch('http://localhost:5050/api/friends/get-friends')
+   if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error('Failed to fetch data')
+   }
+   return await res.json()
+}
+
+const page = async () => {
+   const allUsers = await getAllUsers()
+   return <FriendsComponent friends={allUsers} />
 }
 
 export default page
