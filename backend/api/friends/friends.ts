@@ -6,6 +6,6 @@ const router = Router()
 
 router.get('/get-friends', getUsers)
 
-router.post('/make-friendship', makeFriendshipController, authenticateAccessTokenForApi)
+router.post('/make-friendship', authenticateAccessTokenForApi, makeFriendshipController)
 
 module.exports = router
