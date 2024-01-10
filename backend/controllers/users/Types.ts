@@ -44,7 +44,7 @@ export interface IUserTypes {
    sureName: string
    password: string
    isEmailConfirmed: boolean
-   friends: { userId: ObjectId | string; isAccepted: boolean; createdAt: string }[]
+   friends: { userId: ObjectId | string; isAccepted: boolean; createdAt: string | Date }[]
    notifications: INotifications[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
