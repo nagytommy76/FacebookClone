@@ -1,26 +1,22 @@
-'use client'
 import React from 'react'
 import moment from 'moment'
-import useGetFriends from './Hooks/useGetFriends'
+import type { IFriendsResponse } from './Types'
 
-import Button from '@mui/material/Button'
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
-
+import Box from '@mui/system/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
 import Typography from '@mui/material/Typography'
-import { FriendsContainer, GridContainer, GridItem } from './Styles'
+import { gridBoxSx, containerSx } from './Styles'
 
+import CardButton from './Includes/CardButton'
 import CardHeader from './Includes/CardHeader'
 
-const Friends = () => {
-   const friends = useGetFriends()
+const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
    return (
-      <FriendsContainer>
-         <GridContainer>
+      <section style={containerSx}>
+         <Box component='section' sx={gridBoxSx}>
             {friends.map((friend) => (
-               <GridItem key={friend._id}>
+               <div style={{ width: '300px', height: '420px' }} key={friend._id}>
                   <Card>
                      <CardHeader
                         userId={friend._id}
@@ -30,23 +26,25 @@ const Friends = () => {
                         <Typography variant='h5' gutterBottom>
                            {friend.sureName} {friend.firstName}
                         </Typography>
-                        <Typography variant='subtitle2'>Lakhely: ....</Typography>
-                        <Typography variant='subtitle2'>Munkahely: ....</Typography>
-                        <Typography variant='subtitle2'>Születés: ....</Typography>
-                        <Typography variant='subtitle2'>
+                        <Typography variant='subtitle2' fontWeight={100}>
+                           Lakhely: ....
+                        </Typography>
+                        <Typography variant='subtitle2' fontWeight={100}>
+                           Munkahely: ....
+                        </Typography>
+                        <Typography variant='subtitle2' fontWeight={100}>
+                           Születés: ....
+                        </Typography>
+                        <Typography variant='subtitle2' fontWeight={100}>
                            Létrehozva: {moment(friend.createdAt).format('YYYY MMMM D ')}
                         </Typography>
                      </CardContent>
-                     <CardActions>
-                        <Button variant='outlined' color='info' startIcon={<PersonAddAlt1Icon />}>
-                           Jelölés
-                        </Button>
-                     </CardActions>
+                     <CardButton friendId={friend._id} />
                   </Card>
-               </GridItem>
+               </div>
             ))}
-         </GridContainer>
-      </FriendsContainer>
+         </Box>
+      </section>
    )
 }
 
