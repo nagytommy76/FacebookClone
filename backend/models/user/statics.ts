@@ -39,7 +39,7 @@ export function UserStatics(
       return await this.findOne({
          _id: userId,
          'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-      }).select(['email', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'])
+      }).select(['email', 'firstName', 'sureName', 'friends', 'userDetails.profilePicturePath.$'])
    }
 
    UserSchema.statics.getSaveNotification = async function (

@@ -18,17 +18,14 @@ export interface ILoginRequest extends Request {
    }
 }
 
-export type NotificationType = 'isComment' | 'isPostLike' | 'isCommentLike'
+export type NotificationType = 'isComment' | 'isPostLike' | 'isCommentLike' | 'isFriend'
 
-export interface INotifications {
+export interface INotifications<T = { postId: string | ObjectId; description: string }> {
    _id?: string
    notificationType: NotificationType
    isRead: boolean
    createdAt: Date
-   postData: {
-      postId: string | ObjectId
-      description: string
-   }
+   postData?: T
    userDetails: {
       userId: String | ObjectId
       firstName: string
