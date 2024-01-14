@@ -10,13 +10,19 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
+import { IFriendsResponse } from '../Types'
 
-const CardButton: React.FC<{ friendId: string }> = ({ friendId }) => {
+const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const { friendRequestMutate, loading } = useFriendRequest(friendId)
+   const { friendRequestMutate, loading } = useFriendRequest(friend._id)
+
+   const isFriendRequestSendByMe = friend.friends.find(
+      (item) => item.userId == userId && item.isAccepted === false
+   )
+
    return (
       <CardActions>
-         {userId == friendId ? (
+         {userId == friend._id ? (
             <Link style={{ width: '100%' }} href={`/me/${userId}`}>
                <Button fullWidth variant='outlined' color='success' endIcon={<AccountCircleIcon />}>
                   Profilom
@@ -35,17 +41,32 @@ const CardButton: React.FC<{ friendId: string }> = ({ friendId }) => {
                >
                   <span>Jelölés</span>
                </LoadingButton>
-               <LoadingButton
-                  onClick={() => {}}
-                  endIcon={<PersonRemoveIcon />}
-                  loading={loading}
-                  loadingPosition='end'
-                  variant='outlined'
-                  color='error'
-                  fullWidth
-               >
-                  <span>Jelölés törlése</span>
-               </LoadingButton>
+               {isFriendRequestSendByMe !== undefined && (
+                  <LoadingButton
+                     onClick={() => {}}
+                     endIcon={<PersonRemoveIcon />}
+                     loading={loading}
+                     loadingPosition='end'
+                     variant='outlined'
+                     color='error'
+                     fullWidth
+                  >
+                     <span>Jelölés törlése</span>
+                  </LoadingButton>
+               )}
+               {isFriendRequestSendByMe !== undefined && (
+                  <LoadingButton
+                     onClick={() => {}}
+                     endIcon={<PersonAddAlt1Icon />}
+                     loading={loading}
+                     loadingPosition='end'
+                     variant='outlined'
+                     color='warning'
+                     fullWidth
+                  >
+                     <span>Visszaigazolás</span>
+                  </LoadingButton>
+               )}
             </div>
          )}
       </CardActions>

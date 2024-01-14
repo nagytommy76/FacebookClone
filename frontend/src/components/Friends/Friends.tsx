@@ -39,7 +39,7 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
                            Létrehozva: {moment(friend.createdAt).format('YYYY MMMM D ')}
                         </Typography>
                      </CardContent>
-                     <CardButton friendId={friend._id} />
+                     <CardButton friend={friend} />
                   </Card>
                </div>
             ))}
