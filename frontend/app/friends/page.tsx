@@ -1,7 +1,7 @@
 import FriendsComponent from '@/components/Friends/Friends'
-import { IFriends } from '@/components/Friends/Types'
+import { IFriendsResponse } from '@/components/Friends/Types'
 
-async function getAllUsers(): Promise<IFriends[]> {
+async function getAllUsers(): Promise<IFriendsResponse[]> {
    const res = await fetch('http://localhost:5050/api/friends/get-friends')
    if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
