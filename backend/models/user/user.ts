@@ -23,7 +23,7 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
       friends: {
          type: [
             {
-               userId: { type: Schema.Types.ObjectId, unique: true },
+               userId: { type: String },
                isAccepted: Boolean,
                createdAt: Date,
             },
