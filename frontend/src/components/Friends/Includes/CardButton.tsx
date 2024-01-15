@@ -16,9 +16,11 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const { friendRequestMutate, loading } = useFriendRequest(friend._id)
 
-   const isFriendRequestSendByMe = friend.friends.find(
+   const isFriendRequestSendByMeAndNotAccepted = friend.friends.find(
       (item) => item.userId == userId && item.isAccepted === false
    )
+
+   const myFriendRequest = friend.friends.find((item) => item.userId === userId)
 
    return (
       <CardActions>
@@ -29,19 +31,21 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
                </Button>
             </Link>
          ) : (
-            <div>
-               <LoadingButton
-                  onClick={() => friendRequestMutate()}
-                  endIcon={<PersonAddAlt1Icon />}
-                  loading={loading}
-                  loadingPosition='end'
-                  variant='outlined'
-                  color='info'
-                  fullWidth
-               >
-                  <span>Jelölés</span>
-               </LoadingButton>
-               {isFriendRequestSendByMe !== undefined && (
+            <div style={{ width: '100%' }}>
+               {isFriendRequestSendByMeAndNotAccepted == undefined && (
+                  <LoadingButton
+                     onClick={() => friendRequestMutate()}
+                     endIcon={<PersonAddAlt1Icon />}
+                     loading={loading}
+                     loadingPosition='end'
+                     variant='outlined'
+                     color='info'
+                     fullWidth
+                  >
+                     <span>Jelölés</span>
+                  </LoadingButton>
+               )}
+               {isFriendRequestSendByMeAndNotAccepted !== undefined && (
                   <LoadingButton
                      onClick={() => {}}
                      endIcon={<PersonRemoveIcon />}
@@ -51,10 +55,10 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
                      color='error'
                      fullWidth
                   >
-                     <span>Jelölés törlése</span>
+                     <span>Jelölés visszavonása</span>
                   </LoadingButton>
                )}
-               {isFriendRequestSendByMe !== undefined && (
+               {myFriendRequest !== undefined && (
                   <LoadingButton
                      onClick={() => {}}
                      endIcon={<PersonAddAlt1Icon />}
