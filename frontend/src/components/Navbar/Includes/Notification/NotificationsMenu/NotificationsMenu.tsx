@@ -62,7 +62,7 @@ const NotificationsMenu: React.FC<{
                                        Likeolta a bejegyzésedet:
                                     </Typography>
                                     <Typography variant='caption' noWrap sx={{ width: '280px' }}>
-                                       {notification.postData.description}
+                                       {notification.postData?.description}
                                     </Typography>
                                     <TimeAgo createdAt={notification.createdAt} />
                                  </StyledTextArea>
