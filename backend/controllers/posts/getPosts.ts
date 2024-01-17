@@ -2,6 +2,12 @@ import { Response, Request } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import BasePostController from './Base/basePost'
 
+interface IGetUsersPosts extends IJWTUserType {
+   query: {
+      userId: string | undefined
+   }
+}
+
 export default class GetPostsController extends BasePostController {
    getAllPosts = async (req: Request, res: Response) => {
       try {
@@ -13,8 +19,10 @@ export default class GetPostsController extends BasePostController {
       }
    }
 
-   getUsersAllPosts = async (req: IJWTUserType, res: Response) => {
-      const userId = req.user?.userId
+   // Ebben az esetben nem a token-ből jön a userId hanem a query (params) ból
+   getUsersAllPosts = async (req: IGetUsersPosts, res: Response) => {
+      // const userId = req.user?.userId
+      const userId = req.query.userId
       if (!userId) return res.status(404).json({ msg: 'User not found' })
       try {
          const allUsersPosts = await this.returnPostModelWithPopulated(userId)
