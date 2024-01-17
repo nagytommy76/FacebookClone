@@ -17,7 +17,7 @@ const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    return (
       <ProfileHeader elevation={1}>
          <HeaderTop>
-            <HeaderImage />
+            <HeaderImage profileImagePath={initialUserDataState.userDetails.profilePicturePath[0].path} />
             <HeadTitleSection>
                <Typography variant='h4' fontWeight='50px' color='text.primary'>
                   {initialUserDataState.firstName} {initialUserDataState.sureName}

@@ -9,7 +9,9 @@ const useGetUserData = () => {
 
    const getUserData = async () => {
       try {
-         const response = await axios.get('/user/get-details', { params: { userId: params.userId } })
+         const response = await axios.get('/user/get-details', {
+            params: { userId: params.userId },
+         })
          return response.data as IUserPopulatedPosts
       } catch (error) {
          console.log(error)
