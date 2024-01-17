@@ -1,9 +1,11 @@
 import { Response } from 'express'
 import { User as UserModel } from '../../models/user/user'
-import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import type { IGetUserDetailsRequest } from './Types'
 
-export const getUserDetailsWithOwnPosts = async (request: IJWTUserType, response: Response) => {
-   const userId = request.user?.userId
+export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest, response: Response) => {
+   const userId = request.query.userId
+
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
       const foundUserWithPosts = await UserModel.findById(userId)

@@ -1,5 +1,6 @@
 import { Model, ObjectId, Document } from 'mongoose'
 import type { Request } from 'express'
+import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 export interface IRegisterRequest extends Request {
    body: {
       email: string
@@ -15,6 +16,12 @@ export interface ILoginRequest extends Request {
    body: {
       email: string
       password: string
+   }
+}
+
+export interface IGetUserDetailsRequest extends IJWTUserType {
+   query: {
+      userId: string | undefined
    }
 }
 
