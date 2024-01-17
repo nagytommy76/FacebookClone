@@ -1,30 +1,27 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { useAppSelector } from '@/reduxStore/store'
 
 import useCheckPicture from './Hooks/useCheckPicture'
 import useModalControl from './Hooks/useModalControl'
 
-import ProfilePic from '../../../../assets/facebook-profile.jpg'
+import ProfilePic from '@/assets/facebook-profile.jpg'
 import { HeaderImage as HeaderImageStyle } from './Style'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send'
 
 import ImagePreview from './ImageModal/ImagePreview'
-import ImageSelector from '../../../Base/ImagePreview/ImageSelector/ImageSelector'
+import ImageSelector from '@/Base/ImagePreview/ImageSelector/ImageSelector'
 const ImageModal = dynamic(() => import('./ImageModal/ImageModal'))
 
-const HeaderImage = () => {
-   const userProfileImage = useAppSelector((state) => state.auth.currentImage.path)
+const HeaderImage: React.FC<{ profileImagePath: string }> = ({ profileImagePath }) => {
    const { isButtonDisabled, uploadedPictures, addPicture, removePicture, handleSetUploadPictures } =
       useCheckPicture()
    const { handleCloseDialog, handleOpenDialog, isModalOpen } = useModalControl()
-
    return (
       <>
          <HeaderImageStyle
             onClick={handleOpenDialog}
-            src={userProfileImage || ProfilePic}
+            src={profileImagePath || ProfilePic}
             alt='Profil kép'
             width={100}
             height={100}
