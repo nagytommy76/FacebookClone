@@ -21,7 +21,6 @@ export default class GetPostsController extends BasePostController {
 
    // Ebben az esetben nem a token-ből jön a userId hanem a query (params) ból
    getUsersAllPosts = async (req: IGetUsersPosts, res: Response) => {
-      // const userId = req.user?.userId
       const userId = req.query.userId
       if (!userId) return res.status(404).json({ msg: 'User not found' })
       try {

@@ -5,12 +5,12 @@ import type { IGetUserDetailsRequest } from './Types'
 
 export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest, response: Response) => {
    const userId = request.query.userId
-
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
       const foundUserWithPosts = await UserModel.findById(userId)
       return response.status(200).json(foundUserWithPosts)
    } catch (error) {
+      console.log(error)
       response.status(500).json({ error, msg: 'internal server error' })
    }
 }
