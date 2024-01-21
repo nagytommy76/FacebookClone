@@ -1,14 +1,15 @@
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/utils/axiosSetup/AxiosInstance'
+import useCheckUrl from '@/hooks/useCheckUrl'
 import { IPost } from '@/types/PostTypes'
 
 const useGetAllPosts = (
    setAllPosts: React.Dispatch<React.SetStateAction<IPost[]>>,
-   isGetUsersPosts: boolean = false,
-   isUrlChanged: boolean = false
+   isGetUsersPosts: boolean = false
 ) => {
    const params = useParams() as { userId: string }
+   const isUrlChanged = useCheckUrl()
 
    const getUserPosts = async () => {
       try {
@@ -32,7 +33,7 @@ const useGetAllPosts = (
    }
 
    const { isLoading } = useQuery({
-      queryKey: ['getAllPosts', isUrlChanged],
+      queryKey: ['getAllPosts', { isUrlChanged, userId: params.userId }],
       queryFn: isGetUsersPosts ? getUserPosts : fetchAllQueries,
       onSuccess(data) {
          if (data) setAllPosts(data.data.allPosts)

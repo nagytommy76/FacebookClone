@@ -1,12 +1,14 @@
 'use client'
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
+import useCheckUrl from '@/hooks/useCheckUrl'
 import { axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
-import { IUserPopulatedPosts } from '@/types/AuthTypes'
+import type { IUserPopulatedPosts } from '@/types/AuthTypes'
+import type { IBaseListAction } from '../Context/ProfileReducer'
 
-const useGetUserData = () => {
+const useGetUserData = (profileDispatch: React.Dispatch<IBaseListAction>) => {
    const params = useParams() as { userId: string }
-
+   const isUrlChanged = useCheckUrl()
    const getUserData = async () => {
       try {
          const response = await axios.get('/user/get-details', {
@@ -19,11 +21,14 @@ const useGetUserData = () => {
       }
    }
 
-   const { data, isLoading, isError } = useQuery({
-      queryKey: ['userData'],
+   const { isLoading, isError } = useQuery({
+      queryKey: ['userData', { isUrlChanged, userId: params.userId }],
       queryFn: getUserData,
+      onSuccess(data) {
+         profileDispatch({ payload: data, type: 'SET_INITIAL_USER_DATA' })
+      },
    })
-   return { data, isLoading, isError }
+   return { isLoading, isError }
 }
 
 export default useGetUserData
