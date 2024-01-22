@@ -2,10 +2,11 @@ import { useContext } from 'react'
 import { ProfileContext } from '../Context/ProfileContextProvider'
 import dynamic from 'next/dynamic'
 
+import SinglePost from '@/Skeletons/SinglePost/SinglePost'
 import TabPanel from './Includes/TabPanel'
 const AboutMeComponent = dynamic(() => import('./AboutMe/AboutMe'), { loading: () => <h2>Töltés...</h2> })
 const PostsBase = dynamic(() => import('@/Base/PostsBase/PostsBase'), {
-   loading: () => <h2>Töltés!!!4444...</h2>,
+   loading: () => <SinglePost />,
 })
 
 const Body = () => {
@@ -19,10 +20,10 @@ const Body = () => {
             <AboutMeComponent />
          </TabPanel>
          <TabPanel value={tabValue} index={2}>
-            Ismerősök
+            Itt majd a már felvett ismerősöket tudom kezelni, megnézni stb
          </TabPanel>
          <TabPanel value={tabValue} index={3}>
-            Fényképek jönnek ide
+            Fényképeket (Poszt/profil stb. összes) tudom megnézni
          </TabPanel>
       </>
    )
