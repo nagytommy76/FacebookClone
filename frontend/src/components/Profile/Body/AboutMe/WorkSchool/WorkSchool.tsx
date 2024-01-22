@@ -1,9 +1,11 @@
 import React from 'react'
 
-import { WorkSchoolSection, WorkSchoolItems } from '../AboutMeStyles'
+import { WorkSchoolSection, WorkSchoolItems } from './Styles'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+
+import WorkSchoolInputs from './Includes/WorkSchoolInputs'
 
 const WorkSchool = () => {
    return (
@@ -13,6 +15,7 @@ const WorkSchool = () => {
             <Button variant='text' color='warning' startIcon={<AddCircleOutlineIcon />}>
                Munkahely megadása
             </Button>
+            <WorkSchoolInputs />
             <small>Ide jön a már megadott elem, ha van presze</small>
          </WorkSchoolItems>
          <WorkSchoolItems>
