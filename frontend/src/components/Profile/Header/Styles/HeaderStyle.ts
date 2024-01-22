@@ -34,14 +34,6 @@ export const HeadTitleSection = styled('div')(({ theme }) => ({
    },
 }))
 
-export const ProfileModifySection = styled('div')(({ theme }) => ({
-   flexGrow: 0,
-   alignSelf: 'flex-end',
-   [theme.breakpoints.down('sm')]: {
-      alignSelf: 'center',
-   },
-}))
-
 export const StyledTab = styled(Tab)({
    textTransform: 'none',
    fontSize: '16px',
