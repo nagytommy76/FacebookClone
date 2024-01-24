@@ -69,10 +69,23 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
          workPlaces: [
             {
                companyName: String,
-               post: String,
+               position: String,
                city: String,
-               from: Number,
-               to: Number,
+               description: String,
+               startDate: {
+                  type: {
+                     year: String,
+                     month: String,
+                     day: String,
+                  },
+               },
+               endDate: {
+                  type: {
+                     year: String,
+                     month: String,
+                     day: String,
+                  },
+               },
             },
          ],
       },
