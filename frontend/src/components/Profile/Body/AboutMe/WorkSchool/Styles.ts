@@ -18,3 +18,11 @@ export const WorkSchoolItems = styled('div')({
    justifyContent: 'space-evenly',
    alignItems: 'flex-start',
 })
+
+export const WorkSchoolInputContainer = styled('div')({
+   margin: '1rem 0',
+   width: '90%',
+
+   display: 'grid',
+   gap: '20px',
+})
