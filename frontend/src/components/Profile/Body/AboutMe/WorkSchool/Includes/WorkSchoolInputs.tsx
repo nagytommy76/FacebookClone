@@ -1,21 +1,22 @@
 import React from 'react'
 
+import SelectContainer from './SelectContainer'
+
+import { WorkSchoolInputContainer } from '../Styles'
 import TextField from '@mui/material/TextField'
-import Input from '@mui/material/Input'
+import Button from '@mui/material/Button'
 
 const WorkSchoolInputs = () => {
    return (
-      <div>
-         <TextField label='Vállalat' id='companyName' size='small' />
-         <TextField label='Pozíció' id='post' size='small' />
-         <TextField label='Város' id='city' size='small' />
-         <Input
-            type='date'
-            id='start'
-            name='trip-start'
-            onChange={(event) => console.log(event.target.value)}
-         />
-      </div>
+      <WorkSchoolInputContainer>
+         <TextField label='Vállalat' id='companyName' size='medium' />
+         <TextField label='Pozíció' id='post' size='medium' />
+         <TextField label='Város' id='city' size='medium' />
+         <SelectContainer />
+         <Button color='warning' variant='outlined'>
+            Küldés
+         </Button>
+      </WorkSchoolInputContainer>
    )
 }
 
