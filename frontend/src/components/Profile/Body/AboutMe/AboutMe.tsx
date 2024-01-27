@@ -27,40 +27,33 @@ const AboutMe = () => {
             variant='scrollable'
             value={value}
             onChange={handleChange}
-            aria-label='About me tabs'>
+            aria-label='About me tabs'
+         >
             {/* Nem működik ha kiszedem külön komponensbe..... */}
             <Tab
                sx={{ '&.MuiButtonBase-root': { alignItems: 'flex-start' }, textTransform: 'none' }}
-               label='Áttekintés'
+               label='Munkahelyek és tanulmányok'
                {...a11yProps(0)}
             />
             <Tab
                sx={{ '&.MuiButtonBase-root': { alignItems: 'flex-start' }, textTransform: 'none' }}
-               label='Munkahelyek és tanulmányok'
+               label='Elérhetőségek és alapadatok'
                {...a11yProps(1)}
             />
             <Tab
                sx={{ '&.MuiButtonBase-root': { alignItems: 'flex-start' }, textTransform: 'none' }}
-               label='Elérhetőségek és alapadatok'
-               {...a11yProps(2)}
-            />
-            <Tab
-               sx={{ '&.MuiButtonBase-root': { alignItems: 'flex-start' }, textTransform: 'none' }}
                label='Kapcsolatok'
-               {...a11yProps(3)}
+               {...a11yProps(2)}
             />
          </Tabs>
          <Divider />
          <TabPanel value={value} index={0}>
-            Item One
-         </TabPanel>
-         <TabPanel value={value} index={1}>
             <WorkAndStudyComponent />
          </TabPanel>
-         <TabPanel value={value} index={2}>
+         <TabPanel value={value} index={1}>
             Item Three
          </TabPanel>
-         <TabPanel value={value} index={3}>
+         <TabPanel value={value} index={2}>
             Kapcsolatok
          </TabPanel>
       </StyledTabContainer>
