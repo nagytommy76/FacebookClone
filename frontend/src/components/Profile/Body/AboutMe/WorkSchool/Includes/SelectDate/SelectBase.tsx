@@ -9,12 +9,14 @@ const SelectBase: React.FC<{
    value: string
    labelText: 'Év' | 'Hónap' | 'Nap'
    labelId?: 'year' | 'month' | 'day'
+   disabled?: boolean
    handleChangeEvent: (event: SelectChangeEvent) => void
-}> = ({ children, value, labelText, labelId = 'year', handleChangeEvent }) => {
+}> = ({ children, value, labelText, labelId = 'year', disabled = false, handleChangeEvent }) => {
    return (
       <FormControl fullWidth>
          <InputLabel id={`start-${labelId}`}>{labelText}</InputLabel>
          <Select
+            disabled={disabled}
             multiline
             labelId={`start-${labelId}`}
             id={`start-${labelId}`}
