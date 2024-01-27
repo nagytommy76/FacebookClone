@@ -16,7 +16,6 @@ const WorkSchool = () => {
                Munkahely megadása
             </Button>
             <WorkSchoolInputs />
-            <small>Ide jön a már megadott elem, ha van presze</small>
          </WorkSchoolItems>
          <WorkSchoolItems>
             <Typography variant='h5'>Főiskola/Egyetem</Typography>

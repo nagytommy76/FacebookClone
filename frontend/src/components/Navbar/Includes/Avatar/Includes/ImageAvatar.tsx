@@ -14,7 +14,7 @@ const ImageAvatar: React.FC<{ displayText?: string }> = ({ displayText }) => {
    const { isLoading } = useQuery({
       queryKey: ['getCurrentPicture'],
       queryFn: async () => {
-         const response = (await axios.get('/user//get-current-picture')) as AxiosResponse<{
+         const response = (await axios.get('/user/get-current-picture')) as AxiosResponse<{
             currentImage: IProfilePicture
          }>
          return response.data

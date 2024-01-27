@@ -5,6 +5,7 @@ import { styled } from '@mui/material'
 
 const StyledContainer = styled('section')(({ theme }) => ({
    minHeight: '250px',
+   width: '100%',
 }))
 
 export default function TabPanel(props: TabPanelProps) {
