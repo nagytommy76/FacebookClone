@@ -1,25 +1,27 @@
-import { useState } from 'react'
-
-import moment from 'moment'
-
-import MenuItem from '@mui/material/MenuItem'
 import type { SelectChangeEvent } from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import SelectBase from './SelectBase'
 
-const SelectDay = () => {
-   const [fromDay, setFromDay] = useState('')
-
-   const handleChangeMonth = (event: SelectChangeEvent) => {
-      setFromDay(event.target.value as string)
-   }
-
+const SelectDay: React.FC<{
+   handleChangeDay: (event: SelectChangeEvent) => void
+   day: string
+   daysOfMonth: number[] | null
+   disabled?: boolean
+}> = ({ handleChangeDay, day, daysOfMonth, disabled = false }) => {
    return (
-      <SelectBase handleChangeEvent={handleChangeMonth} labelId='day' labelText='Nap' value={fromDay}>
-         {moment.months().map((month, index) => (
-            <MenuItem key={index} value={month}>
-               {month}
-            </MenuItem>
-         ))}
+      <SelectBase
+         disabled={disabled}
+         handleChangeEvent={handleChangeDay}
+         labelId='day'
+         labelText='Nap'
+         value={day}
+      >
+         {daysOfMonth &&
+            daysOfMonth.map((day) => (
+               <MenuItem key={day} value={day}>
+                  {day}
+               </MenuItem>
+            ))}
       </SelectBase>
    )
 }
