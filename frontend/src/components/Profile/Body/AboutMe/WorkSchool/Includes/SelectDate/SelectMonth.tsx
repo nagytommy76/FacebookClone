@@ -18,7 +18,7 @@ const SelectMonth: React.FC<{
          value={month}
       >
          {moment.months().map((month, index) => (
-            <MenuItem key={index} value={index}>
+            <MenuItem key={index} value={index + 1}>
                {month}
             </MenuItem>
          ))}
