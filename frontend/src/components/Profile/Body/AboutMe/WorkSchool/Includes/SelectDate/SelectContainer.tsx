@@ -5,9 +5,11 @@ import SelectYear from './SelectYear'
 import SelectMonth from './SelectMonth'
 import SelectDay from './SelectDay'
 
-const SelectContainer = () => {
+const SelectContainer: React.FC<{ setDate: React.Dispatch<React.SetStateAction<Date | undefined>> }> = ({
+   setDate,
+}) => {
    const { handleChangeYear, handleChangeMonth, handleChangeDay, year, month, day, disabled, daysOfMonth } =
-      useSelectDate()
+      useSelectDate(setDate)
    return (
       <div style={{ width: '100%', display: 'flex' }}>
          <SelectYear handleChangeYear={handleChangeYear} year={year} />
