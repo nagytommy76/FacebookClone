@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import moment from 'moment'
 import type { SelectChangeEvent } from '@mui/material'
 
-const useSelectDate = () => {
+const useSelectDate = (setDate: React.Dispatch<React.SetStateAction<Date | undefined>>) => {
    const [year, setYear] = useState('')
    const [month, setMonth] = useState('')
    const [day, setDay] = useState('')
@@ -19,16 +19,21 @@ const useSelectDate = () => {
    }
    const handleChangeDay = (event: SelectChangeEvent) => {
       setDay(event.target.value as string)
+      setDate(new Date(`${year}-${month}-${event.target.value}`))
    }
 
    useEffect(() => {
-      const daysInMonth = moment(`${year}-${month + 1}`, 'YYYY-MM').daysInMonth()
+      const daysInMonth = moment(`${year}-${month}`, 'YYYY-MM').daysInMonth()
       let days: number[] = []
       for (let index = 1; index <= daysInMonth; index++) {
          days.push(index)
       }
       setDaysOfMonth(days)
    }, [year, month])
+
+   useEffect(() => {
+      if (year != '' && month != '' && day != '') setDate(new Date(`${year}-${month}-${day}`))
+   }, [year, month, day, setDate])
 
    return {
       handleChangeYear,
