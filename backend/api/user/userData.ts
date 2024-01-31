@@ -6,12 +6,14 @@ import {
    getCurrentProfilePictures,
    editSelectedProfilePicture,
    getCurrentSelectedProfileImage,
-} from '../../controllers/users/userDetails'
+} from '../../controllers/users/userDetails/userDetails'
 import {
    getNotifications,
    setActiveNotifications,
    removeUsersNotification,
 } from '../../controllers/notifications/notifications'
+
+import { addNewWorkplaceController } from '../../controllers/users/userDetails/userProfile'
 
 const router = Router()
 
@@ -25,5 +27,8 @@ router.get('/get-current-picture', authenticateAccessTokenForApi, getCurrentSele
 
 router.post('/save-profile-picture', authenticateAccessTokenForApi, saveUserProfilePicture)
 router.put('/edit-profile-picture', authenticateAccessTokenForApi, editSelectedProfilePicture)
+
+// Profile Work/studies etc..
+router.post('/save-workplace', authenticateAccessTokenForApi, addNewWorkplaceController)
 
 module.exports = router

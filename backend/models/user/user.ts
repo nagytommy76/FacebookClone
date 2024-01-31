@@ -72,20 +72,8 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
                position: String,
                city: String,
                description: String,
-               startDate: {
-                  type: {
-                     year: String,
-                     month: String,
-                     day: String,
-                  },
-               },
-               endDate: {
-                  type: {
-                     year: String,
-                     month: String,
-                     day: String,
-                  },
-               },
+               startDate: String,
+               endDate: { type: String, default: null, required: false },
             },
          ],
       },
