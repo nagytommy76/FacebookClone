@@ -1,7 +1,7 @@
 import { Response } from 'express'
-import { User as UserModel } from '../../models/user/user'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
-import type { IGetUserDetailsRequest } from './Types'
+import { User as UserModel } from '../../../models/user/user'
+import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
+import type { IGetUserDetailsRequest } from '../Types'
 
 export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest, response: Response) => {
    const userId = request.query.userId
