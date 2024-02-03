@@ -14,6 +14,7 @@ const useInputs = () => {
    const [city, setCity] = useState<Error>(textWithError)
    const [fromDate, setFromDate] = useState<Date | undefined>(undefined)
    const [toDate, setToDate] = useState<Date | undefined>(undefined)
+   const [endDateChecked, setEndDateChecked] = useState<boolean>(true)
 
    const setToDefault = () => {
       setCompany(textWithError)
@@ -21,17 +22,22 @@ const useInputs = () => {
       setCity(textWithError)
       setFromDate(undefined)
       setToDate(undefined)
+      setEndDateChecked(true)
+   }
+   const addWorkMutation = useAddWork(company, post, city, fromDate, toDate, endDateChecked, setToDefault)
+
+   const handleChangeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEndDateChecked(event.target.checked)
    }
 
-   const addWorkMutation = useAddWork(company, post, city, fromDate, toDate, setToDefault)
-
-   const handleChangeCompany = (event: ChangeEvent<HTMLInputElement>) => {
+   const handleChangeCompanyError = () => {}
+   const handleChangeCompanyValue = (event: ChangeEvent<HTMLInputElement>) => {
       setCompany({ ...company, value: event.target.value })
    }
-   const handleChangePost = (event: ChangeEvent<HTMLInputElement>) => {
+   const handleChangePostValue = (event: ChangeEvent<HTMLInputElement>) => {
       setPost({ ...post, value: event.target.value })
    }
-   const handleChangeCity = (event: ChangeEvent<HTMLInputElement>) => {
+   const handleChangeCityValue = (event: ChangeEvent<HTMLInputElement>) => {
       setCity({ ...city, value: event.target.value })
    }
 
@@ -39,11 +45,13 @@ const useInputs = () => {
       company,
       post,
       city,
+      endDateChecked,
       setFromDate,
       setToDate,
-      handleChangeCompany,
-      handleChangeCity,
-      handleChangePost,
+      handleChangeChecked,
+      handleChangeCompanyValue,
+      handleChangeCityValue,
+      handleChangePostValue,
       addWorkMutation,
    }
 }
