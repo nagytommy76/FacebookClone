@@ -13,7 +13,7 @@ const SelectBase: React.FC<{
    handleChangeEvent: (event: SelectChangeEvent) => void
 }> = ({ children, value, labelText, labelId = 'year', disabled = false, handleChangeEvent }) => {
    return (
-      <FormControl sx={{ mr: 1 }}>
+      <FormControl sx={{ mr: 1, width: '100%' }}>
          <InputLabel id={`start-${labelId}`}>{labelText}</InputLabel>
          <Select
             disabled={disabled}

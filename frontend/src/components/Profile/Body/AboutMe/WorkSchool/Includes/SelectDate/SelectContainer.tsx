@@ -11,7 +11,7 @@ const SelectContainer: React.FC<{ setDate: React.Dispatch<React.SetStateAction<D
    const { handleChangeYear, handleChangeMonth, handleChangeDay, year, month, day, disabled, daysOfMonth } =
       useSelectDate(setDate)
    return (
-      <div style={{ width: '100%', display: 'flex' }}>
+      <div style={{ maxWidth: '100%', display: 'flex' }}>
          <SelectYear handleChangeYear={handleChangeYear} year={year} />
          <SelectMonth handleChangeMonth={handleChangeMonth} month={month} disabled={disabled.month} />
          <SelectDay
