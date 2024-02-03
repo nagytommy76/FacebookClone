@@ -9,23 +9,49 @@ import Button from '@mui/material/Button'
 
 const WorkSchoolInputs = () => {
    const {
-      setCity,
-      setCompany,
-      setPost,
+      city,
+      company,
+      post,
+      endDateChecked,
+      handleChangeChecked,
       setFromDate,
       setToDate,
-      handleChangeCity,
-      handleChangeCompany,
-      handleChangePost,
+      handleChangeCityValue,
+      handleChangeCompanyValue,
+      handleChangePostValue,
+      addWorkMutation,
    } = useInputs()
 
    return (
       <WorkSchoolInputContainer>
-         <TextField onChange={handleChangeCompany} label='Vállalat' id='companyName' size='medium' />
-         <TextField onChange={handleChangePost} label='Pozíció' id='post' size='medium' />
-         <TextField onChange={handleChangeCity} label='Város' id='city' size='medium' />
-         <DateSelector setFromDate={setFromDate} setToDate={setToDate} />
-         <Button color='warning' variant='outlined'>
+         <TextField
+            onChange={handleChangeCompanyValue}
+            value={company.value}
+            label='Vállalat'
+            id='companyName'
+            size='medium'
+         />
+         <TextField
+            onChange={handleChangePostValue}
+            value={post.value}
+            label='Pozíció'
+            id='post'
+            size='medium'
+         />
+         <TextField
+            onChange={handleChangeCityValue}
+            value={city.value}
+            label='Város'
+            id='city'
+            size='medium'
+         />
+         <DateSelector
+            handleChangeChecked={handleChangeChecked}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
+            endDateChecked={endDateChecked}
+         />
+         <Button onClick={() => addWorkMutation()} color='warning' variant='outlined'>
             Küldés
          </Button>
       </WorkSchoolInputContainer>
