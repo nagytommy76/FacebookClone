@@ -48,3 +48,5 @@ export interface IUserTypes {
 export interface IUserPopulatedPosts extends IUserTypes {
    posts: IPost[]
 }
+
+export type ErrorResponse = { location: string; msg: string; path: string; value: string }[]
