@@ -28,6 +28,8 @@ export const ValidateRegister = [
 ]
 
 export const ValidateLogin = [
-   body('email').custom((email: string) => customEmailValidator(email, true)),
+   body('email')
+      .isEmail()
+      .custom((email: string) => customEmailValidator(email, true)),
    body('password').trim().isLength({ min: 3 }).withMessage('A jelszónak min 3 karakternek kell lennie!'),
 ]
