@@ -7,9 +7,11 @@ const SelectDay: React.FC<{
    day: string
    daysOfMonth: number[] | null
    disabled?: boolean
-}> = ({ handleChangeDay, day, daysOfMonth, disabled = false }) => {
+   error?: boolean
+}> = ({ handleChangeDay, day, daysOfMonth, disabled = false, error = false }) => {
    return (
       <SelectBase
+         error={error}
          disabled={disabled}
          handleChangeEvent={handleChangeDay}
          labelId='day'
