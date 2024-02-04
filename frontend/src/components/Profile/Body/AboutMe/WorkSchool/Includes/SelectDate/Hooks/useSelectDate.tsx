@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import moment from 'moment'
 import type { SelectChangeEvent } from '@mui/material'
+import type { DateError } from '../Types'
 
-const useSelectDate = (setDate: React.Dispatch<React.SetStateAction<Date | undefined>>) => {
+const useSelectDate = (setDate: React.Dispatch<React.SetStateAction<DateError>>) => {
    const [year, setYear] = useState('')
    const [month, setMonth] = useState('')
    const [day, setDay] = useState('')
@@ -19,7 +20,7 @@ const useSelectDate = (setDate: React.Dispatch<React.SetStateAction<Date | undef
    }
    const handleChangeDay = (event: SelectChangeEvent) => {
       setDay(event.target.value as string)
-      setDate(new Date(`${year}-${month}-${event.target.value}`))
+      setDate({ value: new Date(`${year}-${month}-${event.target.value}`), error: false, errorMsg: '' })
    }
 
    useEffect(() => {
@@ -32,7 +33,8 @@ const useSelectDate = (setDate: React.Dispatch<React.SetStateAction<Date | undef
    }, [year, month])
 
    useEffect(() => {
-      if (year != '' && month != '' && day != '') setDate(new Date(`${year}-${month}-${day}`))
+      if (year != '' && month != '' && day != '')
+         setDate({ value: new Date(`${year}-${month}-${day}`), error: false, errorMsg: '' })
    }, [year, month, day, setDate])
 
    return {
