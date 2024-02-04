@@ -13,6 +13,8 @@ const WorkSchoolInputs = () => {
       company,
       post,
       endDateChecked,
+      fromDate,
+      toDate,
       handleChangeChecked,
       setFromDate,
       setToDate,
@@ -30,6 +32,8 @@ const WorkSchoolInputs = () => {
             label='Vállalat'
             id='companyName'
             size='medium'
+            error={company.error}
+            helperText={company.errorMsg}
          />
          <TextField
             onChange={handleChangePostValue}
@@ -37,6 +41,8 @@ const WorkSchoolInputs = () => {
             label='Pozíció'
             id='post'
             size='medium'
+            error={post.error}
+            helperText={post.errorMsg}
          />
          <TextField
             onChange={handleChangeCityValue}
@@ -44,12 +50,15 @@ const WorkSchoolInputs = () => {
             label='Város'
             id='city'
             size='medium'
+            error={city.error}
+            helperText={city.errorMsg}
          />
          <DateSelector
             handleChangeChecked={handleChangeChecked}
             setFromDate={setFromDate}
             setToDate={setToDate}
             endDateChecked={endDateChecked}
+            fromDate={fromDate}
          />
          <Button onClick={() => addWorkMutation()} color='warning' variant='outlined'>
             Küldés

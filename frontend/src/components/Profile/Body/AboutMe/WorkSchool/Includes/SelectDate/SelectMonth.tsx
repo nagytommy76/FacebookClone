@@ -8,11 +8,9 @@ const SelectMonth: React.FC<{
    handleChangeMonth: (event: SelectChangeEvent) => void
    month: string
    disabled?: boolean
-   error?: boolean
-}> = ({ handleChangeMonth, month, disabled = false, error = false }) => {
+}> = ({ handleChangeMonth, month, disabled = false }) => {
    return (
       <SelectBase
-         error={error}
          disabled={disabled}
          handleChangeEvent={handleChangeMonth}
          labelId='month'
