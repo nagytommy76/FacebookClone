@@ -42,7 +42,7 @@ const Login = () => {
                         label='E-mail vagy felhasználó'
                         aria-describedby='email-text'
                      />
-                     {email.isError && <FormHelperText id='email-text'>Error</FormHelperText>}
+                     <FormHelperText id='email-text'>{email.msg}</FormHelperText>
                   </FormControl>
                   <FormControl error={password.isError} variant='outlined' fullWidth>
                      <InputLabel htmlFor='password'>Jelszó</InputLabel>
@@ -54,7 +54,7 @@ const Login = () => {
                         label='Jelszó'
                         aria-describedby='password-text'
                      />
-                     {password.isError && <FormHelperText id='password-text'>Error</FormHelperText>}
+                     <FormHelperText id='password-text'>{password.msg}</FormHelperText>
                   </FormControl>
                   <LoadingButton
                      type='submit'

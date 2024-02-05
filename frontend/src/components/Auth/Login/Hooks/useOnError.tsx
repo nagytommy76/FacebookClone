@@ -1,32 +1,35 @@
-import { isAxiosError } from 'axios'
+import { AxiosError, isAxiosError } from 'axios'
 import type { Dispatch, SetStateAction } from 'react'
 import type { IInputValues } from '../../Register/Includes/Types'
+import type { ErrorResponse } from '@/types/AuthTypes'
 
 const useOnError = (
    setEmail: Dispatch<SetStateAction<IInputValues>>,
    setPassword: Dispatch<SetStateAction<IInputValues>>
 ) => {
-   const onErrorFn = (error: unknown) => {
+   const onErrorFn = (error: AxiosError<{ errors: ErrorResponse }>) => {
       if (isAxiosError(error)) {
-         const errorResponse = error.response?.data.errors as IInputValues[]
-         console.log(errorResponse)
-         errorResponse.map((value) => {
-            if (value.param === 'email') {
-               setEmail((prevValues) => {
-                  return {
-                     ...prevValues,
-                     msg: value.msg,
-                     isError: true,
-                  }
-               })
-            } else {
-               setPassword((prevValues) => {
-                  return {
-                     ...prevValues,
-                     msg: value.msg,
-                     isError: true,
-                  }
-               })
+         const errorResponse = error.response?.data.errors
+         errorResponse?.map((value) => {
+            switch (value.path) {
+               case 'email':
+                  setEmail((prevValues) => {
+                     return {
+                        ...prevValues,
+                        msg: value.msg,
+                        isError: true,
+                     }
+                  })
+                  break
+               case 'password':
+                  setPassword((prevValues) => {
+                     return {
+                        ...prevValues,
+                        msg: value.msg,
+                        isError: true,
+                     }
+                  })
+                  break
             }
          })
       }
