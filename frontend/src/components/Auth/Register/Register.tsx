@@ -27,11 +27,12 @@ const Register = () => {
    return (
       <StyledAuthContainer>
          <StyledRegisterPaper elevation={3}>
-            <Typography variant='h4' mb={2}>
+            <Typography variant='h4' textAlign='center' mb={2}>
                Regisztráció
             </Typography>
             <Stack direction='row' spacing={1}>
                <TextField
+                  fullWidth
                   value={sureName.value}
                   onChange={(e) => setAnyTextStateValues(e, 'surename')}
                   error={sureName.isError}
@@ -41,6 +42,7 @@ const Register = () => {
                   variant='outlined'
                />
                <TextField
+                  fullWidth
                   value={firstName.value}
                   onChange={(e) => setAnyTextStateValues(e, 'firstname')}
                   error={firstName.isError}

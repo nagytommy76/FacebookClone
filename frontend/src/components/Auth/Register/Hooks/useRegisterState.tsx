@@ -1,5 +1,6 @@
 import { useState, ChangeEvent } from 'react'
 import { GenderTypes, IDateOfBirth, IInputValues, InputValues } from '../Includes/Types'
+import type { ErrorResponse } from '@/types/AuthTypes'
 
 const useRegisterState = () => {
    const [sureName, setSureName] = useState<IInputValues>(InputValues)
@@ -17,10 +18,6 @@ const useRegisterState = () => {
 
    const setValueCallback = (prevValue: IInputValues, value: string) => {
       return { ...prevValue, value }
-   }
-
-   const setErrorValueCallback = (prevValue: IInputValues, isError: boolean, param: string, msg: string) => {
-      return { ...prevValue, isError, msg, param }
    }
 
    const setAnyTextStateValues = (
@@ -43,36 +40,47 @@ const useRegisterState = () => {
       }
    }
 
-   const setAnyErrorMsg = (value: IInputValues, isError: boolean = true) => {
-      switch (value.param) {
-         case 'email':
-            setEmail((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
-            break
-         case 'firstName':
-            setFirstName((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
-            break
-         case 'sureName':
-            setSureName((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
-            break
-         case 'password':
-            setPassword((prevValue) => setErrorValueCallback(prevValue, isError, value.param, value.msg))
-            break
-         case 'dateOfBirth':
-            setDateOfBirth((prevValue) => {
-               return { ...prevValue, isError, msg: value.msg, param: value.param }
-            })
-            break
-      }
+   const setAnyErrorMsg = (error: ErrorResponse, isError: boolean = true) => {
+      error.map((value) => {
+         switch (value.path) {
+            case 'email':
+               setEmail((prevValue) => {
+                  return { ...prevValue, isError, msg: value.msg }
+               })
+               break
+            case 'firstName':
+               setFirstName((prevValue) => {
+                  return { ...prevValue, isError, msg: value.msg }
+               })
+               break
+            case 'sureName':
+               setSureName((prevValue) => {
+                  return { ...prevValue, isError, msg: value.msg }
+               })
+               break
+            case 'password':
+               setPassword((prevValue) => {
+                  return { ...prevValue, isError, msg: value.msg }
+               })
+               break
+            case 'dateOfBirth':
+               setDateOfBirth((prevValue) => {
+                  return { ...prevValue, isError, msg: value.msg, param: value.path }
+               })
+               break
+         }
+      })
    }
 
    const resetAllErrors = () => {
       const params = ['email', 'firstName', 'sureName', 'password', 'dateOfBirth']
-      params.map((param) => {
-         setAnyErrorMsg({ msg: '', isError: false, param, value: '' }, false)
-      })
-      setDateOfBirth((prevValue) => {
-         return { ...prevValue, isError: false, msg: '', param: '' }
-      })
+      // params.map((param) => {
+      //    setAnyErrorMsg({ msg: '', isError: false, param, value: '' }, false)
+      // })
+
+      // setDateOfBirth((prevValue) => {
+      //    return { ...prevValue, isError: false, msg: '', param: '' }
+      // })
    }
 
    return {
