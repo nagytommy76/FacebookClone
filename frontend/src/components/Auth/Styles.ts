@@ -20,8 +20,8 @@ const BaseStyledPaper: any = {
 
 export const StyledRegisterPaper = styled(Paper)({
    ...BaseStyledPaper,
-   width: '500px',
-   minHeight: '550px',
+   width: '600px',
+   minHeight: '600px',
 })
 
 // Login
