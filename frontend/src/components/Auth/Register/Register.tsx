@@ -6,6 +6,11 @@ import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+
+import Collapse from '@mui/material/Collapse'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 
 import DateOfBirth from './Includes/DateOfBirth'
 import GenderRadio from './Includes/GenderRadio'
@@ -13,6 +18,8 @@ import GenderRadio from './Includes/GenderRadio'
 const Register = () => {
    const {
       registerMutate,
+      isSuccess,
+      isBtnDisabled,
       dateOfBirth,
       email,
       firstName,
@@ -75,7 +82,21 @@ const Register = () => {
             />
             <DateOfBirth dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} />
             <GenderRadio gender={gender} setGender={setGender} />
-            <Button onClick={() => registerMutate()} variant='contained' color='success' fullWidth>
+            <Divider />
+            <Collapse in={isSuccess} timeout={200} mountOnEnter unmountOnExit>
+               <Alert sx={{ mb: 2 }} variant='outlined' severity='success'>
+                  <AlertTitle>Sikeres regisztráció!</AlertTitle>
+                  <p>{`Sikeres regisztráció a(z) ${email.value} email címmel`}</p>
+                  <p>Hamarosan átirányíitunk a belépő oldalra!</p>
+               </Alert>
+            </Collapse>
+            <Button
+               disabled={isBtnDisabled}
+               onClick={() => registerMutate()}
+               variant='contained'
+               color='success'
+               fullWidth
+            >
                Regisztráció
             </Button>
          </StyledRegisterPaper>
