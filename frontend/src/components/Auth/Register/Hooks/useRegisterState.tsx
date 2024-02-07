@@ -73,14 +73,21 @@ const useRegisterState = () => {
    }
 
    const resetAllErrors = () => {
-      const params = ['email', 'firstName', 'sureName', 'password', 'dateOfBirth']
-      // params.map((param) => {
-      //    setAnyErrorMsg({ msg: '', isError: false, param, value: '' }, false)
-      // })
-
-      // setDateOfBirth((prevValue) => {
-      //    return { ...prevValue, isError: false, msg: '', param: '' }
-      // })
+      setSureName((prevValue) => {
+         return { ...prevValue, isError: false, msg: '' }
+      })
+      setFirstName((prevValue) => {
+         return { ...prevValue, isError: false, msg: '' }
+      })
+      setEmail((prevValue) => {
+         return { ...prevValue, isError: false, msg: '' }
+      })
+      setPassword((prevValue) => {
+         return { ...prevValue, isError: false, msg: '' }
+      })
+      setDateOfBirth((prevValue) => {
+         return { ...prevValue, isError: false, msg: '' }
+      })
    }
 
    return {
