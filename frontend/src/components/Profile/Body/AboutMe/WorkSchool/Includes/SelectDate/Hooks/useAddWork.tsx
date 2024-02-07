@@ -1,15 +1,17 @@
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse, AxiosError } from '@/axios/AxiosInstance'
-import type { Error } from '../Types'
+import type { DateError, Error } from '../Types'
+import type { ErrorResponse } from '@/types/AuthTypes'
 
 const useAddWork = (
    company: Error,
    post: Error,
    city: Error,
-   fromDate: Date | undefined,
-   toDate: Date | undefined,
+   fromDate: DateError,
+   toDate: DateError,
    endDateChecked: boolean,
-   setToDefault: () => void
+   setToDefault: () => void,
+   handleChangeErrors: (errorResponseArray: ErrorResponse) => void
 ) => {
    const workMutationFn = async () => {
       return await axios.post('/user/save-workplace', {
@@ -17,8 +19,8 @@ const useAddWork = (
          post: post.value,
          city: city.value,
          endDateChecked,
-         fromDate,
-         toDate,
+         fromDate: fromDate.value,
+         toDate: toDate.value,
       })
    }
 
@@ -26,11 +28,11 @@ const useAddWork = (
       mutationKey: ['addNewWorkplace'],
       mutationFn: workMutationFn,
       onSuccess(data, variables, context) {
+         setToDefault()
          console.log(data)
-         //  setToDefault()
       },
-      onError(error, variables, context) {
-         console.log(error)
+      onError(error: AxiosError<{ errors: ErrorResponse }>) {
+         if (error.response) handleChangeErrors(error.response.data.errors)
       },
    })
 
