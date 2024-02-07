@@ -1,15 +1,15 @@
-import useRegisterState from './useRegisterState'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { isAxiosError, axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { ErrorResponse } from '@/types/AuthTypes'
 
-import { useMutation } from '@tanstack/react-query'
-import {
-   isAxiosError,
-   axiosInstance as axios,
-   AxiosResponse,
-} from '../../../../utils/axiosSetup/AxiosInstance'
+import { useRouter } from 'next/navigation'
+import useRegisterState from './useRegisterState'
 
 const useRegisterMutate = () => {
+   const [isSuccess, setIsSuccess] = useState<boolean>(false)
+   const [isBtnDisabled, setIsBtnDisabled] = useState<boolean>(false)
+
    const {
       dateOfBirth,
       email,
@@ -37,20 +37,23 @@ const useRegisterMutate = () => {
    }
 
    const onSuccess = (data: AxiosResponse<any, any>) => {
-      if (data.status === 201) router.push('/login')
-      // router.push({
-      //    pathname: '/login',
-      //    query: { msg: `Sikeres regisztráció a(z) ${email.value} email címmel`, isRegisterSuccess: true },
-      // })
+      setIsSuccess(true)
+      setIsBtnDisabled(true)
+
+      setTimeout(() => {
+         if (data.status === 201) router.push('/login')
+      }, 5000)
    }
 
    const { mutate } = useMutation({
       mutationKey: ['register'],
       mutationFn: handleRegisterSend,
+      onMutate(variables) {
+         resetAllErrors()
+      },
       onError(error: ErrorResponse) {
          if (isAxiosError(error)) {
             const errorResponse = error.response?.data.errors
-            // resetAllErrors()
             setAnyErrorMsg(errorResponse)
          }
       },
@@ -59,6 +62,8 @@ const useRegisterMutate = () => {
 
    return {
       registerMutate: mutate,
+      isSuccess,
+      isBtnDisabled,
       dateOfBirth,
       email,
       firstName,
