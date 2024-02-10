@@ -16,6 +16,7 @@ const SinglePostComponent = dynamic(() => import('../../Posts/SinglePost/SingleP
 const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHeader/PostHeader'), {
    loading: () => <PostHeaderSkeleton asStandalone={true} />,
 })
+const EmptyPost = dynamic(() => import('./Includes/EmptyPost'))
 
 const PostsBase: React.FC<{ isGetUsersPosts?: boolean }> = ({ isGetUsersPosts = false }) => {
    const { allPosts, setAllPosts, addNewPost, removeSinglePostById } = useHandlePosts()
@@ -24,17 +25,21 @@ const PostsBase: React.FC<{ isGetUsersPosts?: boolean }> = ({ isGetUsersPosts = 
       <>
          <AddPost addNewPost={addNewPost} />
          {!isLoading ? (
-            allPosts.map((post: IPost) => (
-               <PostContextProvider
-                  removeSinglePostById={removeSinglePostById}
-                  key={post._id}
-                  singlePost={post}
-               >
-                  <SinglePostComponent>
-                     <PostHeader />
-                  </SinglePostComponent>
-               </PostContextProvider>
-            ))
+            allPosts.length !== 0 ? (
+               allPosts.map((post: IPost) => (
+                  <PostContextProvider
+                     removeSinglePostById={removeSinglePostById}
+                     key={post._id}
+                     singlePost={post}
+                  >
+                     <SinglePostComponent>
+                        <PostHeader />
+                     </SinglePostComponent>
+                  </PostContextProvider>
+               ))
+            ) : (
+               <EmptyPost />
+            )
          ) : (
             <SinglePostSkeleton />
          )}
