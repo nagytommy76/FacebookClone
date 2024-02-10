@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import useAddWork from './useAddWork'
-import type { Error, DateError } from '../Types'
+import type { Error, DateError } from '../SelectDate/Types'
 import type { ErrorResponse } from '@/types/AuthTypes'
 
 const textWithError: Error = {

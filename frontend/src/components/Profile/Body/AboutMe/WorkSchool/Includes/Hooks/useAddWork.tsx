@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse, AxiosError } from '@/axios/AxiosInstance'
-import type { DateError, Error } from '../Types'
+import type { DateError, Error } from '../SelectDate/Types'
 import type { ErrorResponse } from '@/types/AuthTypes'
 
 const useAddWork = (
