@@ -1,5 +1,5 @@
 import React from 'react'
-import useInputs from './SelectDate/Hooks/useInputs'
+import useInputs from './Hooks/useInputs'
 
 import DateSelector from './DateSelector'
 

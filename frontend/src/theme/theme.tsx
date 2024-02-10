@@ -3,9 +3,8 @@ import { createTheme } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 
 export const work_sans = Work_Sans({
-   weight: ['300', '400', '500', '700'],
    subsets: ['latin'],
-   display: 'swap',
+   // display: 'swap',
    fallback: ['Helvetica', 'Arial', 'sans-serif'],
 })
 
@@ -29,6 +28,9 @@ export const lightTheme = createTheme({
    },
    typography: {
       fontFamily: work_sans.style.fontFamily,
+      h2: {
+         color: 'green',
+      },
    },
 })
 
@@ -51,5 +53,8 @@ export const darkTheme = createTheme({
    },
    typography: {
       fontFamily: work_sans.style.fontFamily,
+      h2: {
+         color: 'palegreen',
+      },
    },
 })

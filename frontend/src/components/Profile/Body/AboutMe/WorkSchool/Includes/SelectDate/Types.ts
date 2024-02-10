@@ -9,5 +9,3 @@ export type DateError = {
    error: boolean
    errorMsg: string
 }
-
-export type ErrorResponse = { location: string; msg: string; path: string; value: string }[]
