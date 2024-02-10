@@ -5,10 +5,12 @@ import type { ErrorResponse } from '@/types/AuthTypes'
 
 import { useRouter } from 'next/navigation'
 import useRegisterState from './useRegisterState'
+import useCountDown from './useCountDown'
 
 const useRegisterMutate = () => {
    const [isSuccess, setIsSuccess] = useState<boolean>(false)
    const [isBtnDisabled, setIsBtnDisabled] = useState<boolean>(false)
+   const { count, startCountDownTimer } = useCountDown()
 
    const {
       dateOfBirth,
@@ -39,16 +41,16 @@ const useRegisterMutate = () => {
    const onSuccess = (data: AxiosResponse<any, any>) => {
       setIsSuccess(true)
       setIsBtnDisabled(true)
-
+      startCountDownTimer()
       setTimeout(() => {
          if (data.status === 201) router.push('/login')
-      }, 5000)
+      }, count * 1000)
    }
 
    const { mutate } = useMutation({
       mutationKey: ['register'],
       mutationFn: handleRegisterSend,
-      onMutate(variables) {
+      onMutate() {
          resetAllErrors()
       },
       onError(error: ErrorResponse) {
@@ -63,6 +65,7 @@ const useRegisterMutate = () => {
    return {
       registerMutate: mutate,
       isSuccess,
+      count,
       isBtnDisabled,
       dateOfBirth,
       email,
