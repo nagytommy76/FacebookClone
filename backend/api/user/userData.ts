@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { ValidateAddWorkplace } from './validators/userDataValidator'
 import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefresh'
+import { authenticateUserCredentials } from '../../middlewares/authenticateUser'
 import {
    getUserDetailsWithOwnPosts,
    saveUserProfilePicture,
@@ -30,6 +31,12 @@ router.post('/save-profile-picture', authenticateAccessTokenForApi, saveUserProf
 router.put('/edit-profile-picture', authenticateAccessTokenForApi, editSelectedProfilePicture)
 
 // Profile Work/studies etc..
-router.post('/save-workplace', ValidateAddWorkplace, authenticateAccessTokenForApi, addNewWorkplaceController)
+router.post(
+   '/save-workplace',
+   ValidateAddWorkplace,
+   authenticateAccessTokenForApi,
+   authenticateUserCredentials,
+   addNewWorkplaceController
+)
 
 module.exports = router

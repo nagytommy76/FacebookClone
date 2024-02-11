@@ -13,10 +13,6 @@ export const ValidateRegister = [
       }
       return true
    }),
-   // body('email')
-   //    .isEmail()
-   //    .normalizeEmail()
-   //    .withMessage('Az email cím nem megfelelő formátumú vagy üres a mező!'),
    body('password').trim().isLength({ min: 3 }).withMessage('A jelszónak min 3 karakternek kell lennie!'),
    body('dateOfBirth').custom((value: { day: number | ''; month: number | ''; year: number | '' }) => {
       if (value.day === '' || value.month === '' || value.year === '') {
