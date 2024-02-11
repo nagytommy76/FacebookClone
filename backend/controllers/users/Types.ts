@@ -80,10 +80,11 @@ export interface IUserTypes {
       }
       workPlaces: {
          companyName: string
-         post: string
+         position: string
+         description: string
          city: string
-         from: number
-         to: number
+         startDate: string
+         endDate?: string | null
       }[]
    }
    posts: ObjectId[]
