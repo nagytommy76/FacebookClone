@@ -35,6 +35,7 @@
          "@/CommentContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/Comment/*"],
          "@/AnswersContext/*": ["./src/components/Posts/SinglePost/SingleComment/Context/Answers/*"],
          "@/AllCommentContext/*": ["./src/components/Posts/Context/*"],
+         "@/ProfileContext/*": ["./src/components/Profile/Context/*"],
          "@/Skeletons/*": ["./src/skeletons/*"]
       }
    },
