@@ -11,11 +11,8 @@ const WorkSchool = () => {
    return (
       <WorkSchoolSection>
          <WorkSchoolItems>
-            <Typography variant='h5'>Munkahely</Typography>
-            <Button variant='text' color='warning' startIcon={<AddCircleOutlineIcon />}>
-               Munkahely megadása
-            </Button>
             <WorkSchoolInputs />
+            <p>IDE kéne megjeleníteni a már meglévő munkahelyeket</p>
          </WorkSchoolItems>
          <WorkSchoolItems>
             <Typography variant='h5'>Főiskola/Egyetem</Typography>

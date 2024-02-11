@@ -2,8 +2,8 @@ import { styled } from '@mui/system'
 
 // WorkSchool --------------------------
 export const WorkSchoolSection = styled('section')({
-   width: '100%',
-   minHeight: '400px',
+   width: '99%',
+   minHeight: '500px',
    marginLeft: 13,
 
    display: 'flex',
@@ -12,11 +12,13 @@ export const WorkSchoolSection = styled('section')({
 
 export const WorkSchoolItems = styled('div')({
    width: '100%',
-   minHeight: '160px',
+   minHeight: '100px',
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-evenly',
    alignItems: 'flex-start',
+
+   margin: '.3rem 0 3rem 0',
 })
 
 export const WorkSchoolInputContainer = styled('div')({
