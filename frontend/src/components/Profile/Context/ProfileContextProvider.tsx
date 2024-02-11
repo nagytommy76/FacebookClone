@@ -1,6 +1,7 @@
 import React, { createContext, useState, useReducer } from 'react'
 import useGetUserData from '../Hooks/useGetUserData'
-import UserDetailsReducer, { initialProfileState, InitialState, IBaseListAction } from './ProfileReducer'
+import UserDetailsReducer from './ProfileReducer'
+import { initialProfileState, InitialState, IBaseListAction } from './Types'
 
 interface IProfileContext {
    profileReducer: InitialState
