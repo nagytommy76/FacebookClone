@@ -20,7 +20,7 @@ export const lightTheme = createTheme({
          main: '#154c79',
       },
       secondary: {
-         main: '#19857b',
+         main: '#f0f0f0',
       },
       error: {
          main: red.A400,
@@ -49,6 +49,9 @@ export const darkTheme = createTheme({
       mode: 'dark',
       primary: {
          main: '#FFF',
+      },
+      secondary: {
+         main: '#444444',
       },
    },
    typography: {
