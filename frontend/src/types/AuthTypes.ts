@@ -25,6 +25,7 @@ export interface IUserDetails {
       }
    }
    workPlaces: {
+      _id: string
       companyName: string
       position: string
       description: string

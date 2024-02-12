@@ -6,13 +6,14 @@ import Button from '@mui/material/Button'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 import WorkSchoolInputs from './Includes/WorkSchoolInputs'
+import WorkPlaces from './WorkPlaces/WorkPlaces'
 
 const WorkSchool = () => {
    return (
       <WorkSchoolSection>
          <WorkSchoolItems>
             <WorkSchoolInputs />
-            <p>IDE kéne megjeleníteni a már meglévő munkahelyeket</p>
+            <WorkPlaces />
          </WorkSchoolItems>
          <WorkSchoolItems>
             <Typography variant='h5'>Főiskola/Egyetem</Typography>
