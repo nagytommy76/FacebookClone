@@ -19,6 +19,7 @@ const useInputs = () => {
    const [company, setCompany] = useState<Error>(textWithError)
    const [post, setPost] = useState<Error>(textWithError)
    const [city, setCity] = useState<Error>(textWithError)
+   const [description, setDescription] = useState<string>('')
    const [fromDate, setFromDate] = useState<DateError>(dateWithError)
    const [toDate, setToDate] = useState<DateError>(dateWithError)
    const [endDateChecked, setEndDateChecked] = useState<boolean>(true)
@@ -27,6 +28,7 @@ const useInputs = () => {
       setCompany(textWithError)
       setPost(textWithError)
       setCity(textWithError)
+      setDescription('')
       setFromDate(dateWithError)
       setToDate(dateWithError)
       setEndDateChecked(true)
@@ -54,6 +56,7 @@ const useInputs = () => {
       company,
       post,
       city,
+      description,
       fromDate,
       toDate,
       endDateChecked,
@@ -63,6 +66,10 @@ const useInputs = () => {
 
    const handleChangeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
       setEndDateChecked(event.target.checked)
+   }
+
+   const handleSetDescription = (event: ChangeEvent<HTMLInputElement>) => {
+      setDescription(event.target.value)
    }
 
    const handleChangeCompanyValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -83,11 +90,13 @@ const useInputs = () => {
       company,
       post,
       city,
+      description,
       endDateChecked,
       fromDate,
       toDate,
       setFromDate,
       setToDate,
+      handleSetDescription,
       handleChangeChecked,
       handleChangeCompanyValue,
       handleChangeCityValue,

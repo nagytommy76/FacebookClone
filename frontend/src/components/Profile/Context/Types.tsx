@@ -37,7 +37,7 @@ export const initialUserDataState: IUserTypes = {
          university: { from: 2000, name: '', to: 2000 },
       },
       workPlaces: [
-         { city: '', companyName: '', position: '', description: '', startDate: '', endDate: null },
+         { _id: '', city: '', companyName: '', position: '', description: '', startDate: '', endDate: null },
       ],
    },
 }
