@@ -5,7 +5,7 @@ async function getAllUsers(): Promise<IFriendsResponse[]> {
    const res = await fetch('http://localhost:5050/api/friends/get-friends')
    if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
+      throw new Error('Nem sikerült betölteni az ismerősöket')
    }
    return await res.json()
 }
