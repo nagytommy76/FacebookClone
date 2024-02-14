@@ -29,8 +29,9 @@ export const addNewWorkplaceController = async (request: IJWTUserType, response:
          startDate: fromDate,
          endDate: toDate || null,
       })
+      const saved = await savedUserWorlplace?.save()
 
-      response.status(200).json({ savedUserWorlplace: savedUserWorlplace?.userDetails.workPlaces })
+      response.status(200).json({ savedUserWorlplace: savedUserWorlplace?.userDetails.workPlaces, saved })
    } catch (error) {
       console.log(error)
       return response.status(500).json(error)
