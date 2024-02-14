@@ -4,6 +4,8 @@ import { ProfileContext } from '@/ProfileContext/ProfileContextProvider'
 import { StyledWorkItem } from './Styles'
 
 import Typography from '@mui/material/Typography'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import IconButton from '@mui/material/IconButton'
 
 const WorkPlaces = () => {
    const {
@@ -21,6 +23,13 @@ const WorkPlaces = () => {
          </Typography>
          {workPlaces.map((workplace) => (
             <StyledWorkItem key={workplace._id}>
+               <IconButton
+                  sx={{ position: 'absolute', right: 5, top: 5 }}
+                  color='warning'
+                  aria-label='more-options'
+               >
+                  <MoreVertIcon />
+               </IconButton>
                <Typography fontWeight={400} variant='subtitle1'>
                   Vállalat: {workplace.companyName}
                </Typography>
