@@ -28,6 +28,9 @@ export const lightTheme = createTheme({
    },
    typography: {
       fontFamily: work_sans.style.fontFamily,
+      allVariants: {
+         color: '#070707',
+      },
       h2: {
          color: 'green',
       },
@@ -56,6 +59,9 @@ export const darkTheme = createTheme({
    },
    typography: {
       fontFamily: work_sans.style.fontFamily,
+      allVariants: {
+         color: '#fafafa',
+      },
       h2: {
          color: 'palegreen',
       },

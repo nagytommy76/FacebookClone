@@ -43,6 +43,7 @@ export const OverlayedContent = styled('span')({
    backgroundColor: 'rgba(20,20,20, .6)',
 
    fontSize: '47px',
+   color: '#FFF',
 
    width: '100%',
    height: '100%',
