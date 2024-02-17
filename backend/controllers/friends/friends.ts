@@ -2,19 +2,23 @@ import { Response, Request } from 'express'
 import { User as UserModel } from '../../models/user/user'
 import { IMakeFriends } from './Types'
 
+// https://www.mongodb.com/docs/manual/reference/operator/projection/positional/#examples
 export const getUsers = async (request: Request, response: Response) => {
    try {
       const users = await UserModel.find({
          'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+         // 'userDetails.workPlaces': { $elemMatch: { endDate: { $eq: null } } },
       }).select([
          'firstName',
          'sureName',
          'email',
          'createdAt',
          'userDetails.profilePicturePath.$',
+         'userDetails.workPlaces',
          'friends',
       ])
 
+      // console.log(users)
       return response.status(200).json(users)
    } catch (error) {
       console.log(error)
