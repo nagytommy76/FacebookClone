@@ -5,20 +5,32 @@ import { IMakeFriends } from './Types'
 // https://www.mongodb.com/docs/manual/reference/operator/projection/positional/#examples
 export const getUsers = async (request: Request, response: Response) => {
    try {
-      const users = await UserModel.find({
-         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-         // 'userDetails.workPlaces': { $elemMatch: { endDate: { $eq: null } } },
-      }).select([
-         'firstName',
-         'sureName',
-         'email',
-         'createdAt',
-         'userDetails.profilePicturePath.$',
-         'userDetails.workPlaces',
-         'friends',
+      const users = await UserModel.aggregate([
+         {
+            $project: {
+               firstName: 1,
+               sureName: 1,
+               email: 1,
+               createdAt: 1,
+               selectedProfilePicture: {
+                  $filter: {
+                     input: '$userDetails.profilePicturePath',
+                     as: 'profilePic',
+                     cond: { $eq: ['$$profilePic.isSelected', true] },
+                  },
+               },
+               lastWorkPlace: {
+                  $filter: {
+                     input: '$userDetails.workPlaces',
+                     as: 'workPlace',
+                     cond: { $eq: ['$$workPlace.endDate', null] },
+                  },
+               },
+               friends: 1,
+            },
+         },
       ])
 
-      // console.log(users)
       return response.status(200).json(users)
    } catch (error) {
       console.log(error)
