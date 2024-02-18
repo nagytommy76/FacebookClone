@@ -12,9 +12,17 @@ const ConfirmDelete: React.FC<{
    isOpen: boolean
    createdAt: string
    postOrCommentText?: string
+   otherTextToDisplay?: string | null
    handleCloseAndDelete: () => void
    setIsDialogOpen: Dispatch<SetStateAction<boolean>>
-}> = ({ isOpen, createdAt, postOrCommentText = 'poszt', setIsDialogOpen, handleCloseAndDelete }) => {
+}> = ({
+   isOpen,
+   createdAt,
+   postOrCommentText = 'poszt',
+   otherTextToDisplay = null,
+   setIsDialogOpen,
+   handleCloseAndDelete,
+}) => {
    return (
       <Dialog
          open={isOpen}
@@ -24,10 +32,16 @@ const ConfirmDelete: React.FC<{
       >
          <DialogTitle id='alert-dialog-title'>Biztos törölni szeretnéd?</DialogTitle>
          <DialogContent>
-            <DialogContentText variant='body1' id='alert-dialog-description'>
-               A(z) {moment(createdAt).format('YYYY MMMM D k:mm:ss')}-kor létrehozott {postOrCommentText}{' '}
-               véglegesen törölve lesz. Folytatod?
-            </DialogContentText>
+            {otherTextToDisplay === null ? (
+               <DialogContentText variant='body1' id='alert-dialog-description'>
+                  A(z) {moment(createdAt).format('YYYY MMMM D k:mm:ss')}-kor létrehozott {postOrCommentText}{' '}
+                  véglegesen törölve lesz. Folytatod?
+               </DialogContentText>
+            ) : (
+               <DialogContentText variant='body1' id='alert-dialog-description'>
+                  {otherTextToDisplay}
+               </DialogContentText>
+            )}
          </DialogContent>
          <DialogActions>
             <Button onClick={() => setIsDialogOpen(false)}>Mégsem</Button>

@@ -1,5 +1,14 @@
 import type { IPost, IProfilePicture } from './PostTypes'
 
+export interface IWorkPlaces {
+   _id: string
+   companyName: string
+   position: string
+   description: string
+   city: string
+   startDate: string
+   endDate?: string | null
+}
 export interface IUserDetails {
    dateOfBirth: { day: number; month: number; year: number }
    gender: 'female' | 'male'
@@ -24,15 +33,7 @@ export interface IUserDetails {
          name: string
       }
    }
-   workPlaces: {
-      _id: string
-      companyName: string
-      position: string
-      description: string
-      city: string
-      startDate: string
-      endDate?: string | null
-   }[]
+   workPlaces: IWorkPlaces[]
 }
 
 export interface IUserTypes {
