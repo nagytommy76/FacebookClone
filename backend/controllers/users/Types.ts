@@ -79,6 +79,7 @@ export interface IUserTypes {
          }
       }
       workPlaces: {
+         _id?: string
          companyName: string
          position: string
          description: string

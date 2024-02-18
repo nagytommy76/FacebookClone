@@ -15,7 +15,10 @@ import {
    removeUsersNotification,
 } from '../../controllers/notifications/notifications'
 
-import { addNewWorkplaceController } from '../../controllers/users/userDetails/userProfile'
+import {
+   addNewWorkplaceController,
+   removeSingleWorkplace,
+} from '../../controllers/users/userDetails/userProfile'
 
 const router = Router()
 
@@ -38,5 +41,7 @@ router.post(
    authenticateUserCredentials,
    addNewWorkplaceController
 )
+
+router.put('/remove-work', authenticateAccessTokenForApi, authenticateUserCredentials, removeSingleWorkplace)
 
 module.exports = router

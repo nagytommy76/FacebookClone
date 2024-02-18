@@ -37,3 +37,29 @@ export const addNewWorkplaceController = async (request: IJWTUserType, response:
       return response.status(500).json(error)
    }
 }
+
+interface IRemoveWork extends IJWTUserType {
+   body: {
+      workId: string
+   }
+}
+
+export const removeSingleWorkplace = async (request: IRemoveWork, response: Response) => {
+   const { workId } = request.body
+   const userId = request.user?.userId
+   try {
+      const foundUsersWorkplaces = await UserModel.findOne({ _id: userId }).select('userDetails.workPlaces')
+      if (!foundUsersWorkplaces) return response.status(404).json({ msg: 'User not found' })
+      const removedWorkPlace = foundUsersWorkplaces.userDetails.workPlaces.filter(
+         (work) => work._id != workId
+      )
+
+      foundUsersWorkplaces.userDetails.workPlaces = removedWorkPlace
+      foundUsersWorkplaces.save()
+
+      return response.status(200).json({ msg: 'deleted' })
+   } catch (error) {
+      console.log(error)
+      response.status(500).json(error)
+   }
+}
