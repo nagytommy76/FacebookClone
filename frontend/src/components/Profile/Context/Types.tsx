@@ -1,7 +1,7 @@
 import type { IUserTypes } from '@/types/AuthTypes'
 import type { IPost } from '@/types/PostTypes'
 
-type UserDataActions = 'SET_INITIAL_USER_DATA' | 'SET_SELECTED_IMG' | 'ADD_WORKPLACE'
+type UserDataActions = 'SET_INITIAL_USER_DATA' | 'SET_SELECTED_IMG' | 'ADD_WORKPLACE' | 'REMOVE_SINGLEWORK'
 
 export interface IBaseListAction {
    type: UserDataActions

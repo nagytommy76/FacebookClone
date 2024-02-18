@@ -16,11 +16,16 @@ export default function UserDetailsReducer(state: InitialState, action: IBaseLis
          })
          return selectedImg
       case 'ADD_WORKPLACE':
-         console.log('action.payload')
          const newWorkplace = produce(state, (draft) => {
             draft.initialUserDataState.userDetails.workPlaces = action.payload
          })
          return newWorkplace
+      case 'REMOVE_SINGLEWORK':
+         const removed = produce(state, (draft) => {
+            draft.initialUserDataState.userDetails.workPlaces =
+               draft.initialUserDataState.userDetails.workPlaces.filter((work) => work._id != action.payload)
+         })
+         return removed
       default:
          return state
    }
