@@ -1,4 +1,8 @@
-import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import useHandleMenu from './Hooks/useHandleMenu'
+import useDeleteWork from './Hooks/useDeleteWork'
+import useEditWork from './Hooks/useEditWork'
+import useConfirm from './Hooks/useConfirm'
 
 import Fade from '@mui/material/Fade'
 import Menu from '@mui/material/Menu'
@@ -11,30 +15,23 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-const EditMenu = () => {
-   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-   const open = Boolean(anchorEl)
-   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget)
-   }
-   const handleClose = () => {
-      setAnchorEl(null)
-   }
+const ConfirmDelete = dynamic(() => import('@/Base/ConfirmDelete/ConfirmDelete'))
 
-   const handleEditWork = () => {
-      console.log('Work EDIT')
-      setAnchorEl(null)
-   }
-
-   const handleRemoveWork = () => {
-      console.log('Work remove')
-      setAnchorEl(null)
-   }
+const EditMenu: React.FC<{ workId: string }> = ({ workId }) => {
+   const { isOpen, setIsOpen, handleOpenDialog, handleCloseDialog } = useConfirm()
+   const { handleClose, handleClickOpen, anchorEl, open } = useHandleMenu()
+   const { handleEditWork } = useEditWork()
+   const { handleRemoveWorkMutate, handleOpenConfirm } = useDeleteWork(
+      handleOpenDialog,
+      handleClose,
+      handleCloseDialog,
+      workId
+   )
 
    return (
       <>
          <IconButton
-            onClick={handleClick}
+            onClick={handleClickOpen}
             sx={{ position: 'absolute', right: 5, top: 5 }}
             color='warning'
             aria-label='more-options'
@@ -57,13 +54,20 @@ const EditMenu = () => {
                </ListItemIcon>
                <ListItemText>Modosítás</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleRemoveWork}>
+            <MenuItem onClick={handleOpenConfirm}>
                <ListItemIcon>
                   <DeleteIcon fontSize='small' />
                </ListItemIcon>
                <ListItemText>Törlés</ListItemText>
             </MenuItem>
          </Menu>
+         <ConfirmDelete
+            createdAt=''
+            handleCloseAndDelete={handleRemoveWorkMutate}
+            isOpen={isOpen}
+            setIsDialogOpen={setIsOpen}
+            otherTextToDisplay={'Biztos szeretnéd törölni ezt a munkahelyed?'}
+         />
       </>
    )
 }

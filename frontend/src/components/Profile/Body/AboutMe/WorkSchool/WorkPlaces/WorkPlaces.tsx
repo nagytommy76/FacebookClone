@@ -23,7 +23,7 @@ const WorkPlaces = () => {
          </Typography>
          {workPlaces.map((workplace) => (
             <StyledWorkItem key={workplace._id}>
-               <EditMenu />
+               <EditMenu workId={workplace._id} />
                <Typography fontWeight={400} variant='subtitle1'>
                   Vállalat: {workplace.companyName}
                </Typography>
