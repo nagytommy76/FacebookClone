@@ -1,3 +1,4 @@
+import { IWorkPlaces } from '@/src/types/AuthTypes'
 import { IProfilePicture } from '@/src/types/PostTypes'
 
 export interface IFriends {
@@ -13,5 +14,6 @@ export interface IFriendsResponse {
    email: string
    createdAt: string
    friends: IFriends[]
-   userDetails: { profilePicturePath: IProfilePicture[] }
+   selectedProfilePicture: IProfilePicture[]
+   lastWorkPlace: IWorkPlaces
 }

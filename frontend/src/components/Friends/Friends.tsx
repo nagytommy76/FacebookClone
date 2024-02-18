@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import type { IFriendsResponse } from './Types'
+import ProfileImage from '@/assets/facebook-profile.jpg'
 
 import Box from '@mui/system/Box'
 import Card from '@mui/material/Card'
@@ -10,8 +11,8 @@ import { gridBoxSx, containerSx } from './Styles'
 
 import CardButton from './Includes/CardButton'
 import CardHeader from './Includes/CardHeader'
-
 const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
+   // console.log(friends)
    return (
       <section style={containerSx}>
          <Box component='section' sx={gridBoxSx}>
@@ -20,7 +21,7 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
                   <Card>
                      <CardHeader
                         userId={friend._id}
-                        profilePicture={friend.userDetails.profilePicturePath[0].path}
+                        profilePicture={friend.selectedProfilePicture[0]?.path || ProfileImage.src}
                      />
                      <CardContent>
                         <Typography variant='h5' gutterBottom>
@@ -30,7 +31,7 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
                            Lakhely: ....
                         </Typography>
                         <Typography variant='subtitle2' fontWeight={100}>
-                           Munkahely: ....
+                           Munkahely: ................
                         </Typography>
                         <Typography variant='subtitle2' fontWeight={100}>
                            Születés: ....
