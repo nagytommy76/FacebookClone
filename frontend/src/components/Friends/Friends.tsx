@@ -11,8 +11,8 @@ import { gridBoxSx, containerSx } from './Styles'
 
 import CardButton from './Includes/CardButton'
 import CardHeader from './Includes/CardHeader'
+
 const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
-   // console.log(friends)
    return (
       <section style={containerSx}>
          <Box component='section' sx={gridBoxSx}>
@@ -24,20 +24,24 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
                         profilePicture={friend.selectedProfilePicture[0]?.path || ProfileImage.src}
                      />
                      <CardContent>
-                        <Typography variant='h5' gutterBottom>
+                        <Typography fontWeight={500} variant='h5' gutterBottom>
                            {friend.sureName} {friend.firstName}
                         </Typography>
-                        <Typography variant='subtitle2' fontWeight={100}>
-                           Lakhely: ....
+                        {friend.lastWorkPlace.length > 0 ? (
+                           <Typography gutterBottom variant='subtitle2' fontWeight={300}>
+                              Munkahely: {friend.lastWorkPlace[0].companyName},{' '}
+                              {friend.lastWorkPlace[0].position}
+                           </Typography>
+                        ) : (
+                           <Typography gutterBottom variant='subtitle2' fontWeight={300}>
+                              Munkahely: Nincs megadva
+                           </Typography>
+                        )}
+                        <Typography gutterBottom variant='subtitle2' fontWeight={300}>
+                           Születés: {moment(friend.dateOfBirth).format('YYYY MMMM Do ')}
                         </Typography>
-                        <Typography variant='subtitle2' fontWeight={100}>
-                           Munkahely: ................
-                        </Typography>
-                        <Typography variant='subtitle2' fontWeight={100}>
-                           Születés: ....
-                        </Typography>
-                        <Typography variant='subtitle2' fontWeight={100}>
-                           Létrehozva: {moment(friend.createdAt).format('YYYY MMMM D ')}
+                        <Typography gutterBottom variant='subtitle2' fontWeight={300}>
+                           Létrehozva: {moment(friend.createdAt).format('YYYY MMMM Do ')}
                         </Typography>
                      </CardContent>
                      <CardButton friend={friend} />
