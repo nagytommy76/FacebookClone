@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { IProfilePicture } from '@/types/PostTypes'
+import AltProfileImg from '@/assets/facebook-profile.jpg'
 
 interface IAuthState {
    userId: string
@@ -13,7 +14,7 @@ const initialState: IAuthState = {
    userId: '',
    userName: '',
    isLoggedIn: false,
-   currentImage: { _id: '', isSelected: false, path: '' },
+   currentImage: { _id: '', isSelected: false, path: AltProfileImg.src },
 }
 
 export const AuthSlice = createSlice({
