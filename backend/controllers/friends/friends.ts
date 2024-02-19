@@ -2,16 +2,24 @@ import { Response, Request } from 'express'
 import { User as UserModel } from '../../models/user/user'
 import { IMakeFriends } from './Types'
 
-// https://www.mongodb.com/docs/manual/reference/operator/projection/positional/#examples
+// https://www.mongodb.com/docs/manual/reference/operator/aggregation/filter/
+// https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/
 export const getUsers = async (request: Request, response: Response) => {
    try {
       const users = await UserModel.aggregate([
+         {
+            $addFields: {
+               dateOfBirth: { $add: ['$userDetails.dateOfBirth'] },
+            },
+         },
          {
             $project: {
                firstName: 1,
                sureName: 1,
                email: 1,
                createdAt: 1,
+               friends: 1,
+               dateOfBirth: 1,
                selectedProfilePicture: {
                   $filter: {
                      input: '$userDetails.profilePicturePath',
@@ -26,7 +34,6 @@ export const getUsers = async (request: Request, response: Response) => {
                      cond: { $eq: ['$$workPlace.endDate', null] },
                   },
                },
-               friends: 1,
             },
          },
       ])
