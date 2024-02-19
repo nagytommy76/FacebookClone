@@ -13,7 +13,8 @@ export interface IFriendsResponse {
    _id: string
    email: string
    createdAt: string
+   dateOfBirth: string
    friends: IFriends[]
    selectedProfilePicture: IProfilePicture[]
-   lastWorkPlace: IWorkPlaces
+   lastWorkPlace: IWorkPlaces[]
 }
