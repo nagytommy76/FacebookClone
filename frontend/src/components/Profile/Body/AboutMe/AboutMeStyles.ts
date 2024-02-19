@@ -10,3 +10,13 @@ export const StyledTabContainer = styled(BodyPaper)(({ theme }) => ({
       flexDirection: 'column',
    },
 }))
+
+export const RightSection = styled('section')({
+   width: '99%',
+   minHeight: '500px',
+   marginLeft: 13,
+   marginTop: 10,
+
+   display: 'flex',
+   flexDirection: 'column',
+})

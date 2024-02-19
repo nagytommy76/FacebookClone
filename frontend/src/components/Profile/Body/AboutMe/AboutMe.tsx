@@ -12,6 +12,9 @@ import Divider from '@mui/material/Divider'
 const WorkAndStudyComponent = dynamic(() => import('./WorkSchool/WorkSchool'), {
    loading: () => <p>Töltés kérlek várj...</p>,
 })
+const MetaDataComponent = dynamic(() => import('./MetaDetails/MetaDetails'), {
+   loading: () => <p>Töltés, kérlek várj...</p>,
+})
 
 const AboutMe = () => {
    const [value, setValue] = useState(0)
@@ -51,7 +54,7 @@ const AboutMe = () => {
             <WorkAndStudyComponent />
          </TabPanel>
          <TabPanel value={value} index={1}>
-            Item Three
+            <MetaDataComponent />
          </TabPanel>
          <TabPanel value={value} index={2}>
             Kapcsolatok

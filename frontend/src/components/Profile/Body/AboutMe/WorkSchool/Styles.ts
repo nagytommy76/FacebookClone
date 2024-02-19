@@ -1,15 +1,5 @@
 import { styled } from '@mui/system'
 
-// WorkSchool --------------------------
-export const WorkSchoolSection = styled('section')({
-   width: '99%',
-   minHeight: '500px',
-   marginLeft: 13,
-
-   display: 'flex',
-   flexDirection: 'column',
-})
-
 export const WorkSchoolItems = styled('div')({
    width: '100%',
    minHeight: '100px',
