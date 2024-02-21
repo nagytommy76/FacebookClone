@@ -3,6 +3,9 @@ import ReduxProvider from '@/reduxStore/ReduxProvider'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import '../styles/globals.css'
 
+import moment from 'moment'
+import 'moment/locale/hu'
+
 import TanstackProvider from '@/components/Providers/TanstackProvider'
 import ThemeProvider from '@/components/Providers/ThemeProvider'
 
@@ -11,6 +14,23 @@ import { Work_Sans } from 'next/font/google'
 
 import Footer from '@/components/Footer/Footer'
 import Navbar from '@/components/Navbar/Navbar'
+
+moment.updateLocale('hu', {
+   relativeTime: {
+      s: '1 mp',
+      ss: '%d mp',
+      m: '1 p',
+      mm: '%d p',
+      h: '1 ó.',
+      hh: '%d ó.',
+      d: '1 n',
+      dd: '%d n',
+      M: '1 hó',
+      MM: '%d hó',
+      y: '1 é',
+      yy: '%d é',
+   },
+})
 
 const work = Work_Sans({ subsets: ['latin'] })
 
