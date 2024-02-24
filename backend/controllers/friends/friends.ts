@@ -48,7 +48,6 @@ export const getUsers = async (request: Request, response: Response) => {
 export const makeFriendshipController = async (request: IMakeFriends, response: Response) => {
    const loggedInUserId = request.user?.userId as string
    const friendId = request.body.friendId
-
    try {
       const senderUser = await UserModel.getUserByUserIdAndSelect(loggedInUserId)
       const receiverUser = await UserModel.findOne({ _id: friendId }).select([
@@ -60,7 +59,7 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
       if (!senderUser) return response.status(404).json({ msg: 'Sender user not found' })
       if (!receiverUser) return response.status(404).json({ msg: 'Receiver user not found' })
 
-      senderUser.friends.push({
+      senderUser[0].friends.push({
          createdAt: new Date(),
          isAccepted: true,
          userId: receiverUser.id,
@@ -69,17 +68,17 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
       receiverUser.friends.push({
          createdAt: new Date(),
          isAccepted: false,
-         userId: senderUser.id,
+         userId: senderUser[0]._id,
       })
       receiverUser.notifications.push({
          createdAt: new Date(),
          isRead: false,
          notificationType: 'isFriend',
          userDetails: {
-            firstName: senderUser.firstName,
-            sureName: senderUser.sureName,
-            userId: senderUser.id,
-            profilePicture: senderUser.userDetails.profilePicturePath[0].path,
+            firstName: senderUser[0].firstName,
+            sureName: senderUser[0].sureName,
+            userId: senderUser[0]._id,
+            profilePicture: senderUser[0].selectedProfilePicturePath.path,
          },
       })
 
@@ -92,8 +91,8 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          }
       }
 
-      await receiverUser.save()
-      await senderUser.save()
+      // await receiverUser.save()
+      // await senderUser.save()
 
       response.status(200).json({ msg: 'makeFriendship', senderUser, receiverUser })
    } catch (error) {
