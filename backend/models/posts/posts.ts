@@ -69,7 +69,7 @@ PostsSchema.methods.populateUserId = async function () {
 PostsSchema.methods.populateCommentUserId = async function () {
    return this.populate({
       path: 'comments.userId',
-      select: ['firstName', 'sureName', 'userDetails.profilePicturePath'],
+      select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
       match: {
          'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
       },

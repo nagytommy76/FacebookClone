@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express'
 import { validationResult } from 'express-validator'
-import { IRegisterRequest, ILoginRequest } from '../controllers/users/Types'
+import type { ILoginRequest, IRegisterRequest } from '../controllers/users/types/requestTypes'
 
 export const authValidationMiddleware = (
    req: IRegisterRequest | ILoginRequest,

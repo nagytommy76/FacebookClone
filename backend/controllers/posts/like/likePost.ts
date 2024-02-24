@@ -4,7 +4,6 @@ import { User as UserModel } from '../../../models/user/user'
 import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
 
 import BaseLikeController from '../Base/baseLike'
-import { INotifications } from '../../users/Types'
 
 export default class LikePost extends BaseLikeController {
    getPostLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
@@ -111,10 +110,10 @@ export default class LikePost extends BaseLikeController {
          const toSaveNotification = await UserModel.getSaveNotification(
             foundPostToModifyLike.userId,
             foundPostToModifyLike.description,
-            likedUser.firstName,
-            likedUser.sureName,
-            likedUser.id,
-            likedUser.userDetails.profilePicturePath[0].path,
+            likedUser[0].firstName,
+            likedUser[0].sureName,
+            likedUser[0]._id,
+            likedUser[0].selectedProfilePicturePath.path,
             'isPostLike'
          )
 

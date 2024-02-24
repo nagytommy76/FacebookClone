@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { User as UserModel } from '../../models/user/user'
-import type { IRegisterRequest } from './Types'
+import type { IRegisterRequest } from './types/requestTypes'
 
 export const registerUserController = async (req: IRegisterRequest, res: Response) => {
    const sureName = req.body.sureName

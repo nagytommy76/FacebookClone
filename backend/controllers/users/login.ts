@@ -4,7 +4,7 @@ import { signAccessAndRefreshToken } from './helpers/signtTokens'
 import { REFRESH_TOKEN_EXPIRES_IN_MILLISEC, ACCESS_TOKEN_EXPIRES_IN_MILLISEC } from './helpers/signtTokens'
 
 import type { Response } from 'express'
-import type { ILoginRequest } from './Types'
+import type { ILoginRequest } from './types/requestTypes'
 
 export const loginUserController = async (req: ILoginRequest, res: Response) => {
    const { email, password } = req.body

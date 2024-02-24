@@ -72,10 +72,10 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
       const toSaveUsersNotification = await UserModel.getSaveNotification(
          foundPost.userId,
          foundPost.description,
-         likedUser.firstName,
-         likedUser.sureName,
-         likedUser.id,
-         likedUser.userDetails.profilePicturePath[0].path,
+         likedUser[0].firstName,
+         likedUser[0].sureName,
+         likedUser[0]._id,
+         likedUser[0].selectedProfilePicturePath.path,
          'isCommentLike'
       )
 
