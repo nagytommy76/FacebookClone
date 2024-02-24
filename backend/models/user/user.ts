@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import type { UserModel, IUserTypes } from '../../controllers/users/Types'
+import type { UserModel, IUserTypes } from '../../controllers/users/types/ModelTypes'
 import { UserStatics } from './statics'
 
 const UserSchema = new Schema<IUserTypes, UserModel>(
