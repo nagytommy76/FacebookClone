@@ -1,7 +1,6 @@
 import React from 'react'
 import moment from 'moment'
 import type { IFriendsResponse } from './Types'
-import ProfileImage from '@/assets/facebook-profile.jpg'
 
 import Box from '@mui/system/Box'
 import Card from '@mui/material/Card'
@@ -19,10 +18,7 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
             {friends.map((friend) => (
                <div style={{ width: '300px', height: '420px' }} key={friend._id}>
                   <Card>
-                     <CardHeader
-                        userId={friend._id}
-                        profilePicture={friend.selectedProfilePicture[0]?.path || ProfileImage.src}
-                     />
+                     <CardHeader userId={friend._id} profilePicture={friend.selectedProfilePicture[0].path} />
                      <CardContent>
                         <Typography fontWeight={500} variant='h5' gutterBottom>
                            {friend.sureName} {friend.firstName}
