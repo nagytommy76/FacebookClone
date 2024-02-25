@@ -25,6 +25,8 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
             {
                userId: { type: String },
                isAccepted: Boolean,
+               isSender: Boolean,
+               isReceiver: Boolean,
                createdAt: Date,
             },
          ],
@@ -37,6 +39,10 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
                   isSelected: Boolean,
                },
             ],
+            default: {
+               path: 'https://firebasestorage.googleapis.com/v0/b/facebookimagestorage.appspot.com/o/facebook-profile.jpg?alt=media&token=654bab74-a4a3-4eab-8fdb-e7e22f116c9a',
+               isSelected: true,
+            },
          },
          birthTown: String,
          homeTown: String,
