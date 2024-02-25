@@ -1,12 +1,17 @@
 import { useState } from 'react'
-import { axiosInstance as axios } from '@/axios/AxiosInstance'
+import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
+import type { FriendButtonType, IFriendsResponse } from '../Types'
 
 const useFriendRequest = (friendId: string) => {
    const [loading, setLoading] = useState<boolean>(false)
+   const [cardButtonType, setCardButtonType] = useState<FriendButtonType>('makeFriend')
 
    const mutationFunction = async () => {
-      return await axios.post('/friends/make-friendship', { friendId })
+      return (await axios.post('/friends/make-friendship', { friendId })) as AxiosResponse<{
+         receiverUser: IFriendsResponse
+         senderUser: IFriendsResponse
+      }>
    }
 
    const { mutate } = useMutation({
@@ -21,7 +26,10 @@ const useFriendRequest = (friendId: string) => {
          setLoading(false)
       },
    })
-   return { friendRequestMutate: mutate, loading }
+
+   const friendRequestMutate = () => mutate()
+
+   return { friendRequestMutate, loading, cardButtonType }
 }
 
 export default useFriendRequest
