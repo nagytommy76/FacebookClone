@@ -4,8 +4,10 @@ import type { SelectUserByIdType } from './requestTypes'
 
 export interface IFriends {
    userId: ObjectId | string
-   isAccepted: boolean
    createdAt: string | Date
+   isAccepted: boolean
+   isSender: boolean
+   isReceiver: boolean
 }
 
 export interface IProfilePicturePath {
