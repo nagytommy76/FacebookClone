@@ -6,15 +6,14 @@ import useFriendRequest from '../Hooks/useFriendRequest'
 
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
-import LoadingButton from '@mui/lab/LoadingButton'
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
-import { IFriendsResponse } from '../Types'
+import type { IFriendsResponse } from '../Types'
+
+import ButtonTypes from './ButtonTypes'
 
 const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const { friendRequestMutate, loading } = useFriendRequest(friend._id)
+   const { friendRequestMutate, loading, cardButtonType } = useFriendRequest(friend._id)
 
    const isFriendRequestSendByMeAndNotAccepted = friend.friends.find(
       (item) => item.userId == userId && item.isAccepted === false
@@ -32,45 +31,11 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
             </Link>
          ) : (
             <div style={{ width: '100%' }}>
-               {isFriendRequestSendByMeAndNotAccepted == undefined && (
-                  <LoadingButton
-                     onClick={() => friendRequestMutate()}
-                     endIcon={<PersonAddAlt1Icon />}
-                     loading={loading}
-                     loadingPosition='end'
-                     variant='outlined'
-                     color='info'
-                     fullWidth
-                  >
-                     <span>Jelölés</span>
-                  </LoadingButton>
-               )}
-               {isFriendRequestSendByMeAndNotAccepted !== undefined && (
-                  <LoadingButton
-                     onClick={() => {}}
-                     endIcon={<PersonRemoveIcon />}
-                     loading={loading}
-                     loadingPosition='end'
-                     variant='outlined'
-                     color='error'
-                     fullWidth
-                  >
-                     <span>Jelölés visszavonása</span>
-                  </LoadingButton>
-               )}
-               {myFriendRequest !== undefined && (
-                  <LoadingButton
-                     onClick={() => {}}
-                     endIcon={<PersonAddAlt1Icon />}
-                     loading={loading}
-                     loadingPosition='end'
-                     variant='outlined'
-                     color='warning'
-                     fullWidth
-                  >
-                     <span>Visszaigazolás</span>
-                  </LoadingButton>
-               )}
+               <ButtonTypes
+                  buttonType={cardButtonType}
+                  loading={loading}
+                  friendRequestMutate={friendRequestMutate}
+               />
             </div>
          )}
       </CardActions>
