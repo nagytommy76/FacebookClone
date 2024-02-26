@@ -101,8 +101,8 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          }
       }
 
-      // await receiverUser.save()
-      // await senderUser.save()
+      await receiverUser.save()
+      await senderUser.save()
 
       response.status(200).json({ senderUser, receiverUser })
    } catch (error) {
