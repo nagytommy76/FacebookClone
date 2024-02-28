@@ -12,15 +12,18 @@ export interface IFriends {
    createdAt: string
 }
 
-export interface IFriendsResponse {
+export interface IFriendResponse {
+   _id: string
    firstName: string
    sureName: string
-   _id: string
+   friends: IFriends[]
+   notification: NotificationType[]
+}
+
+export interface IFriendsResponse extends IFriendResponse {
    email: string
    createdAt: string
    dateOfBirth: string
-   friends: IFriends[]
    selectedProfilePicture: IProfilePicture[]
    lastWorkPlace: IWorkPlaces[]
-   notification: NotificationType[]
 }

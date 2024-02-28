@@ -7,6 +7,7 @@ import { StyledCommentContainer, StyledListElement, StyledRightSide } from './St
 import LeftSideSkeleton from '@/Skeletons/Comments/Includes/LeftSideSkeleton'
 import BodySkeleton from '@/src/skeletons/Comments/Includes/BodySkeleton'
 import FooterSkeleton from '@/src/skeletons/Comments/Includes/FooterSkeleton'
+import SkeletonImg from '@/assets/facebook-profile.jpg'
 
 import Options from './Includes/Options/Options'
 import ErrorSnackbar from './Includes/Error/ErrorSnackbar'
@@ -53,7 +54,9 @@ const BaseAnswerAndComment: React.FC<{
             <StyledListElement>
                <LeftSide
                   isChild={isChild}
-                  profilePicturePath={answer.userId.userDetails.profilePicturePath[0].path}
+                  profilePicturePath={
+                     answer.userId?.userDetails.profilePicturePath[0].path || SkeletonImg.src
+                  }
                />
                <StyledRightSide>
                   <StyledRightContainer>
@@ -68,7 +71,7 @@ const BaseAnswerAndComment: React.FC<{
                      <Options
                         handleSetAnswerOpenForUpdate={() => handleSetOpenForUpdate(answer.comment)}
                         isChildComment={isChildComment}
-                        answeredUserId={answer.userId._id}
+                        answeredUserId={answer.userId?._id}
                         commentId={answer._id}
                      />
                   </StyledRightContainer>
