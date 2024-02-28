@@ -1,25 +1,33 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback, SetStateAction } from 'react'
 import { useAppSelector } from '@/reduxStore/store'
 
 import type { FriendButtonType, IFriends } from '../Types'
 
 const useFriendWithdraw = (
    friends: IFriends[],
-   setCardButtonType: (value: React.SetStateAction<FriendButtonType>) => void
+   setCardButtonType: (value: SetStateAction<FriendButtonType>) => void
 ) => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const mySentFriendRequests = friends.find((item) => item.userId === userId && !item.isSender)
    // Ebben az esetben én küldtem egy felkérést ( a belépett user ) és vissza tudom hívni
-   useEffect(() => {
-      if (mySentFriendRequests) {
-         console.log(mySentFriendRequests)
-         if (mySentFriendRequests.isAccepted === false) {
-            setCardButtonType('withdrawRequest')
-         }
-      }
-   }, [mySentFriendRequests, setCardButtonType])
 
-   return null
+   const setCardTypeToWithdraw = useCallback(
+      (friends: IFriends[]) => {
+         const mySentFriendRequests = friends.find((item) => item.userId === userId && !item.isSender)
+         if (mySentFriendRequests) {
+            if (mySentFriendRequests.isAccepted === false) {
+               setCardButtonType('withdrawRequest')
+            }
+         }
+         return mySentFriendRequests
+      },
+      [setCardButtonType, userId]
+   )
+
+   useEffect(() => {
+      setCardTypeToWithdraw(friends)
+   }, [setCardTypeToWithdraw, friends])
+
+   return setCardTypeToWithdraw
 }
 
 export default useFriendWithdraw
