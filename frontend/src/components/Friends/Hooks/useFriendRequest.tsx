@@ -1,28 +1,34 @@
 import { useState } from 'react'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { FriendButtonType, IFriendsResponse } from '../Types'
+import type { FriendButtonType, IFriendResponse, IFriends } from '../Types'
 
-const useFriendRequest = (friendId: string) => {
+import useFriendWithdraw from './useFriendWithdraw'
+import useFriendConfirm from './useFriendConfirm'
+
+const useFriendRequest = (friendId: string, friends: IFriends[]) => {
    const [loading, setLoading] = useState<boolean>(false)
    const [cardButtonType, setCardButtonType] = useState<FriendButtonType>('makeFriend')
 
+   const setCardTypeToWithdraw = useFriendWithdraw(friends, setCardButtonType)
+   const setButtonTypeToConfirmFriend = useFriendConfirm(friends, setCardButtonType)
+
    const mutationFunction = async () => {
       return (await axios.post('/friends/make-friendship', { friendId })) as AxiosResponse<{
-         receiverUser: IFriendsResponse
-         senderUser: IFriendsResponse
+         receiverUser: IFriendResponse
+         senderUser: IFriendResponse
       }>
    }
-
    const { mutate } = useMutation({
       mutationKey: ['makeFriendship'],
       mutationFn: mutationFunction,
-      onMutate(variables) {
+      onMutate() {
          setLoading(true)
-         console.log('MUTATE INDUL')
       },
-      onSuccess(data, variables, context) {
-         console.log(data.data)
+      onSuccess(data) {
+         setCardTypeToWithdraw(data.data.receiverUser.friends)
+         // Ez a rész socketIO esetében kell???!!!!!!!
+         setButtonTypeToConfirmFriend(data.data.senderUser.friends)
          setLoading(false)
       },
    })
