@@ -24,6 +24,7 @@ export async function middleware(request: NextRequest) {
    NextResponse.next()
 }
 
+// Itt tudom a route-okat hozzáadni -> mire legyen érvényes
 export const config = {
-   matcher: ['/', '/friends', '/groups', '/me'],
+   matcher: ['/', /*'/friends',*/ '/groups', '/me'],
 }
