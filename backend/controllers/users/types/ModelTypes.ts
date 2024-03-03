@@ -3,7 +3,8 @@ import type { INotifications, NotificationType } from '../../notifications/types
 import type { SelectUserByIdType } from './requestTypes'
 
 export interface IFriends {
-   userId: ObjectId | string
+   senderUserId: ObjectId | string
+   receiverUserId: ObjectId | string
    createdAt: string | Date
    isAccepted: boolean
    isSender: boolean
