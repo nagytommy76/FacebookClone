@@ -1,9 +1,7 @@
 import React from 'react'
 import type { FriendButtonType } from '../Types'
 
-import LoadingButton from '@mui/lab/LoadingButton'
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
+import BaseButton from './Buttons/BaseButton'
 
 const ButtonTypes: React.FC<{
    buttonType: FriendButtonType
@@ -12,60 +10,36 @@ const ButtonTypes: React.FC<{
 }> = ({ buttonType, loading, friendRequestMutate }) => {
    switch (buttonType) {
       case 'makeFriend':
-         return (
-            <LoadingButton
-               onClick={friendRequestMutate}
-               endIcon={<PersonAddAlt1Icon />}
-               loading={loading}
-               loadingPosition='end'
-               variant='outlined'
-               color='info'
-               fullWidth
-            >
-               <span>Jelölés</span>
-            </LoadingButton>
-         )
+         return <BaseButton buttonText='Jelölés' isLoading={loading} onClickEvent={friendRequestMutate} />
       case 'withdrawRequest':
          return (
-            <LoadingButton
-               onClick={() => {}}
-               endIcon={<PersonRemoveIcon />}
-               loading={loading}
-               loadingPosition='end'
-               variant='outlined'
+            <BaseButton
+               buttonText='Jelölés visszavonása'
+               isLoading={loading}
+               onClickEvent={() => {}}
+               iconType='removeIcon'
                color='error'
-               fullWidth
-            >
-               <span>Jelölés visszavonása</span>
-            </LoadingButton>
+            />
          )
       case 'isFriend':
          return (
-            <LoadingButton
-               onClick={() => {}}
-               endIcon={<PersonRemoveIcon />}
-               loading={loading}
-               loadingPosition='end'
-               variant='outlined'
+            <BaseButton
+               buttonText='Barát Törlése'
+               isLoading={loading}
+               onClickEvent={() => {}}
+               iconType='removeIcon'
                color='error'
-               fullWidth
-            >
-               <span>Barát Törlése</span>
-            </LoadingButton>
+            />
          )
       case 'confirmFriend':
          return (
-            <LoadingButton
-               onClick={() => {}}
-               endIcon={<PersonAddAlt1Icon />}
-               loading={loading}
-               loadingPosition='end'
-               variant='outlined'
+            <BaseButton
+               buttonText='Visszaigazolás'
+               isLoading={loading}
+               onClickEvent={() => {}}
+               iconType='addIcon'
                color='warning'
-               fullWidth
-            >
-               <span>Visszaigazolás</span>
-            </LoadingButton>
+            />
          )
       default:
          return <></>
