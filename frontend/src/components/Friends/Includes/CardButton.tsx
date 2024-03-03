@@ -17,23 +17,27 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
    const { friendRequestMutate, loading, cardButtonType } = useFriendRequest(friend._id, friend.friends)
 
    return (
-      <CardActions>
-         {userId == friend._id ? (
-            <Link style={{ width: '100%' }} href={`/me/${userId}`}>
-               <Button fullWidth variant='outlined' color='success' endIcon={<AccountCircleIcon />}>
-                  Profilom
-               </Button>
-            </Link>
-         ) : (
-            <div style={{ width: '100%' }}>
-               <ButtonTypes
-                  buttonType={cardButtonType}
-                  loading={loading}
-                  friendRequestMutate={friendRequestMutate}
-               />
-            </div>
+      <>
+         {userId && (
+            <CardActions>
+               {userId == friend._id ? (
+                  <Link style={{ width: '100%' }} href={`/me/${userId}`}>
+                     <Button fullWidth variant='outlined' color='success' endIcon={<AccountCircleIcon />}>
+                        Profilom
+                     </Button>
+                  </Link>
+               ) : (
+                  <div style={{ width: '100%' }}>
+                     <ButtonTypes
+                        buttonType={cardButtonType}
+                        loading={loading}
+                        friendRequestMutate={friendRequestMutate}
+                     />
+                  </div>
+               )}
+            </CardActions>
          )}
-      </CardActions>
+      </>
    )
 }
 

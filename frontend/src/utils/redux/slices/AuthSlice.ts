@@ -4,14 +4,14 @@ import type { IProfilePicture } from '@/types/PostTypes'
 import AltProfileImg from '@/assets/facebook-profile.jpg'
 
 interface IAuthState {
-   userId: string
+   userId: string | null
    userName: string
    isLoggedIn: boolean
    currentImage: IProfilePicture
 }
 
 const initialState: IAuthState = {
-   userId: '',
+   userId: null,
    userName: '',
    isLoggedIn: false,
    currentImage: { _id: '', isSelected: false, path: AltProfileImg.src },

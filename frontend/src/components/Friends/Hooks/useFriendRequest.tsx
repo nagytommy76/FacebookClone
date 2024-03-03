@@ -10,8 +10,8 @@ const useFriendRequest = (friendId: string, friends: IFriends[]) => {
    const [loading, setLoading] = useState<boolean>(false)
    const [cardButtonType, setCardButtonType] = useState<FriendButtonType>('makeFriend')
 
+   useFriendConfirm(friendId, friends, setCardButtonType)
    const setCardTypeToWithdraw = useFriendWithdraw(friends, setCardButtonType)
-   const setButtonTypeToConfirmFriend = useFriendConfirm(friends, setCardButtonType)
 
    const mutationFunction = async () => {
       return (await axios.post('/friends/make-friendship', { friendId })) as AxiosResponse<{
@@ -27,8 +27,6 @@ const useFriendRequest = (friendId: string, friends: IFriends[]) => {
       },
       onSuccess(data) {
          setCardTypeToWithdraw(data.data.receiverUser.friends)
-         // Ez a rész socketIO esetében kell???!!!!!!!
-         setButtonTypeToConfirmFriend(data.data.senderUser.friends)
          setLoading(false)
       },
    })
