@@ -63,11 +63,10 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
       if (!senderUser) return response.status(404).json({ msg: 'Sender user not found' })
       if (!receiverUser) return response.status(404).json({ msg: 'Receiver user not found' })
 
-      console.log(senderUser.userDetails.profilePicturePath[0].path)
-
       senderUser.friends.push({
          createdAt: new Date(),
-         userId: receiverUser.id,
+         receiverUserId: receiverUser._id,
+         senderUserId: senderUser._id,
          isAccepted: true,
          isSender: true,
          isReceiver: false,
@@ -75,7 +74,8 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
 
       receiverUser.friends.push({
          createdAt: new Date(),
-         userId: senderUser._id,
+         receiverUserId: receiverUser._id,
+         senderUserId: senderUser._id,
          isAccepted: false,
          isSender: false,
          isReceiver: true,
@@ -91,18 +91,18 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
             profilePicture: senderUser.userDetails.profilePicturePath[0].path,
          },
       })
+      await receiverUser.save()
+      await senderUser.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
          if (toSendUser !== undefined) {
             request.ioSocket?.to(toSendUser.socketId).emit('makeFriendship', {
                notifications: receiverUser.notifications,
+               userFriends: receiverUser.friends,
             })
          }
       }
-
-      await receiverUser.save()
-      await senderUser.save()
 
       response.status(200).json({ senderUser, receiverUser })
    } catch (error) {
