@@ -5,7 +5,8 @@ import type { NotificationType } from '../Navbar/Includes/Notification/Types'
 export type FriendButtonType = 'isFriend' | 'withdrawRequest' | 'makeFriend' | 'confirmFriend'
 
 export interface IFriends {
-   userId: string
+   senderUserId: string
+   receiverUserId: string
    isAccepted: boolean
    isReceiver: boolean
    isSender: boolean

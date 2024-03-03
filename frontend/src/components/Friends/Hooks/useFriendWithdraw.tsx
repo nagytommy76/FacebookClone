@@ -12,7 +12,7 @@ const useFriendWithdraw = (
 
    const setCardTypeToWithdraw = useCallback(
       (friends: IFriends[]) => {
-         const mySentFriendRequests = friends.find((item) => item.userId === userId && !item.isSender)
+         const mySentFriendRequests = friends.find((item) => item.senderUserId === userId && !item.isSender)
          if (mySentFriendRequests) {
             if (mySentFriendRequests.isAccepted === false) {
                setCardButtonType('withdrawRequest')
