@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from 'react'
 import { useAppSelector } from '@/reduxStore/store'
-import type { FriendButtonType, IFriends } from '../Types'
+import type { FriendButtonType, IFriends } from '../../Types'
 
-import useFriendSocket from './Sockets/useFriendSocket'
+import useFriendSocket from '../Sockets/useFriendSocket'
 
 const useFriendConfirm = (
    friendId: string,

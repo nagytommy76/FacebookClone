@@ -1,7 +1,7 @@
 import { useEffect, useCallback, SetStateAction } from 'react'
 import { useAppSelector } from '@/reduxStore/store'
 
-import type { FriendButtonType, IFriends } from '../Types'
+import type { FriendButtonType, IFriends } from '../../Types'
 
 const useFriendWithdraw = (
    friends: IFriends[],
