@@ -1,14 +1,21 @@
 import React from 'react'
-import type { FriendButtonType } from '../Types'
+import type { IFriends } from '../Types'
 
 import BaseButton from './Buttons/BaseButton'
 
+import useStates from '../Hooks/useStates'
+import useFriendRequest from '../Hooks/useFriendRequest'
+import useFriendCornfirmRequest from '../Hooks/useFriendCornfirmRequest'
+
 const ButtonTypes: React.FC<{
-   buttonType: FriendButtonType
-   loading: boolean
-   friendRequestMutate: () => void
-}> = ({ buttonType, loading, friendRequestMutate }) => {
-   switch (buttonType) {
+   friendId: string
+   friendFriends: IFriends[]
+}> = ({ friendFriends, friendId }) => {
+   const { cardButtonType, loading, setCardButtonType, setLoading } = useStates()
+   const { friendRequestMutate } = useFriendRequest(friendId, friendFriends, setCardButtonType, setLoading)
+   const { friendConfrimMutate } = useFriendCornfirmRequest(friendId, setLoading)
+
+   switch (cardButtonType) {
       case 'makeFriend':
          return <BaseButton buttonText='Jelölés' isLoading={loading} onClickEvent={friendRequestMutate} />
       case 'withdrawRequest':
@@ -36,7 +43,7 @@ const ButtonTypes: React.FC<{
             <BaseButton
                buttonText='Visszaigazolás'
                isLoading={loading}
-               onClickEvent={() => {}}
+               onClickEvent={friendConfrimMutate}
                iconType='addIcon'
                color='warning'
             />

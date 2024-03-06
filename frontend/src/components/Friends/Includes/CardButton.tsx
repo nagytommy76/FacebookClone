@@ -3,8 +3,6 @@ import React from 'react'
 import Link from 'next/link'
 import { useAppSelector } from '@/reduxStore/store'
 
-import useFriendRequest from '../Hooks/useFriendRequest'
-
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -14,7 +12,6 @@ import ButtonTypes from './ButtonTypes'
 
 const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const { friendRequestMutate, loading, cardButtonType } = useFriendRequest(friend._id, friend.friends)
 
    return (
       <>
@@ -28,11 +25,7 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
                   </Link>
                ) : (
                   <div style={{ width: '100%' }}>
-                     <ButtonTypes
-                        buttonType={cardButtonType}
-                        loading={loading}
-                        friendRequestMutate={friendRequestMutate}
-                     />
+                     <ButtonTypes friendFriends={friend.friends} friendId={friend._id} />
                   </div>
                )}
             </CardActions>
