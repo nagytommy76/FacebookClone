@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 import type { FriendButtonType, IFriendResponse, IFriends } from '../Types'
@@ -6,10 +5,12 @@ import type { FriendButtonType, IFriendResponse, IFriends } from '../Types'
 import useFriendWithdraw from './ButtonType/useFriendWithdraw'
 import useFriendConfirm from './ButtonType/useFriendConfirm'
 
-const useFriendRequest = (friendId: string, friends: IFriends[]) => {
-   const [loading, setLoading] = useState<boolean>(false)
-   const [cardButtonType, setCardButtonType] = useState<FriendButtonType>('makeFriend')
-
+const useFriendRequest = (
+   friendId: string,
+   friends: IFriends[],
+   setCardButtonType: React.Dispatch<React.SetStateAction<FriendButtonType>>,
+   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
    useFriendConfirm(friendId, friends, setCardButtonType)
    const setCardTypeToWithdraw = useFriendWithdraw(friends, setCardButtonType)
 
@@ -33,7 +34,7 @@ const useFriendRequest = (friendId: string, friends: IFriends[]) => {
 
    const friendRequestMutate = () => mutate()
 
-   return { friendRequestMutate, loading, cardButtonType }
+   return { friendRequestMutate }
 }
 
 export default useFriendRequest
