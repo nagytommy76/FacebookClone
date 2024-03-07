@@ -29,6 +29,7 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
       })
 
       //   await foundReceiver.save()
+      //   await foundSender.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
@@ -41,8 +42,7 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
       }
 
       response.status(200).json({
-         foundFriend: foundReceiver.friends[foundFriendIndex],
-         foundSenderNotifi: foundSender?.notifications,
+         friends: foundReceiver.friends,
       })
    } catch (error) {
       console.log(error)
