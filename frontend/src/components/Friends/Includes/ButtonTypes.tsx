@@ -13,7 +13,7 @@ const ButtonTypes: React.FC<{
 }> = ({ friendFriends, friendId }) => {
    const { cardButtonType, loading, setCardButtonType, setLoading } = useStates()
    const { friendRequestMutate } = useFriendRequest(friendId, friendFriends, setCardButtonType, setLoading)
-   const { friendConfrimMutate } = useFriendCornfirmRequest(friendId, setLoading)
+   const { friendConfrimMutate } = useFriendCornfirmRequest(friendId, setLoading, setCardButtonType)
 
    switch (cardButtonType) {
       case 'makeFriend':
