@@ -1,18 +1,23 @@
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 import useFriendDelete from './ButtonType/useFriendDelete'
+import type { FriendButtonType } from '../Types'
 
-import type { FriendButtonType, IFriendResponse, IFriends } from '../Types'
+import useConfirmSocket from './Sockets/useConfirmSocket'
 
 const useFriendCornfirmRequest = (
    friendId: string,
    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
    setCardButtonType: React.Dispatch<React.SetStateAction<FriendButtonType>>
 ) => {
-   const { setCardTypeDeleteFriend } = useFriendDelete(setCardButtonType)
+   const { setCardTypeDeleteFriend, setCardTypeDeleteFriendReceiver } = useFriendDelete(
+      friendId,
+      setCardButtonType
+   )
    const confirmMutate = async () => {
       return await axios.post('/friends/confirm-friendship', { friendId })
    }
+   useConfirmSocket(friendId, setCardTypeDeleteFriendReceiver)
 
    const { mutate } = useMutation({
       mutationKey: ['confirmFriendship'],
