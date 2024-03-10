@@ -1,12 +1,11 @@
-export type NotificationType = {
+export type NotificationTypes = 'isComment' | 'isPostLike' | 'isCommentLike' | 'isFriend' | 'isFriendConfirm'
+
+export type NotificationType<T = { postId: string; description: string }> = {
    _id: string
-   notificationType: 'isComment' | 'isPostLike' | 'isCommentLike'
+   notificationType: NotificationTypes
    isRead: boolean
    createdAt: string
-   postData: {
-      postId: string
-      description: string
-   }
+   data?: T
    userDetails: {
       userId: String
       firstName: string
