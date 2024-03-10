@@ -12,6 +12,7 @@ import Collapse from '@mui/material/Collapse'
 
 import RemoveNotification from '../Includes/RemoveNotification'
 import TimeAgo from '../Includes/TimeAgo'
+import NotificationText from '../Includes/NotificationText'
 
 const NotificationsMenu: React.FC<{
    anchorEl: HTMLElement | null
@@ -48,7 +49,7 @@ const NotificationsMenu: React.FC<{
                                  height={65}
                                  width={65}
                               />
-                              <Link href={`#${notification.postData?.postId}`}>
+                              <Link href={`#${notification.data?.postId}`}>
                                  <StyledTextArea
                                     onClick={() =>
                                        handleSetInactiveAndClose(notification._id, notification.isRead)
@@ -58,11 +59,9 @@ const NotificationsMenu: React.FC<{
                                        {notification.userDetails.firstName}{' '}
                                        {notification.userDetails.sureName}
                                     </Typography>
-                                    <Typography variant='caption' gutterBottom>
-                                       Likeolta a bejegyzésedet:
-                                    </Typography>
+                                    <NotificationText notificationTypes={notification.notificationType} />
                                     <Typography variant='caption' noWrap sx={{ width: '280px' }}>
-                                       {notification.postData?.description}
+                                       {notification.data?.description}
                                     </Typography>
                                     <TimeAgo createdAt={notification.createdAt} />
                                  </StyledTextArea>
