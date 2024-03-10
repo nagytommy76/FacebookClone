@@ -73,7 +73,7 @@ export function UserStatics(
             isRead: false,
             notificationType,
             createdAt: new Date(),
-            postData: {
+            data: {
                postId: foundPostUserId,
                description: foundPostDescription,
             },
