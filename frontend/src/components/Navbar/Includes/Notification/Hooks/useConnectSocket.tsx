@@ -20,7 +20,10 @@ const setNotificationContext = (
 
 const useConnectSocket = () => {
    const userId = useAppSelector((state) => state.auth.userId)
-   const { notificationsDispatch } = useContext(NotificationsContext)
+   const {
+      notificationsDispatch,
+      notificationsReducer: { winXpAudio },
+   } = useContext(NotificationsContext)
 
    useEffect(() => {
       // Ez azért kell mert ki van kapcsolva az automata connect: autoConnect
@@ -29,20 +32,18 @@ const useConnectSocket = () => {
          socket.emit('newUser', userId)
 
          socket.on('likedPost', (args) => {
-            console.log(args)
             setNotificationContext(args, notificationsDispatch)
          })
          socket.on('addComment', (args) => {
-            console.log(args)
             setNotificationContext(args, notificationsDispatch)
          })
 
          socket.on('makeFriendship', (args) => {
-            console.log(args)
             setNotificationContext(args, notificationsDispatch)
+            // console.log(winXpAudio.src)
+            // winXpAudio.play()
          })
          socket.on('confirmFriendship', (args) => {
-            console.log(args)
             setNotificationContext(args, notificationsDispatch)
          })
       })
