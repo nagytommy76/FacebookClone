@@ -19,7 +19,7 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
       foundSender?.notifications.push({
          createdAt: new Date(),
          isRead: false,
-         notificationType: 'isFriend',
+         notificationType: 'isFriendConfirm',
          userDetails: {
             firstName: foundReceiver.firstName,
             sureName: foundReceiver.sureName,
@@ -28,14 +28,14 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
          },
       })
 
-      //   await foundReceiver.save()
-      //   await foundSender.save()
+      await foundReceiver.save()
+      await foundSender?.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
          if (toSendUser !== undefined) {
             request.ioSocket?.to(toSendUser.socketId).emit('confirmFriendship', {
-               notifications: foundReceiver.notifications,
+               notifications: foundSender?.notifications,
                userFriends: foundReceiver.friends,
             })
          }
