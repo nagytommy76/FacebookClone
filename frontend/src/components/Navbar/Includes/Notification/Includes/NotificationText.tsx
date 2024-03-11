@@ -29,6 +29,12 @@ const NotificationText: React.FC<{ notificationTypes: NotificationTypes }> = ({ 
                Barátfelkérés küldött neked!
             </Typography>
          )
+      case 'isFriendConfirm':
+         return (
+            <Typography variant='caption' gutterBottom>
+               Elfogadta a barátfelkérésedet!
+            </Typography>
+         )
       default:
          return <></>
    }
