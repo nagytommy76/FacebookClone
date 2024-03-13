@@ -15,7 +15,7 @@ interface INotificationsContext {
 
 export const NotificationsContext = createContext<INotificationsContext>({
    notificationsDispatch: () => {},
-   notificationsReducer: { activeNotifications: 0, notifications: null },
+   notificationsReducer: initialNotificationsState,
 })
 
 const NotificationContextProvider = () => {

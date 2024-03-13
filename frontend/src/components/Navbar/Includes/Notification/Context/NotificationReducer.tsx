@@ -1,3 +1,4 @@
+'use client'
 import { produce } from 'immer'
 import type { NotificationType } from '../Types'
 
@@ -6,6 +7,7 @@ export type NotificationsAction =
    | 'SET_ACTIVE_NOTIFICATIONS_COUNT'
    | 'UPDATE_ISREAD_BYID'
    | 'REMOVE_NOTIFICATION'
+   | 'SET_AUDIO_PLAY'
 
 export interface INotificationsAction {
    type: NotificationsAction
@@ -15,11 +17,13 @@ export interface INotificationsAction {
 export interface InitialNotificationState {
    notifications: NotificationType[] | null
    activeNotifications: number
+   winXpAudio: HTMLAudioElement
 }
 
 export const initialNotificationsState: InitialNotificationState = {
    activeNotifications: 0,
    notifications: null,
+   winXpAudio: new Audio('/sounds/windows_xp_shutdown.mp3'),
 }
 
 export default function PostsReducer(
@@ -68,6 +72,9 @@ export default function PostsReducer(
             }
          })
          return removed
+      case 'SET_AUDIO_PLAY':
+         state.winXpAudio.play()
+         return state
       default:
          return state
    }
