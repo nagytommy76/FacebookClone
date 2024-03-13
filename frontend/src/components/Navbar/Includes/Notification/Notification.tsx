@@ -13,7 +13,7 @@ import NotificationsMenu from './NotificationsMenu/NotificationsMenu'
 const Notification = () => {
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
    const {
-      notificationsReducer: { activeNotifications },
+      notificationsReducer: { activeNotifications, winXpAudio },
    } = useContext(NotificationsContext)
    useConnectSocket()
 
@@ -30,6 +30,7 @@ const Notification = () => {
                </Badge>
             </IconButton>
          </Tooltip>
+         <audio style={{ display: 'hidden' }} src={winXpAudio.src} />
          <NotificationsMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       </>
    )
