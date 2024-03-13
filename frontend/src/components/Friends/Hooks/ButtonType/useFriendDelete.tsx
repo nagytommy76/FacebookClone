@@ -1,9 +1,10 @@
-import { SetStateAction, useCallback } from 'react'
+import { SetStateAction, useCallback, useEffect } from 'react'
 import { useAppSelector } from '@/reduxStore/store'
 import type { FriendButtonType, IFriends } from '../../Types'
 
 const useFriendDelete = (
    friendId: string,
+   friends: IFriends[],
    setCardButtonType: (value: SetStateAction<FriendButtonType>) => void
 ) => {
    const userId = useAppSelector((state) => state.auth.userId)
@@ -34,6 +35,23 @@ const useFriendDelete = (
       },
       [setCardButtonType, friendId]
    )
+   const setCardTypeDeleteFriendSender = useCallback(
+      (friends: IFriends[]) => {
+         const mySentFriendRequests = friends.find((item) => item.senderUserId === friendId && item.isSender)
+         if (mySentFriendRequests) {
+            if (mySentFriendRequests.isAccepted === true) {
+               setCardButtonType('isFriend')
+            }
+         }
+         return mySentFriendRequests
+      },
+      [setCardButtonType, friendId]
+   )
+
+   useEffect(() => {
+      setCardTypeDeleteFriendReceiver(friends)
+      setCardTypeDeleteFriendSender(friends)
+   }, [setCardTypeDeleteFriendReceiver, setCardTypeDeleteFriendSender, friends])
 
    return { setCardTypeDeleteFriend, setCardTypeDeleteFriendReceiver }
 }
