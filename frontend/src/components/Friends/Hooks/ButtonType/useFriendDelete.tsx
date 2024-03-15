@@ -3,14 +3,17 @@ import { useAppSelector } from '@/reduxStore/store'
 import type { FriendButtonType, IFriends } from '../../Types'
 
 const SetCardType = (
-   mySentFriendRequests: IFriends | undefined,
-   setCardButtonType: (value: SetStateAction<FriendButtonType>) => void
+   friends: IFriends[],
+   setCardButtonType: (value: SetStateAction<FriendButtonType>) => void,
+   findFucntion: (item: IFriends) => boolean
 ) => {
+   const mySentFriendRequests = friends.find(findFucntion)
    if (mySentFriendRequests) {
       if (mySentFriendRequests.isAccepted === true) {
          setCardButtonType('isFriend')
       }
    }
+   return mySentFriendRequests
 }
 
 const useFriendDelete = (
@@ -22,29 +25,24 @@ const useFriendDelete = (
 
    const setCardTypeDeleteFriend = useCallback(
       (friends: IFriends[]) => {
-         const mySentFriendRequests = friends.find((item) => item.receiverUserId === userId && !item.isSender)
-         SetCardType(mySentFriendRequests, setCardButtonType)
-         return mySentFriendRequests
+         const findFunction = (item: IFriends) => item.receiverUserId === userId && !item.isSender
+         return SetCardType(friends, setCardButtonType, findFunction)
       },
       [setCardButtonType, userId]
    )
 
    const setCardTypeDeleteFriendReceiver = useCallback(
       (friends: IFriends[]) => {
-         const mySentFriendRequests = friends.find(
-            (item) => item.receiverUserId === friendId && item.isReceiver
-         )
-         SetCardType(mySentFriendRequests, setCardButtonType)
-         return mySentFriendRequests
+         const findFunction = (item: IFriends) => item.receiverUserId === friendId && item.isReceiver
+         return SetCardType(friends, setCardButtonType, findFunction)
       },
       [setCardButtonType, friendId]
    )
 
    const setCardTypeDeleteFriendSender = useCallback(
       (friends: IFriends[]) => {
-         const mySentFriendRequests = friends.find((item) => item.senderUserId === friendId && item.isSender)
-         SetCardType(mySentFriendRequests, setCardButtonType)
-         return mySentFriendRequests
+         const findFunction = (item: IFriends) => item.senderUserId === friendId && item.isSender
+         return SetCardType(friends, setCardButtonType, findFunction)
       },
       [setCardButtonType, friendId]
    )
