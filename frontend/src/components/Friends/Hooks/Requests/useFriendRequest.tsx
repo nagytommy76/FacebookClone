@@ -1,9 +1,9 @@
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { FriendButtonType, IFriendResponse, IFriends } from '../Types'
+import type { FriendButtonType, IFriendResponse, IFriends } from '../../Types'
 
-import useFriendWithdraw from './ButtonType/useFriendWithdraw'
-import useFriendConfirm from './ButtonType/useFriendConfirm'
+import useFriendWithdraw from '../ButtonType/useFriendWithdraw'
+import useFriendConfirm from '../ButtonType/useFriendConfirm'
 
 const useFriendRequest = (
    friendId: string,

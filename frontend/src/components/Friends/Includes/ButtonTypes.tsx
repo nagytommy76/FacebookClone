@@ -4,8 +4,8 @@ import type { IFriends } from '../Types'
 import BaseButton from './Buttons/BaseButton'
 
 import useStates from '../Hooks/useStates'
-import useFriendRequest from '../Hooks/useFriendRequest'
-import useFriendCornfirmRequest from '../Hooks/useFriendCornfirmRequest'
+import useFriendRequest from '../Hooks/Requests/useFriendRequest'
+import useFriendCornfirmRequest from '../Hooks/Requests/useFriendCornfirmRequest'
 
 const ButtonTypes: React.FC<{
    friendId: string

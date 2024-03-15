@@ -1,9 +1,9 @@
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import useFriendDelete from './ButtonType/useFriendDelete'
-import type { FriendButtonType, IFriends } from '../Types'
+import useFriendDelete from '../ButtonType/useFriendDelete'
+import type { FriendButtonType, IFriends } from '../../Types'
 
-import useConfirmSocket from './Sockets/useConfirmSocket'
+import useConfirmSocket from '../Sockets/useConfirmSocket'
 
 const useFriendCornfirmRequest = (
    friendId: string,
