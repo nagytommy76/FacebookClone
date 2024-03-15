@@ -5,3 +5,8 @@ export interface IMakeFriends extends IJWTUserType {
       friendId: string
    }
 }
+export interface IRemoveFriend extends IJWTUserType {
+   body: {
+      friendId: string
+   }
+}
