@@ -5,13 +5,13 @@ import type { FriendButtonType, IFriends } from '../../Types'
 const SetCardType = (
    friends: IFriends[],
    setCardButtonType: (value: SetStateAction<FriendButtonType>) => void,
-   findFucntion: (item: IFriends) => boolean
+   findFucntion: (item: IFriends) => boolean | null
 ) => {
    const mySentFriendRequests = friends.find(findFucntion)
    if (mySentFriendRequests) {
-      if (mySentFriendRequests.isAccepted === true) {
-         setCardButtonType('isFriend')
-      }
+      // if (mySentFriendRequests.isAccepted === true) {
+      setCardButtonType('isFriend')
+      // }
    }
    return mySentFriendRequests
 }
@@ -33,18 +33,28 @@ const useFriendDelete = (
 
    const setCardTypeDeleteFriendReceiver = useCallback(
       (friends: IFriends[]) => {
-         const findFunction = (item: IFriends) => item.receiverUserId === friendId && item.isReceiver
+         const findFunction = (item: IFriends) => {
+            if (/*item.senderUserId == userId ||*/ item.receiverUserId == userId) {
+               return item.senderUserId === friendId && item.isSender
+            }
+            return null
+         }
          return SetCardType(friends, setCardButtonType, findFunction)
       },
-      [setCardButtonType, friendId]
+      [setCardButtonType, friendId, userId]
    )
 
    const setCardTypeDeleteFriendSender = useCallback(
       (friends: IFriends[]) => {
-         const findFunction = (item: IFriends) => item.senderUserId === friendId && item.isSender
+         const findFunction = (item: IFriends) => {
+            if (item.senderUserId == userId /*|| item.receiverUserId == userId*/) {
+               return item.receiverUserId === friendId && item.isReceiver
+            }
+            return null
+         }
          return SetCardType(friends, setCardButtonType, findFunction)
       },
-      [setCardButtonType, friendId]
+      [setCardButtonType, friendId, userId]
    )
 
    useEffect(() => {
