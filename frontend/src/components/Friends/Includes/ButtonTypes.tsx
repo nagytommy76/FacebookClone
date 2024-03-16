@@ -6,6 +6,7 @@ import BaseButton from './Buttons/BaseButton'
 import useStates from '../Hooks/useStates'
 import useFriendRequest from '../Hooks/Requests/useFriendRequest'
 import useFriendCornfirmRequest from '../Hooks/Requests/useFriendCornfirmRequest'
+import useFriendDeleteRequest from '../Hooks/Requests/useFriendDeleteRequest'
 
 const ButtonTypes: React.FC<{
    friendId: string
@@ -19,6 +20,7 @@ const ButtonTypes: React.FC<{
       setLoading,
       setCardButtonType
    )
+   const { deleteFriendMutate } = useFriendDeleteRequest(friendId, setLoading, setCardButtonType)
 
    switch (cardButtonType) {
       case 'makeFriend':
@@ -28,7 +30,7 @@ const ButtonTypes: React.FC<{
             <BaseButton
                buttonText='Jelölés visszavonása'
                isLoading={loading}
-               onClickEvent={() => {}}
+               onClickEvent={() => deleteFriendMutate(true)}
                iconType='removeIcon'
                color='error'
             />
@@ -38,7 +40,7 @@ const ButtonTypes: React.FC<{
             <BaseButton
                buttonText='Barát Törlése'
                isLoading={loading}
-               onClickEvent={() => {}}
+               onClickEvent={() => deleteFriendMutate()}
                iconType='removeIcon'
                color='error'
             />
