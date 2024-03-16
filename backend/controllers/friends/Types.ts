@@ -8,5 +8,6 @@ export interface IMakeFriends extends IJWTUserType {
 export interface IRemoveFriend extends IJWTUserType {
    body: {
       friendId: string
+      isFriendRequestWithdraw: boolean
    }
 }
