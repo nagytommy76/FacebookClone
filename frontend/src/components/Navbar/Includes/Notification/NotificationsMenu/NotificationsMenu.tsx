@@ -5,7 +5,6 @@ import { NotificationsContext } from '../Context/NotificationContextProvider'
 import useSetActiveNotifications from '../Hooks/useSetActiveNotifications'
 
 import { StyledImage, StyledMenuItem, StyledIsActive, StyledTextArea, StyledMenuContainer } from './Style'
-import Menu from '@mui/material/Menu'
 import Typography from '@mui/material/Typography'
 import { TransitionGroup } from 'react-transition-group'
 import Collapse from '@mui/material/Collapse'
@@ -13,6 +12,8 @@ import Collapse from '@mui/material/Collapse'
 import RemoveNotification from '../Includes/RemoveNotification'
 import TimeAgo from '../Includes/TimeAgo'
 import NotificationText from '../Includes/NotificationText'
+import BaseMenu from './Includes/BaseMenu'
+import EmptyNotification from './Includes/EmptyNotification'
 
 const NotificationsMenu: React.FC<{
    anchorEl: HTMLElement | null
@@ -21,7 +22,6 @@ const NotificationsMenu: React.FC<{
    const {
       notificationsReducer: { notifications },
    } = useContext(NotificationsContext)
-   const open = Boolean(anchorEl)
    const handleClose = () => {
       setAnchorEl(null)
    }
@@ -29,20 +29,15 @@ const NotificationsMenu: React.FC<{
 
    return (
       <>
-         {notifications !== null && (
-            <Menu
-               anchorEl={anchorEl}
-               id='notifications-menu'
-               open={open}
-               onClose={handleClose}
-               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
+         {notifications === null ? (
+            <EmptyNotification anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+         ) : (
+            <BaseMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl}>
                <TransitionGroup>
                   {notifications.map((notification) => (
                      <Collapse timeout={100} key={notification._id}>
                         <StyledMenuContainer>
-                           <StyledMenuItem sx={{ maxWidth: '400px', marginBottom: 2 }}>
+                           <StyledMenuItem>
                               <StyledImage
                                  src={notification.userDetails.profilePicture}
                                  alt='Profile IMG'
@@ -73,7 +68,7 @@ const NotificationsMenu: React.FC<{
                      </Collapse>
                   ))}
                </TransitionGroup>
-            </Menu>
+            </BaseMenu>
          )}
       </>
    )
