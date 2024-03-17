@@ -10,6 +10,17 @@ export const StyledMenuContainer = styled('div')({
 
 export const StyledMenuItem = styled(MenuItem)({
    width: '450px',
+   marginBottom: 2,
+})
+
+export const StyledEmptyMenuItem = styled('section')({
+   width: '450px',
+   height: '300px',
+
+   display: 'flex',
+   flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'center',
 })
 
 export const StyledTextArea = styled('div')({
