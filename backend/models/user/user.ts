@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 import type { UserModel, IUserTypes } from '../../controllers/users/types/ModelTypes'
 import { UserStatics } from './statics'
 
@@ -20,17 +20,20 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
          required: [true, 'Adjon meg egy jelszót!'],
          minlength: [4, 'a jelszó min. 4 karakter legyen!'],
       },
+      // friends: {
+      //    type: [
+      //       {
+      //          senderUserId: { type: String, unique: true },
+      //          receiverUserId: { type: String, unique: true },
+      //          isAccepted: Boolean,
+      //          isSender: Boolean,
+      //          isReceiver: Boolean,
+      //          createdAt: Date,
+      //       },
+      //    ],
+      // },
       friends: {
-         type: [
-            {
-               senderUserId: { type: String, unique: true },
-               receiverUserId: { type: String, unique: true },
-               isAccepted: Boolean,
-               isSender: Boolean,
-               isReceiver: Boolean,
-               createdAt: Date,
-            },
-         ],
+         type: [{ type: Types.ObjectId, ref: 'Friends', index: true, unique: true }],
       },
       userDetails: {
          profilePicturePath: {
@@ -98,6 +101,7 @@ UserSchema.add({
             postId: String,
          },
          userDetails: {
+            // type: Types.ObjectId, ref: 'Users'
             userId: String,
             firstName: String,
             sureName: String,
