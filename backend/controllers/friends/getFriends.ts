@@ -37,6 +37,14 @@ export const getUsers = async (request: Request, response: Response) => {
                },
             },
          },
+         {
+            $lookup: {
+               from: 'friends',
+               localField: 'friends',
+               foreignField: '_id',
+               as: 'connectedFriends',
+            },
+         },
       ])
 
       return response.status(200).json(users)
