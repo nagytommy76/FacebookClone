@@ -21,14 +21,13 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
 
       if (!senderUser) return response.status(404).json({ msg: 'Sender user not found' })
       if (!receiverUser) return response.status(404).json({ msg: 'Receiver user not found' })
-      await FriendsModel.create({
+      const createdFriends = await FriendsModel.create({
          receiverUser: receiverUser._id,
          senderUser: senderUser._id,
          status: 'pending',
       })
-
-      senderUser.friends.push(receiverUser._id)
-      receiverUser.friends.push(senderUser._id)
+      senderUser.friends.push(createdFriends._id)
+      receiverUser.friends.push(createdFriends._id)
 
       receiverUser.notifications.push({
          createdAt: new Date(),
