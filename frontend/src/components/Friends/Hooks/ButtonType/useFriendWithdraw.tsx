@@ -1,24 +1,24 @@
-import { useEffect, useCallback, SetStateAction } from 'react'
+import { useEffect, useCallback, useContext } from 'react'
+import { FriendContext } from '../../Context/FriendContext'
 import { useAppSelector } from '@/reduxStore/store'
 
-import type { FriendButtonType, IConnectedFriends } from '../../Types'
-
-const useFriendWithdraw = (
-   connectedFriends: IConnectedFriends[],
-   setCardButtonType: (value: SetStateAction<FriendButtonType>) => void
-) => {
+const useFriendWithdraw = () => {
    const userId = useAppSelector((state) => state.auth.userId)
+   const {
+      friendReducer: {
+         friend: { connectedFriends },
+      },
+      setCardButtonType,
+   } = useContext(FriendContext)
    // Ebben az esetben én küldtem egy felkérést ( a belépett user ) és vissza tudom hívni
 
    const setCardTypeToWithdraw = useCallback(
       (/*connectedFriends: IConnectedFriends[]*/) => {
-         console.log(connectedFriends)
-         const mySentFriendRequests = connectedFriends.find((item) => item.senderUser == userId)
-         console.log(mySentFriendRequests)
+         const mySentFriendRequests = connectedFriends.find(
+            (item) => item.senderUser == userId && item.status === 'pending'
+         )
          if (mySentFriendRequests) {
-            if (mySentFriendRequests.status === 'pending') {
-               setCardButtonType('withdrawRequest')
-            }
+            setCardButtonType('withdrawRequest')
          }
          return mySentFriendRequests
       },
