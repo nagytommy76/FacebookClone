@@ -20,20 +20,8 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
          required: [true, 'Adjon meg egy jelszót!'],
          minlength: [4, 'a jelszó min. 4 karakter legyen!'],
       },
-      // friends: {
-      //    type: [
-      //       {
-      //          senderUserId: { type: String, unique: true },
-      //          receiverUserId: { type: String, unique: true },
-      //          isAccepted: Boolean,
-      //          isSender: Boolean,
-      //          isReceiver: Boolean,
-      //          createdAt: Date,
-      //       },
-      //    ],
-      // },
       friends: {
-         type: [{ type: Types.ObjectId, ref: 'Friends', index: true, unique: true }],
+         type: [{ type: Types.ObjectId, ref: 'Friends', unique: true }],
       },
       userDetails: {
          profilePicturePath: {

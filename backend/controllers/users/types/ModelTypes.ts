@@ -1,15 +1,6 @@
-import { Model, ObjectId, Document } from 'mongoose'
+import { Model, Types, ObjectId, Document } from 'mongoose'
 import type { INotifications, NotificationType } from '../../notifications/types/notificationTypes'
 import type { SelectUserByIdType } from './requestTypes'
-
-export interface IFriends {
-   senderUserId: ObjectId | string
-   receiverUserId: ObjectId | string
-   createdAt: string | Date
-   isAccepted: boolean
-   isSender: boolean
-   isReceiver: boolean
-}
 
 export interface IProfilePicturePath {
    _id?: ObjectId | string
@@ -24,7 +15,7 @@ export interface IUserTypes {
    sureName: string
    password: string
    isEmailConfirmed: boolean
-   friends: IFriends[]
+   friends: Types.ObjectId[]
    notifications: INotifications[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
