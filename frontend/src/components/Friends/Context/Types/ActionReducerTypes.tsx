@@ -4,27 +4,37 @@ type SetFriendsAction = {
    type: 'SET_FRIEND'
    payload: IFriendsResponse
 }
-type SetConnectedAction = {
-   type: 'SET_CONNECTED_FRIENDS'
-   payload: IConnectedFriends[]
-}
 type SetFriendIdAction = {
    type: 'SET_FRIENDID'
    payload: string
 }
+type SetConnectedFriendAction = {
+   type: 'SET_CONNECTED_FRIEND'
+   payload: IConnectedFriends
+}
 
-export type IFriendAction = SetFriendsAction | SetConnectedAction | SetFriendIdAction
+export type IFriendAction = SetFriendsAction | SetFriendIdAction | SetConnectedFriendAction
 
 export type FriendStateType = {
    friendId: string
    friend: IFriendsResponse
-   connectedFriends: IConnectedFriends[]
+   selectedConnectedFriend: IConnectedFriends | null
 }
 
 export const friendsData: FriendStateType = {
+   selectedConnectedFriend: null,
    friendId: '',
    friend: {
-      connectedFriends: [],
+      connectedFriends: [
+         {
+            _id: '',
+            createdAt: '',
+            updatedAt: '',
+            receiverUser: '',
+            senderUser: '',
+            status: 'pending',
+         },
+      ],
       _id: '',
       createdAt: '',
       dateOfBirth: '',
@@ -36,14 +46,4 @@ export const friendsData: FriendStateType = {
       notification: [],
       selectedProfilePicture: [],
    },
-   connectedFriends: [
-      {
-         _id: '',
-         createdAt: '',
-         updatedAt: '',
-         receiverUser: '',
-         senderUser: '',
-         status: 'pending',
-      },
-   ],
 }

@@ -1,10 +1,10 @@
-import { createContext, useReducer, useEffect, SetStateAction, Dispatch } from 'react'
+import { createContext, useReducer, useEffect, SetStateAction } from 'react'
 import FriendReducer from './FriendReducer'
 import useStates from '../Hooks/useStates'
 
 import { friendsData } from './Types/ActionReducerTypes'
 import type { IFriendContext } from './Types/Context'
-import type { IFriendsResponse, IConnectedFriends, FriendButtonType } from '../Types'
+import type { IFriendsResponse, FriendButtonType } from '../Types'
 
 export const FriendContext = createContext<IFriendContext>({
    loading: false,
@@ -23,9 +23,8 @@ export const FriendContext = createContext<IFriendContext>({
 
 const FriendsContextProvider: React.FC<{
    friend: IFriendsResponse
-   connectedFriends: IConnectedFriends[]
    children: React.ReactNode
-}> = ({ friend, connectedFriends, children }) => {
+}> = ({ friend, children }) => {
    const { cardButtonType, loading, setCardButtonType, setLoading } = useStates()
    const [friendReducer, friendDispatch] = useReducer(FriendReducer, friendsData)
 
@@ -33,9 +32,6 @@ const FriendsContextProvider: React.FC<{
       friendDispatch({ type: 'SET_FRIEND', payload: friend })
       friendDispatch({ type: 'SET_FRIENDID', payload: friend._id })
    }, [friend])
-   useEffect(() => {
-      friendDispatch({ type: 'SET_CONNECTED_FRIENDS', payload: connectedFriends })
-   }, [connectedFriends])
 
    return (
       <FriendContext.Provider
