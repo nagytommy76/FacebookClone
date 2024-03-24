@@ -1,26 +1,34 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useContext } from 'react'
+import { FriendContext } from '../../Context/FriendContext'
 import { useAppSelector } from '@/reduxStore/store'
-import type { FriendButtonType, IConnectedFriends } from '../../Types'
 
 import useFriendSocket from '../Sockets/useFriendSocket'
 
-const useFriendConfirm = (
-   friendId: string,
-   connectedFriends: IConnectedFriends[],
-   setCardButtonType: (value: React.SetStateAction<FriendButtonType>) => void
-) => {
+const useFriendConfirm = () => {
    const userId = useAppSelector((state) => state.auth.userId)
+   const {
+      friendReducer: {
+         friendId,
+         friend: { connectedFriends },
+      },
+      friendDispatch,
+      setCardButtonType,
+   } = useContext(FriendContext)
 
    const setButtonTypeToConfirmFriend = useCallback(
       (/*friends: IFriends[], friendId: string*/) => {
          // Ebben az esetben megtaláltam a nekem ( belépett user ) küldött requesteket
-         const myFriendRequest = connectedFriends.find((friend) => friend.receiverUser == userId)
+         const myFriendRequest = connectedFriends.find(
+            (friend) =>
+               friend.receiverUser == userId && friend.senderUser === friendId && friend.status === 'pending'
+         )
          if (myFriendRequest) {
+            friendDispatch({ type: 'SET_CONNECTED_FRIEND', payload: myFriendRequest })
             setCardButtonType('confirmFriend')
          }
          return myFriendRequest
       },
-      [setCardButtonType, userId, connectedFriends]
+      [setCardButtonType, friendDispatch, userId, connectedFriends, friendId]
    )
    useFriendSocket(friendId, setButtonTypeToConfirmFriend)
 

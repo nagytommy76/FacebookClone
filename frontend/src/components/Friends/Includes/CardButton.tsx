@@ -25,7 +25,7 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
                      </Button>
                   </Link>
                ) : (
-                  <FriendsContextProvider friend={friend} connectedFriends={friend.connectedFriends}>
+                  <FriendsContextProvider friend={friend}>
                      <ButtonTypes />
                   </FriendsContextProvider>
                )}
