@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import type { IFriendsResponse } from '../Types'
 
 import ButtonTypes from './ButtonTypes'
+import FriendsContextProvider from '../Context/FriendContext'
 
 const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
    const userId = useAppSelector((state) => state.auth.userId)
@@ -24,9 +25,9 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
                      </Button>
                   </Link>
                ) : (
-                  <div style={{ width: '100%' }}>
-                     <ButtonTypes friendFriends={friend.friends} friendId={friend._id} />
-                  </div>
+                  <FriendsContextProvider friend={friend} connectedFriends={friend.connectedFriends}>
+                     <ButtonTypes />
+                  </FriendsContextProvider>
                )}
             </CardActions>
          )}

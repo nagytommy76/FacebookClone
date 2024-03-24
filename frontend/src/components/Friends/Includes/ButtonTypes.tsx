@@ -1,26 +1,16 @@
-import React from 'react'
-import type { IFriends } from '../Types'
-
+import { useContext } from 'react'
+import { FriendContext } from '../Context/FriendContext'
 import BaseButton from './Buttons/BaseButton'
 
-import useStates from '../Hooks/useStates'
 import useFriendRequest from '../Hooks/Requests/useFriendRequest'
 import useFriendCornfirmRequest from '../Hooks/Requests/useFriendCornfirmRequest'
 import useFriendDeleteRequest from '../Hooks/Requests/useFriendDeleteRequest'
 
-const ButtonTypes: React.FC<{
-   friendId: string
-   friendFriends: IFriends[]
-}> = ({ friendFriends, friendId }) => {
-   const { cardButtonType, loading, setCardButtonType, setLoading } = useStates()
-   const { friendRequestMutate } = useFriendRequest(friendId, friendFriends, setCardButtonType, setLoading)
-   const { friendConfrimMutate } = useFriendCornfirmRequest(
-      friendId,
-      friendFriends,
-      setLoading,
-      setCardButtonType
-   )
-   const { deleteFriendMutate } = useFriendDeleteRequest(friendId, setLoading, setCardButtonType)
+const ButtonTypes = () => {
+   const { cardButtonType, loading } = useContext(FriendContext)
+   const { friendRequestMutate } = useFriendRequest()
+   const { friendConfrimMutate } = useFriendCornfirmRequest()
+   const { deleteFriendMutate } = useFriendDeleteRequest()
 
    switch (cardButtonType) {
       case 'makeFriend':
