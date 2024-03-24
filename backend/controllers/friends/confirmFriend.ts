@@ -1,22 +1,25 @@
 import { Response } from 'express'
 import { User as UserModel } from '../../models/user/user'
+import { FriendsModel } from '../../models/friends/friends'
 import { IMakeFriends } from './Types'
 
 export const confirmFriendshipController = async (request: IMakeFriends, response: Response) => {
    const loggedInUserId = request.user?.userId as string
    const friendId = request.body.friendId
+   const connectedFriendId = request.body.connectedFriendId
 
    try {
-      const foundReceiver = await UserModel.findOne({ _id: loggedInUserId })
-      const foundSender = await UserModel.findOne({ _id: friendId })
+      const foundFriendsModel = await FriendsModel.findOne({ _id: connectedFriendId })
+      const foundReceiver = await UserModel.findOne({ _id: friendId })
+      const foundSender = await UserModel.findOne({ _id: loggedInUserId })
 
       if (!foundReceiver) return response.status(404)
-      const foundFriendIndex = foundReceiver.friends.findIndex((friend) => friend.senderUserId == friendId)
+      if (!foundSender) return response.status(404)
+      if (!foundFriendsModel) return response.status(404)
 
-      if (foundFriendIndex === -1) return response.status(404)
-      foundReceiver.friends[foundFriendIndex].isAccepted = true
+      foundFriendsModel.status = 'friends'
 
-      foundSender?.notifications.push({
+      foundSender.notifications.push({
          createdAt: new Date(),
          isRead: false,
          notificationType: 'isFriendConfirm',
@@ -29,20 +32,20 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
       })
 
       await foundReceiver.save()
-      await foundSender?.save()
+      await foundSender.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
          if (toSendUser !== undefined) {
             request.ioSocket?.to(toSendUser.socketId).emit('confirmFriendship', {
-               notifications: foundSender?.notifications,
+               notifications: foundSender.notifications,
                userFriends: foundReceiver.friends,
             })
          }
       }
 
       response.status(200).json({
-         friends: foundReceiver.friends,
+         friends: foundFriendsModel,
       })
    } catch (error) {
       console.log(error)
