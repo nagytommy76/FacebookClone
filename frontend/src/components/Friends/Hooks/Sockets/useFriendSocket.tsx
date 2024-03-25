@@ -1,27 +1,44 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { FriendContext } from '../../Context/FriendContext'
 import { socket } from '@/src/utils/socketIo'
-import type { IFriends } from '../../Types'
+import { useAppSelector } from '@/reduxStore/store'
+import type { IConnectedFriends, IFriends } from '../../Types'
 import type { NotificationType } from '../../../Navbar/Includes/Notification/Types'
 
 interface IMakeFriendshipArgs {
    notifications: NotificationType
    userFriends: IFriends[]
+   createdConnectedFriends: IConnectedFriends
 }
 
-const useFriendSocket = (
-   friendId: string,
-   setButtonTypeToConfirmFriend: (friends: IFriends[], friendId: string) => void
-) => {
+const useFriendSocket = () => {
+   const userId = useAppSelector((state) => state.auth.userId)
+   const {
+      friendReducer: { friendId },
+      friendDispatch,
+      setCardButtonType,
+   } = useContext(FriendContext)
+
    useEffect(() => {
       const setButtonType = (args: IMakeFriendshipArgs) => {
-         setButtonTypeToConfirmFriend(args.userFriends, friendId)
+         if (
+            args.createdConnectedFriends.receiverUser == userId &&
+            args.createdConnectedFriends.senderUser === friendId &&
+            args.createdConnectedFriends.status === 'pending'
+         ) {
+            friendDispatch({
+               type: 'SET_SELECTED_CONNECTED_FRIEND',
+               payload: args.createdConnectedFriends,
+            })
+            setCardButtonType('confirmFriend')
+         }
       }
 
       socket.on('makeFriendship', setButtonType)
       return () => {
          socket.off('makeFriendship', setButtonType)
       }
-   }, [setButtonTypeToConfirmFriend, friendId])
+   }, [friendDispatch, setCardButtonType, userId, friendId])
 
    return null
 }

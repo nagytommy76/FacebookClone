@@ -20,7 +20,7 @@ const ButtonTypes = () => {
             <BaseButton
                buttonText='Jelölés visszavonása'
                isLoading={loading}
-               onClickEvent={() => deleteFriendMutate(true)}
+               onClickEvent={deleteFriendMutate}
                iconType='removeIcon'
                color='error'
             />
@@ -30,7 +30,7 @@ const ButtonTypes = () => {
             <BaseButton
                buttonText='Barát Törlése'
                isLoading={loading}
-               onClickEvent={() => deleteFriendMutate()}
+               onClickEvent={deleteFriendMutate}
                iconType='removeIcon'
                color='error'
             />
