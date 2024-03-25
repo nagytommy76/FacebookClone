@@ -8,9 +8,13 @@ export default function FriendReducer(state: FriendStateType, { payload, type }:
             ...state,
             friendId: payload,
          }
-      case 'SET_CONNECTED_FRIEND':
+      case 'SET_SELECTED_CONNECTED_FRIEND':
          return produce(state, (draft) => {
             draft.selectedConnectedFriend = payload
+         })
+      case 'SET_FRIENDS_ARRAY':
+         return produce(state, (draft) => {
+            draft.friend.friends = payload
          })
       case 'SET_FRIEND':
          const friend = produce(state, (draft) => {

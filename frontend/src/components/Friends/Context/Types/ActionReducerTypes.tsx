@@ -4,16 +4,24 @@ type SetFriendsAction = {
    type: 'SET_FRIEND'
    payload: IFriendsResponse
 }
+type SetFriendsArrayAction = {
+   type: 'SET_FRIENDS_ARRAY'
+   payload: string[]
+}
 type SetFriendIdAction = {
    type: 'SET_FRIENDID'
    payload: string
 }
 type SetConnectedFriendAction = {
-   type: 'SET_CONNECTED_FRIEND'
+   type: 'SET_SELECTED_CONNECTED_FRIEND'
    payload: IConnectedFriends
 }
 
-export type IFriendAction = SetFriendsAction | SetFriendIdAction | SetConnectedFriendAction
+export type IFriendAction =
+   | SetFriendsAction
+   | SetFriendsArrayAction
+   | SetFriendIdAction
+   | SetConnectedFriendAction
 
 export type FriendStateType = {
    friendId: string
