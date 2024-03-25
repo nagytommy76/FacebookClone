@@ -1,15 +1,20 @@
+import { useContext } from 'react'
+import { FriendContext } from '../../Context/FriendContext'
+
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { FriendButtonType, IFriends } from '../../Types'
+import type { IFriends } from '../../Types'
 
-const useFriendDeleteRequest = (
-   friendId: string,
-   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-   setCardButtonType: React.Dispatch<React.SetStateAction<FriendButtonType>>
-) => {
-   const removeFriendMutation = async (isFriendRequestWithdraw: boolean = false) => {
+const useFriendDeleteRequest = () => {
+   const {
+      friendReducer: { friendId, selectedConnectedFriend },
+      setLoading,
+      setCardButtonType,
+   } = useContext(FriendContext)
+
+   const removeFriendMutation = async () => {
       return (await axios.delete(`/friends/remove-friend`, {
-         data: { friendId, isFriendRequestWithdraw },
+         data: { friendId, connectedFriendId: selectedConnectedFriend?._id },
       })) as AxiosResponse<{
          loggedInUserFriends: IFriends[]
       }>
@@ -27,7 +32,7 @@ const useFriendDeleteRequest = (
       },
    })
 
-   const deleteFriendMutate = (isFriendRequestWithdraw?: boolean) => mutate(isFriendRequestWithdraw)
+   const deleteFriendMutate = () => mutate()
 
    return {
       deleteFriendMutate,
