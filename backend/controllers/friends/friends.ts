@@ -50,11 +50,12 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
             request.ioSocket?.to(toSendUser.socketId).emit('makeFriendship', {
                notifications: receiverUser.notifications,
                userFriends: receiverUser.friends,
+               createdConnectedFriends: createdFriends,
             })
          }
       }
 
-      response.status(200).json({ senderUser, receiverUser })
+      response.status(200).json({ receiverUser, connectedFriends: createdFriends })
    } catch (error) {
       console.log(error)
       response.json(500).json(error)
