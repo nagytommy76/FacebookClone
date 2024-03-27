@@ -31,8 +31,8 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
          },
       })
 
-      await foundReceiver.save()
       await foundSender.save()
+      await foundFriendsModel.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
@@ -40,12 +40,13 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
             request.ioSocket?.to(toSendUser.socketId).emit('confirmFriendship', {
                notifications: foundSender.notifications,
                userFriends: foundReceiver.friends,
+               foundFriendsModel,
             })
          }
       }
 
       response.status(200).json({
-         friends: foundFriendsModel,
+         foundFriendsModel,
       })
    } catch (error) {
       console.log(error)
