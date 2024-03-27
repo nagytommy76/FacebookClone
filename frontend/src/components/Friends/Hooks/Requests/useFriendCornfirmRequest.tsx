@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { FriendContext } from '../../Context/FriendContext'
+import type { IConnectedFriends } from '../../Types'
 
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
@@ -10,16 +11,17 @@ import useConfirmSocket from '../Sockets/useConfirmSocket'
 const useFriendCornfirmRequest = () => {
    const {
       friendReducer: { friendId, selectedConnectedFriend },
+      friendDispatch,
       setLoading,
    } = useContext(FriendContext)
-   const { setCardTypeDeleteFriend, setCardTypeDeleteFriendReceiver } = useFriendDelete()
+   const { setBtnTypeToDeleteFriend } = useFriendDelete()
    const confirmMutate = async () => {
-      return await axios.post('/friends/confirm-friendship', {
+      return (await axios.post('/friends/confirm-friendship', {
          connectedFriendId: selectedConnectedFriend?._id,
          friendId,
-      })
+      })) as AxiosResponse<{ foundFriendsModel: IConnectedFriends }>
    }
-   useConfirmSocket(friendId, setCardTypeDeleteFriendReceiver)
+   useConfirmSocket()
 
    const { mutate } = useMutation({
       mutationKey: ['confirmFriendship'],
@@ -28,9 +30,9 @@ const useFriendCornfirmRequest = () => {
          setLoading(true)
       },
       onSuccess(data) {
-         console.log(data.data)
          setLoading(false)
-         // setCardTypeDeleteFriend(data.data.friends)
+         friendDispatch({ type: 'SET_SELECTED_CONNECTED_FRIEND', payload: data.data.foundFriendsModel })
+         setBtnTypeToDeleteFriend(data.data.foundFriendsModel)
       },
    })
 

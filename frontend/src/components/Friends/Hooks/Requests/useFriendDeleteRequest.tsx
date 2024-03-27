@@ -3,7 +3,6 @@ import { FriendContext } from '../../Context/FriendContext'
 
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { IFriends } from '../../Types'
 
 const useFriendDeleteRequest = () => {
    const {
@@ -16,7 +15,7 @@ const useFriendDeleteRequest = () => {
       return (await axios.delete(`/friends/remove-friend`, {
          data: { friendId, connectedFriendId: selectedConnectedFriend?._id },
       })) as AxiosResponse<{
-         loggedInUserFriends: IFriends[]
+         loggedInUserFriends: any[]
       }>
    }
 
