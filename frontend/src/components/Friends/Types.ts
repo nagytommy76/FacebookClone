@@ -14,15 +14,6 @@ export interface IConnectedFriends {
    updatedAt: string
 }
 
-export interface IFriends {
-   senderUserId: string
-   receiverUserId: string
-   isAccepted: boolean
-   isReceiver: boolean
-   isSender: boolean
-   createdAt: string
-}
-
 export interface IFriendResponse {
    _id: string
    firstName: string

@@ -3,38 +3,34 @@ import { FriendContext } from '../../Context/FriendContext'
 import { useAppSelector } from '@/reduxStore/store'
 
 import { socket } from '@/src/utils/socketIo'
-import type { IConnectedFriends } from '../../Types'
 import type { IMakeFriendshipArgs } from './Types'
 
-const useConfirmSocket = (setBtnTypeDeleteFriendSender: (connectedFriend: IConnectedFriends) => void) => {
+const useConfirmSocket = () => {
    const {
-      friendReducer: { selectedConnectedFriend },
+      friendReducer: { friendId, friend },
+      friendDispatch,
       setCardButtonType,
    } = useContext(FriendContext)
    const userId = useAppSelector((state) => state.auth.userId)
 
    useEffect(() => {
       const setButtonType = (args: IMakeFriendshipArgs) => {
-         setBtnTypeDeleteFriendSender(args.foundFriendsModel)
          const connectedFriend = args.foundFriendsModel
-
-         // Át kéne tenni ide, nem a useFriendDelete hookban
          if (
-            connectedFriend.senderUser == userId ||
-            (connectedFriend.receiverUser && connectedFriend.status === 'friends')
+            connectedFriend.senderUser == userId &&
+            connectedFriend.receiverUser == friendId &&
+            connectedFriend.status === 'friends'
          ) {
+            friendDispatch({ type: 'SET_SELECTED_CONNECTED_FRIEND', payload: connectedFriend })
             setCardButtonType('isFriend')
          }
-
-         setCardButtonType('isFriend')
-         console.log(args)
       }
       socket.on('confirmFriendship', setButtonType)
 
       return () => {
          socket.off('confirmFriendship', setButtonType)
       }
-   }, [setBtnTypeDeleteFriendSender, setCardButtonType])
+   }, [setCardButtonType, friend, friendId, friendDispatch, userId])
 
    return null
 }
