@@ -1,68 +1,71 @@
-import { SetStateAction, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useContext } from 'react'
+import { FriendContext } from '../../Context/FriendContext'
 import { useAppSelector } from '@/reduxStore/store'
-import type { FriendButtonType, IFriends } from '../../Types'
+import type { IConnectedFriends } from '../../Types'
 
-const SetCardType = (
-   friends: IFriends[],
-   setCardButtonType: (value: SetStateAction<FriendButtonType>) => void,
-   findFucntion: (item: IFriends) => boolean | null
-) => {
-   const mySentFriendRequests = friends.find(findFucntion)
-   if (mySentFriendRequests) {
-      // if (mySentFriendRequests.isAccepted === true) {
-      setCardButtonType('isFriend')
-      // }
-   }
-   return mySentFriendRequests
-}
-
-const useFriendDelete = (
-   friendId: string,
-   friends: IFriends[],
-   setCardButtonType: (value: SetStateAction<FriendButtonType>) => void
-) => {
+const useFriendDelete = () => {
+   const {
+      friendReducer: {
+         friendId,
+         friend: { connectedFriends },
+      },
+      setCardButtonType,
+   } = useContext(FriendContext)
    const userId = useAppSelector((state) => state.auth.userId)
 
-   const setCardTypeDeleteFriend = useCallback(
-      (friends: IFriends[]) => {
-         const findFunction = (item: IFriends) => item.receiverUserId === userId && !item.isSender
-         return SetCardType(friends, setCardButtonType, findFunction)
+   // Ebben az esetben a belépett user visszaigazolás gombját állítom át barát törlése gombra
+   const setBtnTypeToDeleteFriend = useCallback(
+      (connectedFriend: IConnectedFriends) => {
+         if (connectedFriend.receiverUser === userId && connectedFriend.status === 'friends') {
+            setCardButtonType('isFriend')
+         }
       },
-      [setCardButtonType, userId]
+      [userId, setCardButtonType]
    )
 
-   const setCardTypeDeleteFriendReceiver = useCallback(
-      (friends: IFriends[]) => {
-         const findFunction = (item: IFriends) => {
-            if (/*item.senderUserId == userId ||*/ item.receiverUserId == userId) {
-               return item.senderUserId === friendId && item.isSender
-            }
-            return null
+   // Logged in receiver Abban az esetben ha a küldő barát van belépve
+   const setBtnTypeToDeleteReceiver = useCallback(
+      (connectedFriend: IConnectedFriends[]) => {
+         if (
+            connectedFriend.find(
+               (friend) =>
+                  friend.receiverUser === userId &&
+                  friend.senderUser === friendId &&
+                  friend.status === 'friends'
+            )
+         ) {
+            setCardButtonType('isFriend')
          }
-         return SetCardType(friends, setCardButtonType, findFunction)
       },
-      [setCardButtonType, friendId, userId]
+      [userId, friendId, setCardButtonType]
+   )
+   // Logged in receiver. Abban az esetben ha a fogadó barát van belépve
+   const setBtnTypeToDeleteSender = useCallback(
+      (connectedFriend: IConnectedFriends[]) => {
+         if (
+            connectedFriend.find(
+               (friend) =>
+                  friend.senderUser === userId &&
+                  friend.receiverUser === friendId &&
+                  friend.status === 'friends'
+            )
+         ) {
+            setCardButtonType('isFriend')
+         }
+      },
+      [userId, friendId, setCardButtonType]
    )
 
-   const setCardTypeDeleteFriendSender = useCallback(
-      (friends: IFriends[]) => {
-         const findFunction = (item: IFriends) => {
-            if (item.senderUserId == userId /*|| item.receiverUserId == userId*/) {
-               return item.receiverUserId === friendId && item.isReceiver
-            }
-            return null
-         }
-         return SetCardType(friends, setCardButtonType, findFunction)
-      },
-      [setCardButtonType, friendId, userId]
-   )
+   useEffect(() => {}, [])
 
    useEffect(() => {
-      setCardTypeDeleteFriendReceiver(friends)
-      setCardTypeDeleteFriendSender(friends)
-   }, [setCardTypeDeleteFriendReceiver, setCardTypeDeleteFriendSender, friends])
+      if (connectedFriends) {
+         setBtnTypeToDeleteReceiver(connectedFriends)
+         setBtnTypeToDeleteSender(connectedFriends)
+      }
+   }, [connectedFriends, setBtnTypeToDeleteSender, setBtnTypeToDeleteReceiver])
 
-   return { setCardTypeDeleteFriend, setCardTypeDeleteFriendReceiver }
+   return { setBtnTypeToDeleteFriend }
 }
 
 export default useFriendDelete

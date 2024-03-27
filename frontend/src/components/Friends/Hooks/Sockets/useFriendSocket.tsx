@@ -2,12 +2,12 @@ import { useEffect, useContext } from 'react'
 import { FriendContext } from '../../Context/FriendContext'
 import { socket } from '@/src/utils/socketIo'
 import { useAppSelector } from '@/reduxStore/store'
-import type { IConnectedFriends, IFriends } from '../../Types'
+import type { IConnectedFriends } from '../../Types'
 import type { NotificationType } from '../../../Navbar/Includes/Notification/Types'
 
 interface IMakeFriendshipArgs {
    notifications: NotificationType
-   userFriends: IFriends[]
+   userFriends: string[]
    createdConnectedFriends: IConnectedFriends
 }
 
