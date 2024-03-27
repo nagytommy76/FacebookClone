@@ -1,6 +1,7 @@
 import { Response, Request } from 'express'
 import { Types } from 'mongoose'
 import { User as UserModel } from '../../models/user/user'
+import { FriendsModel } from '../../models/friends/friends'
 import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
 // https://www.mongodb.com/docs/manual/reference/operator/aggregation/filter/
@@ -40,7 +41,7 @@ export const getUsers = async (request: Request, response: Response) => {
          {
             $lookup: {
                from: 'friends',
-               localField: 'friends',
+               localField: 'friends.friendsId',
                foreignField: '_id',
                as: 'connectedFriends',
             },
@@ -59,24 +60,116 @@ export const getUsers = async (request: Request, response: Response) => {
 export const getAcceptedUsers = async (request: IJWTUserType, response: Response) => {
    const userId = new Types.ObjectId(request.user?.userId)
    try {
-      const acceptedFriends = await UserModel.aggregate([
+      // const acceptedFriends = await FriendsModel.aggregate([
+      //    {
+      //       $match: {
+      //          status: 'friends',
+      //          $or: [
+      //             {
+      //                senderUser: userId,
+      //             },
+      //             {
+      //                receiverUser: userId,
+      //             },
+      //          ],
+      //       },
+      //    },
+      //    {
+      //       $lookup: {
+      //          from: 'users',
+      //          localField: 'senderUser',
+      //          foreignField: '_id',
+      //          as: 'senderUserData',
+      //          pipeline: [
+      //             {
+      //                $project: {
+      //                   firstName: 1,
+      //                   sureName: 1,
+      //                   selectedProfilePicture: {
+      //                      $filter: {
+      //                         input: '$userDetails.profilePicturePath',
+      //                         as: 'profilePic',
+      //                         cond: { $eq: ['$$profilePic.isSelected', true] },
+      //                      },
+      //                   },
+      //                },
+      //             },
+      //          ],
+      //       },
+      //    },
+      //    {
+      //       $lookup: {
+      //          from: 'users',
+      //          localField: 'receiverUser',
+      //          foreignField: '_id',
+      //          as: 'receiverUserData',
+      //          pipeline: [
+      //             {
+      //                $project: {
+      //                   firstName: 1,
+      //                   sureName: 1,
+      //                   selectedProfilePicture: {
+      //                      $filter: {
+      //                         input: '$userDetails.profilePicturePath',
+      //                         as: 'profilePic',
+      //                         cond: { $eq: ['$$profilePic.isSelected', true] },
+      //                      },
+      //                   },
+      //                },
+      //             },
+      //          ],
+      //       },
+      //    },
+      // ])
+
+      const test = await UserModel.aggregate([
          {
             $match: { _id: userId },
          },
          {
-            $project: {
-               friends: {
-                  $filter: {
-                     input: '$friends',
-                     as: 'acceptedFriends',
-                     cond: { $eq: ['$$acceptedFriends.isAccepted', true] },
+            $project: { friends: 1 },
+         },
+         {
+            $lookup: {
+               from: 'users',
+               localField: 'friends.friend',
+               foreignField: '_id',
+               as: 'myFoundFriendData',
+               pipeline: [
+                  {
+                     $project: {
+                        firstName: 1,
+                        sureName: 1,
+                        selectedProfilePicture: {
+                           $filter: {
+                              input: '$userDetails.profilePicturePath',
+                              as: 'profilePic',
+                              cond: { $eq: ['$$profilePic.isSelected', true] },
+                           },
+                        },
+                     },
                   },
-               },
+               ],
+            },
+         },
+         {
+            $lookup: {
+               from: 'friends',
+               localField: 'friends.friendsId',
+               foreignField: '_id',
+               as: 'semmisemnemkelelleleljoklsghdofdélk',
+               pipeline: [
+                  {
+                     $match: {
+                        status: 'friends',
+                     },
+                  },
+               ],
             },
          },
       ])
 
-      return response.status(200).json(acceptedFriends)
+      return response.status(200).json(test)
    } catch (error) {
       console.log(error)
       return response.status(500).json(error)
