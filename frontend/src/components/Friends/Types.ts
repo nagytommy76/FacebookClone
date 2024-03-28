@@ -18,7 +18,10 @@ export interface IFriendResponse {
    _id: string
    firstName: string
    sureName: string
-   friends: string[]
+   friends: {
+      friendsId: string
+      friend: string
+   }[]
    notification: NotificationType[]
 }
 

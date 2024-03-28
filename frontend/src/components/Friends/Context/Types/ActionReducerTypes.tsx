@@ -6,7 +6,10 @@ type SetFriendsAction = {
 }
 type SetFriendsArrayAction = {
    type: 'SET_FRIENDS_ARRAY'
-   payload: string[]
+   payload: {
+      friendsId: string
+      friend: string
+   }[]
 }
 type SetFriendIdAction = {
    type: 'SET_FRIENDID'
@@ -49,7 +52,7 @@ export const friendsData: FriendStateType = {
       email: '',
       firstName: '',
       sureName: '',
-      friends: [],
+      friends: [{ friend: '', friendsId: '' }],
       lastWorkPlace: [],
       notification: [],
       selectedProfilePicture: [],
