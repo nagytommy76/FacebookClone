@@ -122,7 +122,9 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
       //    },
       // ])
 
-      const test = await UserModel.aggregate([
+      const acceptedFriends = await UserModel.aggregate<{
+         myFoundFriendsData: { firstName: string; surname: string; _id: string }
+      }>([
          {
             $match: { _id: userId },
          },
@@ -134,7 +136,7 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
                from: 'users',
                localField: 'friends.friend',
                foreignField: '_id',
-               as: 'myFoundFriendData',
+               as: 'myFoundFriendsData',
                pipeline: [
                   {
                      $project: {
@@ -157,7 +159,7 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
                from: 'friends',
                localField: 'friends.friendsId',
                foreignField: '_id',
-               as: 'semmisemnemkelelleleljoklsghdofdélk',
+               as: 'foundFriend',
                pipeline: [
                   {
                      $match: {
@@ -169,7 +171,7 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
          },
       ])
 
-      return response.status(200).json(test)
+      return response.status(200).json(acceptedFriends[0])
    } catch (error) {
       console.log(error)
       return response.status(500).json(error)
