@@ -15,7 +15,10 @@ export interface IUserTypes {
    sureName: string
    password: string
    isEmailConfirmed: boolean
-   friends: Types.ObjectId[]
+   friends: {
+      friendsId: Types.ObjectId
+      friend: ObjectId
+   }[]
    notifications: INotifications[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }

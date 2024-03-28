@@ -26,8 +26,9 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          senderUser: senderUser._id,
          status: 'pending',
       })
-      senderUser.friends.push(createdFriends._id)
-      receiverUser.friends.push(createdFriends._id)
+
+      senderUser.friends.push({ friendsId: createdFriends._id, friend: receiverUser._id })
+      receiverUser.friends.push({ friendsId: createdFriends._id, friend: senderUser._id })
 
       receiverUser.notifications.push({
          createdAt: new Date(),
