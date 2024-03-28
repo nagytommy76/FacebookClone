@@ -79,35 +79,13 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
       //          from: 'users',
       //          localField: 'senderUser',
       //          foreignField: '_id',
-      //          as: 'senderUserData',
+      //          as: 'foundUserData',
       //          pipeline: [
       //             {
       //                $project: {
       //                   firstName: 1,
       //                   sureName: 1,
-      //                   selectedProfilePicture: {
-      //                      $filter: {
-      //                         input: '$userDetails.profilePicturePath',
-      //                         as: 'profilePic',
-      //                         cond: { $eq: ['$$profilePic.isSelected', true] },
-      //                      },
-      //                   },
-      //                },
-      //             },
-      //          ],
-      //       },
-      //    },
-      //    {
-      //       $lookup: {
-      //          from: 'users',
-      //          localField: 'receiverUser',
-      //          foreignField: '_id',
-      //          as: 'receiverUserData',
-      //          pipeline: [
-      //             {
-      //                $project: {
-      //                   firstName: 1,
-      //                   sureName: 1,
+      //                   friends: 1,
       //                   selectedProfilePicture: {
       //                      $filter: {
       //                         input: '$userDetails.profilePicturePath',
@@ -122,6 +100,9 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
       //    },
       // ])
 
+      /**
+       *  Meg kéne találnom azokat a barátokat akiknek a status --> friends
+       */
       const acceptedFriends = await UserModel.aggregate<{
          myFoundFriendsData: { firstName: string; surname: string; _id: string }
       }>([
@@ -130,6 +111,21 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
          },
          {
             $project: { friends: 1 },
+         },
+         {
+            $lookup: {
+               from: 'friends',
+               localField: 'friends.friendsId',
+               foreignField: '_id',
+               as: 'foundFriend',
+               pipeline: [
+                  {
+                     $match: {
+                        status: 'friends',
+                     },
+                  },
+               ],
+            },
          },
          {
             $lookup: {
@@ -149,21 +145,6 @@ export const getAcceptedUsers = async (request: IJWTUserType, response: Response
                               cond: { $eq: ['$$profilePic.isSelected', true] },
                            },
                         },
-                     },
-                  },
-               ],
-            },
-         },
-         {
-            $lookup: {
-               from: 'friends',
-               localField: 'friends.friendsId',
-               foreignField: '_id',
-               as: 'foundFriend',
-               pipeline: [
-                  {
-                     $match: {
-                        status: 'friends',
                      },
                   },
                ],
