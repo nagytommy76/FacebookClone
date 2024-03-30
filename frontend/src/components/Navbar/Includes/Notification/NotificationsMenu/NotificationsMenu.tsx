@@ -4,7 +4,8 @@ import { NotificationsContext } from '../Context/NotificationContextProvider'
 
 import useSetActiveNotifications from '../Hooks/useSetActiveNotifications'
 
-import { StyledImage, StyledMenuItem, StyledIsActive, StyledTextArea, StyledMenuContainer } from './Style'
+import { StyledImage, StyledMenuItem, StyledTextArea, StyledMenuContainer } from './Style'
+import { StyledIsActive } from '@/styles/BaseStyles'
 import Typography from '@mui/material/Typography'
 import { TransitionGroup } from 'react-transition-group'
 import Collapse from '@mui/material/Collapse'
