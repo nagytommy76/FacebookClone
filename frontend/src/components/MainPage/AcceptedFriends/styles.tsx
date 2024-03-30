@@ -11,8 +11,6 @@ export const AcceptedFriendsStyles = styled('aside')({
    padding: 18,
 })
 
-export const FriendContainerStyle = styled('section')({})
-
 export const FriendMenuItemStyle = styled(MenuItem)(({ theme }) => ({
    width: '100%',
    marginBottom: 10,
