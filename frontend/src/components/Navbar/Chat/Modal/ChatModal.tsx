@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Modal from '@mui/material/Modal'
-import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 
 const ChatModal = () => {
@@ -12,8 +11,19 @@ const ChatModal = () => {
          aria-labelledby='modal-modal-title'
          aria-describedby='modal-modal-description'
       >
-         <Paper sx={{ width: '50%', height: '500px' }}>
-            <h1>dsfsdjfsdkjfdksl klsd fksd fhfsd h</h1>
+         <Paper
+            sx={{
+               width: '70%',
+               minHeight: '600px',
+               position: 'absolute' as 'absolute',
+               top: '50%',
+               left: '50%',
+               transform: 'translate(-50%, -50%)',
+               boxShadow: 24,
+               p: 3,
+            }}
+         >
+            <h1>Chat felület</h1>
          </Paper>
       </Modal>
    )
