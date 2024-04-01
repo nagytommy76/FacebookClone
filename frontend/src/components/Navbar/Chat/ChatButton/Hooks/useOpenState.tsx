@@ -1,16 +1,11 @@
 import { useState } from 'react'
 
 const useOpenState = () => {
-   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-   const isOpen = Boolean(anchorEl)
-   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget)
-   }
-   const handleClose = () => {
-      setAnchorEl(null)
-   }
+   const [modalOpen, setModalOpen] = useState(false)
+   const handleOpen = () => setModalOpen(true)
+   const handleClose = () => setModalOpen(false)
 
-   return { anchorEl, isOpen, handleOpen, handleClose }
+   return { modalOpen, handleOpen, handleClose }
 }
 
 export default useOpenState

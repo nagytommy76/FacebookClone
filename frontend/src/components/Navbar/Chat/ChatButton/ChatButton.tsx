@@ -1,14 +1,15 @@
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import useOpenState from './Hooks/useOpenState'
 
 import Fab from '@mui/material/Fab'
 import ChatIcon from '@/assets/bubble-chat.png'
 
 import { StyledButtonContainer, CustomizedTooltip } from './Styles'
-import ChatMenu from './Includes/ChatMenu'
+const ChatModal = dynamic(() => import('../Modal/ChatModal'))
 
 const ChatButton = () => {
-   const { isOpen, anchorEl, handleClose, handleOpen } = useOpenState()
+   const { modalOpen, handleClose, handleOpen } = useOpenState()
 
    return (
       <>
@@ -26,7 +27,7 @@ const ChatButton = () => {
                </Fab>
             </CustomizedTooltip>
          </StyledButtonContainer>
-         <ChatMenu anchorEl={anchorEl} isOpen={isOpen} handleClose={handleClose} />
+         <ChatModal modalOpen={modalOpen} handleClose={handleClose} />
       </>
    )
 }
