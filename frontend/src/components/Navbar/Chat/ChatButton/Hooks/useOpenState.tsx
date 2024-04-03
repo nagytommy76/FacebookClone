@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useAppDispatch } from '@/reduxStore/store'
+import { setChatModalOpen } from '@/reduxStore/slices/ChatSlice'
 
 const useOpenState = () => {
-   const [modalOpen, setModalOpen] = useState(false)
-   const handleOpen = () => setModalOpen(true)
-   const handleClose = () => setModalOpen(false)
+   const dispatch = useAppDispatch()
+   const handleOpen = () => dispatch(setChatModalOpen(true))
 
-   return { modalOpen, handleOpen, handleClose }
+   return { handleOpen }
 }
 
 export default useOpenState

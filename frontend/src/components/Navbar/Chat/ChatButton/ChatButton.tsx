@@ -9,7 +9,7 @@ import { StyledButtonContainer, CustomizedTooltip } from './Styles'
 const ChatModal = dynamic(() => import('../Modal/ChatModal'))
 
 const ChatButton = () => {
-   const { modalOpen, handleClose, handleOpen } = useOpenState()
+   const { handleOpen } = useOpenState()
 
    return (
       <>
@@ -27,7 +27,7 @@ const ChatButton = () => {
                </Fab>
             </CustomizedTooltip>
          </StyledButtonContainer>
-         <ChatModal modalOpen={modalOpen} handleClose={handleClose} />
+         <ChatModal />
       </>
    )
 }
