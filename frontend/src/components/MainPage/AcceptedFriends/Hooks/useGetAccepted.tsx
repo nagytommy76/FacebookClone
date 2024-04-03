@@ -22,7 +22,6 @@ const useGetAccepted = () => {
       queryKey: ['getAcceptedFriends'],
       queryFn,
       onSuccess(data) {
-         console.log(data.data.myFoundFriendsData[0])
          setMyFriends(data.data.myFoundFriendsData)
       },
    })
