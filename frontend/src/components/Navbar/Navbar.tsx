@@ -9,7 +9,6 @@ import NotificationContextProvider from './Includes/Notification/Context/Notific
 import LeftSide from './Includes/LeftSide/LeftSide'
 
 const ChatButton = dynamic(() => import('./Chat/ChatButton/ChatButton'))
-const ChatModal = dynamic(() => import('./Chat/Modal/ChatModal'))
 
 import { StyledNavbarToolbar, RightSideContainer } from './Style'
 
@@ -37,7 +36,6 @@ const Navbar = () => {
             </StyledNavbarToolbar>
          </AppBar>
          <ChatButton />
-         <ChatModal />
       </>
    )
 }
