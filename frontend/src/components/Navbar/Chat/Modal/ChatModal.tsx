@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 
+import AddTextBase from '@/Base/AddTextBase/AddTextBase'
 const TabLabel = dynamic(() => import('./Includes/TabLabel'))
 
 const ChatModal = () => {
@@ -49,7 +50,19 @@ const ChatModal = () => {
                   </StyledTabList>
                </StyledChatAside>
                <StyledChatMessagesContainer>
-                  <TabPanel value='658569424d27aad220f6e887'>Teszt Béla</TabPanel>
+                  <TabPanel value='658569424d27aad220f6e887'>
+                     <div>
+                        <h1>Teszt Béla</h1>
+                        <AddTextBase
+                           value=''
+                           placeholderText='...'
+                           setImagePath={() => {}}
+                           onClickFunction={() => {}}
+                           handleChangeValue={() => {}}
+                           handleChangeValueWithEmoji={() => {}}
+                        />
+                     </div>
+                  </TabPanel>
                   <TabPanel value='64777ef1c3038faf5e1a41c6'>Teszt János</TabPanel>
                </StyledChatMessagesContainer>
             </TabContext>
