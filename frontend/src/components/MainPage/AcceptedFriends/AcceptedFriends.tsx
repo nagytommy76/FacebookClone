@@ -28,8 +28,7 @@ const AcceptedFriends = () => {
                key={friend._id}
             >
                <ChatAvatar
-                  firstName={friend.firstName}
-                  sureName={friend.sureName}
+                  fullName={`${friend.firstName} ${friend.sureName}`}
                   selectedProfilePicturePath={friend.selectedProfilePicture[0].path}
                />
                <Typography variant='body1'>{`${friend.firstName} ${friend.sureName}`}</Typography>

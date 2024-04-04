@@ -12,11 +12,7 @@ const TabLabel: React.FC<{
 }> = ({ captionText, fullName, selectedProfilePicturePath }) => {
    return (
       <>
-         <ChatAvatar
-            firstName='-'
-            sureName={fullName}
-            selectedProfilePicturePath={selectedProfilePicturePath}
-         />
+         <ChatAvatar fullName={fullName} selectedProfilePicturePath={selectedProfilePicturePath} />
          <StyledTabText>
             <Typography variant='body1'>{fullName}</Typography>
             <Typography variant='caption'>{captionText}</Typography>
