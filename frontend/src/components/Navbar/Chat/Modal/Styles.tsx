@@ -28,12 +28,6 @@ export const StyledChatMessagesContainer = styled('section')(({ theme }) => ({
    flex: 6,
 }))
 
-export const StyledTab = styled(Tab)({
-   display: 'flex',
-   flexDirection: 'row',
-   textTransform: 'none',
-   height: '80px',
-})
 export const StyledTabList = styled(TabList)({
    borderRight: 1,
    borderColor: 'divider',
@@ -42,4 +36,14 @@ export const StyledTabList = styled(TabList)({
       backgroundColor: '#f5ab0b',
       width: '5px',
    },
+})
+
+export const StyledTab = styled(Tab)({
+   display: 'flex',
+   flexDirection: 'row',
+   justifyContent: 'start',
+
+   textTransform: 'none',
+   textAlign: 'left',
+   height: '80px',
 })

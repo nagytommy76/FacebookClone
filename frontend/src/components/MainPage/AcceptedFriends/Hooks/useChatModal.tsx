@@ -3,7 +3,7 @@ import {
    setChatModalOpen,
    setTabValue,
    setMessageLabels,
-   addSingleMessage,
+   addSingleMessageLabel,
 } from '@/reduxStore/slices/ChatSlice'
 
 const useChatModal = () => {
@@ -14,9 +14,9 @@ const useChatModal = () => {
       if (messageLabels) {
          if (!messageLabels.find((label) => label._id == userId)) {
             dispatch(
-               addSingleMessage({
+               addSingleMessageLabel({
                   _id: userId,
-                  captionText: '',
+                  captionText: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
                   fullName: fullName,
                   selectedProfilePicturePath: selectedProfilePicturePath,
                })

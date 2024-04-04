@@ -1,21 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-const TestLabelData = [
-   {
-      _id: '64777ef1c3038faf5e1a41c6',
-      fullName: 'Teszt János',
-      captionText: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-      selectedProfilePicturePath: '/_next/static/media/facebook-profile.6641f5ee.jpg',
-   },
-   {
-      _id: '658569424d27aad220f6e887',
-      fullName: 'Teszt Béla',
-      captionText: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-      selectedProfilePicturePath: '/_next/static/media/facebook-profile.6641f5ee.jpg',
-   },
-]
-
 type MessgaeLabels = {
    _id: string
    fullName: string
@@ -48,7 +33,7 @@ export const ChatSlice = createSlice({
       setMessageLabels: (state, action: PayloadAction<MessgaeLabels[]>) => {
          state.messageLabels = action.payload
       },
-      addSingleMessage: (state, action: PayloadAction<MessgaeLabels>) => {
+      addSingleMessageLabel: (state, action: PayloadAction<MessgaeLabels>) => {
          state.messageLabels?.push(action.payload)
       },
       openModalAndCreate: (
@@ -65,6 +50,6 @@ export const ChatSlice = createSlice({
    },
 })
 
-export const { setChatModalOpen, setTabValue, openModalAndCreate, setMessageLabels, addSingleMessage } =
+export const { setChatModalOpen, setTabValue, openModalAndCreate, setMessageLabels, addSingleMessageLabel } =
    ChatSlice.actions
 export default ChatSlice.reducer
