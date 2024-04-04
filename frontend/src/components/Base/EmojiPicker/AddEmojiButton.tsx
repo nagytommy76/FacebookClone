@@ -5,7 +5,7 @@ import AddReactionIcon from '@mui/icons-material/AddReaction'
 
 import EmojiTooltipTitle from './EmojiTooltipTitle'
 
-import { StyledEmojiTooltip } from '../../Posts/SinglePost/SingleComment/Includes/Base/AddComment/Styles'
+import { StyledEmojiTooltip } from './Styles'
 
 const AddEmojiButton: React.FC<{
    size?: 'small' | 'medium' | 'large'
