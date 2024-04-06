@@ -1,17 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-type MessgaeLabels = {
+type MessageLabels = {
    _id: string
    fullName: string
    captionText: string
    selectedProfilePicturePath: string
 }
 
+// type IndexedMessageLabelArray = {
+//    [key: string]: MessageLabels
+// }
+
 type ChatType = {
    isChatModalOpen: boolean
    tabValue: string
-   messageLabels: MessgaeLabels[] | null
+   messageLabels: MessageLabels[] | null
 }
 
 const initialState: ChatType = {
@@ -30,10 +34,28 @@ export const ChatSlice = createSlice({
       setTabValue: (state, action: PayloadAction<string>) => {
          state.tabValue = action.payload
       },
-      setMessageLabels: (state, action: PayloadAction<MessgaeLabels[]>) => {
+      setMessageLabels: (state, action: PayloadAction<MessageLabels[]>) => {
+         // const singleMessage: IndexedMessageLabelArray = {}
+
+         // singleMessage[action.payload._id] = action.payload
+
+         // console.log(singleMessage)
+
+         // state.messageLabelsMap[action.payload._id] = singleMessage
+
+         // console.log(state.messageLabelsMap)
+
          state.messageLabels = action.payload
       },
-      addSingleMessageLabel: (state, action: PayloadAction<MessgaeLabels>) => {
+      addSingleMessageLabel: (state, action: PayloadAction<MessageLabels>) => {
+         // const singleMessage: {
+         //    [key: string]: MessageLabels
+         // } = {}
+
+         // singleMessage[action.payload._id] = { ...action.payload }
+
+         // console.log(singleMessage)
+
          state.messageLabels?.push(action.payload)
       },
       openModalAndCreate: (
