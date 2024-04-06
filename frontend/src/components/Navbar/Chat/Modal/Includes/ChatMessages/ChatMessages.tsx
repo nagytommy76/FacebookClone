@@ -1,27 +1,27 @@
 import dynamic from 'next/dynamic'
+import { useAppSelector } from '@/src/utils/redux/store'
 
 import TabPanel from '@mui/lab/TabPanel'
 import { StyledChatMessagesContainer } from './Styles'
 
-const AddTextBase = dynamic(() => import('@/Base/AddTextBase/AddTextBase'))
+const MessgageBox = dynamic(() => import('./Includes/MessgageBox'))
 
 const ChatMessages = () => {
+   const messageLabels = useAppSelector((state) => state.chat.messageLabels)
+
    return (
       <StyledChatMessagesContainer>
-         <TabPanel value='658569424d27aad220f6e887'>
-            <div>
-               <h1>Teszt Béla</h1>
-               <AddTextBase
-                  value=''
-                  placeholderText='...'
-                  setImagePath={() => {}}
-                  onClickFunction={() => {}}
-                  handleChangeValue={() => {}}
-                  handleChangeValueWithEmoji={() => {}}
+         {messageLabels?.map((message) => (
+            <TabPanel key={message._id} value={message._id}>
+               <MessgageBox
+                  userData={{
+                     _id: message._id,
+                     fullName: message.fullName,
+                     selectedProfilePicturePath: message.selectedProfilePicturePath,
+                  }}
                />
-            </div>
-         </TabPanel>
-         <TabPanel value='64777ef1c3038faf5e1a41c6'>Teszt János</TabPanel>
+            </TabPanel>
+         ))}
       </StyledChatMessagesContainer>
    )
 }
