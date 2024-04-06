@@ -13,6 +13,7 @@ const ChatSchema = new Schema<IChatSchema, IChatModel>(
          {
             createdAt: { type: Date, default: new Date() },
             updatedAt: { type: Date, default: new Date() },
+            isRead: { type: Boolean, default: false },
             userId: { type: Types.ObjectId, ref: 'User' },
             message: { type: String },
             image: { type: String },

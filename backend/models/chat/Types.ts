@@ -7,6 +7,7 @@ export interface IChatSchema {
       createdAt: string
       updatedAt: string
       userId: ObjectId // ez is legyen ref
+      isRead?: boolean
       message: string
       image: string
    }[]
