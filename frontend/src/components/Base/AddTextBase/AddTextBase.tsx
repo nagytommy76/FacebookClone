@@ -15,6 +15,7 @@ const AddTextBase: React.FC<{
    reference?: React.MutableRefObject<HTMLTextAreaElement | undefined>
    tooltipTitle?: string
    placeholderText?: string
+   multiline?: boolean
    handleChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void
    handleChangeValueWithEmoji: (emoji?: string) => void
    setImagePath: React.Dispatch<React.SetStateAction<FileList | null>>
@@ -26,6 +27,7 @@ const AddTextBase: React.FC<{
    setImagePath,
    value,
    reference,
+   multiline = true,
    tooltipTitle = 'Küldés',
    isSendBtnDisabled = false,
    placeholderText = 'Hozzászólás írása...',
@@ -40,7 +42,7 @@ const AddTextBase: React.FC<{
                id='chat-comment-input'
                name='chat-comment-input'
                placeholder={placeholderText}
-               multiline
+               multiline={multiline}
                maxRows={4}
                variant='standard'
                fullWidth
