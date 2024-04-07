@@ -7,15 +7,14 @@ type MessageLabels = {
    captionText: string
    selectedProfilePicturePath: string
 }
-
-// type IndexedMessageLabelArray = {
-//    [key: string]: MessageLabels
-// }
+interface IndexedMessageLabel {
+   [key: string]: MessageLabels
+}
 
 type ChatType = {
    isChatModalOpen: boolean
    tabValue: string
-   messageLabels: MessageLabels[] | null
+   messageLabels: IndexedMessageLabel | null
 }
 
 const initialState: ChatType = {
@@ -23,7 +22,7 @@ const initialState: ChatType = {
    tabValue: '',
    messageLabels: null,
 }
-
+// https://www.linkedin.com/pulse/typescript-index-signatures-4-examples-type-safe-dynamic-efimenko-u0ivf/
 export const ChatSlice = createSlice({
    name: 'chat',
    initialState,
@@ -34,29 +33,17 @@ export const ChatSlice = createSlice({
       setTabValue: (state, action: PayloadAction<string>) => {
          state.tabValue = action.payload
       },
-      setMessageLabels: (state, action: PayloadAction<MessageLabels[]>) => {
-         // const singleMessage: IndexedMessageLabelArray = {}
+      setMessageLabels: (state, action: PayloadAction<MessageLabels>) => {
+         const singleMessage: {
+            [key: string]: MessageLabels
+         } = {}
+         singleMessage[action.payload._id] = action.payload
 
-         // singleMessage[action.payload._id] = action.payload
-
-         // console.log(singleMessage)
-
-         // state.messageLabelsMap[action.payload._id] = singleMessage
-
-         // console.log(state.messageLabelsMap)
-
-         state.messageLabels = action.payload
-      },
-      addSingleMessageLabel: (state, action: PayloadAction<MessageLabels>) => {
-         // const singleMessage: {
-         //    [key: string]: MessageLabels
-         // } = {}
-
-         // singleMessage[action.payload._id] = { ...action.payload }
-
-         // console.log(singleMessage)
-
-         state.messageLabels?.push(action.payload)
+         if (state.messageLabels) {
+            state.messageLabels = Object.assign(state.messageLabels, singleMessage)
+         } else {
+            state.messageLabels = singleMessage
+         }
       },
       openModalAndCreate: (
          state,
@@ -72,6 +59,5 @@ export const ChatSlice = createSlice({
    },
 })
 
-export const { setChatModalOpen, setTabValue, openModalAndCreate, setMessageLabels, addSingleMessageLabel } =
-   ChatSlice.actions
+export const { setChatModalOpen, setTabValue, openModalAndCreate, setMessageLabels } = ChatSlice.actions
 export default ChatSlice.reducer
