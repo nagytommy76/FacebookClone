@@ -21,19 +21,20 @@ const ChatAside = () => {
             }}
             aria-label='lab API tabs example'
          >
-            {messageLabels?.map((chatMenuItem) => (
-               <StyledTab
-                  key={chatMenuItem._id}
-                  value={chatMenuItem._id}
-                  label={
-                     <TabLabel
-                        captionText={chatMenuItem.captionText}
-                        fullName={chatMenuItem.fullName}
-                        selectedProfilePicturePath={chatMenuItem.selectedProfilePicturePath}
-                     />
-                  }
-               />
-            ))}
+            {messageLabels &&
+               Object.values(messageLabels).map((value) => (
+                  <StyledTab
+                     key={value._id}
+                     value={value._id}
+                     label={
+                        <TabLabel
+                           captionText={value.captionText}
+                           fullName={value.fullName}
+                           selectedProfilePicturePath={value.selectedProfilePicturePath}
+                        />
+                     }
+                  />
+               ))}
          </StyledTabList>
       </StyledChatAside>
    )
