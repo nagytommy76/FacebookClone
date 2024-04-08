@@ -16,6 +16,8 @@ export const StyledTextBoxHead = styled('span', {
    alignItems: 'center',
    flexDirection: isRightContent ? 'row' : 'row-reverse',
    justifyContent: 'space-between',
+
+   marginBottom: 10,
 }))
 
 export const StyledTextBox = styled(Paper, {

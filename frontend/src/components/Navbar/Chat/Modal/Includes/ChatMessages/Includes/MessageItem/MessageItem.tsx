@@ -22,8 +22,9 @@ const MessageItem: React.FC<{
    return (
       <StyledTextContainer isRightContent={isRightContent}>
          <StyledTextBoxHead isRightContent={isRightContent}>
-            <Typography variant='caption'>{moment(message.createdAt).format('h:mm:ss')}</Typography>
+            <Typography variant='caption'>{moment(message.createdAt).format('MMM D ddd h:mm')}</Typography>
             <ChatAvatar
+               isRead={true}
                fullName='Saját Neve'
                selectedProfilePicturePath={message.image}
                width={30}
