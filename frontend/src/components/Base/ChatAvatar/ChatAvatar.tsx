@@ -8,12 +8,13 @@ const ChatAvatar: React.FC<{
    selectedProfilePicturePath: string
    width?: number
    height?: number
-}> = ({ fullName, selectedProfilePicturePath, width = 56, height = 56 }) => {
+   isRead?: boolean
+}> = ({ fullName, selectedProfilePicturePath, width = 56, height = 56, isRead = false }) => {
    return (
       <>
          <Avatar sx={{ width, height, mr: 2, position: 'relative' }}>
             <Image width={width} height={height} alt={fullName} src={selectedProfilePicturePath} />
-            <StyledIsActive isRead={false} rightPosition='1px' bottomPosition='10px' topPosition='unset' />
+            <StyledIsActive isRead={isRead} rightPosition='1px' bottomPosition='10px' topPosition='unset' />
          </Avatar>
       </>
    )
