@@ -45,19 +45,8 @@ export const ChatSlice = createSlice({
             state.messageLabels = singleMessage
          }
       },
-      openModalAndCreate: (
-         state,
-         action: PayloadAction<{
-            _id: string
-            fullName: string
-            selectedProfilePicturePath: string
-         }>
-      ) => {
-         // state.messageLabels?.push({})
-         state.isChatModalOpen = true
-      },
    },
 })
 
-export const { setChatModalOpen, setTabValue, openModalAndCreate, setMessageLabels } = ChatSlice.actions
+export const { setChatModalOpen, setTabValue, setMessageLabels } = ChatSlice.actions
 export default ChatSlice.reducer
