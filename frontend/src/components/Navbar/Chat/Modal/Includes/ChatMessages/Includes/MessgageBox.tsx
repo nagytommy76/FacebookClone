@@ -25,7 +25,7 @@ const TestMessageData = [
       createdAt: '2024-04-07T09:35:36.758Z',
       updatedAt: '2024-04-07T09:35:10.758Z',
       isRead: true,
-      userId: '658569424d27aad220f6e887',
+      userId: '64777ef1c3038faf5e1a41c6',
       message:
          'Ut ut eros dui. Suspendisse id felis sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras feugiat augue eu est ullamcorper aliquam. Mauris ante nisl, elementum in nisl eu, ultrices pulvinar orci. Mauris eget turpis at quam scelerisque scelerisque quis at ipsum. Proin dictum pellentesque enim, eget lacinia est condimentum in',
       image: 'https://firebasestorage.googleapis.com/v0/b/facebookimagestorage.appspot.com/o/658569424d27aad220f6e887%2FprofilePicture%2F966f1605-7f36-49d5-ab2e-39b487d192c5_1954%20Chevrolet%20Bel%20Air%20side.JPG?alt=media&token=007d0df3-2942-49f2-8474-684073f787c5',
@@ -45,7 +45,8 @@ const TestMessageData = [
 const MessgageBox: React.FC<{
    userData: { _id: string; fullName: string; selectedProfilePicturePath: string }
 }> = ({ userData }) => {
-   const { chatMsg, chatImagePath, handleChatMsg, setChatImagePath } = useMessage()
+   const { chatRef, chatMsg, chatImagePath, handleChangeTextWithEmoji, handleChatMsg, setChatImagePath } =
+      useMessage()
    const loggedInUserId = useAppSelector((state) => state.auth.userId)
 
    return (
@@ -69,13 +70,14 @@ const MessgageBox: React.FC<{
             ))}
          </StyledMessageBox>
          <AddTextBase
+            reference={chatRef}
             multiline={false}
             value={chatMsg}
             placeholderText='...'
             setImagePath={setChatImagePath}
             onClickFunction={() => console.log('Üzenet küldése')}
             handleChangeValue={handleChatMsg}
-            handleChangeValueWithEmoji={() => {}}
+            handleChangeValueWithEmoji={handleChangeTextWithEmoji}
          />
       </StyledMessageBoxContainer>
    )
