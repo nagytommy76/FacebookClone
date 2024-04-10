@@ -25,8 +25,8 @@ export const StyledIsActive = styled('span', {
       rightPosition?: string
    }) => ({
       display: `${isRead ? 'none' : 'flex'}`,
-      width: '12px',
-      height: '12px',
+      width: '25%',
+      height: '25%',
 
       flexDirection: 'row',
       position: 'absolute',
