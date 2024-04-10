@@ -11,17 +11,21 @@ const ChatMessages = () => {
 
    return (
       <StyledChatMessagesContainer>
-         {messageLabels?.map((message) => (
-            <TabPanel key={message._id} value={message._id}>
-               <MessgageBox
-                  userData={{
-                     _id: message._id,
-                     fullName: message.fullName,
-                     selectedProfilePicturePath: message.selectedProfilePicturePath,
-                  }}
-               />
-            </TabPanel>
-         ))}
+         {messageLabels ? (
+            Object.values(messageLabels).map((value) => (
+               <TabPanel sx={{ height: '100%' }} key={value._id} value={value._id}>
+                  <MessgageBox
+                     userData={{
+                        _id: value._id,
+                        fullName: value.fullName,
+                        selectedProfilePicturePath: value.selectedProfilePicturePath,
+                     }}
+                  />
+               </TabPanel>
+            ))
+         ) : (
+            <h1>Nincs még aktív chat</h1>
+         )}
       </StyledChatMessagesContainer>
    )
 }

@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import useMessage from '../Hooks/useMessage'
+import useSendMsgMutation from '../Hooks/useSendMsgMutation'
 import { useAppSelector } from '@/src/utils/redux/store'
 
 import { StyledMessageBoxContainer, ProfileSection, StyledMessageBox } from './Styles'
@@ -45,8 +45,15 @@ const TestMessageData = [
 const MessgageBox: React.FC<{
    userData: { _id: string; fullName: string; selectedProfilePicturePath: string }
 }> = ({ userData }) => {
-   const { chatRef, chatMsg, chatImagePath, handleChangeTextWithEmoji, handleChatMsg, setChatImagePath } =
-      useMessage()
+   const {
+      chatRef,
+      chatMsg,
+      chatImagePath,
+      handleChangeTextWithEmoji,
+      handleChatMsg,
+      setChatImagePath,
+      handleAddChatMutate,
+   } = useSendMsgMutation()
    const loggedInUserId = useAppSelector((state) => state.auth.userId)
 
    return (
@@ -75,7 +82,7 @@ const MessgageBox: React.FC<{
             value={chatMsg}
             placeholderText='...'
             setImagePath={setChatImagePath}
-            onClickFunction={() => console.log('Üzenet küldése')}
+            onClickFunction={handleAddChatMutate}
             handleChangeValue={handleChatMsg}
             handleChangeValueWithEmoji={handleChangeTextWithEmoji}
          />
