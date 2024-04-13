@@ -4,7 +4,7 @@ import { useAppSelector } from '@/src/utils/redux/store'
 import TabPanel from '@mui/lab/TabPanel'
 import { StyledChatMessagesContainer } from './Styles'
 
-const MessgageBox = dynamic(() => import('./Includes/MessgageBox'))
+const MessgageBox = dynamic(() => import('./Includes/MessageBox/MessgageBox'))
 
 const ChatMessages = () => {
    const messageLabels = useAppSelector((state) => state.chat.messageLabels)

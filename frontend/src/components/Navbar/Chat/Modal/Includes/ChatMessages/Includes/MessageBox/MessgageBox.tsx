@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import useSendMsgMutation from '../Hooks/useSendMsgMutation'
+import useSendMsgMutation from '../../Hooks/useSendMsgMutation'
 import { useAppSelector } from '@/src/utils/redux/store'
 
 import { StyledMessageBoxContainer, ProfileSection, StyledMessageBox } from './Styles'
@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 
 const AddTextBase = dynamic(() => import('@/Base/AddTextBase/AddTextBase'))
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
-const MessageItem = dynamic(() => import('./MessageItem/MessageItem'))
+const MessageItem = dynamic(() => import('../MessageItem/MessageItem'))
 
 const TestMessageData = [
    {
