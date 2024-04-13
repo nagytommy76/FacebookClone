@@ -13,13 +13,13 @@ interface IndexedMessageLabel {
 
 type ChatType = {
    isChatModalOpen: boolean
-   tabValue: string
+   chatWithUserId: string
    messageLabels: IndexedMessageLabel | null
 }
 
 const initialState: ChatType = {
    isChatModalOpen: false,
-   tabValue: '',
+   chatWithUserId: '',
    messageLabels: null,
 }
 // https://www.linkedin.com/pulse/typescript-index-signatures-4-examples-type-safe-dynamic-efimenko-u0ivf/
@@ -30,8 +30,8 @@ export const ChatSlice = createSlice({
       setChatModalOpen: (state, action: PayloadAction<boolean>) => {
          state.isChatModalOpen = action.payload
       },
-      setTabValue: (state, action: PayloadAction<string>) => {
-         state.tabValue = action.payload
+      setChatWithUserId: (state, action: PayloadAction<string>) => {
+         state.chatWithUserId = action.payload
       },
       setMessageLabels: (state, action: PayloadAction<MessageLabels>) => {
          const singleMessage: {
@@ -48,5 +48,5 @@ export const ChatSlice = createSlice({
    },
 })
 
-export const { setChatModalOpen, setTabValue, setMessageLabels } = ChatSlice.actions
+export const { setChatModalOpen, setChatWithUserId, setMessageLabels } = ChatSlice.actions
 export default ChatSlice.reducer

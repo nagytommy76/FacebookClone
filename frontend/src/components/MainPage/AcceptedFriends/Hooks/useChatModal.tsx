@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/reduxStore/store'
-import { setChatModalOpen, setTabValue, setMessageLabels } from '@/reduxStore/slices/ChatSlice'
+import { setChatModalOpen, setChatWithUserId, setMessageLabels } from '@/reduxStore/slices/ChatSlice'
 
 const useChatModal = () => {
    const dispatch = useAppDispatch()
@@ -13,7 +13,7 @@ const useChatModal = () => {
             selectedProfilePicturePath: selectedProfilePicturePath,
          })
       )
-      dispatch(setTabValue(userId))
+      dispatch(setChatWithUserId(userId))
       dispatch(setChatModalOpen(true))
    }
 

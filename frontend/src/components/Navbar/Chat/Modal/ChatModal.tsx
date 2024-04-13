@@ -11,7 +11,7 @@ const ChatMessages = dynamic(() => import('./Includes/ChatMessages/ChatMessages'
 
 const ChatModal = () => {
    const chatModalOpen = useAppSelector((state) => state.chat.isChatModalOpen)
-   const tabValue = useAppSelector((state) => state.chat.tabValue)
+   const chatWithUserId = useAppSelector((state) => state.chat.chatWithUserId)
    const dispatch = useAppDispatch()
 
    return (
@@ -22,7 +22,7 @@ const ChatModal = () => {
          aria-describedby='modal-modal-chat'
       >
          <StyledPaper>
-            <TabContext value={tabValue}>
+            <TabContext value={chatWithUserId}>
                <ChatAside />
                <ChatMessages />
             </TabContext>

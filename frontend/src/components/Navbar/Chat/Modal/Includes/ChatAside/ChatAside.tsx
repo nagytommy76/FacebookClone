@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
-import { setTabValue } from '@/reduxStore/slices/ChatSlice'
+import { setChatWithUserId } from '@/reduxStore/slices/ChatSlice'
 
 import { StyledChatAside, StyledTab, StyledTabList } from './Styles'
 
@@ -17,7 +17,7 @@ const ChatAside = () => {
             indicatorColor='primary'
             orientation='vertical'
             onChange={(event: React.SyntheticEvent, newValue: string) => {
-               dispatch(setTabValue(newValue))
+               dispatch(setChatWithUserId(newValue))
             }}
             aria-label='lab API tabs example'
          >
