@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import useSendMsgMutation from '../../Hooks/useSendMsgMutation'
 import { useAppSelector } from '@/src/utils/redux/store'
+import useGetMessages from './Hooks/useGetMessages'
 
 import { StyledMessageBoxContainer, ProfileSection, StyledMessageBox } from './Styles'
 import Typography from '@mui/material/Typography'
@@ -45,6 +46,7 @@ const TestMessageData = [
 const MessgageBox: React.FC<{
    userData: { _id: string; fullName: string; selectedProfilePicturePath: string }
 }> = ({ userData }) => {
+   useGetMessages()
    const {
       chatRef,
       chatMsg,
