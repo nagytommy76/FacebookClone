@@ -7,6 +7,7 @@ const ChatSchema = new Schema<IChatSchema, IChatModel>(
          {
             type: Types.ObjectId,
             ref: 'User',
+            unique: true,
          },
       ],
       messages: [
