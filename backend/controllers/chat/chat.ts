@@ -1,11 +1,30 @@
 import { Types } from 'mongoose'
+import { ChatModel } from '../../models/chat/chatModel'
 import { Response, Request } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
-export const saveChatController = (request: IJWTUserType, response: Response) => {
+interface ISaveChatRequest extends IJWTUserType {
+   body: {
+      chatMsg: string
+      chatUserId: string
+   }
+}
+
+export const saveChatController = (request: ISaveChatRequest, response: Response) => {
    const userId = request.user?.userId
+   const { chatMsg, chatUserId } = request.body
    try {
-      response.status(200).json({ msg: 'minden ok' })
+      const createdChatModel = ChatModel.create({
+         messages: [
+            {
+               userId,
+               message: chatMsg,
+               image: '',
+            },
+         ],
+         participants: [userId, chatUserId],
+      })
+      response.status(200).json({ msg: 'minden ok', createdChatModel })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
