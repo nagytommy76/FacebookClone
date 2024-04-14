@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import useCheckUrl from '@/hooks/useCheckUrl'
 import { axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import type { IUserPopulatedPosts } from '@/types/AuthTypes'
-import type { IBaseListAction } from '../Context/ProfileReducer'
+import type { IBaseListAction } from '../Context/Types'
 
 const useGetUserData = (profileDispatch: React.Dispatch<IBaseListAction>) => {
    const params = useParams() as { userId: string }

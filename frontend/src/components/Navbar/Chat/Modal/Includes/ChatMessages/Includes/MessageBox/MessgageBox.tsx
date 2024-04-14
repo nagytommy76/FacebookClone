@@ -46,7 +46,7 @@ const TestMessageData = [
 const MessgageBox: React.FC<{
    userData: { _id: string; fullName: string; selectedProfilePicturePath: string }
 }> = ({ userData }) => {
-   useGetMessages()
+   const { messages } = useGetMessages()
    const {
       chatRef,
       chatMsg,
@@ -70,13 +70,19 @@ const MessgageBox: React.FC<{
             <Typography variant='body1'>{userData.fullName}</Typography>
          </ProfileSection>
          <StyledMessageBox>
-            {TestMessageData.map((message) => (
-               <MessageItem
-                  key={message._id}
-                  isRightContent={loggedInUserId == message.userId}
-                  message={message}
-               />
-            ))}
+            {messages ? (
+               messages.map((message) => (
+                  <MessageItem
+                     key={message._id}
+                     isRightContent={loggedInUserId == message.userId}
+                     message={message}
+                  />
+               ))
+            ) : (
+               <>
+                  <p>Nincs chat</p>
+               </>
+            )}
          </StyledMessageBox>
          <AddTextBase
             reference={chatRef}
