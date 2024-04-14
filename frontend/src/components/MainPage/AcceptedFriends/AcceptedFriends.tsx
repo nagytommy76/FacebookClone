@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
 
 const AcceptedFriends = () => {
-   const hadleOpenChatModal = useChatModal()
+   const hadleOpenMutateChatModal = useChatModal()
    const myFriends = useGetAccepted()
 
    return (
@@ -19,11 +19,11 @@ const AcceptedFriends = () => {
          {myFriends.map((friend) => (
             <FriendMenuItemStyle
                onClick={() =>
-                  hadleOpenChatModal(
-                     friend._id,
-                     `${friend.firstName} ${friend.sureName}`,
-                     friend.selectedProfilePicture[0].path
-                  )
+                  hadleOpenMutateChatModal({
+                     userId: friend._id,
+                     fullName: `${friend.firstName} ${friend.sureName}`,
+                     selectedProfilePicturePath: friend.selectedProfilePicture[0].path,
+                  })
                }
                key={friend._id}
             >

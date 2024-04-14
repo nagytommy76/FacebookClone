@@ -35,6 +35,13 @@ BUG: A likeolásnál az ikonok nem frissülnek, de az answerContext meg igen
 FONTOS!!!!!!: Ha törlök egy posztot a poszt kép törlődik, de a kommenteké nem!!! EZT MEGOLDANI!!!!!!!!!!!!!!!!
 
 
+CHAT:
+Lépések:
+ - Amikor rákattintok egy ismerősre az oldalsávon (Friends) akkor küldjön egy requestet -> hozzáadni a chatDB-hez a résztvevőket
+ messages nélkül -> ezzel létrejön egy chat "fül"
+ - Majd amikor írok egy message-t akkor a már meglévő chatDB-hez adom hozzá (messages.push) az üzit.
+ - A chat gomb megnyomásakor töltődjön be az összes "aktív" chat
+
 
 
 
