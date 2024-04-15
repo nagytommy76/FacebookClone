@@ -3,13 +3,8 @@ import { IChatModel, IChatSchema } from './Types'
 
 const ChatSchema = new Schema<IChatSchema, IChatModel>(
    {
-      participants: [
-         {
-            type: Types.ObjectId,
-            ref: 'User',
-            unique: true,
-         },
-      ],
+      // participants: [{ type: Types.ObjectId, ref: 'User' }],
+      participants: { type: [{ participant: { type: Types.ObjectId, ref: 'User' } }] },
       messages: [
          {
             createdAt: { type: Date, default: new Date() },
