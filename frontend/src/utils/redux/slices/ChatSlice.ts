@@ -12,12 +12,14 @@ interface IndexedMessageLabel {
 }
 
 type ChatType = {
+   chatId: string | null
    isChatModalOpen: boolean
    chatWithUserId: string
    messageLabels: IndexedMessageLabel | null
 }
 
 const initialState: ChatType = {
+   chatId: null,
    isChatModalOpen: false,
    chatWithUserId: '',
    messageLabels: null,
@@ -27,6 +29,9 @@ export const ChatSlice = createSlice({
    name: 'chat',
    initialState,
    reducers: {
+      setChatId: (state, action: PayloadAction<string>) => {
+         state.chatId = action.payload
+      },
       setChatModalOpen: (state, action: PayloadAction<boolean>) => {
          state.isChatModalOpen = action.payload
       },
@@ -48,5 +53,5 @@ export const ChatSlice = createSlice({
    },
 })
 
-export const { setChatModalOpen, setChatWithUserId, setMessageLabels } = ChatSlice.actions
+export const { setChatModalOpen, setChatWithUserId, setMessageLabels, setChatId } = ChatSlice.actions
 export default ChatSlice.reducer
