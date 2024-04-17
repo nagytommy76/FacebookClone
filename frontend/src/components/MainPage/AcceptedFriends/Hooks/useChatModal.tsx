@@ -1,5 +1,10 @@
 import { useAppDispatch } from '@/reduxStore/store'
-import { setChatModalOpen, setChatWithUserId, setMessageLabels } from '@/reduxStore/slices/ChatSlice'
+import {
+   setChatModalOpen,
+   setChatWithUserId,
+   setMessageLabels,
+   setChatId,
+} from '@/reduxStore/slices/ChatSlice'
 
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
@@ -39,6 +44,7 @@ const useChatModal = () => {
          console.log(data.data)
          const { fullName, selectedProfilePicturePath, userId } = variables
          hadleOpenChatModal(userId, fullName, selectedProfilePicturePath)
+         dispatch(setChatId(data.data.createdChatModel._id))
       },
    })
 
