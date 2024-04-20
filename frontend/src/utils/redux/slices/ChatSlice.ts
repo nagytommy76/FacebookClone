@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
+import type { IChat, IMessages } from '@/src/components/Navbar/Chat/Types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-type MessageLabels = {
-   _id: string
-   fullName: string
-   captionText: string
-   selectedProfilePicturePath: string
-}
+// type MessageLabels = {
+//    _id: string
+//    fullName: string
+//    // captionText: string
+//    messages: IMessages
+//    selectedProfilePicturePath: string
+// }
 interface IndexedMessageLabel {
-   [key: string]: MessageLabels
+   [key: string]: IChat
 }
 
 type ChatType = {
@@ -38,9 +40,9 @@ export const ChatSlice = createSlice({
       setChatWithUserId: (state, action: PayloadAction<string>) => {
          state.chatWithUserId = action.payload
       },
-      setMessageLabels: (state, action: PayloadAction<MessageLabels>) => {
+      setSingleMessageLabel: (state, action: PayloadAction<IChat>) => {
          const singleMessage: {
-            [key: string]: MessageLabels
+            [key: string]: IChat
          } = {}
          singleMessage[action.payload._id] = action.payload
 
@@ -50,8 +52,17 @@ export const ChatSlice = createSlice({
             state.messageLabels = singleMessage
          }
       },
+      setMessageLabels: (state, action: PayloadAction<IChat[]>) => {
+         const messageLabels: {
+            [key: string]: IChat
+         } = {}
+         action.payload.map((chat) => (messageLabels[chat._id] = chat))
+         console.log(messageLabels)
+         state.messageLabels = messageLabels
+      },
    },
 })
 
-export const { setChatModalOpen, setChatWithUserId, setMessageLabels, setChatId } = ChatSlice.actions
+export const { setChatModalOpen, setChatWithUserId, setMessageLabels, setSingleMessageLabel, setChatId } =
+   ChatSlice.actions
 export default ChatSlice.reducer
