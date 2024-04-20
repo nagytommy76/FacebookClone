@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import useOpenState from './Hooks/useOpenState'
+import useFillMessageLabels from './Hooks/useFillMessageLabels'
 
 import Fab from '@mui/material/Fab'
 import ChatIcon from '@/assets/bubble-chat.png'
@@ -10,6 +11,7 @@ const ChatModal = dynamic(() => import('../Modal/ChatModal'))
 
 const ChatButton = () => {
    const { handleOpen } = useOpenState()
+   useFillMessageLabels()
 
    return (
       <>
