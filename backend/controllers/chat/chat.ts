@@ -1,4 +1,3 @@
-import { Types } from 'mongoose'
 import { ChatModel } from '../../models/chat/chatModel'
 import { Response, Request } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
@@ -22,9 +21,9 @@ export const createNewChatController = async (request: ICreateChatRequest, respo
             participants: [{ participant: chatUserId }, { participant: loggedInUserId }],
             messages: [],
          })
-         return response.status(200).json({ createdChatModel })
+         return response.status(201).json({ createdChatModel })
       } else {
-         return response.status(404).json({ createdChatModel: null, msg: 'Chat already exist', foundChat })
+         return response.status(200).json({ createdChatModel: foundChat, msg: 'Chat already exist' })
       }
    } catch (error) {
       console.log(error)
