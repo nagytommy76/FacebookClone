@@ -7,7 +7,6 @@ export const getChatMessageLabels = async (request: IJWTUserType, response: Resp
    try {
       const foundChat = await ChatModel.find({
          $in: [{ 'participants.participant': loggedInUserId }],
-         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
       }).populate({
          path: 'participants.participant',
          select: ['_id', 'sureName', 'firstName', 'userDetails.profilePicturePath.$'],
@@ -15,6 +14,31 @@ export const getChatMessageLabels = async (request: IJWTUserType, response: Resp
             'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
          },
       })
+
+      // const foundChat1 = await ChatModel.aggregate([
+      //    {
+      //       // $match: { 'participants.participant': { loggedInUserId } },
+      //       $match: {
+      //          participants: {
+      //             $all: [
+      //                {
+      //                   $elemMatch: {
+      //                      participant: loggedInUserId,
+      //                   },
+      //                },
+      //             ],
+      //          },
+      //       },
+      //    },
+      //    // {
+      //    //    $project: {
+      //    //       'participants.participant': '$participants.participant',
+      //    //       testing: {
+      //    //          $in: [loggedInUserId, '$participants.participant'],
+      //    //       },
+      //    //    },
+      //    // },
+      // ])
 
       response.status(200).json({ foundChat })
    } catch (error) {
