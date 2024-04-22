@@ -17,7 +17,6 @@ const useFillMessageLabels = () => {
       queryKey: ['getMessageLabels'],
       queryFn: queryFunction,
       onSuccess(data) {
-         console.log(data.data)
          dispatch(setMessageLabels(data.data.foundChat))
       },
    })
