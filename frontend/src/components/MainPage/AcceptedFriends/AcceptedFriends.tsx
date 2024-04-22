@@ -21,8 +21,6 @@ const AcceptedFriends = () => {
                onClick={() =>
                   hadleOpenMutateChatModal({
                      userId: friend._id,
-                     fullName: `${friend.firstName} ${friend.sureName}`,
-                     selectedProfilePicturePath: friend.selectedProfilePicture[0].path,
                   })
                }
                key={friend._id}
