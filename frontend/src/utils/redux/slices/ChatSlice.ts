@@ -1,29 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { IChat, IMessages } from '@/src/components/Navbar/Chat/Types'
+import type { IChat, IMessages } from '@/Chat/Types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-// type MessageLabels = {
-//    _id: string
-//    fullName: string
-//    // captionText: string
-//    messages: IMessages
-//    selectedProfilePicturePath: string
-// }
 interface IndexedMessageLabel {
    [key: string]: IChat
 }
 
 type ChatType = {
    chatId: string | null
+   selectedChatWithUserId: string | null
    isChatModalOpen: boolean
-   chatWithUserId: string
    messageLabels: IndexedMessageLabel | null
 }
 
 const initialState: ChatType = {
    chatId: null,
    isChatModalOpen: false,
-   chatWithUserId: '',
+   selectedChatWithUserId: null,
    messageLabels: null,
 }
 // https://www.linkedin.com/pulse/typescript-index-signatures-4-examples-type-safe-dynamic-efimenko-u0ivf/
@@ -37,8 +30,8 @@ export const ChatSlice = createSlice({
       setChatModalOpen: (state, action: PayloadAction<boolean>) => {
          state.isChatModalOpen = action.payload
       },
-      setChatWithUserId: (state, action: PayloadAction<string>) => {
-         state.chatWithUserId = action.payload
+      setSelectedChatWithUserId: (state, action: PayloadAction<string>) => {
+         state.selectedChatWithUserId = action.payload
       },
       setSingleMessageLabel: (state, action: PayloadAction<IChat>) => {
          const singleMessage: {
@@ -56,13 +49,27 @@ export const ChatSlice = createSlice({
          const messageLabels: {
             [key: string]: IChat
          } = {}
-         action.payload.map((chat) => (messageLabels[chat._id] = chat))
-         console.log(messageLabels)
+         action.payload.map((chat) => {
+            messageLabels[chat._id] = chat
+         })
          state.messageLabels = messageLabels
+      },
+      setChatMessage: (state, action: PayloadAction<IMessages[]>) => {
+         if (state.messageLabels && state.chatId) {
+            state.messageLabels[state.chatId].messages = action.payload
+         } else {
+            console.log('NULL a messageLabels vagy chatId')
+         }
       },
    },
 })
 
-export const { setChatModalOpen, setChatWithUserId, setMessageLabels, setSingleMessageLabel, setChatId } =
-   ChatSlice.actions
+export const {
+   setChatModalOpen,
+   setSelectedChatWithUserId,
+   setMessageLabels,
+   setSingleMessageLabel,
+   setChatId,
+   setChatMessage,
+} = ChatSlice.actions
 export default ChatSlice.reducer
