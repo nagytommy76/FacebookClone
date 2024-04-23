@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 
 const useSendMsgMutation = () => {
-   const chatUserId = useAppSelector((state) => state.chat.chatWithUserId)
+   const chatUserId = useAppSelector((state) => state.chat.selectedChatWithUserId)
    const { chatMsg, chatRef, chatImagePath, setChatImagePath, handleChatMsg, handleChangeTextWithEmoji } =
       useMessage()
 
