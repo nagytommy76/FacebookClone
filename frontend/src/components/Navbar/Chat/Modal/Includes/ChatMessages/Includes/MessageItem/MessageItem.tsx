@@ -1,6 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import moment from 'moment'
+import type { IMessages } from '@/Chat/Types'
 
 import { StyledTextContainer, StyledTextBox, StyledTextBoxHead } from './Styles'
 import Typography from '@mui/material/Typography'
@@ -8,15 +9,7 @@ import Typography from '@mui/material/Typography'
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
 
 const MessageItem: React.FC<{
-   message: {
-      _id: string
-      createdAt: string
-      updatedAt: string
-      isRead: boolean
-      userId: string
-      message: string
-      image: string
-   }
+   message: IMessages
    isRightContent?: boolean
 }> = ({ message, isRightContent = false }) => {
    return (
