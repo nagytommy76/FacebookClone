@@ -1,16 +1,15 @@
 import { Model, ObjectId } from 'mongoose'
 
 export interface IChatSchema {
-   // participants: string[] // ref to users
    participants: { participant: string | ObjectId; _id: string | ObjectId }[] // ref to users
    messages: {
-      _id: ObjectId | string
+      _id?: ObjectId | string
       createdAt?: string
       updatedAt?: string
-      userId: ObjectId // ez is legyen ref
+      receiverUserId: string // ez is legyen ref
       isRead?: boolean
       message: string
-      image: string
+      image?: string
    }[]
 }
 
