@@ -1,7 +1,7 @@
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 
 import { useAppDispatch } from '@/reduxStore/store'
-import { setMessageLabels } from '@/reduxStore/slices/ChatSlice'
+import { setMessageLabels, setChatId, setSelectedChatWithUserId } from '@/reduxStore/slices/ChatSlice'
 import { useQuery } from '@tanstack/react-query'
 
 import type { IChat } from '@/src/components/Navbar/Chat/Types'
@@ -17,7 +17,10 @@ const useFillMessageLabels = () => {
       queryKey: ['getMessageLabels'],
       queryFn: queryFunction,
       onSuccess(data) {
-         dispatch(setMessageLabels(data.data.foundChat))
+         const foundChat = data.data.foundChat
+         dispatch(setChatId(foundChat[0]._id))
+         dispatch(setSelectedChatWithUserId(foundChat[0].chatWithParticipant._id))
+         dispatch(setMessageLabels(foundChat))
       },
    })
    return null

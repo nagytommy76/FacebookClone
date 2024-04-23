@@ -1,5 +1,10 @@
 import { useAppDispatch } from '@/reduxStore/store'
-import { setChatModalOpen, setSingleMessageLabel, setChatId } from '@/reduxStore/slices/ChatSlice'
+import {
+   setChatModalOpen,
+   setSelectedChatWithUserId,
+   setSingleMessageLabel,
+   setChatId,
+} from '@/reduxStore/slices/ChatSlice'
 
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
@@ -21,6 +26,7 @@ const useChatModal = () => {
          if (data.status === 200) {
             dispatch(setChatModalOpen(true))
             dispatch(setChatId(data.data.createdChatModel._id))
+            dispatch(setSelectedChatWithUserId(variables.userId))
          } else if (data.status === 201) {
             // Itt hozzá kell adom egy setSingleMessageLabel-t
             dispatch(setSingleMessageLabel(data.data.createdChatModel))
