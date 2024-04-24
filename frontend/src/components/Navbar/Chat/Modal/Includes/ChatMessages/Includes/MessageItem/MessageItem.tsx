@@ -1,6 +1,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 import moment from 'moment'
+import { useAppSelector } from '@/reduxStore/store'
 import type { IMessages } from '@/Chat/Types'
 
 import { StyledTextContainer, StyledTextBox, StyledTextBoxHead } from './Styles'
@@ -12,14 +13,22 @@ const MessageItem: React.FC<{
    message: IMessages
    isRightContent?: boolean
 }> = ({ message, isRightContent = false }) => {
+   const loggedInUserImg = useAppSelector((state) => state.auth.currentImage)
+   const chatId = useAppSelector((state) => state.chat.chatId)
+   const messageLabels = useAppSelector((state) => state.chat.messageLabels)
+   const chatWithParticipantImage =
+      messageLabels && chatId && messageLabels[chatId].chatWithParticipant.selectedProfilePicture[0].path
+
    return (
       <StyledTextContainer isRightContent={isRightContent}>
          <StyledTextBoxHead isRightContent={isRightContent}>
-            <Typography variant='caption'>{moment(message.createdAt).format('MMM D ddd h:mm')}</Typography>
+            <Typography variant='caption'>{moment(message.createdAt).format('MMM D ddd H:mm')}</Typography>
             <ChatAvatar
                isRead={true}
                fullName='Saját Neve'
-               selectedProfilePicturePath={message.image}
+               selectedProfilePicturePath={
+                  isRightContent ? loggedInUserImg.path : chatWithParticipantImage || ''
+               }
                width={30}
                height={30}
             />

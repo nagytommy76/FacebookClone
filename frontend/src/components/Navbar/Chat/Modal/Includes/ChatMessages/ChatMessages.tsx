@@ -15,11 +15,8 @@ const ChatMessages = () => {
             Object.values(messageLabels).map((value) => (
                <TabPanel sx={{ height: '100%' }} key={value._id} value={value._id}>
                   <MessgageBox
-                     userData={{
-                        _id: value._id,
-                        fullName: value.fullName,
-                        selectedProfilePicturePath: value.selectedProfilePicturePath,
-                     }}
+                     fullName={`${value.chatWithParticipant.firstName} ${value.chatWithParticipant.sureName}`}
+                     selectedProfilePicturePath={value.chatWithParticipant.selectedProfilePicture[0].path}
                   />
                </TabPanel>
             ))
