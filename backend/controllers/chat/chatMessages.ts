@@ -17,10 +17,12 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
       })
       if (!foundChat) return response.status(404).json({ msg: 'ChatModel not found' })
       foundChat.messages.push({
+         createdAt: new Date(),
+         updatedAt: new Date(),
          message: chatMsg,
          receiverUserId: selectedChatWithUserId,
       })
-      response.status(200).json({ message: chatMsg, addedMessages: foundChat.messages })
+      response.status(200).json({ message: chatMsg, addedMessages: foundChat.messages[0] })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
