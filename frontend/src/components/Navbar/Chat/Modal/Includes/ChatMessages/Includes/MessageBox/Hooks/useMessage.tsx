@@ -12,7 +12,21 @@ const useMessage = () => {
       handleChangeEmoji(emoji)
    }
 
-   return { chatRef, chatMsg, chatImagePath, handleChangeTextWithEmoji, setChatImagePath, handleChatMsg }
+   const restoreTextField = () => {
+      handleChangeTextWithEmoji()
+      setChatMsg('')
+      setChatImagePath(null)
+   }
+
+   return {
+      chatRef,
+      chatMsg,
+      chatImagePath,
+      handleChangeTextWithEmoji,
+      setChatImagePath,
+      handleChatMsg,
+      restoreTextField,
+   }
 }
 
 export default useMessage
