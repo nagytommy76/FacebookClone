@@ -1,14 +1,21 @@
 import dynamic from 'next/dynamic'
 import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
-import { setChatWithUserId } from '@/reduxStore/slices/ChatSlice'
+import { setChatId, setSelectedChatWithUserId } from '@/reduxStore/slices/ChatSlice'
+import { selectLastMessageById } from '@/reduxStore/slices/ChatSlice'
 
 import { StyledChatAside, StyledTab, StyledTabList } from './Styles'
 
-const TabLabel = dynamic(() => import('../TabLabel/TabLabel'))
+const TabLabel = dynamic(() => import('./TabLabel/TabLabel'))
 
 const ChatAside = () => {
    const messageLabels = useAppSelector((state) => state.chat.messageLabels)
    const dispatch = useAppDispatch()
+   const lastMessageById = useAppSelector(selectLastMessageById)
+
+   const onChangeFunction = (event: React.SyntheticEvent, newValue: string) => {
+      messageLabels && dispatch(setSelectedChatWithUserId(messageLabels[newValue].chatWithParticipant._id))
+      dispatch(setChatId(newValue))
+   }
 
    return (
       <StyledChatAside>
@@ -16,9 +23,7 @@ const ChatAside = () => {
             variant='scrollable'
             indicatorColor='primary'
             orientation='vertical'
-            onChange={(event: React.SyntheticEvent, newValue: string) => {
-               dispatch(setChatWithUserId(newValue))
-            }}
+            onChange={onChangeFunction}
             aria-label='lab API tabs example'
          >
             {messageLabels &&
@@ -28,9 +33,8 @@ const ChatAside = () => {
                      value={value._id}
                      label={
                         <TabLabel
-                           captionText={value.captionText}
-                           fullName={value.fullName}
-                           selectedProfilePicturePath={value.selectedProfilePicturePath}
+                           participant={value.chatWithParticipant}
+                           captionText={lastMessageById[value._id]}
                         />
                      }
                   />
