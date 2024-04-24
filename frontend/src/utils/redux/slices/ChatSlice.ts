@@ -90,3 +90,11 @@ export const selectLastMessageById = createSelector([messageLabels, chatId], (me
    }
    return lastMessage
 })
+
+export const selectMessagesByChatId = createSelector([messageLabels, chatId], (messageLabels, chatId) => {
+   let messages: IMessages[] | null = null
+   if (messageLabels && chatId) {
+      messages = messageLabels[chatId].messages
+   }
+   return messages
+})
