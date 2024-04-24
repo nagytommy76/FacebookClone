@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createSelector } from '@reduxjs/toolkit'
 import type { IChat, IMessages } from '@/Chat/Types'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../store'
 
 interface IndexedMessageLabel {
    [key: string]: IChat
@@ -54,9 +55,9 @@ export const ChatSlice = createSlice({
          })
          state.messageLabels = messageLabels
       },
-      setChatMessage: (state, action: PayloadAction<IMessages[]>) => {
+      setChatMessage: (state, action: PayloadAction<IMessages>) => {
          if (state.messageLabels && state.chatId) {
-            state.messageLabels[state.chatId].messages = action.payload
+            state.messageLabels[state.chatId].messages.push(action.payload)
          } else {
             console.log('NULL a messageLabels vagy chatId')
          }
@@ -73,3 +74,19 @@ export const {
    setChatMessage,
 } = ChatSlice.actions
 export default ChatSlice.reducer
+
+const messageLabels = (state: RootState) => state.chat.messageLabels
+const chatId = (state: RootState) => state.chat.chatId
+
+export const selectLastMessageById = createSelector([messageLabels, chatId], (messageLabels, chatId) => {
+   const lastMessage: {
+      [key: string]: string | null
+   } = {}
+   if (messageLabels && chatId) {
+      Object.entries(messageLabels).map(([key, chat]) => {
+         const selectedChat = chat.messages[chat.messages.length - 1]
+         lastMessage[key] = selectedChat ? selectedChat.message : null
+      })
+   }
+   return lastMessage
+})
