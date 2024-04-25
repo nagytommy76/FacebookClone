@@ -36,6 +36,15 @@ export const initSocketIO = (app: Application) => {
       socket.on('newUser', (userId) => {
          addNewUser(userId, socket.id)
       })
+
+      io.on('join_room', (args: { chatRoomId: string }) => {
+         socket.join(args.chatRoomId)
+         console.log('JoinRoom socket')
+         socket.to(args.chatRoomId).emit('receive_message', {
+            message: `has joined the chat room. HELLÓÓÓ`,
+         })
+      })
+
       io.on('disconnect', () => removeUser(socket.id))
    })
    return { io, onlineFriends, getUser }
