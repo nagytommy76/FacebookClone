@@ -4,7 +4,7 @@ import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
 interface ISaveChatMsgType extends IJWTUserType {
    body: {
-      chatId: string | null
+      chatId: string
       chatMsg: string
       selectedChatWithUserId: string
    }
@@ -22,6 +22,20 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
          message: chatMsg,
          receiverUserId: selectedChatWithUserId,
       })
+
+      // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
+      // chat:sendMsg
+      if (request.getUser !== undefined) {
+         const toSendUser = request.getUser(selectedChatWithUserId) as any
+         if (toSendUser !== undefined) {
+            console.log(toSendUser.userId)
+            request.ioSocket?.to(toSendUser.socketId).emit('chat:sendMsg', {
+               socketId: toSendUser.socketId,
+               addedMessages: foundChat.messages[0],
+            })
+         }
+      }
+
       response.status(200).json({ message: chatMsg, addedMessages: foundChat.messages[0] })
    } catch (error) {
       console.log(error)
