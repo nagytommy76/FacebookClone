@@ -6,6 +6,8 @@ import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { IMessages } from '@/Chat/Types'
 
+import useSendMsgSocket from './Sockets/useSendMsgSocket'
+
 const useSendMsgMutation = () => {
    const dispatch = useAppDispatch()
    const { selectedChatWithUserId, chatId } = useAppSelector((state) => state.chat)
@@ -18,6 +20,7 @@ const useSendMsgMutation = () => {
       handleChangeTextWithEmoji,
       restoreTextField,
    } = useMessage()
+   useSendMsgSocket()
 
    const chatMutateFn = async () => {
       return (await axios.post('/chat/add-chat-msg', {
