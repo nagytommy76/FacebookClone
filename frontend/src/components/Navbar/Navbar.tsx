@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '../../utils/redux/store'
+import useSocketIoConnect from './Hooks/useSocketIoConnect'
 
 import Menu from './Includes/Menu/Menu'
 import Avatar from './Includes/Avatar/Avatar'
@@ -17,6 +18,7 @@ import Button from '@mui/material/Button'
 
 const Navbar = () => {
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+   useSocketIoConnect()
    return (
       <>
          <AppBar position='sticky'>

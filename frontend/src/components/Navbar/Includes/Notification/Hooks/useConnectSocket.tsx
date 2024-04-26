@@ -23,28 +23,24 @@ const useConnectSocket = () => {
    const { notificationsDispatch } = useContext(NotificationsContext)
 
    useEffect(() => {
-      // Ez azért kell mert ki van kapcsolva az automata connect: autoConnect
-      socket.connect()
-      socket.on('connect', () => {
-         socket.emit('newUser', userId)
+      socket.emit('newUser', userId)
 
-         socket.on('likedPost', (args) => {
-            setNotificationContext(args, notificationsDispatch)
-            notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
-         })
-         socket.on('addComment', (args) => {
-            setNotificationContext(args, notificationsDispatch)
-            notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
-         })
+      socket.on('likedPost', (args) => {
+         setNotificationContext(args, notificationsDispatch)
+         notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
+      })
+      socket.on('addComment', (args) => {
+         setNotificationContext(args, notificationsDispatch)
+         notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
+      })
 
-         socket.on('makeFriendship', (args) => {
-            setNotificationContext(args, notificationsDispatch)
-            notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
-         })
-         socket.on('confirmFriendship', (args) => {
-            setNotificationContext(args, notificationsDispatch)
-            notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
-         })
+      socket.on('makeFriendship', (args) => {
+         setNotificationContext(args, notificationsDispatch)
+         notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
+      })
+      socket.on('confirmFriendship', (args) => {
+         setNotificationContext(args, notificationsDispatch)
+         notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
       })
       return () => {
          socket.off('likedPost')
