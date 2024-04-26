@@ -28,15 +28,18 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(selectedChatWithUserId) as any
          if (toSendUser !== undefined) {
-            console.log(toSendUser.userId)
-            request.ioSocket?.to(toSendUser.socketId).emit('chat:sendMsg', {
+            // console.log(toSendUser.userId)
+            request.ioSocket?.to(foundChat._id.toString()).emit('chat:sendMsg', {
                socketId: toSendUser.socketId,
                addedMessages: foundChat.messages[0],
+               foundChatId: foundChat._id,
             })
          }
       }
 
-      response.status(200).json({ message: chatMsg, addedMessages: foundChat.messages[0] })
+      response
+         .status(200)
+         .json({ message: chatMsg, addedMessages: foundChat.messages[0], foundChatId: foundChat._id })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
