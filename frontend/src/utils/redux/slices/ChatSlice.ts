@@ -55,9 +55,10 @@ export const ChatSlice = createSlice({
          })
          state.messageLabels = messageLabels
       },
-      setChatMessage: (state, action: PayloadAction<IMessages>) => {
-         if (state.messageLabels && state.chatId) {
-            state.messageLabels[state.chatId].messages.push(action.payload)
+      setChatMessage: (state, action: PayloadAction<{ addedMessage: IMessages; foundChatId: string }>) => {
+         const { addedMessage, foundChatId } = action.payload
+         if (state.messageLabels) {
+            state.messageLabels[foundChatId].messages.push(addedMessage)
          } else {
             console.log('NULL a messageLabels vagy chatId')
          }
