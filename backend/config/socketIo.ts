@@ -23,7 +23,9 @@ export const initSocketIO = (app: Application) => {
    let onlineFriends: IOnlineFriends[] = []
 
    const addNewUser = (userId: string, socketId: string) => {
-      !onlineFriends.some((user) => user.userId === userId) && onlineFriends.push({ userId, socketId })
+      if (!onlineFriends.some((user) => user.userId === userId)) {
+         onlineFriends.push({ userId, socketId })
+      }
    }
    const removeUser = (socketId: string) => {
       onlineFriends = onlineFriends.filter((user) => user.socketId !== socketId)
@@ -37,15 +39,12 @@ export const initSocketIO = (app: Application) => {
          addNewUser(userId, socket.id)
       })
 
-      io.on('join_room', (args: { chatRoomId: string }) => {
+      socket.on('join_room', (args: { chatRoomId: string[] }) => {
          socket.join(args.chatRoomId)
-         console.log('JoinRoom socket')
-         socket.to(args.chatRoomId).emit('receive_message', {
-            message: `has joined the chat room. HELLÓÓÓ`,
-         })
+         console.log('JoinRoom socket ID: ', args.chatRoomId)
       })
 
-      io.on('disconnect', () => removeUser(socket.id))
+      socket.on('disconnect', () => removeUser(socket.id))
    })
    return { io, onlineFriends, getUser }
 }
