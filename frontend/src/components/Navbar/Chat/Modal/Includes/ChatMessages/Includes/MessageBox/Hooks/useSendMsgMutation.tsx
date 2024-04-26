@@ -27,7 +27,7 @@ const useSendMsgMutation = () => {
          chatMsg,
          selectedChatWithUserId,
          chatId,
-      })) as AxiosResponse<{ addedMessages: IMessages }>
+      })) as AxiosResponse<{ addedMessages: IMessages; foundChatId: string }>
    }
 
    const { mutate } = useMutation({
@@ -35,7 +35,9 @@ const useSendMsgMutation = () => {
       mutationFn: chatMutateFn,
       onSuccess(data, variables, context) {
          console.log(data.data)
-         dispatch(setChatMessage(data.data.addedMessages))
+         dispatch(
+            setChatMessage({ addedMessage: data.data.addedMessages, foundChatId: data.data.foundChatId })
+         )
          restoreTextField()
       },
    })

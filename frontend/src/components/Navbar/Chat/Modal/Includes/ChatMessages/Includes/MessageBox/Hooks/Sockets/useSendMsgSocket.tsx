@@ -7,6 +7,8 @@ import type { IMessages } from '@/Chat/Types'
 
 interface IChatArgs {
    addedMessages: IMessages
+   foundChatId: string
+   socketId?: string
 }
 
 const useSendMsgSocket = () => {
@@ -14,7 +16,7 @@ const useSendMsgSocket = () => {
    useEffect(() => {
       const sendChatMsg = (args: IChatArgs) => {
          console.log(args)
-         dispatch(setChatMessage(args.addedMessages))
+         dispatch(setChatMessage({ addedMessage: args.addedMessages, foundChatId: args.foundChatId }))
       }
 
       socket.on('chat:sendMsg', sendChatMsg)
