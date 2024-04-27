@@ -1,6 +1,7 @@
-import { Application } from 'express'
+import type { Application, NextFunction, Response } from 'express'
 import { createServer } from 'https'
 import { Server } from 'socket.io'
+import { ISocketRequest } from 'types'
 
 export interface IOnlineFriends {
    userId: string
@@ -9,7 +10,7 @@ export interface IOnlineFriends {
 
 export const initSocketIO = (app: Application) => {
    const httpsServer = createServer(app)
-   const io = new Server(httpsServer, {
+   const socketIo = new Server(httpsServer, {
       cors: {
          origin: ['http://localhost:3000'],
          methods: ['GET', 'POST'],
@@ -17,8 +18,7 @@ export const initSocketIO = (app: Application) => {
       },
    })
 
-   io.listen(3001)
-
+   socketIo.listen(3001)
    // Ezzel megvannak az online userek -> tudok válogatni köztük ki kapjon üzit (AKIT ÉRINT -> POST LIKE)
    let onlineFriends: IOnlineFriends[] = []
 
@@ -34,17 +34,18 @@ export const initSocketIO = (app: Application) => {
       return onlineFriends.find((user) => user.userId === userId)
    }
 
-   io.on('connection', (socket) => {
+   socketIo.on('connection', (socket) => {
       socket.on('newUser', (userId) => {
          addNewUser(userId, socket.id)
       })
 
       socket.on('join_room', (args: { chatRoomId: string[] }) => {
          socket.join(args.chatRoomId)
-         console.log('JoinRoom socket ID: ', args.chatRoomId)
       })
 
-      socket.on('disconnect', () => removeUser(socket.id))
+      socket.on('disconnect', () => {
+         removeUser(socket.id)
+      })
    })
-   return { io, onlineFriends, getUser }
+   return { io: socketIo, onlineFriends, getUser }
 }
