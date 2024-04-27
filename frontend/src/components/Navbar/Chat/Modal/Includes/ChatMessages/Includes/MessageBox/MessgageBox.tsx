@@ -16,6 +16,7 @@ const MessgageBox: React.FC<{
 }> = ({ fullName, selectedProfilePicturePath }) => {
    const {
       chatRef,
+      messageBoxRef,
       chatMsg,
       chatImagePath,
       handleChangeTextWithEmoji,
@@ -37,7 +38,7 @@ const MessgageBox: React.FC<{
             />
             <Typography variant='body1'>{fullName}</Typography>
          </ProfileSection>
-         <StyledMessageBox>
+         <StyledMessageBox ref={messageBoxRef}>
             {allMessages ? (
                allMessages.map((message) => (
                   <MessageItem
