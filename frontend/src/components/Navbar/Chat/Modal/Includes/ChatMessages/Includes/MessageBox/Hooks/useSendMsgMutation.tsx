@@ -1,4 +1,4 @@
-import useMessage from './useMessage'
+import { useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setChatMessage } from '@/reduxStore/slices/ChatSlice'
 
@@ -6,14 +6,16 @@ import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { IMessages } from '@/Chat/Types'
 
+import useMessage from './useMessage'
 import useSendMsgSocket from './Sockets/useSendMsgSocket'
 
 const useSendMsgMutation = () => {
    const dispatch = useAppDispatch()
-   const { selectedChatWithUserId, chatId } = useAppSelector((state) => state.chat)
+   const { selectedChatWithUserId, chatId, messageLabels } = useAppSelector((state) => state.chat)
    const {
       chatMsg,
       chatRef,
+      messageBoxRef,
       chatImagePath,
       setChatImagePath,
       handleChatMsg,
@@ -21,6 +23,14 @@ const useSendMsgMutation = () => {
       restoreTextField,
    } = useMessage()
    useSendMsgSocket()
+
+   useEffect(() => {
+      const element = messageBoxRef.current
+      if (element) {
+         element.scrollIntoView({ behavior: 'smooth' })
+         element.scrollTop = element.scrollHeight
+      }
+   }, [messageBoxRef, messageLabels])
 
    const chatMutateFn = async () => {
       return (await axios.post('/chat/add-chat-msg', {
@@ -45,6 +55,7 @@ const useSendMsgMutation = () => {
    return {
       chatMsg,
       chatRef,
+      messageBoxRef,
       chatImagePath,
       setChatImagePath,
       handleChatMsg,
