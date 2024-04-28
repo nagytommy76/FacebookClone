@@ -3,17 +3,17 @@ import useSendMsgMutation from './Hooks/useSendMsgMutation'
 import { useAppSelector } from '@/reduxStore/store'
 import { selectMessagesByChatId } from '@/reduxStore/slices/ChatSlice'
 
-import { StyledMessageBoxContainer, ProfileSection, StyledMessageBox } from './Styles'
-import Typography from '@mui/material/Typography'
+import { StyledMessageBoxContainer, StyledMessageBox } from './Styles'
 
+import Profile from './Profile/Profile'
 const AddTextBase = dynamic(() => import('@/Base/AddTextBase/AddTextBase'))
-const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
 const MessageItem = dynamic(() => import('../MessageItem/MessageItem'))
 
 const MessgageBox: React.FC<{
    fullName: string
    selectedProfilePicturePath: string
-}> = ({ fullName, selectedProfilePicturePath }) => {
+   chatFirendId: string
+}> = ({ fullName, chatFirendId, selectedProfilePicturePath }) => {
    const {
       chatRef,
       messageBoxRef,
@@ -29,15 +29,11 @@ const MessgageBox: React.FC<{
 
    return (
       <StyledMessageBoxContainer>
-         <ProfileSection>
-            <ChatAvatar
-               width={60}
-               height={60}
-               fullName={fullName}
-               selectedProfilePicturePath={selectedProfilePicturePath}
-            />
-            <Typography variant='body1'>{fullName}</Typography>
-         </ProfileSection>
+         <Profile
+            chatFirendId={chatFirendId}
+            fullName={fullName}
+            selectedProfilePicturePath={selectedProfilePicturePath}
+         />
          <StyledMessageBox ref={messageBoxRef}>
             {allMessages ? (
                allMessages.map((message) => (

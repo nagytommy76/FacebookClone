@@ -9,14 +9,6 @@ export const StyledMessageBoxContainer = styled('section')({
    flexDirection: 'column',
    justifyContent: 'center',
 })
-
-export const ProfileSection = styled('div')({
-   width: '100%',
-
-   display: 'flex',
-   alignItems: 'center',
-})
-
 export const StyledMessageBox = styled(Paper)(({ theme }) => ({
    backgroundColor: theme.palette.secondary.main,
    boxShadow: 'none',
