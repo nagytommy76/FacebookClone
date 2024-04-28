@@ -7,7 +7,6 @@ import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { IMessages } from '@/Chat/Types'
 
 import useMessage from './useMessage'
-import useSendMsgSocket from './Sockets/useSendMsgSocket'
 
 const useSendMsgMutation = () => {
    const dispatch = useAppDispatch()
@@ -22,7 +21,6 @@ const useSendMsgMutation = () => {
       handleChangeTextWithEmoji,
       restoreTextField,
    } = useMessage()
-   useSendMsgSocket()
 
    useEffect(() => {
       const element = messageBoxRef.current
