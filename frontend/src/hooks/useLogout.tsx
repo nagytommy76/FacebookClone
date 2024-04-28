@@ -5,6 +5,8 @@ import { axiosInstance as axios } from '../utils/axiosSetup/AxiosInstance'
 import { useAppDispatch } from '../utils/redux/store'
 import { setLogoutUser } from '../utils/redux/slices/AuthSlice'
 
+import { socket } from '@/src/utils/socketIo'
+
 const useLogout = () => {
    const dispatch = useAppDispatch()
    const router = useRouter()
@@ -16,6 +18,9 @@ const useLogout = () => {
 
    const logout = async () => {
       try {
+         socket.on('disconnect', (reason) => {
+            console.log(reason)
+         })
          const response = await axios.post('/auth/logout')
          console.log(response.status)
          if (response.status === 200) {

@@ -1,6 +1,6 @@
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 
-import { useAppDispatch } from '@/reduxStore/store'
+import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
 import { setMessageLabels, setChatId, setSelectedChatWithUserId } from '@/reduxStore/slices/ChatSlice'
 import { useQuery } from '@tanstack/react-query'
 
@@ -8,13 +8,14 @@ import type { IChat } from '@/src/components/Navbar/Chat/Types'
 
 const useFillMessageLabels = () => {
    const dispatch = useAppDispatch()
+   const { isLoggedIn, userId } = useAppSelector((state) => state.auth)
 
    const queryFunction = async () => {
       return (await axios.get('/chat/get-all-chats')) as AxiosResponse<{ foundChat: IChat[] }>
    }
 
    const {} = useQuery({
-      queryKey: ['getMessageLabels'],
+      queryKey: ['getMessageLabels', isLoggedIn, userId],
       queryFn: queryFunction,
       onSuccess(data) {
          const foundChat = data.data.foundChat
