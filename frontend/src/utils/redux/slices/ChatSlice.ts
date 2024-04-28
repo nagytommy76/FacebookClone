@@ -12,6 +12,7 @@ type ChatType = {
    selectedChatWithUserId: string | null
    isChatModalOpen: boolean
    messageLabels: IndexedMessageLabel | null
+   isOnlineFriends: { [friendId: string]: boolean } | null
 }
 
 const initialState: ChatType = {
@@ -19,6 +20,7 @@ const initialState: ChatType = {
    isChatModalOpen: false,
    selectedChatWithUserId: null,
    messageLabels: null,
+   isOnlineFriends: null,
 }
 // https://www.linkedin.com/pulse/typescript-index-signatures-4-examples-type-safe-dynamic-efimenko-u0ivf/
 export const ChatSlice = createSlice({
@@ -63,6 +65,24 @@ export const ChatSlice = createSlice({
             console.log('NULL a messageLabels vagy chatId')
          }
       },
+      setOnlineFriends: (state, action: PayloadAction<{ friendId: string }>) => {
+         const friendId = action.payload.friendId
+         const onlineFriends: {
+            [key: string]: boolean
+         } = {}
+
+         onlineFriends[friendId] = false
+         if (state.isOnlineFriends) {
+            state.isOnlineFriends = Object.assign(state.isOnlineFriends, onlineFriends)
+         } else {
+            state.isOnlineFriends = onlineFriends
+         }
+      },
+      setOnlineStatus: (state, action: PayloadAction<{ friendId: string; status: boolean }>) => {
+         if (state.isOnlineFriends) {
+            state.isOnlineFriends[action.payload.friendId] = action.payload.status
+         }
+      },
    },
 })
 
@@ -73,6 +93,8 @@ export const {
    setSingleMessageLabel,
    setChatId,
    setChatMessage,
+   setOnlineFriends,
+   setOnlineStatus,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
