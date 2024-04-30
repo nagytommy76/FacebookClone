@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setChatMessage } from '@/reduxStore/slices/ChatSlice'
+import { socket } from '@/src/utils/socketIo'
 
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
@@ -15,7 +16,9 @@ const useSendMsgMutation = () => {
       chatMsg,
       chatRef,
       messageBoxRef,
+      typingStatus,
       chatImagePath,
+      handleTyping,
       setChatImagePath,
       handleChatMsg,
       handleChangeTextWithEmoji,
@@ -46,6 +49,7 @@ const useSendMsgMutation = () => {
          dispatch(
             setChatMessage({ addedMessage: data.data.addedMessages, foundChatId: data.data.foundChatId })
          )
+         handleTyping(0)
          restoreTextField()
       },
    })
@@ -55,6 +59,7 @@ const useSendMsgMutation = () => {
       chatRef,
       messageBoxRef,
       chatImagePath,
+      typingStatus,
       setChatImagePath,
       handleChatMsg,
       handleChangeTextWithEmoji,
