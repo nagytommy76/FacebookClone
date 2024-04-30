@@ -59,6 +59,10 @@ export const initSocketIO = (app: Application) => {
          socket.join(args.chatRoomId)
       })
 
+      socket.on('chat:typing', (args: { isTyping: boolean; chatMsgLength: number; chatId: string }) =>
+         socket.broadcast.to(args.chatId).emit('chat:typingResponse', args)
+      )
+
       socket.on('disconnect', () => {
          removeUser(socket.id, socket)
       })
