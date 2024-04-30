@@ -10,6 +10,7 @@ export const StyledMessageBoxContainer = styled('section')({
    justifyContent: 'center',
 })
 export const StyledMessageBox = styled(Paper)(({ theme }) => ({
+   position: 'relative',
    backgroundColor: theme.palette.secondary.main,
    boxShadow: 'none',
    height: '500px',
