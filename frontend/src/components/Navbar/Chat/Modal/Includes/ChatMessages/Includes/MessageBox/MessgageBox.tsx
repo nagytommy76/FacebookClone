@@ -6,6 +6,7 @@ import { selectMessagesByChatId } from '@/reduxStore/slices/ChatSlice'
 import { StyledMessageBoxContainer, StyledMessageBox } from './Styles'
 
 import Profile from './Profile/Profile'
+import TypingIndicator from './TypingIndicator/TypingIndicator'
 const AddTextBase = dynamic(() => import('@/Base/AddTextBase/AddTextBase'))
 const MessageItem = dynamic(() => import('../MessageItem/MessageItem'))
 
@@ -17,6 +18,7 @@ const MessgageBox: React.FC<{
    const {
       chatRef,
       messageBoxRef,
+      typingStatus,
       chatMsg,
       chatImagePath,
       handleChangeTextWithEmoji,
@@ -35,19 +37,22 @@ const MessgageBox: React.FC<{
             selectedProfilePicturePath={selectedProfilePicturePath}
          />
          <StyledMessageBox ref={messageBoxRef}>
-            {allMessages ? (
-               allMessages.map((message) => (
-                  <MessageItem
-                     key={message._id}
-                     isRightContent={loggedInUserId != message.receiverUserId}
-                     message={message}
-                  />
-               ))
-            ) : (
-               <>
-                  <p>Nincs chat</p>
-               </>
-            )}
+            <>
+               {allMessages ? (
+                  allMessages.map((message) => (
+                     <MessageItem
+                        key={message._id}
+                        isRightContent={loggedInUserId != message.receiverUserId}
+                        message={message}
+                     />
+                  ))
+               ) : (
+                  <>
+                     <p>Nincs chat</p>
+                  </>
+               )}
+               <TypingIndicator typingStatus={typingStatus} />
+            </>
          </StyledMessageBox>
          <AddTextBase
             reference={chatRef}
