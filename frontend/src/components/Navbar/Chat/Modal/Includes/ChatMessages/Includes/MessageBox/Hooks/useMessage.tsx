@@ -5,6 +5,7 @@ import useTypingSocket from './Sockets/useTypingSocket'
 import useSendMsgSocket from './Sockets/useSendMsgSocket'
 
 // https://dev.to/novu/building-a-chat-app-with-socketio-and-react-2edj
+
 const useMessage = () => {
    const chatRef = useRef<HTMLTextAreaElement>()
    const messageBoxRef = useRef<HTMLDivElement | null>(null)
