@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, Dispatch, SetStateAction } from 'react'
 import { socket } from '@/src/utils/socketIo'
 
 import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
@@ -11,7 +11,7 @@ interface IChatArgs {
    socketId?: string
 }
 
-const useSendMsgSocket = () => {
+const useSendMsgSocket = (setTypingStatus: Dispatch<SetStateAction<boolean>>) => {
    const dispatch = useAppDispatch()
    const loggedInUserId = useAppSelector((state) => state.auth.userId)
    useEffect(() => {
@@ -19,6 +19,8 @@ const useSendMsgSocket = () => {
          // loggedInUserId == args.addedMessages.receiverUserId -> azért kell, hogy ha egyezik csak akkor dispatch->setChatMessage
          // Különben 2szer írja be a msg-t, broadcast-tel backenden megoldani!!!
          if (loggedInUserId == args.addedMessages.receiverUserId) {
+            // Itt kéne nekem a typinmgStatus-t false-ra tenni
+            setTypingStatus(false)
             dispatch(setChatMessage({ addedMessage: args.addedMessages, foundChatId: args.foundChatId }))
          }
       }
@@ -27,7 +29,7 @@ const useSendMsgSocket = () => {
       return () => {
          socket.off('chat:sendMsg', sendChatMsg)
       }
-   }, [dispatch, loggedInUserId])
+   }, [dispatch, loggedInUserId, setTypingStatus])
 
    return null
 }
