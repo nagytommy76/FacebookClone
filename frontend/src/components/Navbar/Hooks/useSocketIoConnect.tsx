@@ -3,10 +3,7 @@ import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setOnlineStatus } from '@/reduxStore/slices/ChatSlice'
 import { socket } from '@/src/utils/socketIo'
 
-import useSendMsgSocket from '@/Chat/Modal/Includes/ChatMessages/Includes/MessageBox/Hooks/Sockets/useSendMsgSocket'
-
 const useSocketIoConnect = () => {
-   useSendMsgSocket()
    const dispatch = useAppDispatch()
    const userId = useAppSelector((state) => state.auth.userId)
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
