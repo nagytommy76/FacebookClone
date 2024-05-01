@@ -5,6 +5,7 @@ import TabPanel from '@mui/lab/TabPanel'
 import { StyledChatMessagesContainer } from './Styles'
 
 const MessgageBox = dynamic(() => import('./Includes/MessageBox/MessgageBox'))
+const Profile = dynamic(() => import('./Includes/MessageBox/Profile/Profile'))
 
 const ChatMessages = () => {
    const messageLabels = useAppSelector((state) => state.chat.messageLabels)
@@ -15,9 +16,15 @@ const ChatMessages = () => {
             Object.values(messageLabels).map((value) => (
                <TabPanel sx={{ height: '100%' }} key={value._id} value={value._id}>
                   <MessgageBox
-                     chatFirendId={value.chatWithParticipant._id}
-                     fullName={`${value.chatWithParticipant.firstName} ${value.chatWithParticipant.sureName}`}
-                     selectedProfilePicturePath={value.chatWithParticipant.selectedProfilePicture[0].path}
+                     ProfileSection={
+                        <Profile
+                           chatFirendId={value.chatWithParticipant._id}
+                           fullName={`${value.chatWithParticipant.firstName} ${value.chatWithParticipant.sureName}`}
+                           selectedProfilePicturePath={
+                              value.chatWithParticipant.selectedProfilePicture[0].path
+                           }
+                        />
+                     }
                   />
                </TabPanel>
             ))

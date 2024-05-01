@@ -5,16 +5,13 @@ import { selectMessagesByChatId } from '@/reduxStore/slices/ChatSlice'
 
 import { StyledMessageBoxContainer, StyledMessageBox } from './Styles'
 
-import Profile from './Profile/Profile'
 import TypingIndicator from './TypingIndicator/TypingIndicator'
 const AddTextBase = dynamic(() => import('@/Base/AddTextBase/AddTextBase'))
 const MessageItem = dynamic(() => import('../MessageItem/MessageItem'))
 
 const MessgageBox: React.FC<{
-   fullName: string
-   selectedProfilePicturePath: string
-   chatFirendId: string
-}> = ({ fullName, chatFirendId, selectedProfilePicturePath }) => {
+   ProfileSection: React.ReactNode
+}> = ({ ProfileSection }) => {
    const {
       chatRef,
       messageBoxRef,
@@ -31,11 +28,7 @@ const MessgageBox: React.FC<{
 
    return (
       <StyledMessageBoxContainer>
-         <Profile
-            chatFirendId={chatFirendId}
-            fullName={fullName}
-            selectedProfilePicturePath={selectedProfilePicturePath}
-         />
+         {ProfileSection}
          <StyledMessageBox ref={messageBoxRef}>
             <>
                {allMessages ? (
