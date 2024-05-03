@@ -1,7 +1,10 @@
 import dynamic from 'next/dynamic'
-import useSendMsgMutation from './Hooks/useSendMsgMutation'
 import { useAppSelector } from '@/reduxStore/store'
 import { selectMessagesByChatId } from '@/reduxStore/slices/ChatSlice'
+
+import useSendMsgMutation from './Hooks/useSendMsgMutation'
+import useMessage from './Hooks/useMessage'
+import useUploadChatImg from './Hooks/useUploadChatImg'
 
 import { StyledMessageBoxContainer, StyledMessageBox } from './Styles'
 
@@ -12,19 +15,21 @@ const MessageItem = dynamic(() => import('../MessageItem/MessageItem'))
 const MessgageBox: React.FC<{
    ProfileSection: React.ReactNode
 }> = ({ ProfileSection }) => {
+   const loggedInUserId = useAppSelector((state) => state.auth.userId)
+   const allMessages = useAppSelector(selectMessagesByChatId)
    const {
       chatRef,
       messageBoxRef,
-      typingStatus,
       chatMsg,
       chatImagePath,
-      handleChangeTextWithEmoji,
+      typingStatus,
       handleChatMsg,
+      handleChangeTextWithEmoji,
+      restoreTextField,
       setChatImagePath,
-      handleAddChatMutate,
-   } = useSendMsgMutation()
-   const loggedInUserId = useAppSelector((state) => state.auth.userId)
-   const allMessages = useAppSelector(selectMessagesByChatId)
+   } = useMessage()
+   const { handleAddChatMutate } = useSendMsgMutation(messageBoxRef, chatMsg, restoreTextField)
+   useUploadChatImg(chatImagePath, handleAddChatMutate)
 
    return (
       <StyledMessageBoxContainer>
