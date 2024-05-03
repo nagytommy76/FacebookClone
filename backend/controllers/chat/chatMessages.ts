@@ -7,10 +7,11 @@ interface ISaveChatMsgType extends IJWTUserType {
       chatId: string
       chatMsg: string
       selectedChatWithUserId: string
+      chatImagePath: string | undefined
    }
 }
 export const saveChatMessageController = async (request: ISaveChatMsgType, response: Response) => {
-   const { chatId, chatMsg, selectedChatWithUserId } = request.body
+   const { chatId, chatMsg, chatImagePath, selectedChatWithUserId } = request.body
    try {
       const foundChat = await ChatModel.findOne({
          _id: chatId,
@@ -21,6 +22,7 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
          updatedAt: new Date(),
          message: chatMsg,
          receiverUserId: selectedChatWithUserId,
+         image: chatImagePath,
       })
 
       // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
