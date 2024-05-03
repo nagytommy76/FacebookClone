@@ -55,10 +55,25 @@ const useUploadFirebase = () => {
          return null
       }
    }
+
+   const handleChatImgUpload = async (chatId: string, chatImage: File) => {
+      try {
+         const imageReference = ref(firebaseStorage, `${chatId}/${v4()}_${chatImage.name}`)
+         await uploadBytes(imageReference, chatImage)
+         const currentImageLink = await getDownloadURL(imageReference)
+
+         return currentImageLink
+      } catch (error) {
+         console.log(error)
+         return null
+      }
+   }
+
    return {
       handleMultipleImageUploadToFirebase,
       handleSingleImageUploadToFirebase,
       handleSingleProfileImageUploadToFirebase,
+      handleChatImgUpload,
    }
 }
 

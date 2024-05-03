@@ -18,9 +18,7 @@ const useLogout = () => {
 
    const logout = async () => {
       try {
-         socket.on('disconnect', (reason) => {
-            console.log(reason)
-         })
+         socket.on('disconnect', (reason) => {})
          const response = await axios.post('/auth/logout')
          console.log(response.status)
          if (response.status === 200) {
