@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { MutableRefObject, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setChatMessage } from '@/reduxStore/slices/ChatSlice'
 
@@ -6,22 +6,13 @@ import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { IMessages } from '@/Chat/Types'
 
-import useMessage from './useMessage'
-
-const useSendMsgMutation = () => {
+const useSendMsgMutation = (
+   messageBoxRef: MutableRefObject<HTMLDivElement | null>,
+   chatMsg: string,
+   restoreTextField: () => void
+) => {
    const dispatch = useAppDispatch()
    const { selectedChatWithUserId, chatId, messageLabels } = useAppSelector((state) => state.chat)
-   const {
-      chatMsg,
-      chatRef,
-      messageBoxRef,
-      typingStatus,
-      chatImagePath,
-      setChatImagePath,
-      handleChatMsg,
-      handleChangeTextWithEmoji,
-      restoreTextField,
-   } = useMessage()
 
    useEffect(() => {
       const element = messageBoxRef.current
@@ -31,11 +22,12 @@ const useSendMsgMutation = () => {
       }
    }, [messageBoxRef, messageLabels])
 
-   const chatMutateFn = async () => {
+   const chatMutateFn = async (chatImagePath?: string) => {
       return (await axios.post('/chat/add-chat-msg', {
          chatMsg,
          selectedChatWithUserId,
          chatId,
+         chatImagePath,
       })) as AxiosResponse<{ addedMessages: IMessages; foundChatId: string }>
    }
 
@@ -52,15 +44,7 @@ const useSendMsgMutation = () => {
    })
 
    return {
-      chatMsg,
-      chatRef,
-      messageBoxRef,
-      chatImagePath,
-      typingStatus,
-      setChatImagePath,
-      handleChatMsg,
-      handleChangeTextWithEmoji,
-      handleAddChatMutate: () => mutate(),
+      handleAddChatMutate: (chatImagePath?: string) => mutate(chatImagePath),
    }
 }
 
