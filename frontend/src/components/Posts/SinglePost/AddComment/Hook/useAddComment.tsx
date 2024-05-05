@@ -31,6 +31,10 @@ const useAddComment = (reference: React.MutableRefObject<HTMLTextAreaElement | u
       },
    })
 
+   const addSingleImagePath = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCommentImagePath(event.target.files)
+   }
+
    const handleChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value.length === 0) setIsSendDisabled(true)
       else setIsSendDisabled(false)
@@ -52,6 +56,7 @@ const useAddComment = (reference: React.MutableRefObject<HTMLTextAreaElement | u
       handleChangeText,
       handleSendComment,
       handleChangeTextWithEmoji,
+      addSingleImagePath,
       setCommentImagePath,
       commentImagePath,
       commentText,

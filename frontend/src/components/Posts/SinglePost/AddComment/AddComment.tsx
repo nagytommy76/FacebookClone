@@ -10,6 +10,7 @@ const AddComment: React.FC<{
       commentText,
       isSendDisabled,
       commentImagePath,
+      addSingleImagePath,
       setCommentImagePath,
       handleChangeText,
       handleSendComment,
@@ -26,6 +27,7 @@ const AddComment: React.FC<{
             handleChangeTextWithEmoji={handleChangeTextWithEmoji}
             handleChangeText={handleChangeText}
             handleAddSinglePostComment={handleSendComment}
+            addSingleImagePath={addSingleImagePath}
             setCommentImagePath={setCommentImagePath}
             commentImagePath={commentImagePath}
             updateCommentMutate={() => {}}

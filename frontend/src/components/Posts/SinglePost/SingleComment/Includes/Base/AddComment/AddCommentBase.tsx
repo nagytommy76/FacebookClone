@@ -11,6 +11,7 @@ const AddCommentBase: React.FC<{
    handleUpdateCommentAnswerMutate: () => void
    handleChangeTextWithEmoji: (emoji?: string) => void
    handleAddSinglePostComment: () => void
+   addSingleImagePath: (event: React.ChangeEvent<HTMLInputElement>) => void
    setCommentImagePath: React.Dispatch<React.SetStateAction<FileList | null>>
    commentImagePath: FileList | null
    reference: React.MutableRefObject<HTMLTextAreaElement | undefined>
@@ -26,6 +27,7 @@ const AddCommentBase: React.FC<{
    updateCommentMutate,
    handleChangeText,
    handleChangeTextWithEmoji,
+   addSingleImagePath,
    setCommentImagePath,
    commentImagePath,
    reference,
@@ -64,7 +66,7 @@ const AddCommentBase: React.FC<{
             onClickFunction={handleClick}
             handleChangeValue={handleChangeText}
             handleChangeValueWithEmoji={handleChangeTextWithEmoji}
-            setImagePath={setCommentImagePath}
+            setImagePath={addSingleImagePath}
          />
          {commentImagePath && (
             <DisplayCommentImage
