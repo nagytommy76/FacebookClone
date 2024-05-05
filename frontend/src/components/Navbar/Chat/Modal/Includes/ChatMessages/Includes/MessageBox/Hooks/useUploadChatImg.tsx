@@ -1,28 +1,27 @@
-import { useEffect } from 'react'
 import { useAppSelector } from '@/reduxStore/store'
 
 import useUploadFirebase from '@/hooks/useUploadFirebase'
 
-const useUploadChatImg = (
-   chatImagePath: FileList | null,
-   handleAddChatMutate: (chatImagePath?: string) => void
-) => {
+const useUploadChatImg = (handleAddChatMutate: (chatImagePath?: string) => void) => {
    const { handleChatImgUpload } = useUploadFirebase()
    const chatId = useAppSelector((state) => state.chat.chatId)
 
-   useEffect(() => {
-      const handleUploadChatMsgImg = async () => {
-         if (chatImagePath && chatId) {
-            const uploadedImagePath = await handleChatImgUpload(chatId, chatImagePath[0])
-            return uploadedImagePath
-         }
+   const handleUploadChatMsgImg = async (singleImageFile: FileList | null) => {
+      if (chatId && singleImageFile) {
+         const uploadedImagePath = await handleChatImgUpload(chatId, singleImageFile[0])
+         return uploadedImagePath
       }
-      handleUploadChatMsgImg().then((uploadedImagePath) => {
-         if (uploadedImagePath) handleAddChatMutate(uploadedImagePath)
-      })
-   }, [chatImagePath, chatId, handleChatImgUpload, handleAddChatMutate])
+   }
 
-   return null
+   /**
+    * @param event React.ChangeEvent<HTMLInputElement> Image
+    */
+   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const uploadedImagePath = await handleUploadChatMsgImg(event.target.files)
+      if (uploadedImagePath) handleAddChatMutate(uploadedImagePath)
+   }
+
+   return handleUpload
 }
 
 export default useUploadChatImg
