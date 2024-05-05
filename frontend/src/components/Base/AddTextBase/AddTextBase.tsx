@@ -18,7 +18,7 @@ const AddTextBase: React.FC<{
    multiline?: boolean
    handleChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void
    handleChangeValueWithEmoji: (emoji?: string) => void
-   setImagePath: React.Dispatch<React.SetStateAction<FileList | null>>
+   setImagePath: (event: React.ChangeEvent<HTMLInputElement>) => void
    onClickFunction: () => void
 }> = ({
    handleChangeValue,
@@ -47,12 +47,7 @@ const AddTextBase: React.FC<{
                variant='standard'
                fullWidth
             />
-            <ImageSelector
-               addPictures={(event) => setImagePath(event.target.files)}
-               maxFileCount={1}
-               multiple={false}
-               size='small'
-            />
+            <ImageSelector addPictures={setImagePath} maxFileCount={1} multiple={false} size='small' />
             <AddEmojiButton handleChangeTextWithEmoji={handleChangeValueWithEmoji} />
             <Tooltip title={tooltipTitle} placement='top' arrow>
                <span>
