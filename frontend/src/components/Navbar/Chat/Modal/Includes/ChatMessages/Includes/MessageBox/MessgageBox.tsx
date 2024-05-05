@@ -21,15 +21,13 @@ const MessgageBox: React.FC<{
       chatRef,
       messageBoxRef,
       chatMsg,
-      chatImagePath,
       typingStatus,
       handleChatMsg,
       handleChangeTextWithEmoji,
       restoreTextField,
-      setChatImagePath,
    } = useMessage()
    const { handleAddChatMutate } = useSendMsgMutation(messageBoxRef, chatMsg, restoreTextField)
-   useUploadChatImg(chatImagePath, handleAddChatMutate)
+   const handleUploadChatMsgImg = useUploadChatImg(handleAddChatMutate)
 
    return (
       <StyledMessageBoxContainer>
@@ -58,7 +56,7 @@ const MessgageBox: React.FC<{
             value={chatMsg}
             isSendBtnDisabled={chatMsg.length < 1}
             placeholderText='Üzenet írása...'
-            setImagePath={setChatImagePath}
+            setImagePath={handleUploadChatMsgImg}
             onClickFunction={handleAddChatMutate}
             handleChangeValue={handleChatMsg}
             handleChangeValueWithEmoji={handleChangeTextWithEmoji}

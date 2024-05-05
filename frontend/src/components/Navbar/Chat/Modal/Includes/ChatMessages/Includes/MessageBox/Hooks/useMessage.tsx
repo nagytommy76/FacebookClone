@@ -9,7 +9,6 @@ const useMessage = () => {
    const chatRef = useRef<HTMLTextAreaElement>()
    const messageBoxRef = useRef<HTMLDivElement | null>(null)
    const [chatMsg, setChatMsg] = useState<string>('')
-   const [chatImagePath, setChatImagePath] = useState<FileList | null>(null)
    const [typingStatus, setTypingStatus] = useState<boolean>(false)
    const handleChangeEmoji = useEmojiText(chatRef, setChatMsg)
 
@@ -30,17 +29,14 @@ const useMessage = () => {
    const restoreTextField = () => {
       handleChangeTextWithEmoji()
       setChatMsg('')
-      setChatImagePath(null)
    }
 
    return {
       chatRef,
       messageBoxRef,
       chatMsg,
-      chatImagePath,
       typingStatus,
       handleChangeTextWithEmoji,
-      setChatImagePath,
       handleChatMsg,
       restoreTextField,
    }
