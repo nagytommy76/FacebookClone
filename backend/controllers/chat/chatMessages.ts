@@ -1,6 +1,7 @@
 import { ChatModel } from '../../models/chat/chatModel'
 import { Response, Request } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import { Types } from 'mongoose'
 
 interface ISaveChatMsgType extends IJWTUserType {
    body: {
@@ -38,12 +39,34 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
          }
       }
 
-      // await foundChat.save()
+      await foundChat.save()
+
       response.status(200).json({
          message: chatMsg,
          addedMessages: foundChat.messages[foundChat.messages.length - 1],
          foundChatId: foundChat._id,
       })
+   } catch (error) {
+      console.log(error)
+      response.status(500).json(error)
+   }
+}
+
+interface IMessagesRead extends IJWTUserType {
+   body: {
+      currentChatId: string
+   }
+}
+
+export const setMessagesRead = async (request: IMessagesRead, response: Response) => {
+   const loggedInUserId = new Types.ObjectId(request.user?.userId)
+   const { currentChatId } = request.body
+   try {
+      const foundUsersMessages = await ChatModel.find({
+         _id: currentChatId,
+      })
+
+      response.status(200).json(foundUsersMessages)
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
