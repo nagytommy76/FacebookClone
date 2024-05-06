@@ -42,6 +42,26 @@ export const getChatMessageLabels = async (request: IJWTUserType, response: Resp
             },
          },
          {
+            $addFields: {
+               totalUnreadMsgCount: {
+                  $sum: {
+                     $size: {
+                        $filter: {
+                           input: '$messages',
+                           as: 'message',
+                           cond: {
+                              $and: [
+                                 { $eq: ['$$message.isRead', false] },
+                                 { $eq: ['$$message.receiverUserId', loggedInUserId] },
+                              ],
+                           },
+                        },
+                     },
+                  },
+               },
+            },
+         },
+         {
             $unwind: {
                path: '$chatWithParticipant',
             },
