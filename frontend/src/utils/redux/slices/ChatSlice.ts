@@ -83,6 +83,11 @@ export const ChatSlice = createSlice({
             state.isOnlineFriends[action.payload.friendId] = action.payload.status
          }
       },
+      setTotalUnreadMsgCount: (state, action: PayloadAction<{ currentChatId: string; count: number }>) => {
+         if (state.messageLabels) {
+            state.messageLabels[action.payload.currentChatId].totalUnreadMsgCount = action.payload.count
+         }
+      },
    },
 })
 
@@ -95,6 +100,7 @@ export const {
    setChatMessage,
    setOnlineFriends,
    setOnlineStatus,
+   setTotalUnreadMsgCount,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
@@ -120,4 +126,14 @@ export const selectMessagesByChatId = createSelector([messageLabels, chatId], (m
       messages = messageLabels[chatId].messages
    }
    return messages
+})
+
+export const selectAllUnreadMessageCount = createSelector([messageLabels], (messageLabels) => {
+   let AllCountedMsg: number = 0
+   if (messageLabels) {
+      Object.values(messageLabels).map((value) => {
+         AllCountedMsg += value.totalUnreadMsgCount
+      })
+   }
+   return AllCountedMsg
 })
