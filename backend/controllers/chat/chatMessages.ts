@@ -1,7 +1,6 @@
 import { ChatModel } from '../../models/chat/chatModel'
-import { Response, Request } from 'express'
+import { Response } from 'express'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
-import { Types } from 'mongoose'
 
 interface ISaveChatMsgType extends IJWTUserType {
    body: {
@@ -59,14 +58,24 @@ interface IMessagesRead extends IJWTUserType {
 }
 
 export const setMessagesRead = async (request: IMessagesRead, response: Response) => {
-   const loggedInUserId = new Types.ObjectId(request.user?.userId)
+   const loggedInUserId = request.user?.userId
    const { currentChatId } = request.body
    try {
-      const foundUsersMessages = await ChatModel.find({
+      const foundUsersMessages = await ChatModel.findOne({
          _id: currentChatId,
+      }).select('messages')
+      if (!foundUsersMessages) return response.status(404).json({ msg: 'Chat not found' })
+
+      foundUsersMessages.messages = foundUsersMessages.messages.map((message) => {
+         if (message.receiverUserId == loggedInUserId) {
+            message.isRead = true
+         }
+         return message
       })
 
-      response.status(200).json(foundUsersMessages)
+      await foundUsersMessages.save()
+
+      response.status(200).json({ totalUnreadMsgCount: 0 })
    } catch (error) {
       console.log(error)
       response.status(500).json(error)
