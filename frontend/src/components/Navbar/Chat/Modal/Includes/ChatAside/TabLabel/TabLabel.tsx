@@ -3,14 +3,16 @@ import { useAppSelector } from '@/reduxStore/store'
 
 import { StyledTabText } from './Styles'
 import Typography from '@mui/material/Typography'
+import Badge from '@mui/material/Badge'
 import type { IPopulatedUserData } from '@/Chat/Types'
 
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
 
 const TabLabel: React.FC<{
    participant: IPopulatedUserData
+   totalUnreadMsgCount?: number
    captionText?: string | null
-}> = ({ participant, captionText = '' }) => {
+}> = ({ participant, captionText = '', totalUnreadMsgCount = 0 }) => {
    const isOnlineFriends = useAppSelector((state) => state.chat.isOnlineFriends)
    return (
       <>
@@ -19,14 +21,16 @@ const TabLabel: React.FC<{
             selectedProfilePicturePath={participant.selectedProfilePicture[0].path}
             isRead={isOnlineFriends && isOnlineFriends[participant._id] ? false : true}
          />
-         <StyledTabText>
-            <Typography variant='body1'>
-               {participant.firstName} {participant.sureName}
-            </Typography>
-            <Typography variant='caption' sx={{ textOverflow: 'ellipsis' }}>
-               {captionText}
-            </Typography>
-         </StyledTabText>
+         <Badge badgeContent={totalUnreadMsgCount} color='error'>
+            <StyledTabText>
+               <Typography variant='body1'>
+                  {participant.firstName} {participant.sureName}
+               </Typography>
+               <Typography variant='caption' sx={{ textOverflow: 'ellipsis' }}>
+                  {captionText}
+               </Typography>
+            </StyledTabText>
+         </Badge>
       </>
    )
 }
