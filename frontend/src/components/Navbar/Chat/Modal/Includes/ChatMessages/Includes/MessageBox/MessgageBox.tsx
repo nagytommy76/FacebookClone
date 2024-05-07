@@ -5,6 +5,7 @@ import { selectMessagesByChatId } from '@/reduxStore/slices/ChatSlice'
 import useSendMsgMutation from './Hooks/useSendMsgMutation'
 import useMessage from './Hooks/useMessage'
 import useUploadChatImg from './Hooks/useUploadChatImg'
+import useSetScroll from './Hooks/useSetScroll'
 
 import { StyledMessageBoxContainer, StyledMessageBox } from './Styles'
 
@@ -26,8 +27,9 @@ const MessgageBox: React.FC<{
       handleChangeTextWithEmoji,
       restoreTextField,
    } = useMessage()
-   const { handleAddChatMutate } = useSendMsgMutation(messageBoxRef, chatMsg, restoreTextField)
+   const { handleAddChatMutate } = useSendMsgMutation(chatMsg, restoreTextField)
    const handleUploadChatMsgImg = useUploadChatImg(handleAddChatMutate)
+   useSetScroll(messageBoxRef)
 
    return (
       <StyledMessageBoxContainer>

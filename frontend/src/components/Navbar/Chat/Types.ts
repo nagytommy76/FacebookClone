@@ -19,6 +19,7 @@ export interface IChat {
    createdAt: string
    updatedAt: string
    messages: IMessages[]
+   totalUnreadMsgCount: number
 }
 
 export interface IMessages {
