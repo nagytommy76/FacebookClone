@@ -83,6 +83,14 @@ export const ChatSlice = createSlice({
             state.isOnlineFriends[action.payload.friendId] = action.payload.status
          }
       },
+      incrementTotalUnreadMsgCount: (
+         state,
+         action: PayloadAction<{ currentChatId: string; count: number }>
+      ) => {
+         if (state.messageLabels) {
+            state.messageLabels[action.payload.currentChatId].totalUnreadMsgCount += action.payload.count
+         }
+      },
       setTotalUnreadMsgCount: (state, action: PayloadAction<{ currentChatId: string; count: number }>) => {
          if (state.messageLabels) {
             state.messageLabels[action.payload.currentChatId].totalUnreadMsgCount = action.payload.count
@@ -101,6 +109,7 @@ export const {
    setOnlineFriends,
    setOnlineStatus,
    setTotalUnreadMsgCount,
+   incrementTotalUnreadMsgCount,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
