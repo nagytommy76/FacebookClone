@@ -8,10 +8,7 @@ const useChangeFunction = () => {
    const dispatch = useAppDispatch()
    const { onMutateFunction } = useSetReadMsg()
 
-   const onChangeFunction = (event: React.SyntheticEvent, newChatId: string) => {
-      messageLabels && dispatch(setSelectedChatWithUserId(messageLabels[newChatId].chatWithParticipant._id))
-      dispatch(setChatId(newChatId))
-
+   const setUnreadMsg = (newChatId: string) => {
       if (messageLabels && messageLabels[newChatId].totalUnreadMsgCount > 0) {
          setTimeout(() => {
             onMutateFunction()
@@ -19,7 +16,13 @@ const useChangeFunction = () => {
       }
    }
 
-   return onChangeFunction
+   const onChangeFunction = (event: React.SyntheticEvent, newChatId: string) => {
+      messageLabels && dispatch(setSelectedChatWithUserId(messageLabels[newChatId].chatWithParticipant._id))
+      dispatch(setChatId(newChatId))
+      setUnreadMsg(newChatId)
+   }
+
+   return { onChangeFunction, setUnreadMsg }
 }
 
 export default useChangeFunction

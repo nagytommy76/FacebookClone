@@ -10,7 +10,7 @@ const TabLabel = dynamic(() => import('./TabLabel/TabLabel'))
 const ChatAside = () => {
    const messageLabels = useAppSelector((state) => state.chat.messageLabels)
    const lastMessageById = useAppSelector(selectLastMessageById)
-   const onChangeFunction = useChangeFunction()
+   const { onChangeFunction, setUnreadMsg } = useChangeFunction()
 
    return (
       <StyledChatAside>
@@ -24,6 +24,7 @@ const ChatAside = () => {
             {messageLabels &&
                Object.values(messageLabels).map((value) => (
                   <StyledTab
+                     onClick={() => setUnreadMsg(value._id)}
                      key={value._id}
                      value={value._id}
                      label={
