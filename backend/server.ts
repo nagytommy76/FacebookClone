@@ -4,6 +4,7 @@ import connectDB from './config/connectDB'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
 import { initSocketIO } from './config/socketIo'
 import type { ISocketRequest } from './types'
 
@@ -28,6 +29,8 @@ app.use(
       origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:6060'],
    })
 )
+
+app.use(helmet())
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
