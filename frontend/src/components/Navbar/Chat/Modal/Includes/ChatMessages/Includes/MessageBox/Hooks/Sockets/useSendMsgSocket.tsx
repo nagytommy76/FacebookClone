@@ -2,7 +2,7 @@ import { useEffect, Dispatch, SetStateAction } from 'react'
 import { socket } from '@/src/utils/socketIo'
 
 import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
-import { setChatMessage } from '@/reduxStore/slices/ChatSlice'
+import { setChatMessage, incrementTotalUnreadMsgCount } from '@/reduxStore/slices/ChatSlice'
 import type { IMessages } from '@/Chat/Types'
 
 interface IChatArgs {
@@ -18,10 +18,11 @@ const useSendMsgSocket = (setTypingStatus: Dispatch<SetStateAction<boolean>>) =>
       const sendChatMsg = (args: IChatArgs) => {
          // loggedInUserId == args.addedMessages.receiverUserId -> azért kell, hogy ha egyezik csak akkor dispatch->setChatMessage
          // Különben 2szer írja be a msg-t, broadcast-tel backenden megoldani!!!
+         // A fogadó félnek állítom be ->
          if (loggedInUserId == args.addedMessages.receiverUserId) {
-            // Itt kéne nekem a typinmgStatus-t false-ra tenni
             setTypingStatus(false)
             dispatch(setChatMessage({ addedMessage: args.addedMessages, foundChatId: args.foundChatId }))
+            dispatch(incrementTotalUnreadMsgCount({ count: 1, currentChatId: args.foundChatId }))
          }
       }
 

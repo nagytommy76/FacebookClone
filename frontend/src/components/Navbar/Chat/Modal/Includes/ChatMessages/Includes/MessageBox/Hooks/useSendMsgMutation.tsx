@@ -9,7 +9,7 @@ const useSendMsgMutation = (chatMsg: string, restoreTextField: () => void) => {
    const dispatch = useAppDispatch()
    const { selectedChatWithUserId, chatId } = useAppSelector((state) => state.chat)
 
-   const chatMutateFn = async (chatImagePath?: string) => {
+   const chatMutateFn = async (chatImagePath: string = '') => {
       return (await axios.post('/chat/add-chat-msg', {
          chatMsg,
          selectedChatWithUserId,
@@ -30,9 +30,11 @@ const useSendMsgMutation = (chatMsg: string, restoreTextField: () => void) => {
       },
    })
 
-   return {
-      handleAddChatMutate: (chatImagePath?: string) => mutate(chatImagePath),
+   const handleAddChatMutate = (chatImagePath: string = '') => {
+      mutate(chatImagePath)
    }
+
+   return handleAddChatMutate
 }
 
 export default useSendMsgMutation
