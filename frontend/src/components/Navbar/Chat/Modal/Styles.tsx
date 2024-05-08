@@ -2,8 +2,8 @@ import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
-   width: '80%',
-   minHeight: '700px',
+   width: '70%',
+   minHeight: '70%',
    position: 'absolute',
    top: '50%',
    left: '50%',
@@ -12,8 +12,8 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
 
-   [theme.breakpoints.down('md')]: {
+   [theme.breakpoints.down('xl')]: {
       width: '95%',
-      minHeight: '85%',
+      height: '90%',
    },
 }))

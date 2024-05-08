@@ -7,13 +7,13 @@ export const StyledMessageBoxContainer = styled('section')({
 
    display: 'flex',
    flexDirection: 'column',
-   justifyContent: 'center',
+   justifyContent: 'space-between',
 })
 export const StyledMessageBox = styled(Paper)(({ theme }) => ({
    position: 'relative',
    backgroundColor: theme.palette.secondary.main,
    boxShadow: 'none',
-   height: '500px',
+   height: '700px',
 
    margin: '1rem 0',
    padding: '.5rem',
@@ -21,4 +21,9 @@ export const StyledMessageBox = styled(Paper)(({ theme }) => ({
 
    display: 'flex',
    flexDirection: 'column',
+
+   [theme.breakpoints.down('xl')]: {
+      width: '95%',
+      height: '90%',
+   },
 }))

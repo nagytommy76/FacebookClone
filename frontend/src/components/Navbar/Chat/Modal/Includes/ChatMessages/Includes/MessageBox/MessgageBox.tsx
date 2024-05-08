@@ -27,7 +27,7 @@ const MessgageBox: React.FC<{
       handleChangeTextWithEmoji,
       restoreTextField,
    } = useMessage()
-   const { handleAddChatMutate } = useSendMsgMutation(chatMsg, restoreTextField)
+   const handleAddChatMutate = useSendMsgMutation(chatMsg, restoreTextField)
    const handleUploadChatMsgImg = useUploadChatImg(handleAddChatMutate)
    useSetScroll(messageBoxRef)
 
@@ -59,7 +59,7 @@ const MessgageBox: React.FC<{
             isSendBtnDisabled={chatMsg.length < 1}
             placeholderText='Üzenet írása...'
             setImagePath={handleUploadChatMsgImg}
-            onClickFunction={handleAddChatMutate}
+            onClickFunction={() => handleAddChatMutate()}
             handleChangeValue={handleChatMsg}
             handleChangeValueWithEmoji={handleChangeTextWithEmoji}
          />
