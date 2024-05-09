@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import type { IPostTypes, PostModel } from '../../controllers/posts/types/PostTypes'
 
-const likes = {
+export const likesSchemaObject = {
    type: [
       {
          userId: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -28,7 +28,7 @@ const commentAnswers = {
          commentDepth: { type: Number, required: true, default: 1 },
          answeredAt: { type: Date, required: false, default: new Date() },
          commentImage: { type: String, required: false, default: null },
-         likes,
+         likes: likesSchemaObject,
       },
    ],
    required: false,
@@ -39,7 +39,7 @@ const PostsSchema = new Schema(
       userId: { type: Schema.Types.ObjectId, ref: 'User' },
       description: String,
       postedPicturesPath: { type: [String], required: false },
-      likes,
+      likes: likesSchemaObject,
       comments: {
          type: [
             {
@@ -48,7 +48,7 @@ const PostsSchema = new Schema(
                answeredAt: { type: Date, required: false, default: new Date() },
                commentImage: { type: String, required: false, default: null },
                commentAnswers,
-               likes,
+               likes: likesSchemaObject,
             },
          ],
          required: false,

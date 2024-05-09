@@ -1,6 +1,8 @@
 import { Schema, model, Types } from 'mongoose'
 import { IChatModel, IChatSchema } from './Types'
 
+import { likesSchemaObject } from '../posts/posts'
+
 const ChatSchema = new Schema<IChatSchema, IChatModel>(
    {
       participants: { type: [{ participant: { type: Types.ObjectId, ref: 'User' } }] },
@@ -12,6 +14,7 @@ const ChatSchema = new Schema<IChatSchema, IChatModel>(
             receiverUserId: { type: Types.ObjectId, ref: 'User' },
             message: { type: String },
             image: { type: String, default: '' },
+            reaction: likesSchemaObject,
          },
       ],
    },
