@@ -1,4 +1,4 @@
-import { StyledPaperContainer, StyledImage } from './Styles'
+import { StyledPaperContainer, StyledImage } from '../../Posts/SinglePost/Like/Styles'
 import Tooltip from '@mui/material/Tooltip'
 
 import LikeAnimated from '@/assets/likeAnimated.svg'
