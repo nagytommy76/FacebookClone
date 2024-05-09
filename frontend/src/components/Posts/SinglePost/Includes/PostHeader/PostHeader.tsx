@@ -10,7 +10,7 @@ import {
    StyledProfileImage,
 } from './HeaderStyles'
 
-import CustomTooltipTitle from '@/Base/CustomTooltipTitle'
+import CustomTooltipTitle from '@/Base/LikeTooltip/CustomTooltipTitle'
 import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
 import OptionsMenu from './Includes/OptionsMenu'
 import TimeAgo from './Includes/TimeAgo'

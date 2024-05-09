@@ -19,7 +19,7 @@ const AddTextBase: React.FC<{
    handleChangeValue: (event: React.ChangeEvent<HTMLInputElement>) => void
    handleChangeValueWithEmoji: (emoji?: string) => void
    setImagePath: (event: React.ChangeEvent<HTMLInputElement>) => void
-   onClickFunction: () => void
+   onClickFunction: (anyArgument: any) => void
 }> = ({
    handleChangeValue,
    handleChangeValueWithEmoji,

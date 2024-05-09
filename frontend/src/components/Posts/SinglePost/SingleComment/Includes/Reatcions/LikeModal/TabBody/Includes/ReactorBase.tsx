@@ -6,7 +6,7 @@ import { ReactorElement, StyledImageContainer, StyledIconImage } from '../Style'
 import { StyledProfileImage } from '@/styles/BaseStyles'
 import Typography from '@mui/material/Typography'
 
-import CustomTooltipTitle from '@/Base/CustomTooltipTitle'
+import CustomTooltipTitle from '@/src/components/Base/LikeTooltip/CustomTooltipTitle'
 const ProfileCard = dynamic(() => import('@/Base/ProfileCard/DetailsTooltipTitle'))
 
 const ReactorBase: React.FC<{ reactor: IReactors; children: React.ReactNode }> = ({ reactor, children }) => {
