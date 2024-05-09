@@ -7,8 +7,7 @@ import type { IPostLike } from '@/types/LikeTypes'
 import Button from '@mui/material/Button'
 import { StyledCommentLikeButton } from './Styles'
 
-import CustomTooltipTitle from '../../../Base/CustomTooltipTitle'
-import Reactions from './Reactions'
+import LikeTooltip from '@/Base/LikeTooltip/LikeTooltip'
 
 const Like: React.FC<{
    postId: string
@@ -32,39 +31,31 @@ const Like: React.FC<{
 
    return (
       <>
-         <CustomTooltipTitle
-            placement='top'
-            title={
-               <Reactions
-                  setLike={
-                     isPostLike
-                        ? handleSendPostLike
-                        : isChildComment
-                        ? handleSendAnswerLike
-                        : handleSendCommentLike
-                  }
-               />
+         <LikeTooltip
+            setLikeFunction={
+               isPostLike ? handleSendPostLike : isChildComment ? handleSendAnswerLike : handleSendCommentLike
             }
-         >
-            {isPostLike ? (
-               <Button
-                  sx={{ color: likeButtonColor, textTransform: 'none' }}
-                  disableRipple
-                  onClick={handleLikeBtnClick}
-                  fullWidth
-                  startIcon={likeBtnIcon}
-               >
-                  {likeBtnText}
-               </Button>
-            ) : (
-               <StyledCommentLikeButton
-                  onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
-                  style={{ color: likeButtonColor }}
-               >
-                  Tetszik
-               </StyledCommentLikeButton>
-            )}
-         </CustomTooltipTitle>
+            LikeCommentButtonComponent={
+               isPostLike ? (
+                  <Button
+                     sx={{ color: likeButtonColor, textTransform: 'none' }}
+                     disableRipple
+                     onClick={handleLikeBtnClick}
+                     fullWidth
+                     startIcon={likeBtnIcon}
+                  >
+                     {likeBtnText}
+                  </Button>
+               ) : (
+                  <StyledCommentLikeButton
+                     onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
+                     style={{ color: likeButtonColor }}
+                  >
+                     Tetszik
+                  </StyledCommentLikeButton>
+               )
+            }
+         ></LikeTooltip>
          {children}
       </>
    )
