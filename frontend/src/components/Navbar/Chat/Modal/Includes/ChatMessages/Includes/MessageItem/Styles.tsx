@@ -24,7 +24,7 @@ export const StyledTextBoxContainer = styled('div', {
    shouldForwardProp: (prop) => prop !== 'isRightContent',
 })<{ isRightContent: boolean }>(({ isRightContent, theme }) => ({
    display: 'flex',
-   flexDirection: 'row',
+   flexDirection: isRightContent ? 'row' : 'row-reverse',
    alignItems: 'center',
 }))
 

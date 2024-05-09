@@ -23,5 +23,5 @@ export const StyledTab = styled(Tab)({
 })
 
 export const StyledChatAside = styled('aside')(({ theme }) => ({
-   flex: 2,
+   flex: 1,
 }))
