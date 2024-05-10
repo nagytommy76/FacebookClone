@@ -3,8 +3,9 @@ import type { IMessages } from '@/Chat/Types'
 
 import { StyledTextContainer, StyledTextBox, StyledTextBoxContainer } from './Styles'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+
+import RemoveButton from './Includes/RemoveButton/RemoveButton'
+import Reaction from './Includes/Reaction/Reaction'
 
 const ImageDisplay = dynamic(() => import('./Includes/ImageDisplay'))
 const MessageItemHead = dynamic(() => import('./Includes/MessageItemHead'))
@@ -22,11 +23,8 @@ const MessageItem: React.FC<{
             )}
             {message.message.length !== 0 && (
                <StyledTextBoxContainer isRightContent={isRightContent}>
-                  {isRightContent && (
-                     <IconButton aria-label='delete' size='small'>
-                        <MoreHorizIcon fontSize='inherit' />
-                     </IconButton>
-                  )}
+                  <Reaction messageId={message._id} />
+                  {isRightContent && <RemoveButton messageId={message._id} />}
                   <StyledTextBox isRightContent={isRightContent}>
                      <Typography fontWeight={350} fontSize={13} variant='caption'>
                         {message.message}
