@@ -96,6 +96,15 @@ export const ChatSlice = createSlice({
             state.messageLabels[action.payload.currentChatId].totalUnreadMsgCount = action.payload.count
          }
       },
+      setNewMessages: (state, action: PayloadAction<{ updatedMessages: IMessages[]; chatId: string }>) => {
+         if (state.messageLabels) {
+            // state.messageLabels[state.chatId].messages = state.messageLabels[state.chatId].messages.filter(
+            //    (message) => message._id !== action.payload.messageId
+            // )
+            console.log(action.payload.updatedMessages)
+            state.messageLabels[action.payload.chatId].messages = action.payload.updatedMessages
+         }
+      },
    },
 })
 
@@ -110,6 +119,7 @@ export const {
    setOnlineStatus,
    setTotalUnreadMsgCount,
    incrementTotalUnreadMsgCount,
+   setNewMessages,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
