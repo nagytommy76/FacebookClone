@@ -63,6 +63,10 @@ export const initSocketIO = (app: Application) => {
          socket.broadcast.to(args.chatId).emit('chat:typingResponse', args)
       )
 
+      socket.on('chat:deleteMsg', (args) => {
+         socket.broadcast.to(args.chatId).emit('chat:deleteMsgResponse', args)
+      })
+
       socket.on('disconnect', () => {
          removeUser(socket.id, socket)
       })
