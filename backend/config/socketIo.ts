@@ -1,10 +1,9 @@
 import type { Application } from 'express'
 import { createServer } from 'https'
 import { Server, Socket } from 'socket.io'
-
-import { getAcceptedFriendsModel } from '@/controllers/friends/getFriends'
-import { Types } from 'mongoose'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+
+import type { IMessage } from '../models/chat/Types'
 
 export interface IOnlineFriends {
    userId: string
@@ -49,6 +48,7 @@ export const initSocketIO = (app: Application) => {
       return onlineFriends.find((user) => user.userId === userId)
    }
 
+   // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
    socketIo.on('connection', (socket) => {
       socket.on('newUser', async (userId) => {
          addNewUser(userId, socket.id)
@@ -59,13 +59,21 @@ export const initSocketIO = (app: Application) => {
          socket.join(args.chatRoomId)
       })
 
+      // CHAT ---------------------------------------------------------------------
+
       socket.on('chat:typing', (args: { isTyping: boolean; chatMsgLength: number; chatId: string }) =>
          socket.broadcast.to(args.chatId).emit('chat:typingResponse', args)
       )
 
+      socket.on('chat:sendMsg', (args: { addedMessage: IMessage[]; foundChatId: string }) => {
+         socket.broadcast.to(args.foundChatId).emit('chat:sendMsgResponse', args)
+      })
+
       socket.on('chat:deleteMsg', (args) => {
          socket.broadcast.to(args.chatId).emit('chat:deleteMsgResponse', args)
       })
+
+      // --------------------------------------------------------------------------
 
       socket.on('disconnect', () => {
          removeUser(socket.id, socket)

@@ -25,19 +25,6 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
          image: chatImagePath,
       })
 
-      // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
-      // chat:sendMsg
-      if (request.getUser !== undefined) {
-         const toSendUser = request.getUser(selectedChatWithUserId)
-         if (toSendUser !== undefined) {
-            request.ioSocket?.to(foundChat._id.toString()).emit('chat:sendMsg', {
-               socketId: toSendUser.socketId,
-               addedMessages: foundChat.messages[foundChat.messages.length - 1],
-               foundChatId: foundChat._id,
-            })
-         }
-      }
-
       await foundChat.save()
 
       response.status(200).json({
