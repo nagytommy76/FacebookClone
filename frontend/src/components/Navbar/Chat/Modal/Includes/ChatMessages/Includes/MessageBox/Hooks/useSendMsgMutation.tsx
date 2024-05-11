@@ -1,6 +1,8 @@
 import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setChatMessage } from '@/reduxStore/slices/ChatSlice'
 
+import { socket } from '@/src/utils/socketIo'
+
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { IMessages } from '@/Chat/Types'
@@ -22,10 +24,13 @@ const useSendMsgMutation = (chatMsg: string, restoreTextField: () => void) => {
       mutationKey: ['addChatMessage'],
       mutationFn: chatMutateFn,
       onSuccess(data, variables, context) {
-         console.log(data.data)
          dispatch(
             setChatMessage({ addedMessage: data.data.addedMessages, foundChatId: data.data.foundChatId })
          )
+         socket.emit('chat:sendMsg', {
+            addedMessage: data.data.addedMessages,
+            foundChatId: data.data.foundChatId,
+         })
          restoreTextField()
       },
    })
