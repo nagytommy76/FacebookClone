@@ -17,11 +17,10 @@ const useDeleteSocket = () => {
       const deleteChatMsg = (args: IArgs) => {
          dispatch(setNewMessages({ chatId: args.chatId, updatedMessages: args.updatedMessages }))
       }
-
-      socket.on('chat:deleteMessage', deleteChatMsg)
+      socket.on('chat:deleteMsgResponse', deleteChatMsg)
 
       return () => {
-         socket.off('chat:deleteMessage', deleteChatMsg)
+         socket.off('chat:deleteMsgResponse', deleteChatMsg)
       }
    }, [dispatch])
 

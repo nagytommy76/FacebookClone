@@ -1,6 +1,8 @@
 import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setNewMessages } from '@/reduxStore/slices/ChatSlice'
 
+import { socket } from '@/src/utils/socketIo'
+
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { IMessages } from '@/Chat/Types'
@@ -19,8 +21,10 @@ const useDeleteMutate = (messageId: string) => {
       mutationKey: ['DeleteSingleMessage'],
       mutationFn: deleteMutationFn,
       onSuccess(data, variables, context) {
-         console.log(data.data)
-         if (chatId) dispatch(setNewMessages({ updatedMessages: data.data.updatedMessages, chatId }))
+         if (chatId) {
+            dispatch(setNewMessages({ updatedMessages: data.data.updatedMessages, chatId }))
+            socket.emit('chat:deleteMsg', { updatedMessages: data.data.updatedMessages, chatId })
+         }
       },
    })
 
