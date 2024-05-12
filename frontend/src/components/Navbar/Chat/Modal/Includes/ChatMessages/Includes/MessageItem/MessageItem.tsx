@@ -24,7 +24,7 @@ const MessageItem: React.FC<{
             {message.message.length !== 0 && (
                <StyledTextBoxContainer isRightContent={isRightContent}>
                   <Reaction messageId={message._id} />
-                  {isRightContent && <RemoveButton messageId={message._id} />}
+                  {isRightContent && <RemoveButton messageImage={message.image} messageId={message._id} />}
                   <StyledTextBox isRightContent={isRightContent}>
                      <Typography fontWeight={350} fontSize={13} variant='caption'>
                         {message.message}

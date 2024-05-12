@@ -7,9 +7,10 @@ import IconButton from '@mui/material/IconButton'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
 const RemoveButton: React.FC<{
+   messageImage: string
    messageId: string
-}> = ({ messageId }) => {
-   const deleteMessageMutation = useDeleteMutate(messageId)
+}> = ({ messageId, messageImage }) => {
+   const deleteMessageMutation = useDeleteMutate(messageId, messageImage)
 
    const removeSingleMsg = () => {
       deleteMessageMutation()

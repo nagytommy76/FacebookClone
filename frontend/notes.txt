@@ -42,7 +42,8 @@ Lépések:
  - Majd amikor írok egy message-t akkor a már meglévő chatDB-hez adom hozzá (messages.push) az üzit.
  - A chat gomb megnyomásakor töltődjön be az összes "aktív" chat
 
-
+A friends nél is  átnézni, hogy a socketek jól vannak meghívva ->
+ - A controllerekből át tenni a socketIo.ts connection-be és broadcastelni mint chat nél
 
 
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
