@@ -24,7 +24,7 @@ const useDeleteMutate = (messageId: string, messageImage: string) => {
       mutationFn: deleteMutationFn,
       onSuccess: async (data, variables, context) => {
          if (chatId) {
-            await deleteImages([messageImage])
+            if (messageImage && messageImage.length > 0) await deleteImages([messageImage])
             dispatch(setNewMessages({ updatedMessages: data.data.updatedMessages, chatId }))
             socket.emit('chat:deleteMsg', { updatedMessages: data.data.updatedMessages, chatId })
          }
