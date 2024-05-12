@@ -33,5 +33,5 @@ export type SelectUserByIdType = {
    sureName: string
    email: string
    friends: IFriends[]
-   selectedProfilePicturePath: IProfilePicturePath
+   selectedProfilePicturePath: IProfilePicturePath[]
 }

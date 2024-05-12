@@ -19,7 +19,7 @@ export const deleteMessageController = async (request: IDeleteMessageRequest, re
 
       foundMessages.messages = foundMessages.messages.filter((message) => message._id != messageId)
 
-      //   await foundMessages.save()
+      await foundMessages.save()
 
       response.status(200).json({ msg: 'Message Deleted', updatedMessages: foundMessages.messages })
    } catch (error) {

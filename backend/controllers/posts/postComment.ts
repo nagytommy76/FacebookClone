@@ -75,7 +75,7 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          likedUser[0].firstName,
          likedUser[0].sureName,
          likedUser[0]._id,
-         likedUser[0].selectedProfilePicturePath.path,
+         likedUser[0].selectedProfilePicturePath[0].path,
          'isCommentLike'
       )
 
