@@ -17,7 +17,6 @@ const useLikeMutate = () => {
             reactionType: likeTypeFomInput,
             postId,
          })) as AxiosResponse<IPostLike[]>
-         postsDispatch({ type: 'ADD_POST_LIKE', payload: response.data })
          return response
       } catch (error) {
          console.log(error)
@@ -27,6 +26,9 @@ const useLikeMutate = () => {
    const { mutate } = useMutation({
       mutationKey: ['likePost'],
       mutationFn: handleSendLike,
+      onSuccess(data, variables, context) {
+         postsDispatch({ type: 'ADD_POST_LIKE', payload: data?.data })
+      },
    })
    return { mutatePostLike: mutate }
 }
