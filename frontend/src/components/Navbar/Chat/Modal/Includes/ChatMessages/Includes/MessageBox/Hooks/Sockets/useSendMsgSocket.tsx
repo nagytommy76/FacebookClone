@@ -1,4 +1,4 @@
-import { useEffect, Dispatch, SetStateAction } from 'react'
+import { useEffect, Dispatch, SetStateAction, useState } from 'react'
 import { socket } from '@/src/utils/socketIo'
 
 import { useAppDispatch } from '@/reduxStore/store'
@@ -12,12 +12,15 @@ interface IChatArgs {
 }
 
 const useSendMsgSocket = (setTypingStatus: Dispatch<SetStateAction<boolean>>) => {
+   const [chatAudio] = useState(new Audio('/sounds/facebook_messenger.mp3'))
    const dispatch = useAppDispatch()
+
    useEffect(() => {
       const sendChatMsg = (args: IChatArgs) => {
          setTypingStatus(false)
          dispatch(setChatMessage({ addedMessage: args.addedMessage, foundChatId: args.foundChatId }))
          dispatch(incrementTotalUnreadMsgCount({ count: 1, currentChatId: args.foundChatId }))
+         chatAudio.play()
       }
 
       socket.on('chat:sendMsgResponse', sendChatMsg)
@@ -25,7 +28,7 @@ const useSendMsgSocket = (setTypingStatus: Dispatch<SetStateAction<boolean>>) =>
       return () => {
          socket.off('chat:sendMsgResponse', sendChatMsg)
       }
-   }, [dispatch, setTypingStatus])
+   }, [dispatch, setTypingStatus, chatAudio])
 
    return null
 }
