@@ -20,10 +20,12 @@ const AddTextBase: React.FC<{
    handleChangeValueWithEmoji: (emoji?: string) => void
    setImagePath: (event: React.ChangeEvent<HTMLInputElement>) => void
    onClickFunction: (anyArgument: any) => void
+   onKeyEnterFunction?: (anyArgument: any) => void
 }> = ({
    handleChangeValue,
    handleChangeValueWithEmoji,
    onClickFunction,
+   onKeyEnterFunction,
    setImagePath,
    value,
    reference,
@@ -39,6 +41,7 @@ const AddTextBase: React.FC<{
                value={value}
                inputRef={reference}
                onChange={handleChangeValue}
+               onKeyDown={onKeyEnterFunction}
                id='chat-comment-input'
                name='chat-comment-input'
                placeholder={placeholderText}
