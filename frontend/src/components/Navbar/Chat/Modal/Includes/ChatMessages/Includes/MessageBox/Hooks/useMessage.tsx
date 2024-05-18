@@ -23,6 +23,13 @@ const useMessage = () => {
       setChatMsg(event.target.value)
    }
 
+   const onEnterKeyDown = (
+      event: React.KeyboardEvent,
+      handleAddChatMutate: (chatImagePath?: string) => void
+   ) => {
+      if (event.key === 'Enter') handleAddChatMutate()
+   }
+
    const handleChangeTextWithEmoji = (emoji: string = '') => {
       handleTyping(emoji.length)
       handleChangeEmoji(emoji)
@@ -40,6 +47,7 @@ const useMessage = () => {
       typingStatus,
       handleChangeTextWithEmoji,
       handleChatMsg,
+      onEnterKeyDown,
       restoreTextField,
    }
 }

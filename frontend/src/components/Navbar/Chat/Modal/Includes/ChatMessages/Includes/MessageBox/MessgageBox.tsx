@@ -26,6 +26,7 @@ const MessgageBox: React.FC<{
       handleChatMsg,
       handleChangeTextWithEmoji,
       restoreTextField,
+      onEnterKeyDown,
    } = useMessage()
    const handleAddChatMutate = useSendMsgMutation(chatMsg, restoreTextField)
    const handleUploadChatMsgImg = useUploadChatImg(handleAddChatMutate)
@@ -60,6 +61,7 @@ const MessgageBox: React.FC<{
             placeholderText='Üzenet írása...'
             setImagePath={handleUploadChatMsgImg}
             onClickFunction={() => handleAddChatMutate()}
+            onKeyEnterFunction={(event) => onEnterKeyDown(event, handleAddChatMutate)}
             handleChangeValue={handleChatMsg}
             handleChangeValueWithEmoji={handleChangeTextWithEmoji}
          />
