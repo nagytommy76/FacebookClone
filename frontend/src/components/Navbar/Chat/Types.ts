@@ -1,3 +1,4 @@
+import { ILike } from '@/src/types/LikeTypes'
 import { IProfilePicture } from '@/src/types/PostTypes'
 
 export interface IParticipants {
@@ -30,4 +31,5 @@ export interface IMessages {
    isRead?: boolean
    message: string
    image: string
+   reaction: ILike[]
 }
