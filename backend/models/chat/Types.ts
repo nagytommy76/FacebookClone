@@ -1,4 +1,5 @@
 import { Model, ObjectId } from 'mongoose'
+import type { ILike } from '@/controllers/Base/Types'
 
 export interface IMessage {
    _id?: ObjectId | string
@@ -8,6 +9,7 @@ export interface IMessage {
    isRead?: boolean
    message: string
    image?: string
+   reaction: ILike[]
 }
 export interface IChatSchema {
    participants: { participant: string | ObjectId; _id: string | ObjectId }[] // ref to users
