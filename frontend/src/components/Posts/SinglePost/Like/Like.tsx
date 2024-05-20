@@ -2,7 +2,7 @@ import useButtonColor from './Hooks/useButtonColor'
 import useHandleFn from './Hooks/useHandleFn'
 import useLikePostSocket from './Hooks/Sockets/useLikePostSocket'
 import useRemoveLikeSocket from './Hooks/Sockets/useRemoveLikeSocket'
-import type { IPostLike } from '@/types/LikeTypes'
+import type { ILike } from '@/types/LikeTypes'
 
 import Button from '@mui/material/Button'
 import { StyledCommentLikeButton } from './Styles'
@@ -11,7 +11,7 @@ import LikeTooltip from '@/Base/LikeTooltip/LikeTooltip'
 
 const Like: React.FC<{
    postId: string
-   postLikes: IPostLike[]
+   postLikes: ILike[]
    isPostLike?: boolean
    commentId: string
    children?: React.ReactNode

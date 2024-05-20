@@ -1,13 +1,13 @@
 import { useContext, useEffect } from 'react'
 import { PostContext } from '@/PostContext/PostContextProvider'
 import { socket } from '@/src/utils/socketIo'
-import type { IPostLike } from '@/src/types/LikeTypes'
+import type { ILike } from '@/src/types/LikeTypes'
 
 const useSocket = () => {
    const { postsDispatch } = useContext(PostContext)
 
    useEffect(() => {
-      const onLikePost = (args: { likeType: IPostLike; toModifyPostId: string }) => {
+      const onLikePost = (args: { likeType: ILike; toModifyPostId: string }) => {
          postsDispatch({
             type: 'ADD_SINGLE_SOCKET_POST_LIKE',
             payload: { likes: args.likeType, toModifyPostId: args.toModifyPostId },

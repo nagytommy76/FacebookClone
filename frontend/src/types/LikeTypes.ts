@@ -17,7 +17,7 @@ export interface ICommentAnswers {
    commentDepth: number
    answeredAt: string
    commentImage: string | null
-   likes: IPostLike[]
+   likes: ILike[]
 }
 
 export interface IPostComment {
@@ -28,12 +28,12 @@ export interface IPostComment {
    }>
    comment: string
    answeredAt: string
-   likes: IPostLike[]
+   likes: ILike[]
    commentImage: string | null
    commentAnswers: ICommentAnswers[]
 }
 // Ez egyelőre nem biztos, hogy így lesz ------------------------------
-export interface IPostLike {
+export interface ILike {
    _id: string
    userId: IPopulatedUserId | string
    reactionType: {

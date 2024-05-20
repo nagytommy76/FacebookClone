@@ -2,11 +2,11 @@ import { useContext } from 'react'
 import { PostContext } from '@/PostContext/PostContextProvider'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
-import type { IPostLike } from '@/src/types/LikeTypes'
+import type { ILike } from '@/src/types/LikeTypes'
 
 const deleteLikeFn = async (postId: string) => {
    return (await axios.delete('/post/post-like-delete', { data: { postId } })) as AxiosResponse<{
-      filteredLikes: IPostLike[]
+      filteredLikes: ILike[]
    }>
 }
 

@@ -8,14 +8,14 @@ import useLikeDelete from './delete/useLikeDelete'
 import useLikeCommentDelete from './delete/useLikeCommentDelete'
 import useAnswerLikeDelete from './delete/useAnswerLikeDelete'
 import useLikeIdDelete from './useLikeIdDelete'
-import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
+import type { ILike, LikeTypes } from '@/types/LikeTypes'
 
 // A commentId az lehet answerId is
 const useHandleFn = (
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void,
    postId: string,
    commentId: string,
-   postLikes: IPostLike[]
+   postLikes: ILike[]
 ) => {
    const {
       commentReducer: { singleComment },

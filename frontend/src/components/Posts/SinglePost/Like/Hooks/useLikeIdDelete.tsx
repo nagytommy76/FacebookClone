@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useAppSelector } from '@/src/utils/redux/store'
 
-import type { IPostLike, LikeTypes } from '@/src/types/LikeTypes'
+import type { ILike, LikeTypes } from '@/src/types/LikeTypes'
 
 const useLikeIdDelete = (
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void,
-   postLikes: IPostLike[]
+   postLikes: ILike[]
 ) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const [likeIdToDelete, setLikeIdToDelete] = useState<string>('')

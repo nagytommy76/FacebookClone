@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { AxiosResponse, axiosInstance as axios } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 import { AnswerContext } from '@/AnswersContext/AnswersContext'
-import type { IPostLike } from '@/src/types/LikeTypes'
+import type { ILike } from '@/src/types/LikeTypes'
 
 interface IAnswerLike {
    commentId: string
@@ -13,7 +13,7 @@ interface IAnswerLike {
 
 interface IAnswerLikeResponse {
    commentAnswersIndex: number
-   updatedCommentAnswerLikes: IPostLike[]
+   updatedCommentAnswerLikes: ILike[]
 }
 const handleSendAnswerLike = async ({ commentId, postId, commentAnswerId, reactionType }: IAnswerLike) => {
    try {

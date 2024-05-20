@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { PostContext } from '../../../../MainPage/Context/PostContextProvider'
 import { axiosInstance as axios, AxiosResponse } from '@/utils/axiosSetup/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
-import type { IPostLike, LikeTypes } from '@/types/LikeTypes'
+import type { ILike, LikeTypes } from '@/types/LikeTypes'
 
 interface ISendLike {
    likeTypeFomInput: LikeTypes
@@ -16,7 +16,7 @@ const useLikeMutate = () => {
          const response = (await axios.post('/post/post-like', {
             reactionType: likeTypeFomInput,
             postId,
-         })) as AxiosResponse<IPostLike[]>
+         })) as AxiosResponse<ILike[]>
          return response
       } catch (error) {
          console.log(error)
