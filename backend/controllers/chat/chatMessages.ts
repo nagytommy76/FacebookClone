@@ -23,6 +23,7 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
          message: chatMsg,
          receiverUserId: selectedChatWithUserId,
          image: chatImagePath,
+         reaction: [],
       })
 
       await foundChat.save()

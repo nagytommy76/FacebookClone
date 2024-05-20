@@ -4,7 +4,9 @@ import { createNewChatController } from '../../controllers/chat/chat'
 import { saveChatMessageController, setMessagesRead } from '../../controllers/chat/chatMessages'
 import { getChatMessageLabels } from '../../controllers/chat/getChats'
 import { deleteMessageController } from '../../controllers/chat/removeMessage'
-import { likeMessageController } from '../../controllers/chat/likeMessage'
+import LikeChatController from '../../controllers/chat/likeMessage'
+
+const LikeController = new LikeChatController()
 
 const router = Router()
 
@@ -13,7 +15,7 @@ router.get('/get-all-chats', authenticateAccessTokenForApi, getChatMessageLabels
 router.post('/add-chat-msg', authenticateAccessTokenForApi, saveChatMessageController)
 router.post('/create-chat', authenticateAccessTokenForApi, createNewChatController)
 // Like
-router.post('/like-message', authenticateAccessTokenForApi, likeMessageController)
+router.post('/like-message', authenticateAccessTokenForApi, LikeController.likeMessageController)
 
 router.put('/set-read-messages', authenticateAccessTokenForApi, setMessagesRead)
 
