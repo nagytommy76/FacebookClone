@@ -1,6 +1,6 @@
 import { Response } from 'express'
 import { Posts as PostModel } from '../../../../models/posts/posts'
-import BaseLikeController from '../../Base/baseLike'
+import BaseLikeController from '../../../Base/BaseLikeController'
 
 import type { IPostRemoveLikeRequest } from '../../types/PostTypes'
 

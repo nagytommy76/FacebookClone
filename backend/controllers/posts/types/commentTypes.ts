@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongoose'
-import type { IPostLike } from './PostTypes'
+import type { ILike } from '../../Base/Types'
 
 export interface ICommentAnswer {
    _id?: string | ObjectId
@@ -9,7 +9,7 @@ export interface ICommentAnswer {
    commentDepth: number
    answeredAt: string
    commentImage: string | null
-   likes: IPostLike[]
+   likes: ILike[]
 }
 
 export interface IPostComment {
@@ -28,5 +28,5 @@ export interface IPostComment {
    parentCommentId: string | null
    commentDepth: number
    commentAnswers: ICommentAnswer[]
-   likes: IPostLike[]
+   likes: ILike[]
 }

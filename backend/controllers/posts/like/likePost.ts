@@ -3,9 +3,9 @@ import { Posts as PostModel } from '../../../models/posts/posts'
 import { User as UserModel } from '../../../models/user/user'
 import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
 
-import BaseLikeController from '../Base/baseLike'
+import BasePostController from '../Base/basePost'
 
-export default class LikePost extends BaseLikeController {
+export default class LikePost extends BasePostController {
    getPostLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
       const { postId } = request.body
       try {

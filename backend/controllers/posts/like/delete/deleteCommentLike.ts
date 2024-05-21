@@ -1,5 +1,5 @@
 import { Response } from 'express'
-import BaseLikeController from '../../Base/baseLike'
+import BaseLikeController from '../../../Base/BaseLikeController'
 import { ICommentRemoveLikeRequest } from '../../types/PostTypes'
 import { Posts as PostModel } from '../../../../models/posts/posts'
 

@@ -1,30 +1,14 @@
 import { Model, ObjectId } from 'mongoose'
 import { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
 import type { IPostComment } from './commentTypes'
-
-export interface IReactionTypes {
-   [index: string]: boolean
-   isLike: boolean
-   isLove: boolean
-   isCare: boolean
-   isHaha: boolean
-   isWow: boolean
-   isSad: boolean
-   isAngry: boolean
-}
-
-export interface IPostLike {
-   _id?: string | ObjectId
-   userId: ObjectId
-   reactionType: IReactionTypes
-}
+import type { ILike } from '../../Base/Types'
 
 export interface IPostTypes {
    _id: ObjectId
    userId: ObjectId
    description: string
    postedPicturesPath: string[]
-   likes: IPostLike[]
+   likes: ILike[]
    comments: IPostComment[]
    createdAt: number
    updatedAt: number
