@@ -2,7 +2,7 @@ import { ChatModel } from '../../models/chat/chatModel'
 import { Response } from 'express'
 import BaseLikeController from '../Base/BaseLikeController'
 
-import type { ILikeChatMsgRequest } from './Types/Types'
+import type { ILikeChatMsgRequest, IMessageLikeCountRequest } from './Types/Types'
 
 export default class LikeChatController extends BaseLikeController {
    likeMessageController = async (request: ILikeChatMsgRequest, response: Response) => {
@@ -32,6 +32,15 @@ export default class LikeChatController extends BaseLikeController {
          await foundSingleMessage.save()
 
          response.status(200).json(foundSingleMessage)
+      } catch (error) {
+         console.log(error)
+         response.status(500).json(error)
+      }
+   }
+
+   getMsgReactionByTypeAndCountController = async (request: IMessageLikeCountRequest, response: Response) => {
+      const { messageId } = request.body
+      try {
       } catch (error) {
          console.log(error)
          response.status(500).json(error)

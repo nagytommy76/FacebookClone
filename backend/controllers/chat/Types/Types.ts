@@ -8,3 +8,9 @@ export interface ILikeChatMsgRequest extends IJWTUserType {
       likeType: LikeTypes
    }
 }
+
+export interface IMessageLikeCountRequest extends IJWTUserType {
+   body: {
+      messageId: string
+   }
+}
