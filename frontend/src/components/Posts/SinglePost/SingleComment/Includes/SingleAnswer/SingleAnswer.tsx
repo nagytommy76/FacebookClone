@@ -66,6 +66,7 @@ const SingleAnswer: React.FC<{ answer: ICommentAnswers }> = ({ answer }) => {
                   updateCommentMutate={updateCommentMutate}
                   handleSendCommentAnswer={saveAnswerMutate}
                   handleUpdateCommentAnswerMutate={handleUpdateCommentAnswerMutate}
+                  addSingleImagePath={() => {}}
                   handleAddSinglePostComment={() => {}}
                   commentImagePath={imagePath}
                   reference={reference}

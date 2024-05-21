@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
-import type { IPostLike } from '@/src/types/LikeTypes'
+import type { ILike } from '@/src/types/LikeTypes'
 
 import useGetComment from './Hook/useGetComment'
 
@@ -8,16 +8,16 @@ import { StyledCommentPaper, StyledCommentParagraph } from './Styles'
 
 import ReactionsSkeleton from '@/src/skeletons/Comments/Includes/ReactionsSkeleton'
 
-const Reactions = dynamic(() => import('../../../Reatcions/Reactions'), {
+const Reactions = dynamic(() => import('@/Base/LikeReactions/Reactions'), {
    loading: () => <ReactionsSkeleton />,
 })
-const LikeModal = dynamic(() => import('../../../Reatcions/LikeModal/LikeModal'))
+const LikeModal = dynamic(() => import('@/Base/LikeReactions/LikeModal/LikeModal'))
 
 const CommentBody: React.FC<{
    answerId: string
    commentId: string | undefined
    postId: string
-   likes: IPostLike[]
+   likes: ILike[]
    comment: string
    isChildComment?: boolean
 }> = ({ answerId, postId, likes, comment, isChildComment = false, commentId }) => {

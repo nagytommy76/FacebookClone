@@ -54,6 +54,7 @@ const SingleComment = () => {
                   setCommentImagePath={setImagePath}
                   updateCommentMutate={updateCommentMutate}
                   handleSendCommentAnswer={saveAnswerMutate}
+                  addSingleImagePath={() => {}}
                   handleUpdateCommentAnswerMutate={() => {}}
                   handleAddSinglePostComment={() => {}}
                   commentImagePath={imagePath}

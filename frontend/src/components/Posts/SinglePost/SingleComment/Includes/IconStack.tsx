@@ -2,7 +2,7 @@ import React from 'react'
 import useCommentLikeIcons from '../Hooks/useCommentLikeIcons'
 import type { IOrderedLikesCount } from '@/types/LikeTypes'
 
-import { IconStackStyle } from '../Includes/Reatcions/Styles'
+import { IconStackStyle } from '@/Base/LikeReactions/Styles'
 import { IconStackContainerStyle } from '../Styles'
 import Typography from '@mui/material/Typography'
 

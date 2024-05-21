@@ -4,7 +4,7 @@ import moment from 'moment'
 import useMoment from '@/src/hooks/useMoment'
 
 import Tooltip from '@mui/material/Tooltip'
-import type { IPostLike } from '@/src/types/LikeTypes'
+import type { ILike } from '@/src/types/LikeTypes'
 import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
 
 const Likes = dynamic(() => import('../../../../../Like/Like'))
@@ -13,7 +13,7 @@ const CommentFooter: React.FC<{
    handleSetAnswerOpen: () => void
    answerId: string
    postId: string
-   likes: IPostLike[]
+   likes: ILike[]
    answeredAt: string
    isChildComment?: boolean
 }> = ({ handleSetAnswerOpen, answerId, likes, postId, answeredAt, isChildComment = false }) => {

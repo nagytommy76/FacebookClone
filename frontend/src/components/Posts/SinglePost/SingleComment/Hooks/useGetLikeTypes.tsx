@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { IPostLike, IOrderedLikesCount } from '@/types/LikeTypes'
+import type { ILike, IOrderedLikesCount } from '@/types/LikeTypes'
 
 const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
    const requiredObj: any = {}
@@ -13,7 +13,7 @@ const pickHighest = (obj: IOrderedLikesCount, num = 7): IOrderedLikesCount => {
    return requiredObj
 }
 
-const useGetLikeTypes = (commentLikes: IPostLike[]) => {
+const useGetLikeTypes = (commentLikes: ILike[]) => {
    const [orderedCountedLike, setOrderedCountedLike] = useState<IOrderedLikesCount | null>(null)
    useEffect(() => {
       let collectObject: IOrderedLikesCount = {

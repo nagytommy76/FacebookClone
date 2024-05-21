@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
 import AllCommentContextProvider from '@/src/components/Posts/Context/AllCommentsContext'
 
-import Paper, { PaperProps } from '@mui/material/Paper'
+import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import {
@@ -20,10 +20,9 @@ import ImageSlideSkeleton from '@/Skeletons/SinglePost/ImageSlide'
 const ImageSlideComponent = dynamic(() => import('./Includes/ImageSlide/ImageSlide'), {
    loading: () => <ImageSlideSkeleton />,
 })
-const ReactionsContainer = dynamic(
-   () => import('./SingleComment/Includes/Reatcions/Container/ReactionsContainer'),
-   { loading: () => <ReactionsSkeleton /> }
-)
+const ReactionsContainer = dynamic(() => import('@/Base/LikeReactions/Container/ReactionsContainer'), {
+   loading: () => <ReactionsSkeleton />,
+})
 const CommentsDialog = dynamic(() => import('./SingleComment/Includes/CommentDialog/CommentDialog'))
 
 import CommentButton from './AddComment/CommentButton'
