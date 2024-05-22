@@ -39,8 +39,16 @@ export default class LikeChatController extends BaseLikeController {
    }
 
    getMsgReactionByTypeAndCountController = async (request: IMessageLikeCountRequest, response: Response) => {
-      const { messageId } = request.body
+      const { messageId, chatId } = request.body
       try {
+         const foundMessage = await ChatModel.findOne({
+            _id: chatId,
+            messages: { $elemMatch: { _id: messageId } },
+         }).select(['messages.$'])
+
+         if (!foundMessage) return response.status(404).json({ msg: 'message not found' })
+
+         response.status(200).json(foundMessage)
       } catch (error) {
          console.log(error)
          response.status(500).json(error)

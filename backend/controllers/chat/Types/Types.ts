@@ -12,5 +12,6 @@ export interface ILikeChatMsgRequest extends IJWTUserType {
 export interface IMessageLikeCountRequest extends IJWTUserType {
    body: {
       messageId: string
+      chatId: string
    }
 }
