@@ -11,6 +11,11 @@ const LikeController = new LikeChatController()
 const router = Router()
 
 router.get('/get-all-chats', authenticateAccessTokenForApi, getChatMessageLabels)
+router.get(
+   '/get-message-like-count',
+   authenticateAccessTokenForApi,
+   LikeController.getMsgReactionByTypeAndCountController
+)
 
 router.post('/add-chat-msg', authenticateAccessTokenForApi, saveChatMessageController)
 router.post('/create-chat', authenticateAccessTokenForApi, createNewChatController)
