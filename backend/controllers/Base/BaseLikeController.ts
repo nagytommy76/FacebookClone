@@ -9,7 +9,7 @@ export default abstract class BaseLikeController {
       return Object.keys(reactionType).filter((key) => reactionType[key])[0] as LikeTypes
    }
 
-   public countLikeReactions(reactionTypes: IReactionCount) {
+   protected countLikeReactions(reactionTypes: IReactionCount) {
       let totalReactionCount = 0
       Object.values(reactionTypes).forEach((value) => {
          totalReactionCount += value.count
@@ -17,11 +17,11 @@ export default abstract class BaseLikeController {
       return totalReactionCount
    }
 
-   findUsersLikeByUserID(likes: ILike[], userId: string) {
+   protected findUsersLikeByUserID(likes: ILike[], userId: string) {
       return likes.find((like) => like.userId.toString() === userId.toString())
    }
 
-   public getLikesByReactionType(likes: ILike[]) {
+   protected getLikesByReactionType(likes: ILike[]) {
       const reactionTypes: IReactionCount = {}
       try {
          likes.map((like) => {
@@ -46,7 +46,7 @@ export default abstract class BaseLikeController {
       return reactionTypes
    }
 
-   public getFilteredLikesByUserId(likes: ILike[], userId: string) {
+   protected getFilteredLikesByUserId(likes: ILike[], userId: string) {
       let removedUserLikesID: string | null = null
 
       const filteredLikes = likes.filter((like) => {
@@ -61,7 +61,12 @@ export default abstract class BaseLikeController {
       }
    }
 
-   checkUserLike(userLike: ILike | undefined, reactionType: LikeTypes, likes: ILike[], userId: any) {
+   protected checkUserLike(
+      userLike: ILike | undefined,
+      reactionType: LikeTypes,
+      likes: ILike[],
+      userId: any
+   ) {
       if (userLike) {
          let previousReaction = this.findPreviousReactionType(userLike.reactionType)
          userLike.reactionType[previousReaction] = false
