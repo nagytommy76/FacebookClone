@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import RemoveButton from './Includes/RemoveButton/RemoveButton'
 import Reaction from './Includes/Reaction/Reaction'
 
+const MsgReactionModal = dynamic(() => import('./Includes/MsgReactionModal/MsgReactionModal'))
 const ImageDisplay = dynamic(() => import('./Includes/ImageDisplay'))
 const MessageItemHead = dynamic(() => import('./Includes/MessageItemHead'))
 
@@ -32,6 +33,7 @@ const MessageItem: React.FC<{
                   </StyledTextBox>
                </StyledTextBoxContainer>
             )}
+            {message.reaction && <MsgReactionModal messageId={message._id} reactions={message.reaction} />}
          </StyledTextContainer>
       </>
    )
