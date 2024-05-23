@@ -31,7 +31,10 @@ export default class LikeChatController extends BaseLikeController {
 
          await foundSingleMessage.save()
 
-         response.status(200).json(foundSingleMessage)
+         response.status(200).json({
+            modifiedReaction: foundSingleMessage.messages[foundMessageIndex].reaction,
+            foundMessageIndex,
+         })
       } catch (error) {
          console.log(error)
          response.status(500).json(error)
@@ -39,7 +42,7 @@ export default class LikeChatController extends BaseLikeController {
    }
 
    getMsgReactionByTypeAndCountController = async (request: IMessageLikeCountRequest, response: Response) => {
-      const { messageId, chatId } = request.body
+      const { messageId, chatId } = request.query
       try {
          const foundMessage = await ChatModel.findOne({
             _id: chatId,

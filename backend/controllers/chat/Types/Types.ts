@@ -10,7 +10,7 @@ export interface ILikeChatMsgRequest extends IJWTUserType {
 }
 
 export interface IMessageLikeCountRequest extends IJWTUserType {
-   body: {
+   query: {
       messageId: string
       chatId: string
    }
