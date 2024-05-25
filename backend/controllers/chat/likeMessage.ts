@@ -47,11 +47,22 @@ export default class LikeChatController extends BaseLikeController {
          const foundMessage = await ChatModel.findOne({
             _id: chatId,
             messages: { $elemMatch: { _id: messageId } },
-         }).select(['messages.$'])
+         })
+            .select(['messages.$'])
+            .populate({
+               path: 'messages.reaction.userId',
+               select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
+               match: {
+                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+               },
+            })
 
          if (!foundMessage) return response.status(404).json({ msg: 'message not found' })
 
-         response.status(200).json(foundMessage)
+         const reactionTypes = this.getLikesByReactionType(foundMessage.messages[0].reaction)
+         const totalReactionCount = this.countLikeReactions(reactionTypes)
+
+         response.status(200).json({ reactionTypes, totalReactionCount })
       } catch (error) {
          console.log(error)
          response.status(500).json(error)
