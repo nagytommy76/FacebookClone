@@ -1,7 +1,8 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit'
 import type { IChat, IMessages } from '@/Chat/Types'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store'
+import type { RootState } from '../store'
+import type { ILike } from '@/src/types/LikeTypes'
 
 interface IndexedMessageLabel {
    [key: string]: IChat
@@ -98,10 +99,17 @@ export const ChatSlice = createSlice({
       },
       setNewMessages: (state, action: PayloadAction<{ updatedMessages: IMessages[]; chatId: string }>) => {
          if (state.messageLabels) {
-            // state.messageLabels[state.chatId].messages = state.messageLabels[state.chatId].messages.filter(
-            //    (message) => message._id !== action.payload.messageId
-            // )
             state.messageLabels[action.payload.chatId].messages = action.payload.updatedMessages
+         }
+      },
+      addNewReactionsToMessage: (
+         state,
+         action: PayloadAction<{ reactions: ILike[]; foundMessageIndex: number }>
+      ) => {
+         const { messageLabels, chatId } = state
+         if (messageLabels && chatId) {
+            messageLabels[chatId].messages[action.payload.foundMessageIndex].reaction =
+               action.payload.reactions
          }
       },
    },
@@ -119,6 +127,7 @@ export const {
    setTotalUnreadMsgCount,
    incrementTotalUnreadMsgCount,
    setNewMessages,
+   addNewReactionsToMessage,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
