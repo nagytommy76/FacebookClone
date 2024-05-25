@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import useMutateLike from './Hooks/useMutateLike'
 
 import IconButton from '@mui/material/IconButton'
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied'
@@ -6,6 +7,8 @@ import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfi
 const LikeTooltip = dynamic(() => import('@/Base/LikeTooltip/LikeTooltip'))
 
 const Reaction: React.FC<{ messageId: string }> = ({ messageId }) => {
+   const likeMutate = useMutateLike(messageId)
+
    return (
       <LikeTooltip
          LikeCommentButtonComponent={
@@ -13,9 +16,7 @@ const Reaction: React.FC<{ messageId: string }> = ({ messageId }) => {
                <SentimentVerySatisfiedIcon fontSize='inherit' />
             </IconButton>
          }
-         setLikeFunction={(likeType: any) => {
-            console.log('Reagálás: ', likeType, messageId)
-         }}
+         setLikeFunction={(likeType: any) => likeMutate(likeType)}
       />
    )
 }

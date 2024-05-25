@@ -7,6 +7,8 @@ export const StyledTextContainer = styled('div', {
    width: '43%',
    alignSelf: isRightContent ? 'end' : 'start',
    marginBottom: 15,
+
+   position: 'relative',
 }))
 
 export const StyledTextBoxHead = styled('span', {
