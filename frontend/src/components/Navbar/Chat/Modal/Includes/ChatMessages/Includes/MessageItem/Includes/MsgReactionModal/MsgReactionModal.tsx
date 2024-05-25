@@ -8,32 +8,12 @@ const Reactions = dynamic(() => import('@/Base/LikeReactions/Reactions'))
 
 const MsgReactionModal: React.FC<{ reactions: ILike[]; messageId: string }> = ({ reactions, messageId }) => {
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-   useGetReactionCount(messageId, isModalOpen)
+   const likeCount = useGetReactionCount(messageId, isModalOpen)
    return (
       <>
          {reactions.length !== 0 && (
             <Reactions setIsModalOpen={() => setIsModalOpen(true)} likes={reactions}>
-               {/* <LikeModal
-                  isModalOpen={isModalOpen}
-                  likeCount={{
-                     totalReactionCount: 1,
-                     reactionTypes: {
-                        isLike: {
-                           count: 1,
-                           reactors: [
-                              {
-                                 firstName: 'dssda',
-                                 sureName: 'sdafdfsdf',
-                                 userDetails: {
-                                    profilePicturePath: [{ id: '12121', isSelected: true, path: '' }],
-                                 },
-                              },
-                           ],
-                        },
-                     },
-                  }}
-                  setIsModalOpen={setIsModalOpen}
-               /> */}
+               <LikeModal isModalOpen={isModalOpen} likeCount={likeCount} setIsModalOpen={setIsModalOpen} />
             </Reactions>
          )}
       </>
