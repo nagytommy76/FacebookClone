@@ -1,5 +1,6 @@
 import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { addNewReactionsToMessage } from '@/reduxStore/slices/ChatSlice'
+import { socket } from '@/src/utils/socketIo'
 
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
@@ -22,11 +23,16 @@ const useMutateLike = (messageId: string) => {
       onSuccess(data, variables, context) {
          dispatch(
             addNewReactionsToMessage({
+               chatId: chatId,
                foundMessageIndex: data.data.foundMessageIndex,
                reactions: data.data.modifiedReaction,
             })
          )
-         console.log(data.data)
+         socket.emit('chat:addMessageReaction', {
+            foundMessageIndex: data.data.foundMessageIndex,
+            reactions: data.data.modifiedReaction,
+            chatId,
+         })
       },
    })
 
