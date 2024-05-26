@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 
 export const StyledTextContainer = styled('div', {
    shouldForwardProp: (prop) => prop !== 'isRightContent',
@@ -9,6 +10,11 @@ export const StyledTextContainer = styled('div', {
    marginBottom: 15,
 
    position: 'relative',
+
+   [theme.breakpoints.down('md')]: {
+      width: '100%',
+      marginBottom: 25,
+   },
 }))
 
 export const StyledTextBoxHead = styled('span', {
@@ -40,4 +46,16 @@ export const StyledTextBox = styled(Paper, {
    borderRadius: '25px',
    borderTopRightRadius: isRightContent ? 0 : '25px',
    borderTopLeftRadius: isRightContent ? '25px' : 0,
+
+   [theme.breakpoints.down('md')]: {
+      padding: '.7rem',
+      fontSize: '.1rem',
+   },
+}))
+
+export const StyledTypography = styled(Typography)(({ theme }) => ({
+   fontWeight: 350,
+   [theme.breakpoints.down('md')]: {
+      fontSize: 11,
+   },
 }))
