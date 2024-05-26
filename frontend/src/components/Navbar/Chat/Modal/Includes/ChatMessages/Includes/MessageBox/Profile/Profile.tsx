@@ -15,8 +15,8 @@ const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfil
    return (
       <ProfileSection>
          <ChatAvatar
-            width={60}
-            height={60}
+            width={window.innerWidth >= 500 ? 60 : 40}
+            height={window.innerWidth >= 500 ? 60 : 40}
             fullName={fullName}
             selectedProfilePicturePath={selectedProfilePicturePath}
             isRead={true}
