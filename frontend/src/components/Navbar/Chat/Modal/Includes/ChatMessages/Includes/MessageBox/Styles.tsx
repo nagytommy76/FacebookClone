@@ -26,4 +26,9 @@ export const StyledMessageBox = styled(Paper)(({ theme }) => ({
       width: '95%',
       height: '90%',
    },
+
+   [theme.breakpoints.down('md')]: {
+      width: '100%',
+      height: '100%',
+   },
 }))

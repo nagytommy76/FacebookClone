@@ -4,6 +4,7 @@ import useEmojiText from '@/hooks/useEmojiText'
 import useTypingSocket from './Sockets/useTypingSocket'
 import useSendMsgSocket from './Sockets/useSendMsgSocket'
 import useDeleteSocket from './Sockets/useDeleteSocket'
+import useReactionSocket from './Sockets/useReactionSocket'
 // https://dev.to/novu/building-a-chat-app-with-socketio-and-react-2edj
 
 const useMessage = () => {
@@ -16,6 +17,7 @@ const useMessage = () => {
    const handleTyping = useTypingSocket(setTypingStatus)
    useSendMsgSocket(setTypingStatus)
    useDeleteSocket()
+   useReactionSocket()
 
    const handleChatMsg = (event: React.ChangeEvent<HTMLInputElement>) => {
       // Ide kell egy emit és a MsgBox-hoz egy on socket?!
@@ -24,10 +26,12 @@ const useMessage = () => {
    }
 
    const onEnterKeyDown = (
-      event: React.KeyboardEvent,
+      event: React.KeyboardEvent<HTMLInputElement>,
       handleAddChatMutate: (chatImagePath?: string) => void
    ) => {
-      if (event.key === 'Enter') handleAddChatMutate()
+      if (event.key === 'Enter' && event.target.value.length >= 1) {
+         handleAddChatMutate()
+      }
    }
 
    const handleChangeTextWithEmoji = (emoji: string = '') => {
