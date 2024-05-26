@@ -1,8 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '@/src/utils/redux/store'
 
-import TabPanel from '@mui/lab/TabPanel'
-import { StyledChatMessagesContainer } from './Styles'
+import { StyledChatMessagesContainer, StyledTabPanel } from './Styles'
 
 const MessgageBox = dynamic(() => import('./Includes/MessageBox/MessgageBox'))
 const Profile = dynamic(() => import('./Includes/MessageBox/Profile/Profile'))
@@ -14,7 +13,7 @@ const ChatMessages = () => {
       <StyledChatMessagesContainer>
          {messageLabels ? (
             Object.values(messageLabels).map((value) => (
-               <TabPanel sx={{ height: '100%' }} key={value._id} value={value._id}>
+               <StyledTabPanel sx={{ height: '100%' }} key={value._id} value={value._id}>
                   <MessgageBox
                      ProfileSection={
                         <Profile
@@ -26,7 +25,7 @@ const ChatMessages = () => {
                         />
                      }
                   />
-               </TabPanel>
+               </StyledTabPanel>
             ))
          ) : (
             <h1>Nincs még aktív chat</h1>
