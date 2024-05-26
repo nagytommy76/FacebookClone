@@ -104,12 +104,11 @@ export const ChatSlice = createSlice({
       },
       addNewReactionsToMessage: (
          state,
-         action: PayloadAction<{ reactions: ILike[]; foundMessageIndex: number }>
+         action: PayloadAction<{ reactions: ILike[]; foundMessageIndex: number; chatId: string | null }>
       ) => {
-         const { messageLabels, chatId } = state
-         if (messageLabels && chatId) {
-            messageLabels[chatId].messages[action.payload.foundMessageIndex].reaction =
-               action.payload.reactions
+         const { chatId, foundMessageIndex, reactions } = action.payload
+         if (state.messageLabels && chatId) {
+            state.messageLabels[chatId].messages[foundMessageIndex].reaction = reactions
          }
       },
    },
