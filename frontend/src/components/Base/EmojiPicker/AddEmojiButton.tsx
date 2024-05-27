@@ -25,7 +25,7 @@ const AddEmojiButton: React.FC<{
             />
          }
          arrow
-         placement='top-end'
+         placement='left-end'
       >
          <IconButton
             sx={{
