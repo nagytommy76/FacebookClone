@@ -5,7 +5,9 @@ import { setChatModalOpen } from '@/reduxStore/slices/ChatSlice'
 import { StyledPaper } from './Styles'
 import Modal from '@mui/material/Modal'
 import TabContext from '@mui/lab/TabContext'
+import Fade from '@mui/material/Fade'
 
+import CloseButton from './Includes/CloseButton/CloseButton'
 const ChatAside = dynamic(() => import('./Includes/ChatAside/ChatAside'))
 const ChatMessages = dynamic(() => import('./Includes/ChatMessages/ChatMessages'))
 
@@ -21,12 +23,15 @@ const ChatModal = () => {
          aria-labelledby='modal-chat'
          aria-describedby='modal-modal-chat'
       >
-         <StyledPaper>
-            <TabContext value={chatId || ''}>
-               <ChatAside />
-               <ChatMessages />
-            </TabContext>
-         </StyledPaper>
+         <Fade in={chatModalOpen}>
+            <StyledPaper>
+               <TabContext value={chatId || ''}>
+                  <ChatAside />
+                  <ChatMessages />
+               </TabContext>
+               <CloseButton />
+            </StyledPaper>
+         </Fade>
       </Modal>
    )
 }
