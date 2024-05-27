@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 import Tab from '@mui/material/Tab'
 import TabList from '@mui/lab/TabList'
 
-export const StyledTabList = styled(TabList)({
+export const StyledTabList = styled(TabList)(({ theme }) => ({
    borderRight: 1,
    borderColor: 'divider',
    height: '100%',
@@ -10,9 +10,9 @@ export const StyledTabList = styled(TabList)({
       backgroundColor: '#f5ab0b',
       width: '5px',
    },
-})
+}))
 
-export const StyledTab = styled(Tab)({
+export const StyledTab = styled(Tab)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'start',
@@ -20,8 +20,19 @@ export const StyledTab = styled(Tab)({
    textTransform: 'none',
    textAlign: 'left',
    height: '80px',
-})
+
+   [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+      height: '60px',
+      width: '60px',
+      padding: '.5rem',
+   },
+}))
 
 export const StyledChatAside = styled('aside')(({ theme }) => ({
    flex: 1,
+
+   [theme.breakpoints.down('md')]: {
+      width: '70px',
+   },
 }))

@@ -17,7 +17,7 @@ export const StyledMessageBox = styled(Paper)(({ theme }) => ({
 
    margin: '1rem 0',
    padding: '.5rem',
-   overflowY: 'auto',
+   overflowY: 'scroll',
 
    display: 'flex',
    flexDirection: 'column',
@@ -30,5 +30,6 @@ export const StyledMessageBox = styled(Paper)(({ theme }) => ({
    [theme.breakpoints.down('md')]: {
       width: '100%',
       height: '100%',
+      scrollbarWidth: 'thin',
    },
 }))

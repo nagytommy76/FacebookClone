@@ -45,6 +45,9 @@ Lépések:
 A friends nél is  átnézni, hogy a socketek jól vannak meghívva ->
  - A controllerekből át tenni a socketIo.ts connection-be és broadcastelni mint chat nél
 
+- Az adatbázisből a messages-eket úgy lekérni, hogy már group-polva vannak dátum szerint: Év -> hó -> nap, az időpont
+  pedig (hh:mm) a message alján
+
 
 MEGCSINÁLTAM -------------------------------------------------------------------------------------------------------------------
 

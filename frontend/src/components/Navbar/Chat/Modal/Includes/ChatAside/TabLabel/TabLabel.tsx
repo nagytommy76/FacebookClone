@@ -20,6 +20,8 @@ const TabLabel: React.FC<{
             fullName={`${participant.sureName} ${participant.firstName}`}
             selectedProfilePicturePath={participant.selectedProfilePicture[0].path}
             isRead={isOnlineFriends && isOnlineFriends[participant._id] ? false : true}
+            width={window.innerWidth >= 500 ? 60 : 40}
+            height={window.innerWidth >= 500 ? 60 : 40}
          />
          <Badge badgeContent={totalUnreadMsgCount} color='error'>
             <StyledTabText>
