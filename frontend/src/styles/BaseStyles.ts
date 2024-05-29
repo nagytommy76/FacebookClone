@@ -1,14 +1,6 @@
 import { styled } from '@mui/material'
 import Image from 'next/image'
 
-// Picture style --------------------------------------------
-
-export const StyledProfileImage = styled(Image)({
-   height: 40,
-   width: 40,
-   borderRadius: 50,
-})
-
 export const StyledIsActive = styled('span', {
    shouldForwardProp: (prop) =>
       prop !== 'isRead' && prop !== 'topPosition' && prop !== 'rightPosition' && prop !== 'bottomPosition',
@@ -61,3 +53,11 @@ export const StyledIsActive = styled('span', {
       },
    })
 )
+
+// Picture style --------------------------------------------
+
+export const StyledProfileImage = styled(Image)({
+   height: 40,
+   width: 40,
+   borderRadius: 50,
+})
