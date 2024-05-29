@@ -10,3 +10,7 @@ export const ProfileSection = styled('div')(({ theme }) => ({
       height: '50px',
    },
 }))
+
+export const StyledTextSection = styled('div')({
+   marginLeft: '10px',
+})

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '@/src/utils/redux/store'
 
-import { ProfileSection } from './Styles'
+import { ProfileSection, StyledTextSection } from './Styles'
 import Typography from '@mui/material/Typography'
 
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
@@ -21,7 +21,7 @@ const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfil
             selectedProfilePicturePath={selectedProfilePicturePath}
             isRead={true}
          />
-         <div>
+         <StyledTextSection>
             <Typography variant='h6'>{fullName}</Typography>
             {isOnlineFriends && isOnlineFriends[chatFirendId] ? (
                <Typography sx={{ color: '#77c70e' }} variant='body1'>
@@ -32,7 +32,7 @@ const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfil
                   offline
                </Typography>
             )}
-         </div>
+         </StyledTextSection>
       </ProfileSection>
    )
 }
