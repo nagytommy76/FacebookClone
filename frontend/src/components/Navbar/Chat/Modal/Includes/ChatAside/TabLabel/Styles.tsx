@@ -5,6 +5,8 @@ export const StyledTabText = styled('div')(({ theme }) => ({
    flexDirection: 'column',
    textAlign: 'left',
 
+   marginLeft: '10px',
+
    width: '220px',
    whiteSpace: 'nowrap',
    overflow: 'hidden',
