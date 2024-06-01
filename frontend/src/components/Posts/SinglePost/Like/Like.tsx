@@ -51,7 +51,7 @@ const Like: React.FC<{
                      onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
                      style={{ color: likeButtonColor }}
                   >
-                     Tetszik
+                     {likeBtnText}
                   </StyledCommentLikeButton>
                )
             }

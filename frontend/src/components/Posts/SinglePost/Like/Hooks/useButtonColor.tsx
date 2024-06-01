@@ -29,15 +29,15 @@ const useButtonColor = () => {
    const [likeButtonColor, setLikeButtonColor] = useState('')
    const [likeBtnIcon, setLikeBtnIcon] = useState(<ThumbUpOffAltIcon />)
    const [likeBtnText, setLikeBtnText] = useState<
-      'Like' | 'Imádom' | 'Ölelés' | 'Vicces' | 'Hűha' | 'Szomorú' | 'Dühítő'
-   >('Like')
+      'Tetszik' | 'Imádom' | 'Ölelés' | 'Vicces' | 'Hűha' | 'Szomorú' | 'Dühítő'
+   >('Tetszik')
 
    const setButtonColor = useCallback((currentLikeType: LikeTypes | undefined) => {
       switch (currentLikeType) {
          case 'isLike':
             setLikeButtonColor(buttonColor.isLike)
             setLikeBtnIcon(<Image src={LikeAnimated} alt='like icon' />)
-            setLikeBtnText('Like')
+            setLikeBtnText('Tetszik')
             break
          case 'isLove':
             setLikeButtonColor(buttonColor.isLove)
@@ -72,7 +72,7 @@ const useButtonColor = () => {
          default:
             setLikeButtonColor('')
             setLikeBtnIcon(<ThumbUpOffAltIcon />)
-            setLikeBtnText('Like')
+            setLikeBtnText('Tetszik')
             break
       }
    }, [])
