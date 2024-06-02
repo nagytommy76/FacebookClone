@@ -5,8 +5,14 @@ import { socket } from '@/src/utils/socketIo'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import type { ILike, LikeTypes } from '@/src/types/LikeTypes'
-
-const useMutateLike = (messageId: string) => {
+/**
+ * A custom hook that handles mutation for liking a message.
+ *
+ * @param {string} messageId - The ID of the message to be liked.
+ * @param {Function} setButtonColor - A function that sets the color of the like button.
+ * @return {Object} An object containing the `handleLikeMutate` function for mutating the like.
+ */
+const useMutateLike = (messageId: string, setButtonColor: (likeTypes: LikeTypes | undefined) => void) => {
    const dispatch = useAppDispatch()
    const chatId = useAppSelector((state) => state.chat.chatId)
 
@@ -20,7 +26,8 @@ const useMutateLike = (messageId: string) => {
    const { mutate } = useMutation({
       mutationKey: ['likeMessage'],
       mutationFn: mutateLikeFn,
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables) {
+         setButtonColor(variables)
          dispatch(
             addNewReactionsToMessage({
                chatId: chatId,
@@ -36,7 +43,7 @@ const useMutateLike = (messageId: string) => {
       },
    })
 
-   return mutate
+   return { handleLikeMutate: mutate }
 }
 
 export default useMutateLike
