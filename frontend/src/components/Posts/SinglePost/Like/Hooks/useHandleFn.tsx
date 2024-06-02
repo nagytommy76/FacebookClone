@@ -7,7 +7,7 @@ import useLikeAnswer from './useLikeAnswer'
 import useLikeDelete from './delete/useLikeDelete'
 import useLikeCommentDelete from './delete/useLikeCommentDelete'
 import useAnswerLikeDelete from './delete/useAnswerLikeDelete'
-import useLikeIdDelete from './useLikeIdDelete'
+import useGetUsersLikeId from '@/hooks/Like/useGetUsersLikeId'
 import type { ILike, LikeTypes } from '@/types/LikeTypes'
 
 // A commentId az lehet answerId is
@@ -26,7 +26,7 @@ const useHandleFn = (
    const { deleteMutation } = useLikeDelete()
    const { deleteCommentLikeMutation } = useLikeCommentDelete()
    const { deleteAnswerLikeMutation } = useAnswerLikeDelete()
-   const { like, likeIdToDelete, setLike } = useLikeIdDelete(setButtonColor, postLikes)
+   const { like, likeIdToDelete, setLike } = useGetUsersLikeId(setButtonColor, postLikes)
 
    const handleUnsetLike = () => {
       // ide egy remove post like mutate kell

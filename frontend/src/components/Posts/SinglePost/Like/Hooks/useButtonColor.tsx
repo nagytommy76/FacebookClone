@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import Image from 'next/image'
 import type { LikeTypes } from '@/types/LikeTypes'
 
-import useLikeBtnColor from '@/hooks/useLikeBtnColor'
+import useLikeBtnColor from '@/hooks/Like/useLikeBtnColor'
 
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import LikeAnimated from '@/assets/likeAnimated.svg'
