@@ -3,9 +3,9 @@ import { useAppSelector } from '@/src/utils/redux/store'
 
 import type { ILike, LikeTypes } from '@/src/types/LikeTypes'
 
-const useLikeIdDelete = (
+const useGetUsersLikeId = (
    setButtonColor: (currentLikeType: LikeTypes | undefined) => void,
-   postLikes: ILike[]
+   likes: ILike[]
 ) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const [likeIdToDelete, setLikeIdToDelete] = useState<string>('')
@@ -22,7 +22,7 @@ const useLikeIdDelete = (
    )
 
    useEffect(() => {
-      postLikes.map((like) => {
+      likes.map((like) => {
          // Itt kiválasztom, hogy a belépett user mit nyomott (isLike, isAngry stb...)
          if (userId === like.userId) {
             setLikeIdToDelete(like._id)
@@ -32,9 +32,9 @@ const useLikeIdDelete = (
             handleSetLikeAndButtonColor(likeType)
          }
       })
-   }, [postLikes, userId, handleSetLikeAndButtonColor])
+   }, [likes, userId, handleSetLikeAndButtonColor])
 
    return { likeIdToDelete, like, setLike }
 }
 
-export default useLikeIdDelete
+export default useGetUsersLikeId
