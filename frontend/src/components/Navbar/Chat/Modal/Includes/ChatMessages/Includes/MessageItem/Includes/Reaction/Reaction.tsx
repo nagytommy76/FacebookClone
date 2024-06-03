@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic'
-import type { ILike } from '@/types/LikeTypes'
+import type { ILike, LikeTypes } from '@/types/LikeTypes'
 
 import useMutateLike from './Hooks/useMutateLike'
 import useTooltip from './Hooks/useTooltip'
 import useGetUsersLikeId from '@/hooks/Like/useGetUsersLikeId'
 import useSetBtnColor from './Hooks/useSetBtnColor'
 
+import ReactionIcon from './Includes/ReactionIcon'
 import IconButton from '@mui/material/IconButton'
-import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied'
 
 const LikeTooltip = dynamic(() => import('@/Base/LikeTooltip/LikeTooltip'))
 /**
@@ -21,7 +21,17 @@ const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ message
    const { likeButtonColor, setButtonColor } = useSetBtnColor()
    const { handleLikeMutate } = useMutateLike(messageId, setButtonColor)
    const { handleClick, handleClose, open } = useTooltip()
-   const { likeIdToDelete } = useGetUsersLikeId(setButtonColor, reactions)
+   const { likeIdToDelete, like } = useGetUsersLikeId(setButtonColor, reactions)
+
+   const handleLikeOrDelete = (likeType: LikeTypes) => {
+      // Itt kéne törölnöm a likeot ha ugyan arra a reakció iconra kattintok, ha a like !== undefined.
+      if (like === undefined) {
+         handleLikeMutate(likeType)
+      } else if (like === likeType) {
+         // Itt törlök
+         console.log('Itt törölnem', likeIdToDelete)
+      }
+   }
 
    return (
       <LikeTooltip
@@ -34,10 +44,10 @@ const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ message
                aria-label='add-message-reaction'
                size='small'
             >
-               <SentimentVerySatisfiedIcon fontSize='inherit' />
+               <ReactionIcon likeType={like} />
             </IconButton>
          }
-         setLikeFunction={(likeType: any) => handleLikeMutate(likeType)}
+         setLikeFunction={(likeType: LikeTypes) => handleLikeOrDelete(likeType)}
       />
    )
 }
