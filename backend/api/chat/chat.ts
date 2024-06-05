@@ -5,8 +5,10 @@ import { saveChatMessageController, setMessagesRead } from '../../controllers/ch
 import { getChatMessageLabels } from '../../controllers/chat/getChats'
 import { deleteMessageController } from '../../controllers/chat/removeMessage'
 import LikeChatController from '../../controllers/chat/likeMessage'
+import DeleteLikeChatController from '../../controllers/chat/deleteLike'
 
 const LikeController = new LikeChatController()
+const DeleteController = new DeleteLikeChatController()
 
 const router = Router()
 
@@ -25,5 +27,7 @@ router.post('/like-message', authenticateAccessTokenForApi, LikeController.likeM
 router.put('/set-read-messages', authenticateAccessTokenForApi, setMessagesRead)
 
 router.patch('/delete-message', authenticateAccessTokenForApi, deleteMessageController)
+
+router.delete('/delete-message-like', authenticateAccessTokenForApi, DeleteController.deleteLikeController)
 
 module.exports = router

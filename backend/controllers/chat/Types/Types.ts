@@ -15,3 +15,11 @@ export interface IMessageLikeCountRequest extends IJWTUserType {
       chatId: string
    }
 }
+
+export interface ILikeDeleteRequest extends IJWTUserType {
+   body: {
+      messageId: string
+      chatId: string
+      likeIdToDelete: string
+   }
+}
