@@ -5,6 +5,7 @@ import useMutateLike from './Hooks/useMutateLike'
 import useTooltip from './Hooks/useTooltip'
 import useGetUsersLikeId from '@/hooks/Like/useGetUsersLikeId'
 import useSetBtnColor from './Hooks/useSetBtnColor'
+import useDeleteLike from './Hooks/useDeleteLike'
 
 import ReactionIcon from './Includes/ReactionIcon'
 import IconButton from '@mui/material/IconButton'
@@ -22,6 +23,7 @@ const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ message
    const { handleLikeMutate } = useMutateLike(messageId, setButtonColor)
    const { handleClick, handleClose, open } = useTooltip()
    const { likeIdToDelete, like } = useGetUsersLikeId(setButtonColor, reactions)
+   const deleteLikeMutate = useDeleteLike(messageId, likeIdToDelete)
 
    const handleLikeOrDelete = (likeType: LikeTypes) => {
       // Itt kéne törölnöm a likeot ha ugyan arra a reakció iconra kattintok, ha a like !== undefined.
@@ -29,6 +31,7 @@ const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ message
          handleLikeMutate(likeType)
       } else if (like === likeType) {
          // Itt törlök
+         deleteLikeMutate()
          console.log('Itt törölnem', likeIdToDelete)
       }
    }
