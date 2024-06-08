@@ -13,7 +13,7 @@ export default class DeleteLikeChatController extends BaseLikeController {
             {
                _id: chatId,
                messages: {
-                  $elemMatch: { _id: messageId, 'reaction._id': likeIdToDelete, 'likes.userId': userId },
+                  $elemMatch: { _id: messageId, 'reaction._id': likeIdToDelete, 'reaction.userId': userId },
                },
             },
             {
