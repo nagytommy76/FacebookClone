@@ -111,6 +111,22 @@ export const ChatSlice = createSlice({
             state.messageLabels[chatId].messages[foundMessageIndex].reaction = reactions
          }
       },
+      removeReactionFromMessage: (
+         state,
+         action: PayloadAction<{ likeIdToDelete: string; chatId: string | null; messageId: string }>
+      ) => {
+         const { chatId, likeIdToDelete, messageId } = action.payload
+
+         if (state.messageLabels && chatId) {
+            state.messageLabels[chatId].messages = state.messageLabels[chatId].messages.map((message) => {
+               if (message._id === messageId) {
+                  message.reaction.filter((like) => like._id !== likeIdToDelete)
+               }
+               return message
+            })
+            console.log('"')
+         }
+      },
    },
 })
 
@@ -127,6 +143,7 @@ export const {
    incrementTotalUnreadMsgCount,
    setNewMessages,
    addNewReactionsToMessage,
+   removeReactionFromMessage,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
