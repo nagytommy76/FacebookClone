@@ -4,8 +4,8 @@ import type { ILike, LikeTypes } from '@/types/LikeTypes'
 import useMutateLike from './Hooks/useMutateLike'
 import useTooltip from './Hooks/useTooltip'
 import useGetUsersLikeId from '@/hooks/Like/useGetUsersLikeId'
-import useSetBtnColor from './Hooks/useSetBtnColor'
 import useDeleteLike from './Hooks/useDeleteLike'
+import useDeleteLikeSocket from './Hooks/Sockets/useDeleteLikeSocket'
 
 import ReactionIcon from './Includes/ReactionIcon'
 import IconButton from '@mui/material/IconButton'
@@ -19,11 +19,11 @@ const LikeTooltip = dynamic(() => import('@/Base/LikeTooltip/LikeTooltip'))
  * @return {ReactElement} The rendered reaction component.
  */
 const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ messageId, reactions }) => {
-   const { likeButtonColor, setButtonColor } = useSetBtnColor()
-   const { handleLikeMutate } = useMutateLike(messageId, setButtonColor)
+   const { handleLikeMutate } = useMutateLike(messageId)
    const { handleClick, handleClose, open } = useTooltip()
-   const { likeIdToDelete, like } = useGetUsersLikeId(setButtonColor, reactions)
-   const deleteLikeMutate = useDeleteLike(messageId, likeIdToDelete)
+   const { likeIdToDelete, like, setLike } = useGetUsersLikeId(() => {}, reactions)
+   const deleteLikeMutate = useDeleteLike(messageId, likeIdToDelete, setLike)
+   useDeleteLikeSocket()
 
    const handleLikeOrDelete = (likeType: LikeTypes) => {
       // Itt kéne törölnöm a likeot ha ugyan arra a reakció iconra kattintok, ha a like !== undefined.
@@ -32,7 +32,6 @@ const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ message
       } else if (like === likeType) {
          // Itt törlök
          deleteLikeMutate()
-         console.log('Itt törölnem', likeIdToDelete)
       }
    }
 
@@ -41,12 +40,7 @@ const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ message
          open={open}
          handleClose={handleClose}
          LikeCommentButtonComponent={
-            <IconButton
-               sx={{ color: likeButtonColor }}
-               onClick={handleClick}
-               aria-label='add-message-reaction'
-               size='small'
-            >
+            <IconButton onClick={handleClick} aria-label='add-message-reaction' size='small'>
                <ReactionIcon likeType={like} />
             </IconButton>
          }
