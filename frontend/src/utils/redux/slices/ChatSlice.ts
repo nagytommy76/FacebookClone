@@ -113,18 +113,15 @@ export const ChatSlice = createSlice({
       },
       removeReactionFromMessage: (
          state,
-         action: PayloadAction<{ likeIdToDelete: string; chatId: string | null; messageId: string }>
+         action: PayloadAction<{ chatId: string | null; messageId: string; modifiedMessage: IMessages }>
       ) => {
-         const { chatId, likeIdToDelete, messageId } = action.payload
+         const { chatId, messageId, modifiedMessage } = action.payload
 
          if (state.messageLabels && chatId) {
-            state.messageLabels[chatId].messages = state.messageLabels[chatId].messages.map((message) => {
-               if (message._id === messageId) {
-                  message.reaction.filter((like) => like._id !== likeIdToDelete)
-               }
-               return message
-            })
-            console.log('"')
+            const messageIndex = state.messageLabels[chatId].messages.findIndex(
+               (message) => message._id === messageId
+            )
+            state.messageLabels[chatId].messages[messageIndex] = modifiedMessage
          }
       },
    },
