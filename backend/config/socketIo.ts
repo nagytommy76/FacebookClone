@@ -77,6 +77,10 @@ export const initSocketIO = (app: Application) => {
          socket.broadcast.to(args.chatId).emit('chat:addMessageReactionResponse', args)
       })
 
+      socket.on('chat:deleteLike', (args) => {
+         socket.broadcast.to(args.chatId).emit('chat:deleteLikeResponse', args)
+      })
+
       // --------------------------------------------------------------------------
 
       socket.on('disconnect', () => {
