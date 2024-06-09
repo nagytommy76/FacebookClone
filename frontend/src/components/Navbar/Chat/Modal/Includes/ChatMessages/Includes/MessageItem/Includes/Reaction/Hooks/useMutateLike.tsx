@@ -12,7 +12,7 @@ import type { ILike, LikeTypes } from '@/src/types/LikeTypes'
  * @param {Function} setButtonColor - A function that sets the color of the like button.
  * @return {Object} An object containing the `handleLikeMutate` function for mutating the like.
  */
-const useMutateLike = (messageId: string, setButtonColor: (likeTypes: LikeTypes | undefined) => void) => {
+const useMutateLike = (messageId: string) => {
    const dispatch = useAppDispatch()
    const chatId = useAppSelector((state) => state.chat.chatId)
 
@@ -27,7 +27,6 @@ const useMutateLike = (messageId: string, setButtonColor: (likeTypes: LikeTypes 
       mutationKey: ['likeMessage'],
       mutationFn: mutateLikeFn,
       onSuccess(data, variables) {
-         setButtonColor(variables)
          dispatch(
             addNewReactionsToMessage({
                chatId: chatId,
