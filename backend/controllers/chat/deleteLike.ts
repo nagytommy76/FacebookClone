@@ -27,7 +27,12 @@ export default class DeleteLikeChatController extends BaseLikeController {
             }
          )
 
-         response.status(200).json({ updatedReaction })
+         const modifiedMessage = await ChatModel.findOne({
+            _id: chatId,
+            messages: { $elemMatch: { _id: messageId } },
+         }).select('messages.$')
+
+         response.status(200).json({ modifiedMessage: modifiedMessage?.messages[0] })
       } catch (error) {
          response.status(500).json(error)
       }
