@@ -1,10 +1,8 @@
 import dynamic from 'next/dynamic'
 import type { ILike, LikeTypes } from '@/types/LikeTypes'
 
-import useMutateLike from './Hooks/useMutateLike'
+import useHandleLike from './Hooks/useHandleLike'
 import useTooltip from './Hooks/useTooltip'
-import useGetUsersLikeId from '@/hooks/Like/useGetUsersLikeId'
-import useDeleteLike from './Hooks/useDeleteLike'
 import useDeleteLikeSocket from './Hooks/Sockets/useDeleteLikeSocket'
 
 import ReactionIcon from './Includes/ReactionIcon'
@@ -19,21 +17,9 @@ const LikeTooltip = dynamic(() => import('@/Base/LikeTooltip/LikeTooltip'))
  * @return {ReactElement} The rendered reaction component.
  */
 const Reaction: React.FC<{ messageId: string; reactions: ILike[] }> = ({ messageId, reactions }) => {
-   const { handleLikeMutate } = useMutateLike(messageId)
    const { handleClick, handleClose, open } = useTooltip()
-   const { likeIdToDelete, like, setLike } = useGetUsersLikeId(() => {}, reactions)
-   const deleteLikeMutate = useDeleteLike(messageId, likeIdToDelete, setLike)
+   const { handleLikeOrDelete, like } = useHandleLike(messageId, reactions)
    useDeleteLikeSocket()
-
-   const handleLikeOrDelete = (likeType: LikeTypes) => {
-      // Itt kéne törölnöm a likeot ha ugyan arra a reakció iconra kattintok, ha a like !== undefined.
-      if (like === undefined) {
-         handleLikeMutate(likeType)
-      } else if (like === likeType) {
-         // Itt törlök
-         deleteLikeMutate()
-      }
-   }
 
    return (
       <LikeTooltip
