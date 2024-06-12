@@ -41,6 +41,9 @@ const globalStyleBase = (
       '&::-webkit-scrollbar': {
          width: '9px',
          transition: 'all .2s ease',
+         ['@media (max-width: 768px)']: {
+            width: '1px',
+         },
       },
       '&::-webkit-scrollbar-track': {
          background: mainColor,
