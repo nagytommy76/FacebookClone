@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import { styled } from '@mui/material/styles'
 
-export const MainPageContainer = styled('section')({
+export const MainPageContainer = styled('section')(({ theme }) => ({
    position: 'relative',
    width: '100%',
    minHeight: '100%',
@@ -8,4 +8,8 @@ export const MainPageContainer = styled('section')({
 
    display: 'flex',
    justifyContent: 'center',
-})
+
+   [theme.breakpoints.down('md')]: {
+      overflowX: 'hidden',
+   },
+}))

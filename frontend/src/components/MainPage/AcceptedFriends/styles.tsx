@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles'
 import MenuItem from '@mui/material/MenuItem'
 
-export const AcceptedFriendsStyles = styled('aside')({
+export const AcceptedFriendsStyles = styled('aside')(({ theme }) => ({
    width: '300px',
    height: '600px',
    marginLeft: 25,
@@ -9,7 +9,11 @@ export const AcceptedFriendsStyles = styled('aside')({
    top: '80px',
 
    padding: 18,
-})
+
+   [theme.breakpoints.down('md')]: {
+      display: 'none',
+   },
+}))
 
 export const FriendMenuItemStyle = styled(MenuItem)(({ theme }) => ({
    width: '100%',
