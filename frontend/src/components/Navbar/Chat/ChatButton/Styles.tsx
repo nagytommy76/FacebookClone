@@ -1,5 +1,7 @@
+import Image from 'next/image'
 import { styled } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
+import Fab from '@mui/material/Fab'
 
 import Menu from '@mui/material/Menu'
 
@@ -42,5 +44,25 @@ export const CustomizedTooltip = styled(({ className, ...props }: TooltipProps) 
       color: theme.palette.background.paper,
       boxShadow: theme.shadows[1],
       fontSize: 15,
+   },
+}))
+
+export const StyledFab = styled(Fab)(({ theme }) => ({
+   width: 60,
+   height: 60,
+
+   [theme.breakpoints.down('md')]: {
+      width: 40,
+      height: 40,
+   },
+}))
+
+export const StyledFabImage = styled(Image)(({ theme }) => ({
+   width: 50,
+   height: 50,
+
+   [theme.breakpoints.down('md')]: {
+      width: 30,
+      height: 30,
    },
 }))

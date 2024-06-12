@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '@/reduxStore/store'
 import { selectAllUnreadMessageCount } from '@/reduxStore/slices/ChatSlice'
@@ -7,9 +6,8 @@ import useOpenState from './Hooks/useOpenState'
 import useFillMessageLabels from './Hooks/useFillMessageLabels'
 
 import Badge from '@mui/material/Badge'
-import Fab from '@mui/material/Fab'
 import ChatIcon from '@/assets/bubble-chat.png'
-import { StyledButtonContainer, CustomizedTooltip } from './Styles'
+import { StyledButtonContainer, CustomizedTooltip, StyledFab, StyledFabImage } from './Styles'
 
 const ChatModal = dynamic(() => import('../Modal/ChatModal'))
 
@@ -31,16 +29,15 @@ const ChatButton = () => {
                   badgeContent={allUnreadMsgCount}
                   max={9}
                >
-                  <Fab
+                  <StyledFab
                      aria-haspopup='true'
                      onClick={handleOpen}
-                     sx={{ width: 60, height: 60 }}
                      color='primary'
                      aria-label='chat'
                      size='large'
                   >
-                     <Image src={ChatIcon} alt='Chat Icon Button' width={50} height={50} />
-                  </Fab>
+                     <StyledFabImage src={ChatIcon} alt='Chat Icon Button' width={50} height={50} />
+                  </StyledFab>
                </Badge>
             </CustomizedTooltip>
          </StyledButtonContainer>
