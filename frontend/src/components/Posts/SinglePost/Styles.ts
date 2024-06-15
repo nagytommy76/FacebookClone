@@ -1,4 +1,16 @@
 import { styled } from '@mui/material'
+import Paper from '@mui/material/Paper'
+
+export const StyledPaper = styled(Paper)(({ theme }) => ({
+   margin: '1rem 0',
+   pb: '.3rem',
+   minHeight: '100px',
+   position: 'relative',
+
+   [theme.breakpoints.down('md')]: {
+      margin: '0',
+   },
+}))
 
 // Body section -----------------
 export const BodyDescriptionSection = styled('div')({ padding: '.6rem 1rem' })

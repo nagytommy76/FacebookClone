@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic'
 import { PostContext } from '../../MainPage/Context/PostContextProvider'
 import AllCommentContextProvider from '@/src/components/Posts/Context/AllCommentsContext'
 
-import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import {
+   StyledPaper,
    FooterSectionStyle,
    ButtonGroupStyle,
    BodyDescriptionSection,
@@ -45,7 +45,7 @@ const SinglePost: React.FC<{
 
    return (
       <>
-         <Paper
+         <StyledPaper
             id={singlePost._id}
             sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px', position: 'relative' }}
          >
@@ -79,7 +79,7 @@ const SinglePost: React.FC<{
                </ButtonGroupStyle>
                {CommentsComponent}
             </FooterSectionStyle>
-         </Paper>
+         </StyledPaper>
          <AllCommentContextProvider>
             <CommentsDialog
                commentRef={commentRef}
