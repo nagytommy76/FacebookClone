@@ -13,35 +13,40 @@ const ChatModal = dynamic(() => import('../Modal/ChatModal'))
 
 const ChatButton = () => {
    const allUnreadMsgCount = useAppSelector(selectAllUnreadMessageCount)
+   const userLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
    const { handleOpen } = useOpenState()
    useFillMessageLabels()
 
    return (
       <>
-         <StyledButtonContainer>
-            <CustomizedTooltip title='Chat' placement='top'>
-               <Badge
-                  anchorOrigin={{
-                     vertical: 'top',
-                     horizontal: 'left',
-                  }}
-                  color='error'
-                  badgeContent={allUnreadMsgCount}
-                  max={9}
-               >
-                  <StyledFab
-                     aria-haspopup='true'
-                     onClick={handleOpen}
-                     color='primary'
-                     aria-label='chat'
-                     size='large'
-                  >
-                     <StyledFabImage src={ChatIcon} alt='Chat Icon Button' width={50} height={50} />
-                  </StyledFab>
-               </Badge>
-            </CustomizedTooltip>
-         </StyledButtonContainer>
-         <ChatModal />
+         {userLoggedIn === true && (
+            <>
+               <StyledButtonContainer>
+                  <CustomizedTooltip title='Chat' placement='top'>
+                     <Badge
+                        anchorOrigin={{
+                           vertical: 'top',
+                           horizontal: 'left',
+                        }}
+                        color='error'
+                        badgeContent={allUnreadMsgCount}
+                        max={9}
+                     >
+                        <StyledFab
+                           aria-haspopup='true'
+                           onClick={handleOpen}
+                           color='primary'
+                           aria-label='chat'
+                           size='large'
+                        >
+                           <StyledFabImage src={ChatIcon} alt='Chat Icon Button' width={50} height={50} />
+                        </StyledFab>
+                     </Badge>
+                  </CustomizedTooltip>
+               </StyledButtonContainer>
+               <ChatModal />
+            </>
+         )}
       </>
    )
 }
