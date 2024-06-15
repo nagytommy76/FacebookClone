@@ -1,15 +1,16 @@
 import React from 'react'
-import { useAppDispatch } from '@/reduxStore/store'
-import { setChatModalOpen } from '@/reduxStore/slices/ChatSlice'
 
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 
-const CloseButton = () => {
-   const dispatch = useAppDispatch()
+const CloseButton: React.FC<{ closeFunction: () => void; rightPosition?: number; topPosition?: number }> = ({
+   closeFunction,
+   rightPosition = 2,
+   topPosition = 2,
+}) => {
    return (
       <IconButton
-         onClick={() => dispatch(setChatModalOpen(false))}
+         onClick={closeFunction}
          sx={{ position: 'absolute', right: 2, top: 2 }}
          aria-label='close'
          color='error'
