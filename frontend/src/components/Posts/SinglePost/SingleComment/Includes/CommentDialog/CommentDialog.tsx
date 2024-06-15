@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
 import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
 
-import Dialog from '@mui/material/Dialog'
-import { StyledDialogContext } from './Styles'
+import { StyledDialogContext, StyledDialog } from './Styles'
 
 import SinglePost from '../../../SinglePost'
 import AddComment from '../../../AddComment/AddComment'
@@ -23,8 +22,8 @@ const CommentDialog: React.FC<{
    const isLoading = useGetComments(_id, isDialogOpen)
 
    return (
-      <Dialog
-         maxWidth='md'
+      <StyledDialog
+         maxWidth={false}
          scroll='body'
          open={isDialogOpen}
          onClose={onCloseFn}
@@ -44,7 +43,7 @@ const CommentDialog: React.FC<{
                {children}
             </SinglePost>
          </StyledDialogContext>
-      </Dialog>
+      </StyledDialog>
    )
 }
 
