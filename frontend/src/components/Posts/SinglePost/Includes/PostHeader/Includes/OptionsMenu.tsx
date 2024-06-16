@@ -37,7 +37,7 @@ const OptionsMenu = () => {
             <IconButton onClick={handleClick}>
                <MoreHorizIcon fontSize='inherit' />
             </IconButton>
-            <Menu id='delete-post-menu' anchorEl={anchorEl} open={open} onClose={openModifyDialog}>
+            <Menu id='delete-post-menu' anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
                <MenuItem onClick={openModifyDialog}>Módosítás</MenuItem>
                <MenuItem onClick={openConfirmDialog}>Törlés</MenuItem>
             </Menu>
