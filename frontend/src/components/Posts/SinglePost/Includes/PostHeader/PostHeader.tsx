@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { PostContext } from '@/src/components/MainPage/Context/PostContextProvider'
+import { PostContext } from '@/PostContext/PostContextProvider'
 import { useAppSelector } from '@/reduxStore/store'
 
 import ProfilePic from '@/assets/facebook-profile.jpg'

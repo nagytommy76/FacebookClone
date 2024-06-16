@@ -1,6 +1,6 @@
 import React, { useRef, useContext, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { PostContext } from '../../MainPage/Context/PostContextProvider'
+import { PostContext } from '@/PostContext/PostContextProvider'
 import AllCommentContextProvider from '@/src/components/Posts/Context/AllCommentsContext'
 
 import Typography from '@mui/material/Typography'
