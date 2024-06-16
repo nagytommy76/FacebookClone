@@ -52,6 +52,15 @@ export const initialSinglePostData: IPost = {
          dateOfBirth: { day: 0, month: 0, year: 0 },
          gender: 'female',
          profilePicturePath: [{ _id: '', isSelected: false, path: '' }],
+         birthTown: '',
+         homeTown: '',
+         relationShip: { inRelation: false, isAlone: true },
+         studies: {
+            elementary: { from: 0, to: 0, name: '' },
+            highSchool: { from: 0, to: 0, name: '' },
+            university: { from: 0, to: 0, name: '' },
+         },
+         workPlaces: [],
       },
    },
 }
