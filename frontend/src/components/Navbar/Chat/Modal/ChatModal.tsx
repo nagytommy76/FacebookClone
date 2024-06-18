@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal'
 import TabContext from '@mui/lab/TabContext'
 import Fade from '@mui/material/Fade'
 
-import CloseButton from './Includes/CloseButton/CloseButton'
+import CloseButton from '@/Base/CloseButton/CloseButton'
 const ChatAside = dynamic(() => import('./Includes/ChatAside/ChatAside'))
 const ChatMessages = dynamic(() => import('./Includes/ChatMessages/ChatMessages'))
 
@@ -29,7 +29,7 @@ const ChatModal = () => {
                   <ChatAside />
                   <ChatMessages />
                </TabContext>
-               <CloseButton />
+               <CloseButton closeFunction={() => dispatch(setChatModalOpen(false))} />
             </StyledPaper>
          </Fade>
       </Modal>
