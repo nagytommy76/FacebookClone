@@ -4,7 +4,7 @@ import { styled } from '@mui/material'
 
 export const StyledCommentContainer = styled('div', {
    shouldForwardProp: (prop) => prop !== 'isChildComment',
-})(({ isChildComment = false }: { isChildComment: boolean }) => ({
+})<{ isChildComment?: boolean }>(({ theme, isChildComment = false }) => ({
    position: 'relative',
    maxWidth: `${isChildComment ? 'calc(100% - 54px)' : '100%'}`,
    marginTop: '1rem',
@@ -14,11 +14,11 @@ export const StyledCommentContainer = styled('div', {
    flexDirection: 'column',
 }))
 
-export const StyledListElement = styled('div')({
+export const StyledListElement = styled('div')((theme) => ({
    position: 'relative',
    display: 'flex',
    flexDirection: 'row',
-})
+}))
 
 export const StyledRightSide = styled('div')({
    width: '100%',
