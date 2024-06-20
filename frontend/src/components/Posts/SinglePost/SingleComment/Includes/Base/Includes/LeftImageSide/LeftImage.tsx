@@ -9,7 +9,7 @@ const LeftImage: React.FC<{ profilePicturePath: string; isChild: boolean }> = ({
 }) => {
    return (
       <StyledLeftSide>
-         <StyledProfileImage src={profilePicturePath} alt='profil' width={20} height={20} />
+         <StyledProfileImage src={profilePicturePath} alt='profil' width={30} height={30} />
          <HorizontalLineStyle isChildComment={isChild} />
       </StyledLeftSide>
    )
