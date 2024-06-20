@@ -57,7 +57,5 @@ export const StyledIsActive = styled('span', {
 // Picture style --------------------------------------------
 
 export const StyledProfileImage = styled(Image)({
-   height: 40,
-   width: 40,
    borderRadius: 50,
 })
