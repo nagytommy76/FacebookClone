@@ -15,7 +15,7 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
 
 // Body section -----------------
 export const BodyDescriptionSection = styled('div')(({ theme }) => ({
-   padding: '.5rem 1rem 1.5rem 1rem',
+   padding: '.5rem 1rem 1rem 1rem',
    textAlign: 'justify',
    [theme.breakpoints.down('md')]: {
       textTransform: 'capitalize',
@@ -30,17 +30,24 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
 
 // "Footer" section
 
-export const LikeAndCommentContainer = styled('div')({
+export const LikeAndCommentContainer = styled('div')(({ theme }) => ({
    width: '100%',
    display: 'flex',
    justifyContent: 'space-between',
-})
+   [theme.breakpoints.down('md')]: {
+      marginLeft: '.3rem',
+   },
+}))
 
-export const ButtonGroupStyle = styled('div')({
+export const ButtonGroupStyle = styled('div')(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    gap: '2px',
-})
+
+   [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+   },
+}))
 
 export const FooterSectionStyle = styled('footer')(({ theme }) => ({
    width: '100%',

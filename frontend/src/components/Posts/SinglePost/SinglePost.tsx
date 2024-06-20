@@ -6,10 +6,11 @@ import AllCommentContextProvider from '@/src/components/Posts/Context/AllComment
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import {
+   BodyDescriptionSection,
+   StyledTypography,
    StyledPaper,
    FooterSectionStyle,
    ButtonGroupStyle,
-   BodyDescriptionSection,
    LikeAndCommentContainer,
    CommentsParagraph,
 } from './Styles'
@@ -45,13 +46,10 @@ const SinglePost: React.FC<{
 
    return (
       <>
-         <StyledPaper
-            id={singlePost._id}
-            sx={{ margin: '1rem 0', pb: '.3rem', minHeight: '100px', position: 'relative' }}
-         >
+         <StyledPaper id={singlePost._id}>
             {children}
             <BodyDescriptionSection>
-               <Typography variant='subtitle1'>{singlePost.description}</Typography>
+               <StyledTypography variant='subtitle1'>{singlePost.description}</StyledTypography>
             </BodyDescriptionSection>
             {singlePost.postedPicturesPath && singlePost.postedPicturesPath.length > 0 && (
                <ImageSlideComponent postedPicturesPath={singlePost.postedPicturesPath} />
