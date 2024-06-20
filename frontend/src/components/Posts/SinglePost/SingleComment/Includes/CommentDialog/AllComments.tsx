@@ -28,7 +28,7 @@ const AllComments: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
          {isLoading ? (
             <SingleCommentSkeleton />
          ) : (
-            <TransitionGroup>
+            <TransitionGroup component={null}>
                {AllComments.map((comment) => (
                   <Collapse key={comment._id} timeout={150}>
                      <CommentContextProvider singleComment={comment} postId={_id}>
