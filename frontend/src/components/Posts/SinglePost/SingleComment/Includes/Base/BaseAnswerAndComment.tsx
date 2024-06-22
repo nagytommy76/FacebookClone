@@ -1,8 +1,12 @@
 import dynamic from 'next/dynamic'
 import type { ICommentAnswers, IPostComment } from '@/src/types/LikeTypes'
 
-import { StyledRightContainer } from './Styles/Styles'
-import { StyledCommentContainer, StyledListElement, StyledRightSide } from './Styles/ContainerStyles'
+import {
+   StyledCommentContainer,
+   StyledListElement,
+   StyledRightSide,
+   StyledRightContainer,
+} from './Styles/ContainerStyles'
 
 import LeftSideSkeleton from '@/Skeletons/Comments/Includes/LeftSideSkeleton'
 import BodySkeleton from '@/src/skeletons/Comments/Includes/BodySkeleton'
