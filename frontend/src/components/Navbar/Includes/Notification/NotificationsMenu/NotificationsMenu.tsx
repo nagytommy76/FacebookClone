@@ -62,7 +62,14 @@ const NotificationsMenu: React.FC<{
                                     <TimeAgo createdAt={notification.createdAt} />
                                  </StyledTextArea>
                               </Link>
-                              <StyledIsActive isRead={notification.isRead} />
+                              <StyledIsActive
+                                 topPosition='unset'
+                                 bottomPosition='10px'
+                                 rightPosition='10px'
+                                 width='12px'
+                                 height='12px'
+                                 isRead={notification.isRead}
+                              />
                            </StyledMenuItem>
                            <RemoveNotification notificationId={notification._id} />
                         </StyledMenuContainer>

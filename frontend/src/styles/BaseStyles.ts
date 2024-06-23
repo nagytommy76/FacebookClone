@@ -3,22 +3,31 @@ import Image from 'next/image'
 
 export const StyledIsActive = styled('span', {
    shouldForwardProp: (prop) =>
-      prop !== 'isRead' && prop !== 'topPosition' && prop !== 'rightPosition' && prop !== 'bottomPosition',
+      prop !== 'isRead' &&
+      prop !== 'topPosition' &&
+      prop !== 'rightPosition' &&
+      prop !== 'bottomPosition' &&
+      prop !== 'width' &&
+      prop !== 'height',
 })(
    ({
       isRead = false,
       topPosition = '50%',
       bottomPosition = 'unset',
       rightPosition = '10px',
+      width = '25%',
+      height = '25%',
    }: {
       isRead: boolean
       topPosition?: string
       bottomPosition?: string
       rightPosition?: string
+      width?: string
+      height?: string
    }) => ({
       display: `${isRead ? 'none' : 'flex'}`,
-      width: '25%',
-      height: '25%',
+      width,
+      height,
 
       flexDirection: 'row',
       position: 'absolute',
