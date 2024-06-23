@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem'
 const ProfileMenuLink: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
    const { userId, userName } = useAppSelector((state) => state.auth)
    return (
-      <Link href={`/me/${userId}`}>
+      <Link href={`/${userId}`}>
          <MenuItem onClick={handleClose}>
             <ImageAvatar displayText={userName} />
          </MenuItem>
