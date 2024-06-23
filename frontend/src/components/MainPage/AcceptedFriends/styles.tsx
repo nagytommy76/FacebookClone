@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles'
 import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
 
 export const AcceptedFriendsStyles = styled('aside')(({ theme }) => ({
    width: '300px',
@@ -21,4 +22,8 @@ export const FriendMenuItemStyle = styled(MenuItem)(({ theme }) => ({
    padding: '.6rem .3rem',
    borderRadius: 5,
    transition: 'all .2s ease',
+}))
+
+export const FriendNameStyle = styled(Typography)(({ theme }) => ({
+   marginLeft: 10,
 }))

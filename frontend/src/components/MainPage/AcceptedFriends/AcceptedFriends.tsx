@@ -3,7 +3,7 @@ import useGetAccepted from './Hooks/useGetAccepted'
 import useChatModal from './Hooks/useChatModal'
 import { useAppSelector } from '@/reduxStore/store'
 
-import { AcceptedFriendsStyles, FriendMenuItemStyle } from './styles'
+import { AcceptedFriendsStyles, FriendMenuItemStyle, FriendNameStyle } from './styles'
 import Typography from '@mui/material/Typography'
 
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
@@ -32,7 +32,7 @@ const AcceptedFriends = () => {
                   selectedProfilePicturePath={friend.selectedProfilePicture[0].path}
                   isRead={isOnlineFriends && isOnlineFriends[friend._id] ? false : true}
                />
-               <Typography variant='body1'>{`${friend.firstName} ${friend.sureName}`}</Typography>
+               <FriendNameStyle variant='body1'>{`${friend.firstName} ${friend.sureName}`}</FriendNameStyle>
             </FriendMenuItemStyle>
          ))}
       </AcceptedFriendsStyles>
