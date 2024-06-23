@@ -38,7 +38,7 @@ const PostHeader = () => {
             height={45}
          />
          <HeaderRightTitleSection>
-            <CustomTooltipTitle title={<DetailsTooltipTitle userInfo={userInfo} />}>
+            <CustomTooltipTitle placement='bottom' title={<DetailsTooltipTitle userInfo={userInfo} />}>
                <StyledClickableTypography variant='h6'>
                   {userInfo.firstName} {userInfo.sureName}
                </StyledClickableTypography>
