@@ -10,6 +10,9 @@ import {
    StyledProfileImage,
 } from './HeaderStyles'
 
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+
 import CustomTooltipTitle from '@/Base/LikeTooltip/CustomTooltipTitle'
 import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
 import OptionsMenu from './Includes/OptionsMenu'
@@ -38,7 +41,21 @@ const PostHeader = () => {
             height={45}
          />
          <HeaderRightTitleSection>
-            <CustomTooltipTitle placement='bottom' title={<DetailsTooltipTitle userInfo={userInfo} />}>
+            <CustomTooltipTitle
+               placement='bottom'
+               title={
+                  <DetailsTooltipTitle userInfo={userInfo}>
+                     <Stack m={1} spacing={2} direction='row'>
+                        <Button fullWidth variant='contained'>
+                           Ismerősök
+                        </Button>
+                        <Button fullWidth variant='outlined'>
+                           Chat Megnyitás
+                        </Button>
+                     </Stack>
+                  </DetailsTooltipTitle>
+               }
+            >
                <StyledClickableTypography variant='h6'>
                   {userInfo.firstName} {userInfo.sureName}
                </StyledClickableTypography>
