@@ -35,6 +35,9 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
                         )}
                         <Typography gutterBottom variant='subtitle2' fontWeight={300}>
                            Születés: {moment(friend.dateOfBirth).format('YYYY MMMM Do ')}
+                           <Typography variant='caption' fontWeight={400}>
+                              ({moment(Date.now()).year() - moment(friend.dateOfBirth).year()} éves)
+                           </Typography>
                         </Typography>
                         <Typography gutterBottom variant='subtitle2' fontWeight={300}>
                            Létrehozva: {moment(friend.createdAt).format('YYYY MMMM Do ')}
