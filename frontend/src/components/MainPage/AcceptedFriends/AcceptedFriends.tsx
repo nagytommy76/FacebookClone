@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import useGetAccepted from './Hooks/useGetAccepted'
-import useChatModal from './Hooks/useChatModal'
+import useChatModal from '../../../hooks/useChatModal'
 import { useAppSelector } from '@/reduxStore/store'
 
 import { AcceptedFriendsStyles, FriendMenuItemStyle, FriendNameStyle } from './styles'
