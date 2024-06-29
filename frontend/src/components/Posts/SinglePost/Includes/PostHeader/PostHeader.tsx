@@ -10,13 +10,11 @@ import {
    StyledProfileImage,
 } from './HeaderStyles'
 
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
-
 import CustomTooltipTitle from '@/Base/LikeTooltip/CustomTooltipTitle'
 import DetailsTooltipTitle from '@/Base/ProfileCard/DetailsTooltipTitle'
 import OptionsMenu from './Includes/OptionsMenu'
 import TimeAgo from './Includes/TimeAgo'
+import ButtonStack from './Includes/Buttons/ButtonStack'
 
 const PostHeader = () => {
    const {
@@ -45,14 +43,7 @@ const PostHeader = () => {
                placement='bottom'
                title={
                   <DetailsTooltipTitle userInfo={userInfo}>
-                     <Stack m={1} spacing={2} direction='row'>
-                        <Button fullWidth variant='contained'>
-                           Ismerősök
-                        </Button>
-                        <Button fullWidth variant='outlined'>
-                           Chat Megnyitás
-                        </Button>
-                     </Stack>
+                     <ButtonStack />
                   </DetailsTooltipTitle>
                }
             >
