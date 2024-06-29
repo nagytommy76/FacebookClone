@@ -19,6 +19,7 @@ const useFillMessageLabels = () => {
       queryFn: queryFunction,
       onSuccess(data) {
          const foundChat = data.data.foundChat
+         if (foundChat.length === 0) return null
          dispatch(setChatId(foundChat[0]._id))
          dispatch(setSelectedChatWithUserId(foundChat[0].chatWithParticipant._id))
          dispatch(setMessageLabels(foundChat))
