@@ -19,7 +19,7 @@ const CardButton: React.FC<{ friend: IFriendsResponse }> = ({ friend }) => {
          {userId && (
             <CardActions>
                {userId == friend._id ? (
-                  <Link style={{ width: '100%' }} href={`/me/${userId}`}>
+                  <Link style={{ width: '100%' }} href={`/${userId}`}>
                      <Button fullWidth variant='outlined' color='success' endIcon={<AccountCircleIcon />}>
                         Profilom
                      </Button>
