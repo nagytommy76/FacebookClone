@@ -29,7 +29,7 @@ const ChatButton = () => {
                            horizontal: 'left',
                         }}
                         color='error'
-                        badgeContent={allUnreadMsgCount}
+                        badgeContent={allUnreadMsgCount || 0}
                         max={9}
                      >
                         <StyledFab
