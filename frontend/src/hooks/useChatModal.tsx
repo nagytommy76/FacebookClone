@@ -28,8 +28,10 @@ const useChatModal = () => {
             dispatch(setChatId(data.data.createdChatModel._id))
             dispatch(setSelectedChatWithUserId(variables.userId))
          } else if (data.status === 201) {
-            // Itt hozzá kell adom egy setSingleMessageLabel-t
             dispatch(setSingleMessageLabel(data.data.createdChatModel))
+            dispatch(setChatId(data.data.createdChatModel._id))
+            dispatch(setSelectedChatWithUserId(variables.userId))
+            dispatch(setChatModalOpen(true))
          }
       },
    })
