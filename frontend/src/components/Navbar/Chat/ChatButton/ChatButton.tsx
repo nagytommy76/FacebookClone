@@ -4,6 +4,7 @@ import { selectAllUnreadMessageCount } from '@/reduxStore/slices/ChatSlice'
 
 import useOpenState from './Hooks/useOpenState'
 import useFillMessageLabels from './Hooks/useFillMessageLabels'
+import useCreateChatSocket from './Hooks/useCreateChatSocket'
 
 import Badge from '@mui/material/Badge'
 import ChatIcon from '@/assets/bubble-chat.png'
@@ -16,6 +17,7 @@ const ChatButton = () => {
    const userLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
    const { handleOpen } = useOpenState()
    useFillMessageLabels()
+   useCreateChatSocket()
 
    return (
       <>
