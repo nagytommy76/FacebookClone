@@ -5,6 +5,7 @@ import {
    setSingleMessageLabel,
    setChatId,
 } from '@/reduxStore/slices/ChatSlice'
+import { socket } from '@/src/utils/socketIo'
 
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
@@ -32,6 +33,10 @@ const useChatModal = () => {
             dispatch(setChatId(data.data.createdChatModel._id))
             dispatch(setSelectedChatWithUserId(variables.userId))
             dispatch(setChatModalOpen(true))
+            socket.emit('chat:createChat', {
+               createdChatModel: data.data.createdChatModel,
+               createdChatId: data.data.createdChatModel._id,
+            })
          }
       },
    })
