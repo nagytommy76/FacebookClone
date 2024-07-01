@@ -61,6 +61,10 @@ export const initSocketIO = (app: Application) => {
 
       // CHAT ---------------------------------------------------------------------
 
+      socket.on('chat:createChat', (args) => {
+         socket.broadcast.to(args.createdChatId).emit('chat:createChatResponse', args)
+      })
+
       socket.on('chat:typing', (args: { isTyping: boolean; chatMsgLength: number; chatId: string }) =>
          socket.broadcast.to(args.chatId).emit('chat:typingResponse', args)
       )
