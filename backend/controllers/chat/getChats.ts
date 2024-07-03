@@ -16,6 +16,29 @@ export const aggregateMessageLabels = async (loggedInUserId: Types.ObjectId, cha
             from: 'users',
             localField: 'participants.participant',
             foreignField: '_id',
+            as: 'populatedParticipants',
+            pipeline: [
+               {
+                  $project: {
+                     firstName: 1,
+                     sureName: 1,
+                     selectedProfilePicture: {
+                        $filter: {
+                           input: '$userDetails.profilePicturePath',
+                           as: 'profilePic',
+                           cond: { $eq: ['$$profilePic.isSelected', true] },
+                        },
+                     },
+                  },
+               },
+            ],
+         },
+      },
+      {
+         $lookup: {
+            from: 'users',
+            localField: 'participants.participant',
+            foreignField: '_id',
             as: 'chatWithParticipant',
             pipeline: [
                {
