@@ -36,6 +36,7 @@ const useChatModal = () => {
             socket.emit('chat:createChat', {
                createdChatModel: data.data.createdChatModel,
                createdChatId: data.data.createdChatModel._id,
+               toUserId: data.data.createdChatModel.chatWithParticipant._id,
             })
          }
       },
