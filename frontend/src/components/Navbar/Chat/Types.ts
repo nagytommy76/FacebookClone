@@ -17,6 +17,7 @@ export interface IChat {
    _id: string
    participants: IParticipants[]
    chatWithParticipant: IPopulatedUserData
+   populatedParticipants: IPopulatedUserData[]
    createdAt: string
    updatedAt: string
    messages: IMessages[]
