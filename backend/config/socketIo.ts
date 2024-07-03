@@ -62,7 +62,9 @@ export const initSocketIO = (app: Application) => {
       // CHAT ---------------------------------------------------------------------
 
       socket.on('chat:createChat', (args) => {
-         socket.broadcast.to(args.createdChatId).emit('chat:createChatResponse', args)
+         let foundUserSocketId = onlineFriends.find((user) => user.userId === args.toUserId)?.socketId
+         // socket.broadcast.to(args.createdChatId).emit('chat:createChatResponse', args)
+         if (foundUserSocketId) socket.broadcast.to(foundUserSocketId).emit('chat:createChatResponse', args)
       })
 
       socket.on('chat:typing', (args: { isTyping: boolean; chatMsgLength: number; chatId: string }) =>
