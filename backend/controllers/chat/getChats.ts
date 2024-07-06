@@ -1,8 +1,32 @@
 import { Response } from 'express'
-import { Types } from 'mongoose'
+import { Types, PipelineStage } from 'mongoose'
 
 import { ChatModel } from '../../models/chat/chatModel'
 import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+
+const projectUserData = () => {
+   return {
+      firstName: 1,
+      sureName: 1,
+      selectedProfilePicture: {
+         $filter: {
+            input: '$userDetails.profilePicturePath',
+            as: 'profilePic',
+            cond: { $eq: ['$$profilePic.isSelected', true] },
+         },
+      },
+   }
+}
+
+const lookupUser = (as: string, pipeline: PipelineStage.Project[] | any[]) => {
+   return {
+      from: 'users',
+      localField: 'participants.participant',
+      foreignField: '_id',
+      as,
+      pipeline,
+   }
+}
 
 export const aggregateMessageLabels = async (loggedInUserId: Types.ObjectId, chatId?: Types.ObjectId) => {
    const foundChat = await ChatModel.aggregate([
@@ -12,55 +36,23 @@ export const aggregateMessageLabels = async (loggedInUserId: Types.ObjectId, cha
          },
       },
       {
-         $lookup: {
-            from: 'users',
-            localField: 'participants.participant',
-            foreignField: '_id',
-            as: 'populatedParticipants',
-            pipeline: [
-               {
-                  $project: {
-                     firstName: 1,
-                     sureName: 1,
-                     selectedProfilePicture: {
-                        $filter: {
-                           input: '$userDetails.profilePicturePath',
-                           as: 'profilePic',
-                           cond: { $eq: ['$$profilePic.isSelected', true] },
-                        },
-                     },
-                  },
-               },
-            ],
-         },
+         $lookup: lookupUser('populatedParticipants', [
+            {
+               $project: projectUserData(),
+            },
+         ]),
       },
       {
-         $lookup: {
-            from: 'users',
-            localField: 'participants.participant',
-            foreignField: '_id',
-            as: 'chatWithParticipant',
-            pipeline: [
-               {
-                  $match: {
-                     _id: { $ne: loggedInUserId },
-                  },
+         $lookup: lookupUser('chatWithParticipant', [
+            {
+               $match: {
+                  _id: { $ne: loggedInUserId },
                },
-               {
-                  $project: {
-                     firstName: 1,
-                     sureName: 1,
-                     selectedProfilePicture: {
-                        $filter: {
-                           input: '$userDetails.profilePicturePath',
-                           as: 'profilePic',
-                           cond: { $eq: ['$$profilePic.isSelected', true] },
-                        },
-                     },
-                  },
-               },
-            ],
-         },
+            },
+            {
+               $project: projectUserData(),
+            },
+         ]),
       },
       {
          $addFields: {
