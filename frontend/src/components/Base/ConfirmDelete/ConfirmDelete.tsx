@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 
 const ConfirmDelete: React.FC<{
    isOpen: boolean
-   createdAt: string
+   createdAt?: string
    postOrCommentText?: string
    otherTextToDisplay?: string | null
    handleCloseAndDelete: () => void
