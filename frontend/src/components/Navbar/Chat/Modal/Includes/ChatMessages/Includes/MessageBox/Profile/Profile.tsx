@@ -5,6 +5,7 @@ import { ProfileSection, StyledTextSection } from './Styles'
 import Typography from '@mui/material/Typography'
 
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
+const DeleteMessage = dynamic(() => import('./DeleteMessage/DeleteMessage'))
 
 const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfilePicturePath: string }> = ({
    fullName,
@@ -33,6 +34,7 @@ const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfil
                </Typography>
             )}
          </StyledTextSection>
+         <DeleteMessage fullName={fullName} />
       </ProfileSection>
    )
 }
