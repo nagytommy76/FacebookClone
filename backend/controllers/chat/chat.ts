@@ -27,7 +27,7 @@ export const createNewChatController = async (request: ICreateChatRequest, respo
             new Types.ObjectId(loggedInUserId),
             new Types.ObjectId(createdChatModel._id)
          )
-
+         aggregatedChatLabels[0].totalUnreadMsgCount = 1
          return response.status(201).json({ createdChatModel: aggregatedChatLabels[0] })
       } else {
          return response.status(200).json({ createdChatModel: foundChat, msg: 'Chat already exist' })
