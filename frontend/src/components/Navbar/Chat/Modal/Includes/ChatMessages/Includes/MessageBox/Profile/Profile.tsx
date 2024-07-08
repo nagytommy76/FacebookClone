@@ -1,9 +1,8 @@
 import dynamic from 'next/dynamic'
-import { useAppSelector } from '@/src/utils/redux/store'
-
 import { ProfileSection, StyledTextSection } from './Styles'
-import Typography from '@mui/material/Typography'
 
+const IsOnline = dynamic(() => import('./Includes/IsOnline'))
+const NameLink = dynamic(() => import('./Includes/NameLink'))
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
 const DeleteMessage = dynamic(() => import('./DeleteMessage/DeleteMessage'))
 
@@ -12,7 +11,6 @@ const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfil
    selectedProfilePicturePath,
    chatFirendId,
 }) => {
-   const isOnlineFriends = useAppSelector((state) => state.chat.isOnlineFriends)
    return (
       <ProfileSection>
          <ChatAvatar
@@ -23,16 +21,8 @@ const Profile: React.FC<{ fullName: string; chatFirendId: string; selectedProfil
             isRead={true}
          />
          <StyledTextSection>
-            <Typography variant='h6'>{fullName}</Typography>
-            {isOnlineFriends && isOnlineFriends[chatFirendId] ? (
-               <Typography sx={{ color: '#77c70e' }} variant='body1'>
-                  online
-               </Typography>
-            ) : (
-               <Typography sx={{ color: '#fd2b27' }} variant='body1'>
-                  offline
-               </Typography>
-            )}
+            <NameLink chatFirendId={chatFirendId} fullName={fullName} />
+            <IsOnline chatFirendId={chatFirendId} />
          </StyledTextSection>
          <DeleteMessage fullName={fullName} />
       </ProfileSection>
