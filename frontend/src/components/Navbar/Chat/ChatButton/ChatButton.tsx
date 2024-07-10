@@ -5,6 +5,7 @@ import { selectAllUnreadMessageCount } from '@/reduxStore/slices/ChatSlice'
 import useOpenState from './Hooks/useOpenState'
 import useFillMessageLabels from './Hooks/useFillMessageLabels'
 import useCreateChatSocket from './Hooks/useCreateChatSocket'
+import useSendMsgSocket from '../../Hooks/useSendMsgSocket'
 
 import Badge from '@mui/material/Badge'
 import ChatIcon from '@/assets/bubble-chat.png'
@@ -18,6 +19,7 @@ const ChatButton = () => {
    const { handleOpen } = useOpenState()
    useFillMessageLabels()
    useCreateChatSocket()
+   useSendMsgSocket()
 
    return (
       <>

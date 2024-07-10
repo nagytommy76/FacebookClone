@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import useEmojiText from '@/hooks/useEmojiText'
 
 import useTypingSocket from './Sockets/useTypingSocket'
-import useSendMsgSocket from './Sockets/useSendMsgSocket'
+import useEndTypingSocket from './Sockets/useEndTypingSocket'
 import useDeleteSocket from './Sockets/useDeleteSocket'
 import useReactionSocket from './Sockets/useReactionSocket'
 // https://dev.to/novu/building-a-chat-app-with-socketio-and-react-2edj
@@ -15,7 +15,7 @@ const useMessage = () => {
    const handleChangeEmoji = useEmojiText(chatRef, setChatMsg)
 
    const handleTyping = useTypingSocket(setTypingStatus)
-   useSendMsgSocket(setTypingStatus)
+   useEndTypingSocket(setTypingStatus)
    useDeleteSocket()
    useReactionSocket()
 
@@ -29,7 +29,7 @@ const useMessage = () => {
       event: React.KeyboardEvent<HTMLInputElement>,
       handleAddChatMutate: (chatImagePath?: string) => void
    ) => {
-      if (event.key === 'Enter' && event.target.value.length >= 1) {
+      if (event.key === 'Enter' && (event.target as HTMLInputElement).value.length >= 1) {
          handleAddChatMutate()
       }
    }
