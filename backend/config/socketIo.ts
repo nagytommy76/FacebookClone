@@ -72,6 +72,7 @@ export const initSocketIO = (app: Application) => {
       )
 
       socket.on('chat:sendMsg', (args: { addedMessage: IMessage[]; foundChatId: string }) => {
+         socket.broadcast.to(args.foundChatId).emit('chat:endTypingResponse')
          socket.broadcast.to(args.foundChatId).emit('chat:sendMsgResponse', args)
       })
 
