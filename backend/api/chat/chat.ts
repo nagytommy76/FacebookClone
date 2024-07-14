@@ -4,6 +4,7 @@ import { createNewChatController } from '../../controllers/chat/chat'
 import { saveChatMessageController, setMessagesRead } from '../../controllers/chat/chatMessages'
 import { getChatMessageLabels } from '../../controllers/chat/getChats'
 import { deleteMessageController } from '../../controllers/chat/removeMessage'
+import { deleteChatController } from '../../controllers/chat/deleteChat'
 import LikeChatController from '../../controllers/chat/likeMessage'
 import DeleteLikeChatController from '../../controllers/chat/deleteLike'
 
@@ -29,5 +30,6 @@ router.put('/set-read-messages', authenticateAccessTokenForApi, setMessagesRead)
 router.patch('/delete-message', authenticateAccessTokenForApi, deleteMessageController)
 
 router.delete('/delete-message-like', authenticateAccessTokenForApi, DeleteController.deleteLikeController)
+router.delete('/delete-chat', authenticateAccessTokenForApi, deleteChatController)
 
 module.exports = router
