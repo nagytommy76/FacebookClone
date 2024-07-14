@@ -124,6 +124,17 @@ export const ChatSlice = createSlice({
             state.messageLabels[chatId].messages[messageIndex] = modifiedMessage
          }
       },
+      deleteChat: (state, action: PayloadAction<{ chatId: string }>) => {
+         const { chatId } = action.payload
+         if (state.messageLabels) {
+            const unassign = (target: IndexedMessageLabel) => {
+               Object.keys(target).forEach((key) => {
+                  if (chatId === key) delete target[key]
+               })
+            }
+            unassign(state.messageLabels)
+         }
+      },
    },
 })
 
@@ -141,6 +152,7 @@ export const {
    setNewMessages,
    addNewReactionsToMessage,
    removeReactionFromMessage,
+   deleteChat,
 } = ChatSlice.actions
 export default ChatSlice.reducer
 
