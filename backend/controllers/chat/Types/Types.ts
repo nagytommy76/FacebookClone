@@ -23,3 +23,9 @@ export interface ILikeDeleteRequest extends IJWTUserType {
       likeIdToDelete: string
    }
 }
+
+export interface IDeletChatRequest extends IJWTUserType {
+   body: {
+      chatId: string
+   }
+}
