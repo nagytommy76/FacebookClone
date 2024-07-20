@@ -2,6 +2,7 @@ import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios } from '@/axios/AxiosInstance'
 import { deleteChat, setChatId } from '@/reduxStore/slices/ChatSlice'
+import { socket } from '@/src/utils/socketIo'
 import type { Dispatch, SetStateAction } from 'react'
 
 const useDeleteChat = (setIsDialogOpen: Dispatch<SetStateAction<boolean>>) => {
@@ -21,6 +22,7 @@ const useDeleteChat = (setIsDialogOpen: Dispatch<SetStateAction<boolean>>) => {
             dispatch(setChatId(Object.keys(messageLabels)[0]))
          }
          if (chatId) dispatch(deleteChat({ chatId }))
+         socket.emit('chat:deleteChat', { chatId })
       },
    })
 
