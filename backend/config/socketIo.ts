@@ -88,6 +88,10 @@ export const initSocketIO = (app: Application) => {
          socket.broadcast.to(args.chatId).emit('chat:deleteLikeResponse', args)
       })
 
+      socket.on('chat:deleteChat', (args) => {
+         socket.broadcast.to(args.chatId).emit('chat:deleteChatResponse', args)
+      })
+
       // --------------------------------------------------------------------------
 
       socket.on('disconnect', () => {
