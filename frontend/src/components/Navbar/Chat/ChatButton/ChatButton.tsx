@@ -6,6 +6,7 @@ import useOpenState from './Hooks/useOpenState'
 import useFillMessageLabels from './Hooks/useFillMessageLabels'
 import useCreateChatSocket from './Hooks/useCreateChatSocket'
 import useSendMsgSocket from '../../Hooks/useSendMsgSocket'
+import useDeleteChatSocket from './Hooks/useDeleteChatSocket'
 
 import Badge from '@mui/material/Badge'
 import ChatIcon from '@/assets/bubble-chat.png'
@@ -20,6 +21,7 @@ const ChatButton = () => {
    useFillMessageLabels()
    useCreateChatSocket()
    useSendMsgSocket()
+   useDeleteChatSocket()
 
    return (
       <>
