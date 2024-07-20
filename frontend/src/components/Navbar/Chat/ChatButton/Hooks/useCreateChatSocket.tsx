@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useAppDispatch } from '@/reduxStore/store'
-import { setSingleMessageLabel, setChatId } from '@/reduxStore/slices/ChatSlice'
+import { setSingleMessageLabel, setChatId, setSelectedChatWithUserId } from '@/reduxStore/slices/ChatSlice'
 
 import { socket } from '@/src/utils/socketIo'
 import type { IChat } from '../../Types'
@@ -25,6 +25,7 @@ const useCreateChatSocket = () => {
    useEffect(() => {
       const createChatLabel = (args: IChatArgs) => {
          swapChatWithParticipant(args.createdChatModel, args.toUserId)
+         dispatch(setSelectedChatWithUserId(args.createdChatModel.chatWithParticipant._id))
          dispatch(setSingleMessageLabel(args.createdChatModel))
          dispatch(setChatId(args.createdChatId))
          chatAudio.play()
