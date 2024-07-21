@@ -1,19 +1,38 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit'
-import type { IChat, IMessages } from '@/Chat/Types'
+import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
+
+type InfoSnackType = {
+   isInfoSnackOpen: boolean
+   imageSrc: string | null
+   headText: string
+   message: string
+}
+
+const initialState: InfoSnackType = {
+   isInfoSnackOpen: false,
+   imageSrc: '',
+   headText: '',
+   message: '',
+}
 
 export const InfoSnackSlice = createSlice({
    name: 'infoSnack',
-   initialState: {
-      isInfoSnackOpen: true,
-   },
+   initialState,
    reducers: {
-      setInfoSnack: (state, action: PayloadAction<boolean>) => {
+      setIsInfoSnackOpen: (state, action: PayloadAction<boolean>) => {
          state.isInfoSnackOpen = action.payload
+      },
+      setImageSrc: (state, action: PayloadAction<string>) => {
+         state.imageSrc = action.payload
+      },
+      setHeadText: (state, action: PayloadAction<string>) => {
+         state.headText = action.payload
+      },
+      setMessage: (state, action: PayloadAction<string>) => {
+         state.message = action.payload
       },
    },
 })
 
-export const { setInfoSnack } = InfoSnackSlice.actions
+export const { setIsInfoSnackOpen, setImageSrc, setHeadText, setMessage } = InfoSnackSlice.actions
 export default InfoSnackSlice.reducer
