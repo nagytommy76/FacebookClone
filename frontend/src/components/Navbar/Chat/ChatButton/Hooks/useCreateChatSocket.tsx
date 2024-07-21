@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import useSetInfoSnack from '@/Base/InfoSnackbar/useSetInfoSnack'
 
 import { useAppDispatch } from '@/reduxStore/store'
 import { setSingleMessageLabel, setChatId, setSelectedChatWithUserId } from '@/reduxStore/slices/ChatSlice'
@@ -14,6 +15,7 @@ interface IChatArgs {
 
 const useCreateChatSocket = () => {
    const dispatch = useAppDispatch()
+   const setInfoSnackbar = useSetInfoSnack()
    const [chatAudio] = useState(new Audio('/sounds/facebook_messenger.mp3'))
 
    const swapChatWithParticipant = (createdChatModel: IChat, toUserId: string) => {
@@ -24,10 +26,18 @@ const useCreateChatSocket = () => {
    }
    useEffect(() => {
       const createChatLabel = (args: IChatArgs) => {
+         const { chatWithParticipant } = args.createdChatModel
+
          swapChatWithParticipant(args.createdChatModel, args.toUserId)
-         dispatch(setSelectedChatWithUserId(args.createdChatModel.chatWithParticipant._id))
+         dispatch(setSelectedChatWithUserId(chatWithParticipant._id))
          dispatch(setSingleMessageLabel(args.createdChatModel))
          dispatch(setChatId(args.createdChatId))
+         console.log(chatWithParticipant.selectedProfilePicture[0].path)
+         setInfoSnackbar(
+            '',
+            `${chatWithParticipant.firstName} ${chatWithParticipant.sureName} létrehozott egy beszélgetést veled`,
+            `${chatWithParticipant.selectedProfilePicture[0].path}`
+         )
          chatAudio.play()
       }
 
@@ -36,7 +46,7 @@ const useCreateChatSocket = () => {
       return () => {
          socket.off('chat:createChatResponse', createChatLabel)
       }
-   }, [dispatch, chatAudio])
+   }, [dispatch, setInfoSnackbar, chatAudio])
 
    return null
 }

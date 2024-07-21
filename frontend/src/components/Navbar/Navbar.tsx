@@ -11,6 +11,7 @@ import NotificationContextProvider from './Includes/Notification/Context/Notific
 import LeftSide from './Includes/LeftSide/LeftSide'
 
 const ChatButton = dynamic(() => import('./Chat/ChatButton/ChatButton'))
+const InfoSnackbar = dynamic(() => import('@/Base/InfoSnackbar/InfoSnackbar'))
 
 import { StyledNavbarToolbar, RightSideContainer } from './Style'
 
@@ -40,6 +41,7 @@ const Navbar = () => {
             </StyledNavbarToolbar>
          </AppBar>
          <ChatButton />
+         <InfoSnackbar />
       </>
    )
 }
