@@ -1,7 +1,8 @@
 import { useEffect, Dispatch, SetStateAction, useState } from 'react'
 import { socket } from '@/src/utils/socketIo'
+import useSetInfoSnack from '@/Base/InfoSnackbar/useSetInfoSnack'
 
-import { useAppDispatch } from '@/reduxStore/store'
+import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
 import { setChatMessage, incrementTotalUnreadMsgCount } from '@/reduxStore/slices/ChatSlice'
 
 import useNotification from './useNotification'
@@ -16,9 +17,11 @@ interface IChatArgs {
 }
 
 const useSendMsgSocket = (setTypingStatus?: Dispatch<SetStateAction<boolean>>) => {
-   const [chatAudio] = useState(new Audio('/sounds/facebook_messenger.mp3'))
-   const notification = useNotification()
    const dispatch = useAppDispatch()
+   const [chatAudio] = useState(new Audio('/sounds/facebook_messenger.mp3'))
+   const isChatModalOpen = useAppSelector((state) => state.chat.isChatModalOpen)
+   const setInfoSnackbar = useSetInfoSnack()
+   const notification = useNotification()
 
    useEffect(() => {
       const sendChatMsg = (args: IChatArgs) => {
@@ -26,6 +29,13 @@ const useSendMsgSocket = (setTypingStatus?: Dispatch<SetStateAction<boolean>>) =
          if (setTypingStatus) setTypingStatus(false)
          dispatch(setChatMessage({ addedMessage: args.addedMessage, foundChatId: args.foundChatId }))
          dispatch(incrementTotalUnreadMsgCount({ count: 1, currentChatId: args.foundChatId }))
+         if (isChatModalOpen === false) {
+            setInfoSnackbar(
+               args.addedMessage.message,
+               `${args.fullName} Üzenetet küldött neked!`,
+               args.profileImage
+            )
+         }
          chatAudio.play()
       }
 
@@ -34,7 +44,7 @@ const useSendMsgSocket = (setTypingStatus?: Dispatch<SetStateAction<boolean>>) =
       return () => {
          socket.off('chat:sendMsgResponse', sendChatMsg)
       }
-   }, [dispatch, setTypingStatus, chatAudio, notification])
+   }, [dispatch, setTypingStatus, chatAudio, isChatModalOpen, notification, setInfoSnackbar])
 
    return null
 }
