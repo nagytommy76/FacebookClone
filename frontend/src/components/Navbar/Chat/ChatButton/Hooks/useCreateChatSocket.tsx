@@ -26,13 +26,13 @@ const useCreateChatSocket = () => {
    }
    useEffect(() => {
       const createChatLabel = (args: IChatArgs) => {
+         swapChatWithParticipant(args.createdChatModel, args.toUserId)
          const { chatWithParticipant } = args.createdChatModel
 
-         swapChatWithParticipant(args.createdChatModel, args.toUserId)
          dispatch(setSelectedChatWithUserId(chatWithParticipant._id))
          dispatch(setSingleMessageLabel(args.createdChatModel))
          dispatch(setChatId(args.createdChatId))
-         console.log(chatWithParticipant.selectedProfilePicture[0].path)
+
          setInfoSnackbar(
             '',
             `${chatWithParticipant.firstName} ${chatWithParticipant.sureName} létrehozott egy beszélgetést veled`,
