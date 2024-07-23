@@ -11,6 +11,7 @@ export type GenderTypes = 'female' | 'male'
 export interface IInputValues {
    isError: boolean
    msg: string
+   path: string
    value: string
 }
 
@@ -18,6 +19,7 @@ export const InputValues: IInputValues = {
    isError: false,
    msg: '',
    value: '',
+   path: '',
 }
 
 export interface ILoginData {
