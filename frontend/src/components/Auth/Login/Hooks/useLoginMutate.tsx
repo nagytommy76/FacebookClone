@@ -20,6 +20,10 @@ const useLoginMutate = (
    const { mutate, isLoading, data } = useMutation({
       mutationKey: ['login'],
       mutationFn: handleLoginSend,
+      onMutate: () => {
+         setEmail((prevValues) => ({ ...prevValues, isError: false, msg: '' }))
+         setPassword((prevValues) => ({ ...prevValues, isError: false, msg: '' }))
+      },
       onSuccess,
       onError,
    })
