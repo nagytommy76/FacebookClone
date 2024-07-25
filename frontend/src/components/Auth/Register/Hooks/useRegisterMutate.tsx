@@ -43,7 +43,7 @@ const useRegisterMutate = () => {
       setIsBtnDisabled(true)
       startCountDownTimer()
       setTimeout(() => {
-         if (data.status === 201) router.push('/login')
+         if (data.status === 201) router.push('/login?isRegisterSuccess=true')
       }, count * 1000)
    }
 
