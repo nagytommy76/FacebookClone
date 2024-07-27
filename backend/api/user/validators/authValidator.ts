@@ -4,6 +4,7 @@ import { User } from '../../../models/user/user'
 export const ValidateRegister = [
    body('sureName').trim().isLength({ min: 1 }).withMessage('A Vezetéknév mező kitöltése kötelező!'),
    body('firstName').trim().isLength({ min: 1 }).withMessage('A Keresztnév mező kitöltése kötelező!'),
+   body('email').trim().normalizeEmail().isEmail().withMessage('Nem megfelelő formátumú az email cím!'),
    body('email').custom(async (email: string) => {
       const checkUserRegisteredWithEmail = await User.findOne({ email })
       if (email.length <= 3) {
