@@ -27,8 +27,8 @@ const HeaderImage: React.FC<{ profileImagePath: IProfilePicture[] }> = ({ profil
             onClick={handleOpenDialog}
             src={selectedProfileImg || ProfilePic}
             alt='Profil kép'
-            width={100}
-            height={100}
+            width={200}
+            height={200}
          />
          <ImageModal
             isModalOpen={isModalOpen}
