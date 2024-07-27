@@ -6,7 +6,7 @@ import CardActionArea from '@mui/material/CardActionArea'
 
 const CardHeader: React.FC<{ profilePicture: string; userId: string }> = ({ profilePicture, userId }) => {
    return (
-      <Link href={`/me/${userId}`}>
+      <Link href={`/${userId}`}>
          <CardActionArea>
             <CardContent sx={{ padding: 0 }}>
                <Image
