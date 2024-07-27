@@ -21,14 +21,27 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
 
       if (!senderUser) return response.status(404).json({ msg: 'Sender user not found' })
       if (!receiverUser) return response.status(404).json({ msg: 'Receiver user not found' })
-      const createdFriends = await FriendsModel.create({
-         receiverUser: receiverUser._id,
-         senderUser: senderUser._id,
-         status: 'pending',
-      })
 
-      senderUser.friends.push({ friendsId: createdFriends._id, friend: receiverUser._id })
-      receiverUser.friends.push({ friendsId: createdFriends._id, friend: senderUser._id })
+      receiverUser.friends.push({ friend: senderUser._id })
+      senderUser.friends.push({ friend: receiverUser._id })
+
+      // const createdFriends = new FriendsModel({
+      //    receiverUser: receiverUser._id,
+      //    senderUser: senderUser._id,
+      //    status: 'pending',
+      // })
+      // const createdFriends = await FriendsModel.create({
+      //    receiverUser: receiverUser._id,
+      //    senderUser: senderUser._id,
+      //    status: 'pending',
+      // })
+
+      // console.log(createdFriends)
+
+      // await createdFriends.save()
+
+      // senderUser.friends.push({ friendsId: createdFriends._id, friend: receiverUser._id })
+      // receiverUser.friends.push({ friendsId: createdFriends._id, friend: senderUser._id })
 
       receiverUser.notifications.push({
          createdAt: new Date(),
@@ -42,8 +55,8 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          },
       })
 
-      await receiverUser.save()
-      await senderUser.save()
+      // await receiverUser.save()
+      // await senderUser.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
@@ -51,15 +64,24 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
             request.ioSocket?.to(toSendUser.socketId).emit('makeFriendship', {
                notifications: receiverUser.notifications,
                userFriends: receiverUser.friends,
-               createdConnectedFriends: createdFriends,
+               createdConnectedFriends: {
+                  receiverUser: receiverUser._id,
+                  senderUser: senderUser._id,
+                  status: 'pending',
+               },
             })
          }
       }
 
-      response.status(200).json({ receiverUser, connectedFriends: createdFriends })
-   } catch (error) {
+      response.status(200).json({ receiverUser /* connectedFriends: createdFriends */ })
+   } catch (error: any) {
+      if (error.code === 11000) {
+         // Handle duplicate key error
+         console.error('Friendship already exists:', error)
+         // You can choose to throw a custom error, retry, or handle it differently
+      }
       console.log(error)
-      response.json(500).json(error)
+      response.status(500).json(error)
    }
 }
 
