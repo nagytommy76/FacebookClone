@@ -9,25 +9,20 @@ const useFriendConfirm = () => {
    const {
       friendReducer: {
          friendId,
-         friend: { connectedFriends },
+         friend: { friends },
       },
-      friendDispatch,
       setCardButtonType,
    } = useContext(FriendContext)
    useFriendSocket()
 
    const setButtonTypeToConfirmFriend = useCallback(() => {
       // Ebben az esetben megtaláltam a nekem ( belépett user ) küldött requesteket
-      const myFriendRequest = connectedFriends.find(
-         (friend) =>
-            friend.receiverUser == userId && friend.senderUser === friendId && friend.status === 'pending'
+      const mySentFriendRequests = friends.find(
+         (friend) => friend.friend == userId && friend.status === 'pending' && friend.isSender
       )
-      if (myFriendRequest) {
-         friendDispatch({ type: 'SET_SELECTED_CONNECTED_FRIEND', payload: myFriendRequest })
-         setCardButtonType('confirmFriend')
-      }
-      return myFriendRequest
-   }, [setCardButtonType, friendDispatch, userId, connectedFriends, friendId])
+
+      if (mySentFriendRequests) setCardButtonType('confirmFriend')
+   }, [setCardButtonType, friends, userId])
 
    useEffect(() => {
       setButtonTypeToConfirmFriend()
