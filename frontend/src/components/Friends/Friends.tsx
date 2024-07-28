@@ -16,7 +16,7 @@ const Friends: React.FC<{ friends: IFriendsResponse[] }> = ({ friends }) => {
       <section style={containerSx}>
          <Box component='section' sx={gridBoxSx}>
             {friends.map((friend) => (
-               <div style={{ width: '300px', height: '420px' }} key={friend._id}>
+               <div id={friend._id} style={{ width: '300px', height: '420px' }} key={friend._id}>
                   <Card>
                      <CardHeader userId={friend._id} profilePicture={friend.selectedProfilePicture[0].path} />
                      <CardContent>
