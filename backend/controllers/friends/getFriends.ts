@@ -1,7 +1,6 @@
 import { Response, Request } from 'express'
 import { Types } from 'mongoose'
 import { User as UserModel } from '../../models/user/user'
-import { FriendsModel } from '../../models/friends/friends'
 import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
 // https://www.mongodb.com/docs/manual/reference/operator/aggregation/filter/
@@ -36,14 +35,6 @@ export const getUsers = async (request: Request, response: Response) => {
                      cond: { $eq: ['$$workPlace.endDate', null] },
                   },
                },
-            },
-         },
-         {
-            $lookup: {
-               from: 'friends',
-               localField: 'friends.friendsId',
-               foreignField: '_id',
-               as: 'connectedFriends',
             },
          },
       ])
@@ -111,46 +102,6 @@ export const getAcceptedFriendsModel = async (userId: Types.ObjectId) => {
 export const getAcceptedUsers = async (request: IJWTUserType, response: Response) => {
    const userId = new Types.ObjectId(request.user?.userId)
    try {
-      // const acceptedFriends = await FriendsModel.aggregate([
-      //    {
-      //       $match: {
-      //          status: 'friends',
-      //          $or: [
-      //             {
-      //                senderUser: userId,
-      //             },
-      //             {
-      //                receiverUser: userId,
-      //             },
-      //          ],
-      //       },
-      //    },
-      //    {
-      //       $lookup: {
-      //          from: 'users',
-      //          localField: 'senderUser',
-      //          foreignField: '_id',
-      //          as: 'foundUserData',
-      //          pipeline: [
-      //             {
-      //                $project: {
-      //                   firstName: 1,
-      //                   sureName: 1,
-      //                   friends: 1,
-      //                   selectedProfilePicture: {
-      //                      $filter: {
-      //                         input: '$userDetails.profilePicturePath',
-      //                         as: 'profilePic',
-      //                         cond: { $eq: ['$$profilePic.isSelected', true] },
-      //                      },
-      //                   },
-      //                },
-      //             },
-      //          ],
-      //       },
-      //    },
-      // ])
-
       /**
        *  Meg kéne találnom azokat a barátokat akiknek a status --> friends
        */
