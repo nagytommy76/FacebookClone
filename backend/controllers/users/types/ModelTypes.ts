@@ -1,4 +1,4 @@
-import { Model, Types, ObjectId, Document } from 'mongoose'
+import { Model, ObjectId, Document } from 'mongoose'
 import type { INotifications, NotificationType } from '../../notifications/types/notificationTypes'
 import type { SelectUserByIdType } from './requestTypes'
 
@@ -16,8 +16,10 @@ export interface IUserTypes {
    password: string
    isEmailConfirmed: boolean
    friends: {
-      friendsId: Types.ObjectId
       friend: ObjectId
+      isSender?: boolean
+      friendSince?: Date
+      status?: 'pending' | 'friends' | 'rejected'
    }[]
    notifications: INotifications[]
    userDetails: {
