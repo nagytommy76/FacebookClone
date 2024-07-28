@@ -21,18 +21,14 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
          minlength: [4, 'a jelszó min. 4 karakter legyen!'],
       },
       friends: {
-         // type: [
-         //    {
-         //       friendsId: { type: Types.ObjectId, ref: 'Friends', unique: true },
-         //       friend: { type: Types.ObjectId, ref: 'User', unique: true },
-         //    },
-         // ],
          type: [
             {
                friend: { type: Types.ObjectId, ref: 'User', unique: true },
+               friendSince: { type: Date, default: new Date() },
+               isSender: { type: Boolean, default: false },
                status: {
                   type: String,
-                  enum: ['pending', 'friends'],
+                  enum: ['pending', 'friends', 'rejected'],
                   default: 'pending',
                },
             },
