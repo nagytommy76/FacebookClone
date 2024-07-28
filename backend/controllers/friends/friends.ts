@@ -1,6 +1,5 @@
 import { Response } from 'express'
 import { User as UserModel } from '../../models/user/user'
-import { FriendsModel } from '../../models/friends/friends'
 import { IMakeFriends } from './Types'
 
 export const makeFriendshipController = async (request: IMakeFriends, response: Response) => {
@@ -23,25 +22,7 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
       if (!receiverUser) return response.status(404).json({ msg: 'Receiver user not found' })
 
       receiverUser.friends.push({ friend: senderUser._id })
-      senderUser.friends.push({ friend: receiverUser._id })
-
-      // const createdFriends = new FriendsModel({
-      //    receiverUser: receiverUser._id,
-      //    senderUser: senderUser._id,
-      //    status: 'pending',
-      // })
-      // const createdFriends = await FriendsModel.create({
-      //    receiverUser: receiverUser._id,
-      //    senderUser: senderUser._id,
-      //    status: 'pending',
-      // })
-
-      // console.log(createdFriends)
-
-      // await createdFriends.save()
-
-      // senderUser.friends.push({ friendsId: createdFriends._id, friend: receiverUser._id })
-      // receiverUser.friends.push({ friendsId: createdFriends._id, friend: senderUser._id })
+      senderUser.friends.push({ friend: receiverUser._id, isSender: true })
 
       receiverUser.notifications.push({
          createdAt: new Date(),
@@ -55,8 +36,8 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          },
       })
 
-      // await receiverUser.save()
-      // await senderUser.save()
+      await receiverUser.save()
+      await senderUser.save()
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
@@ -73,7 +54,10 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          }
       }
 
-      response.status(200).json({ receiverUser /* connectedFriends: createdFriends */ })
+      response.status(200).json({
+         receiverUser,
+         senderUser,
+      })
    } catch (error: any) {
       if (error.code === 11000) {
          // Handle duplicate key error
