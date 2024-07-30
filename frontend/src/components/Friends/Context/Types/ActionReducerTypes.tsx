@@ -1,4 +1,4 @@
-import type { IFriendsResponse, IConnectedFriends } from '../../Types'
+import type { IFriendsResponse, IFriends } from '../../Types'
 
 type SetFriendsAction = {
    type: 'SET_FRIEND'
@@ -6,53 +6,40 @@ type SetFriendsAction = {
 }
 type SetFriendsArrayAction = {
    type: 'SET_FRIENDS_ARRAY'
-   payload: {
-      friendsId: string
-      friend: string
-   }[]
+   payload: IFriends[]
 }
+
+type setSenderFriendsAction = {
+   type: 'SET_SENDER_FRIENDS'
+   payload: { receiverFriends: IFriends; receiverFriendId: string }
+}
+
 type SetFriendIdAction = {
    type: 'SET_FRIENDID'
    payload: string
-}
-type SetConnectedFriendAction = {
-   type: 'SET_SELECTED_CONNECTED_FRIEND'
-   payload: IConnectedFriends
 }
 
 export type IFriendAction =
    | SetFriendsAction
    | SetFriendsArrayAction
    | SetFriendIdAction
-   | SetConnectedFriendAction
+   | setSenderFriendsAction
 
 export type FriendStateType = {
    friendId: string
    friend: IFriendsResponse
-   selectedConnectedFriend: IConnectedFriends | null
 }
 
 export const friendsData: FriendStateType = {
-   selectedConnectedFriend: null,
    friendId: '',
    friend: {
-      connectedFriends: [
-         {
-            _id: '',
-            createdAt: '',
-            updatedAt: '',
-            receiverUser: '',
-            senderUser: '',
-            status: 'pending',
-         },
-      ],
       _id: '',
       createdAt: '',
       dateOfBirth: '',
       email: '',
       firstName: '',
       sureName: '',
-      friends: [{ friend: '', friendsId: '' }],
+      friends: [],
       lastWorkPlace: [],
       notification: [],
       selectedProfilePicture: [],
