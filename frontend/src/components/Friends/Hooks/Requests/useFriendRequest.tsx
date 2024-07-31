@@ -4,7 +4,7 @@ import { FriendContext } from '../../Context/FriendContext'
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
 
-import type { IConnectedFriends, IFriendResponse } from '../../Types'
+import type { IFriendResponse } from '../../Types'
 
 import useFriendWithdraw from '../ButtonType/useFriendWithdraw'
 import useFriendConfirm from '../ButtonType/useFriendConfirm'
@@ -15,13 +15,12 @@ const useFriendRequest = () => {
       friendDispatch,
       setLoading,
    } = useContext(FriendContext)
-   const setButtonTypeToConfirmFriend = useFriendConfirm()
+   useFriendConfirm()
    const setCardTypeToWithdraw = useFriendWithdraw()
 
    const mutationFunction = async () => {
       return (await axios.post('/friends/make-friendship', { friendId })) as AxiosResponse<{
          receiverUser: IFriendResponse
-         connectedFriends: IConnectedFriends
       }>
    }
    const { mutate } = useMutation({
@@ -32,7 +31,7 @@ const useFriendRequest = () => {
       },
       onSuccess(data) {
          friendDispatch({ type: 'SET_FRIENDS_ARRAY', payload: data.data.receiverUser.friends })
-         setCardTypeToWithdraw([data.data.connectedFriends])
+         setCardTypeToWithdraw()
          setLoading(false)
       },
       onError(error, variables, context) {
