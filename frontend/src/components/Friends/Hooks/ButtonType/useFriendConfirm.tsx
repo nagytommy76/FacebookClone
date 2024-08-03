@@ -18,7 +18,7 @@ const useFriendConfirm = () => {
    const setButtonTypeToConfirmFriend = useCallback(() => {
       // Ebben az esetben megtaláltam a nekem ( belépett user ) küldött requesteket
       const mySentFriendRequests = friends.find(
-         (friend) => friend.friend == userId && friend.status === 'pending' && friend.isSender
+         (friend) => friend.friend == userId && friend.status === 'pending' && !friend.isSender
       )
 
       if (mySentFriendRequests) setCardButtonType('confirmFriend')
