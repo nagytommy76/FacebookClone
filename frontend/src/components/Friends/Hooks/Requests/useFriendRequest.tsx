@@ -8,6 +8,7 @@ import type { IFriendResponse } from '../../Types'
 
 import useFriendWithdraw from '../ButtonType/useFriendWithdraw'
 import useFriendConfirm from '../ButtonType/useFriendConfirm'
+import useFriendDelete from '../ButtonType/useFriendDelete'
 
 const useFriendRequest = () => {
    const {
@@ -15,6 +16,7 @@ const useFriendRequest = () => {
       friendDispatch,
       setLoading,
    } = useContext(FriendContext)
+   useFriendDelete()
    useFriendConfirm()
    const setCardTypeToWithdraw = useFriendWithdraw()
 
