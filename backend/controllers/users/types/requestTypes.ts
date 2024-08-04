@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose'
 import type { Request } from 'express'
 import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
-import type { IFriends, IProfilePicturePath } from './ModelTypes'
+import type { IProfilePicturePath } from './ModelTypes'
 
 export interface IRegisterRequest extends Request {
    body: {
@@ -32,6 +32,5 @@ export type SelectUserByIdType = {
    firstName: string
    sureName: string
    email: string
-   friends: IFriends[]
    selectedProfilePicturePath: IProfilePicturePath[]
 }
