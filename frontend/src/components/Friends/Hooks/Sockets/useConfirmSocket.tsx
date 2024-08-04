@@ -7,30 +7,24 @@ import type { IMakeFriendshipArgs } from './Types'
 
 const useConfirmSocket = () => {
    const {
-      friendReducer: { friendId, friend },
+      friendReducer: { friendId },
       friendDispatch,
-      setCardButtonType,
    } = useContext(FriendContext)
    const userId = useAppSelector((state) => state.auth.userId)
 
    useEffect(() => {
       const setButtonType = (args: IMakeFriendshipArgs) => {
-         const connectedFriend = args.foundFriendsModel
-         if (
-            connectedFriend.senderUser == userId &&
-            connectedFriend.receiverUser == friendId &&
-            connectedFriend.status === 'friends'
-         ) {
-            friendDispatch({ type: 'SET_SELECTED_CONNECTED_FRIEND', payload: connectedFriend })
-            setCardButtonType('isFriend')
-         }
+         friendDispatch({
+            type: 'SET_SENDER_FRIENDS',
+            payload: { receiverFriendId: args.userFriends.friend, receiverFriends: args.userFriends },
+         })
       }
       socket.on('confirmFriendship', setButtonType)
 
       return () => {
          socket.off('confirmFriendship', setButtonType)
       }
-   }, [setCardButtonType, friend, friendId, friendDispatch, userId])
+   }, [friendDispatch, friendId, userId])
 
    return null
 }
