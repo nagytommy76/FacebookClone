@@ -7,50 +7,53 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
    const friendId = request.body.friendId
 
    try {
+      await UserModel.updateOne(
+         { _id: loggedInUserId, friends: { $elemMatch: { friend: { $eq: friendId } } } },
+         { $set: { 'friends.$.status': 'friends' } }
+      )
       const foundSender = await UserModel.findOne({
          _id: loggedInUserId,
          friends: { $elemMatch: { friend: { $eq: friendId } } },
       }).select(['friends.$', 'firstName', 'sureName', 'notifications', 'userDetails.profilePicturePath'])
 
+      await UserModel.updateOne(
+         { _id: friendId, friends: { $elemMatch: { friend: { $eq: loggedInUserId } } } },
+         {
+            $set: { 'friends.$.status': 'friends' },
+            $push: {
+               notifications: {
+                  createdAt: new Date(),
+                  isRead: false,
+                  notificationType: 'isFriendConfirm',
+                  userDetails: {
+                     firstName: foundSender?.firstName,
+                     sureName: foundSender?.sureName,
+                     userId: foundSender?._id,
+                     profilePicture: foundSender?.userDetails.profilePicturePath[0].path,
+                  },
+               },
+            },
+         }
+      )
+
       const foundReceiver = await UserModel.findOne({
          _id: friendId,
          friends: { $elemMatch: { friend: { $eq: loggedInUserId } } },
-      }).select(['friends.$', 'firstName', 'sureName', 'notifications'])
-
-      if (!foundReceiver) return response.status(404)
-      if (!foundSender) return response.status(404)
-
-      foundReceiver.friends[0].status = 'friends'
-      foundSender.friends[0].status = 'friends'
-
-      foundSender.notifications.push({
-         createdAt: new Date(),
-         isRead: false,
-         notificationType: 'isFriendConfirm',
-         userDetails: {
-            firstName: foundSender.firstName,
-            sureName: foundSender.sureName,
-            userId: foundSender._id,
-            profilePicture: foundSender.userDetails.profilePicturePath[0].path,
-         },
-      })
-
-      await foundSender.save()
-      await foundReceiver.save()
+      }).select(['friends.$', 'notifications'])
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(friendId) as any
          if (toSendUser !== undefined) {
             request.ioSocket?.to(toSendUser.socketId).emit('confirmFriendship', {
-               notifications: foundSender.notifications,
-               userFriends: foundSender.friends[0],
+               notifications: foundReceiver?.notifications,
+               userFriends: foundSender?.friends[0],
             })
          }
       }
 
       response.status(200).json({
-         receiverFriendId: foundReceiver.friends[0].friend,
-         receiverFriends: foundReceiver.friends[0],
+         receiverFriendId: foundReceiver?.friends[0].friend,
+         receiverFriends: foundReceiver?.friends[0],
       })
    } catch (error) {
       console.log(error)
