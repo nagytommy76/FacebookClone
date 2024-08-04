@@ -6,14 +6,14 @@ import { useMutation } from '@tanstack/react-query'
 
 const useFriendDeleteRequest = () => {
    const {
-      friendReducer: { friendId, selectedConnectedFriend },
+      friendReducer: { friendId },
       setLoading,
       setCardButtonType,
    } = useContext(FriendContext)
 
    const removeFriendMutation = async () => {
       return (await axios.delete(`/friends/remove-friend`, {
-         data: { friendId, connectedFriendId: selectedConnectedFriend?._id },
+         data: { friendId },
       })) as AxiosResponse<{
          loggedInUserFriends: any[]
       }>
