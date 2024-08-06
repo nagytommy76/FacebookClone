@@ -9,7 +9,7 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
    try {
       await UserModel.updateOne(
          { _id: loggedInUserId, friends: { $elemMatch: { friend: { $eq: friendId } } } },
-         { $set: { 'friends.$.status': 'friends' } }
+         { $set: { 'friends.$.status': 'friends', 'friends.$.friendSince': new Date() } }
       )
       const foundSender = await UserModel.findOne({
          _id: loggedInUserId,
@@ -19,7 +19,7 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
       await UserModel.updateOne(
          { _id: friendId, friends: { $elemMatch: { friend: { $eq: loggedInUserId } } } },
          {
-            $set: { 'friends.$.status': 'friends' },
+            $set: { 'friends.$.status': 'friends', 'friends.$.friendSince': new Date() },
             $push: {
                notifications: {
                   createdAt: new Date(),
