@@ -87,7 +87,16 @@ const UserSchema = new Schema<IUserTypes, UserModel>(
          ],
       },
    },
-   { timestamps: true }
+   {
+      query: {
+         byGetSelectedProfilePicture() {
+            return this.where({
+               'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+            }).select(['userDetails.profilePicturePath.$'])
+         },
+      },
+      timestamps: true,
+   }
 )
 UserSchema.add({
    notifications: [
