@@ -37,13 +37,28 @@ const ButtonTypes = () => {
          )
       case 'confirmFriend':
          return (
-            <BaseButton
-               buttonText='Visszaigazolás'
-               isLoading={loading}
-               onClickEvent={friendConfrimMutate}
-               iconType='addIcon'
-               color='warning'
-            />
+            <div
+               style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+               }}
+            >
+               <BaseButton
+                  buttonText='Visszaigazolás'
+                  isLoading={loading}
+                  onClickEvent={friendConfrimMutate}
+                  iconType='addIcon'
+                  color='warning'
+               />
+               <BaseButton
+                  buttonText='Elutasítás'
+                  isLoading={loading}
+                  onClickEvent={deleteFriendMutate}
+                  iconType='removeIcon'
+                  color='error'
+               />
+            </div>
          )
       default:
          return <></>
