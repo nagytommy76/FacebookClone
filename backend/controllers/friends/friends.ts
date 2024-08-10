@@ -44,11 +44,9 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
          if (toSendUser !== undefined) {
             request.ioSocket?.to(toSendUser.socketId).emit('makeFriendship', {
                notifications: receiverUser.notifications,
-               userFriends: receiverUser.friends,
-               createdConnectedFriends: {
-                  receiverUser: receiverUser._id,
-                  senderUser: senderUser._id,
-                  status: 'pending',
+               userFriends: {
+                  _id: senderUser._id,
+                  friends: senderUser.friends,
                },
             })
          }
@@ -56,7 +54,6 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
 
       response.status(200).json({
          receiverUser,
-         senderUser,
       })
    } catch (error: any) {
       if (error.code === 11000) {
@@ -68,5 +65,3 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
       response.status(500).json(error)
    }
 }
-
-export const removeFriendRequestController = async () => {}
