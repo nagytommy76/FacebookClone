@@ -2,11 +2,12 @@ import jwt from 'jsonwebtoken'
 import { hash, compare } from 'bcrypt'
 
 import { DefaultSchemaOptions, ObjectId, Schema, Types } from 'mongoose'
-import type { IUserTypes, UserModel } from '../../controllers/users/types/ModelTypes'
+import type { IUserTypes } from '../../controllers/users/types/ModelTypes'
+import type { UserModel } from '../../controllers/users/types/staticsHelper'
 import type { NotificationType } from '../../controllers/notifications/types/notificationTypes'
 
 export function UserStatics(
-   UserSchema: Schema<IUserTypes, UserModel, {}, {}, {}, {}, DefaultSchemaOptions, IUserTypes>
+   UserSchema: Schema<IUserTypes, UserModel, {}, any, {}, {}, DefaultSchemaOptions, IUserTypes>
 ) {
    UserSchema.statics.encryptPassword = async function (nativePass: string) {
       return await hash(nativePass, 10)
@@ -56,7 +57,6 @@ export function UserStatics(
          },
       ])
    }
-
    UserSchema.statics.getSaveNotification = async function (
       foundPostUserId: string,
       foundPostDescription: string,

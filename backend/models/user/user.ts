@@ -1,5 +1,6 @@
 import { Schema, model, Types } from 'mongoose'
-import type { UserModel, IUserTypes } from '../../controllers/users/types/ModelTypes'
+import type { IUserTypes } from '../../controllers/users/types/ModelTypes'
+import type { UserModel } from '../../controllers/users/types/staticsHelper'
 import { UserStatics } from './statics'
 
 const UserSchema = new Schema<IUserTypes, UserModel>(
@@ -109,7 +110,6 @@ UserSchema.add({
             postId: String,
          },
          userDetails: {
-            // type: Types.ObjectId, ref: 'Users'
             userId: String,
             firstName: String,
             sureName: String,
