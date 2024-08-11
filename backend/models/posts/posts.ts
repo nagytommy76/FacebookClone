@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import type { IPostTypes, PostModel } from '../../controllers/posts/types/PostTypes'
+import type { IPostTypes, PostModel } from '../../controllers/posts/types/postModelType'
 
 export const likesSchemaObject = {
    type: [
@@ -34,7 +34,7 @@ const commentAnswers = {
    required: false,
 }
 
-const PostsSchema = new Schema(
+const PostsSchema = new Schema<IPostTypes, PostModel>(
    {
       userId: { type: Schema.Types.ObjectId, ref: 'User' },
       description: String,
@@ -54,7 +54,22 @@ const PostsSchema = new Schema(
          required: false,
       },
    },
-   { timestamps: true }
+   {
+      query: {
+         selectAndPopulateUserPicure(selectField, path, selectArray = []) {
+            return this.select(selectField).populate({
+               path: path,
+               select: ['_id', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'].concat(
+                  selectArray
+               ),
+               match: {
+                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+               },
+            })
+         },
+      },
+      timestamps: true,
+   }
 )
 
 PostsSchema.methods.populateUserId = async function () {
