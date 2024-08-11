@@ -14,7 +14,9 @@ export const confirmFriendshipController = async (request: IMakeFriends, respons
       const foundSender = await UserModel.findOne({
          _id: loggedInUserId,
          friends: { $elemMatch: { friend: { $eq: friendId } } },
-      }).select(['friends.$', 'firstName', 'sureName', 'notifications', 'userDetails.profilePicturePath'])
+      })
+         .select(['friends.$', 'firstName', 'sureName', 'notifications'])
+         .byGetSelectedProfilePicture()
 
       await UserModel.updateOne(
          { _id: friendId, friends: { $elemMatch: { friend: { $eq: loggedInUserId } } } },
