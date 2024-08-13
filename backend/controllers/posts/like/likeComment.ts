@@ -9,7 +9,7 @@ export default class CommentLikeController extends BasePostController {
       const userId = request.user?.userId as string | any
       try {
          // https://www.mongodb.com/community/forums/t/how-to-only-get-the-array-nested-subdocuments-with-that-document-id-and-not-having-to-iterate-through-it/100197
-         const foundPostToModifyLike = await this.findPostModelByPostId(postId)
+         const foundPostToModifyLike = await PostModel.findById(postId)
          if (!foundPostToModifyLike) return response.status(404).json({ msg: 'Post comment not found' })
 
          const commentLikeIndex = foundPostToModifyLike.comments.findIndex((comment) => {

@@ -13,7 +13,7 @@ export default class PostCommentController extends BasePostController {
       const { answeredAt, commentAnswer, postId, commentId, parentCommentId, commentDepth, commentImage } =
          request.body
       try {
-         const foundPostComment = await this.findPostModelByPostId(postId)
+         const foundPostComment = await PostModel.findById(postId)
          if (!foundPostComment) return response.status(404).json({ msg: `post not found by id: ${postId}` })
 
          const foundCommentIndex = foundPostComment.comments.findIndex((comment) => comment._id == commentId)

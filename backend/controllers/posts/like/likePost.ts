@@ -9,15 +9,10 @@ export default class LikePost extends BasePostController {
    getPostLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
       const { postId } = request.body
       try {
-         const postLikes = await PostModel.findById(postId)
-            .select('likes')
-            .populate({
-               path: 'likes.userId',
-               select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-               match: {
-                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-               },
-            })
+         const postLikes = await PostModel.findById(postId).selectAndPopulateUserPicure(
+            'likes',
+            'likes.userId'
+         )
          if (!postLikes) return response.status(404).json({ msg: 'post not found' })
          const reactionTypes = this.getLikesByReactionType(postLikes.likes)
          const totalReactionCount = this.countLikeReactions(reactionTypes)
@@ -31,21 +26,14 @@ export default class LikePost extends BasePostController {
    getPostCommentsLikesByTypeAndCountController = async (request: IGetLikesRequest, response: Response) => {
       const { commentId, postId } = request.body
       try {
-         const postCommentLikes = await PostModel.find({
+         const postCommentLikes = await PostModel.findOne({
             _id: postId,
             comments: { $elemMatch: { _id: commentId } },
-         })
-            .select('comments.$')
-            .populate({
-               path: 'comments.likes.userId',
-               select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-               match: {
-                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-               },
-            })
+         }).selectAndPopulateUserPicure('comments.$', 'comments.likes.userId')
+
          if (!postCommentLikes) return response.status(404).json({ msg: 'post not found' })
 
-         const reactionTypes = this.getLikesByReactionType(postCommentLikes[0].comments[0].likes)
+         const reactionTypes = this.getLikesByReactionType(postCommentLikes.comments[0].likes)
          const totalReactionCount = this.countLikeReactions(reactionTypes)
 
          response.status(200).json({ reactionTypes, totalReactionCount })
@@ -63,16 +51,7 @@ export default class LikePost extends BasePostController {
          const postCommentAnswerLikes = await PostModel.findOne({
             _id: postId,
             comments: { $elemMatch: { _id: commentId, 'commentAnswers._id': answerId } },
-         })
-            .select('comments.commentAnswers.$')
-            .populate({
-               path: 'comments.commentAnswers.likes.userId',
-               select: ['firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-               match: {
-                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-               },
-            })
-            .exec()
+         }).selectAndPopulateUserPicure('comments.commentAnswers.$', 'comments.commentAnswers.likes.userId')
 
          if (!postCommentAnswerLikes) return response.status(404).json({ msg: 'post not found' })
 
@@ -96,7 +75,7 @@ export default class LikePost extends BasePostController {
       const userId = request.user?.userId as string
 
       try {
-         const foundPostToModifyLike = await this.findPostModelByPostId(postId)
+         const foundPostToModifyLike = await PostModel.findById(postId)
          if (!foundPostToModifyLike) return response.status(404).json({ msg: 'nincs ilyen poszt' })
 
          const userLike = this.findUsersLikeByUserID(foundPostToModifyLike.likes, userId)
