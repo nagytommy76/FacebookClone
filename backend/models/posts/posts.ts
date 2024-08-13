@@ -67,6 +67,24 @@ const PostsSchema = new Schema<IPostTypes, PostModel>(
                },
             })
          },
+         /**
+          * Populates the user ID field with the profile picture path, optionally selecting additional fields.
+          *
+          * @param {string} [path='userId'] - The path to the user ID field.
+          * @param {string[]} [selectArray=[]] - An optional array of fields to select.
+          * @return {Query<IPostTypes, PostModel>} - The query object with the populated fields.
+          */
+         populateUserIdWithProfilePicture(path: string = 'userId', selectArray: string[] | undefined = []) {
+            return this.populate({
+               path,
+               select: ['email', '_id', 'sureName', 'firstName', 'userDetails.profilePicturePath.$'].concat(
+                  selectArray
+               ),
+               match: {
+                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+               },
+            })
+         },
       },
       timestamps: true,
    }
