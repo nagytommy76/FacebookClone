@@ -7,4 +7,8 @@ export interface IPostQueryHelper {
       path: string,
       selectArray?: string[]
    ): QueryWithHelpers<HydratedDocument<IPostTypes>, HydratedDocument<IPostTypes>, IPostQueryHelper>
+   populateUserIdWithProfilePicture(
+      path: string,
+      selectArray?: string[]
+   ): QueryWithHelpers<HydratedDocument<IPostTypes>, HydratedDocument<IPostTypes>, IPostQueryHelper>
 }
