@@ -12,25 +12,11 @@ export default class GetCommentController {
    getCommentsController = async (req: ICommentRequest, res: Response) => {
       const postId = req.query.postId
       try {
-         const foundComments = await PostModel.find({ _id: postId })
-            .select('comments')
-            .populate({
-               path: 'comments.userId',
-               select: ['_id', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-               match: {
-                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-               },
-            })
-            .populate({
-               path: 'comments.commentAnswers.userId',
-               select: ['_id', 'firstName', 'sureName', 'userDetails.profilePicturePath.$'],
-               match: {
-                  'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
-               },
-            })
+         const foundComments = await PostModel.findOne({ _id: postId })
+            .selectAndPopulateUserPicure('comments', 'comments.userId')
+            .selectAndPopulateUserPicure('comments', 'comments.commentAnswers.userId')
             .lean()
-
-         res.status(200).json({ comments: foundComments[0].comments })
+         res.status(200).json({ comments: foundComments.comments })
       } catch (error) {
          res.status(500).json(error)
       }
