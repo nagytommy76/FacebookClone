@@ -4,14 +4,18 @@ import BaseButton from './Buttons/BaseButton'
 
 import useFriendRequest from '../Hooks/Requests/useFriendRequest'
 import useFriendCornfirmRequest from '../Hooks/Requests/useFriendCornfirmRequest'
-import useFriendDeleteRequest from '../Hooks/Requests/useFriendDeleteRequest'
+import useFriendDeleteRequest from '../Hooks/Requests/Delete/useFriendDeleteRequest'
+import useWithdrawFriend from '../Hooks/Requests/Delete/useWithdrawFriend'
 
 const ButtonTypes = () => {
    const { cardButtonType, loading } = useContext(FriendContext)
    const { friendRequestMutate } = useFriendRequest()
    const { friendConfrimMutate } = useFriendCornfirmRequest()
-   const { deleteFriendMutate } = useFriendDeleteRequest()
 
+   const { deleteFriendMutate } = useFriendDeleteRequest()
+   const { withdrawFriend } = useWithdrawFriend()
+
+   // Hozzáadni egy üzenet gombot?!?!?!?!?!?!??!?!
    switch (cardButtonType) {
       case 'makeFriend':
          return <BaseButton buttonText='Jelölés' isLoading={loading} onClickEvent={friendRequestMutate} />
@@ -20,7 +24,7 @@ const ButtonTypes = () => {
             <BaseButton
                buttonText='Jelölés visszavonása'
                isLoading={loading}
-               onClickEvent={deleteFriendMutate}
+               onClickEvent={withdrawFriend}
                iconType='removeIcon'
                color='error'
             />
