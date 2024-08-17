@@ -1,24 +1,19 @@
 import { useContext } from 'react'
-import { FriendContext } from '../../Context/FriendContext'
+import { FriendContext } from '../../../Context/FriendContext'
 
-import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
+import useRemoveMutation from './useRemoveMutation'
 
 const useFriendDeleteRequest = () => {
-   const {
-      friendReducer: { friendId },
-      setLoading,
-      setCardButtonType,
-   } = useContext(FriendContext)
+   const removeFriendMutation = useRemoveMutation()
+   const { setLoading, setCardButtonType } = useContext(FriendContext)
 
-   const removeFriendMutation = async () => {
-      return (await axios.delete(`/friends/remove-friend`, {
-         data: { friendId },
-      })) as AxiosResponse<{
-         loggedInUserFriends: any[]
-      }>
-   }
+   // Ide kéne 3 mutation ->
+   // - Amikor törlöm a már meglévő friendet
+   //  - Amikor elutasítom
+   //  - És amikor visszavonom a jelölésem
 
+   // Ha már barátok vagyunk akkor ->
    const { mutate } = useMutation({
       mutationKey: ['removeFriend'],
       mutationFn: removeFriendMutation,
