@@ -25,6 +25,10 @@ export default function FriendReducer(state: FriendStateType, { payload, type }:
             draft.friend = payload
          })
          return friend
+      case 'REMOVE_SINGLE_FRIEND':
+         return produce(state, (draft) => {
+            draft.friend.friends = draft.friend.friends.filter((friend) => friend.friend !== payload)
+         })
       default:
          return state
    }

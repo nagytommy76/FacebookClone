@@ -19,11 +19,17 @@ type SetFriendIdAction = {
    payload: string
 }
 
+type removeSingleFriendAction = {
+   type: 'REMOVE_SINGLE_FRIEND'
+   payload: string
+}
+
 export type IFriendAction =
    | SetFriendsAction
    | SetFriendsArrayAction
    | SetFriendIdAction
    | setSenderFriendsAction
+   | removeSingleFriendAction
 
 export type FriendStateType = {
    friendId: string
