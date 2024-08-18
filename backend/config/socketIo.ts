@@ -93,6 +93,15 @@ export const initSocketIO = (app: Application) => {
       })
 
       // --------------------------------------------------------------------------
+      // FRIENDS -------------------------------------------------------------------
+
+      socket.on('friend:join_friend', (args: { friendId: string }) => {
+         socket.join(args.friendId)
+      })
+
+      socket.on('friend:withdrawFriend', (args: { friendId: string }) => {
+         socket.broadcast.to(args.friendId).emit('friend:withdrawFriendResponse', args)
+      })
 
       socket.on('disconnect', () => {
          removeUser(socket.id, socket)
