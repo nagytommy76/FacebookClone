@@ -21,6 +21,8 @@ const useFriendSocket = () => {
       const setButtonType = (args: IMakeFriendshipArgs) => {
          if (friendId == args.userFriends._id) {
             friendDispatch({ type: 'SET_FRIENDS_ARRAY', payload: args.userFriends.friends })
+            // Ezzel csatlakozok a friends szobába -> receiver
+            socket.emit('friend:join_friend', { friendId: args.userFriends._id })
             setCardButtonType('confirmFriend')
          }
       }

@@ -1,8 +1,10 @@
 import { useContext } from 'react'
 import { FriendContext } from '../../Context/FriendContext'
+import { useAppSelector } from '@/reduxStore/store'
 
 import { axiosInstance as axios, AxiosResponse } from '@/axios/AxiosInstance'
 import { useMutation } from '@tanstack/react-query'
+import { socket } from '@/src/utils/socketIo'
 
 import type { IFriendResponse } from '../../Types'
 
@@ -11,6 +13,7 @@ import useFriendConfirm from '../ButtonType/useFriendConfirm'
 import useFriendDelete from '../ButtonType/useFriendDelete'
 
 const useFriendRequest = () => {
+   const userId = useAppSelector((state) => state.auth.userId)
    const {
       friendReducer: { friendId },
       friendDispatch,
@@ -34,6 +37,7 @@ const useFriendRequest = () => {
       onSuccess(data) {
          friendDispatch({ type: 'SET_FRIENDS_ARRAY', payload: data.data.receiverUser.friends })
          setCardTypeToWithdraw()
+         socket.emit('friend:join_friend', { friendId: userId })
          setLoading(false)
       },
       onError(error, variables, context) {
