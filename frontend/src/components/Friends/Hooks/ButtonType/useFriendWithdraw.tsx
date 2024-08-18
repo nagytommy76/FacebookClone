@@ -2,7 +2,10 @@ import { useEffect, useCallback, useContext } from 'react'
 import { FriendContext } from '../../Context/FriendContext'
 import { useAppSelector } from '@/reduxStore/store'
 
+import useWithdrawSocket from '../Sockets/useWithdrawSocket'
+
 const useFriendWithdraw = () => {
+   useWithdrawSocket()
    const userId = useAppSelector((state) => state.auth.userId)
    const {
       friendReducer: {
