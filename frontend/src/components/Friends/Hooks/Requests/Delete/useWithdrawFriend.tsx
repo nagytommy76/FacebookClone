@@ -8,7 +8,7 @@ import { socket } from '@/src/utils/socketIo'
 const useWithdrawFriend = () => {
    const { userId, userName, currentImage } = useAppSelector((state) => state.auth)
    const removeFriendMutation = useRemoveMutation()
-   const { setLoading, setCardButtonType } = useContext(FriendContext)
+   const { setLoading, setCardButtonType, friendDispatch } = useContext(FriendContext)
 
    const { mutate } = useMutation({
       mutationKey: ['removeFriend'],
@@ -20,6 +20,7 @@ const useWithdrawFriend = () => {
          setLoading(false)
          setCardButtonType('makeFriend')
          // My userId needed -> I'm the sender -> my id is the room_id
+         friendDispatch({ type: 'REMOVE_SINGLE_FRIEND', payload: userId as string })
          socket.emit('friend:withdrawFriend', {
             friend: { userName, currentImage: currentImage.path },
             friendId: userId,

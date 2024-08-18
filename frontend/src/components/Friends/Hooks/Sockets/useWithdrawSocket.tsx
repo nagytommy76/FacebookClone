@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react'
 import { FriendContext } from '../../Context/FriendContext'
 import { socket } from '@/src/utils/socketIo'
-import { useAppDispatch } from '@/reduxStore/store'
+import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
 import { setHeadText, setMessage, setImageSrc, setIsInfoSnackOpen } from '@/reduxStore/slices/InfoSnack'
 
 interface IArgs {
@@ -14,6 +14,7 @@ interface IArgs {
 
 const useWithdrawSocket = () => {
    const dispatch = useAppDispatch()
+   const userId = useAppSelector((state) => state.auth.userId)
    const {
       friendReducer: { friendId },
       friendDispatch,
@@ -23,7 +24,7 @@ const useWithdrawSocket = () => {
    useEffect(() => {
       const withdrawFriend = (data: IArgs) => {
          if (friendId == data.friendId) {
-            friendDispatch({ type: 'REMOVE_SINGLE_FRIEND', payload: data.friendId })
+            friendDispatch({ type: 'REMOVE_SINGLE_FRIEND', payload: userId as string })
             dispatch(setHeadText(data.friend.userName))
             dispatch(setMessage('Visszavonta a barátfelkérését!'))
             dispatch(setImageSrc(data.friend.currentImage))
@@ -37,7 +38,7 @@ const useWithdrawSocket = () => {
       return () => {
          socket.off('friend:withdrawFriendResponse', withdrawFriend)
       }
-   }, [friendId, friendDispatch, dispatch, setCardButtonType])
+   }, [friendId, userId, friendDispatch, dispatch, setCardButtonType])
    return null
 }
 
