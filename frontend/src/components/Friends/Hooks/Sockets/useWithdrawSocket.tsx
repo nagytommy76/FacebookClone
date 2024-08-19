@@ -3,14 +3,7 @@ import { FriendContext } from '../../Context/FriendContext'
 import { socket } from '@/src/utils/socketIo'
 import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
 import { setHeadText, setMessage, setImageSrc, setIsInfoSnackOpen } from '@/reduxStore/slices/InfoSnack'
-
-interface IArgs {
-   friendId: string
-   friend: {
-      currentImage: string
-      userName: string
-   }
-}
+import type { IArgs } from './Types'
 
 const useWithdrawSocket = () => {
    const dispatch = useAppDispatch()
