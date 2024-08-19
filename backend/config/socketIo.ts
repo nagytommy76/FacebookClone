@@ -102,6 +102,9 @@ export const initSocketIO = (app: Application) => {
       socket.on('friend:withdrawFriend', (args: { friendId: string }) => {
          socket.broadcast.to(args.friendId).emit('friend:withdrawFriendResponse', args)
       })
+      socket.on('friend:rejectFriend', (args: { friendId: string; roomId: string }) => {
+         socket.broadcast.to(args.roomId).emit('friend:rejectFriendResponse', args)
+      })
 
       socket.on('disconnect', () => {
          removeUser(socket.id, socket)
