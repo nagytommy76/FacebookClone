@@ -7,6 +7,13 @@ export interface IProfilePicturePath {
    isSelected: boolean
 }
 
+export interface IFriends {
+   friend: ObjectId
+   isSender?: boolean
+   friendSince?: Date
+   status?: 'pending' | 'friends' | 'rejected'
+}
+
 export interface IUserTypes {
    _id: ObjectId
    email: string
@@ -14,12 +21,7 @@ export interface IUserTypes {
    sureName: string
    password: string
    isEmailConfirmed: boolean
-   friends: {
-      friend: ObjectId
-      isSender?: boolean
-      friendSince?: Date
-      status?: 'pending' | 'friends' | 'rejected'
-   }[]
+   friends: IFriends[]
    notifications: INotifications[]
    userDetails: {
       dateOfBirth: { day: number; month: number; year: number }
