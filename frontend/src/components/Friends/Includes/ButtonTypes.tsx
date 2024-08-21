@@ -8,20 +8,31 @@ import useFriendDeleteRequest from '../Hooks/Requests/Delete/useFriendDeleteRequ
 import useWithdrawFriend from '../Hooks/Requests/Delete/useWithdrawFriend'
 
 const ButtonTypes = () => {
-   const { cardButtonType, loading } = useContext(FriendContext)
+   const {
+      cardButtonType,
+      loading,
+      friendReducer: { friendId },
+   } = useContext(FriendContext)
    const { friendRequestMutate } = useFriendRequest()
    const { friendConfrimMutate } = useFriendCornfirmRequest()
 
    const { deleteFriendMutate } = useFriendDeleteRequest()
    const { withdrawFriend } = useWithdrawFriend()
 
-   // Hozzáadni egy üzenet gombot?!?!?!?!?!?!??!?!
    switch (cardButtonType) {
       case 'makeFriend':
-         return <BaseButton buttonText='Jelölés' isLoading={loading} onClickEvent={friendRequestMutate} />
+         return (
+            <BaseButton
+               friendId={friendId}
+               buttonText='Jelölés'
+               isLoading={loading}
+               onClickEvent={friendRequestMutate}
+            />
+         )
       case 'withdrawRequest':
          return (
             <BaseButton
+               friendId={friendId}
                buttonText='Jelölés visszavonása'
                isLoading={loading}
                onClickEvent={withdrawFriend}
@@ -32,6 +43,7 @@ const ButtonTypes = () => {
       case 'isFriend':
          return (
             <BaseButton
+               friendId={friendId}
                buttonText='Barát Törlése'
                isLoading={loading}
                onClickEvent={deleteFriendMutate}
@@ -46,9 +58,11 @@ const ButtonTypes = () => {
                   width: '100%',
                   display: 'flex',
                   flexDirection: 'column',
+                  gap: '5px',
                }}
             >
                <BaseButton
+                  withChatButton={false}
                   buttonText='Visszaigazolás'
                   isLoading={loading}
                   onClickEvent={friendConfrimMutate}
@@ -56,6 +70,7 @@ const ButtonTypes = () => {
                   color='warning'
                />
                <BaseButton
+                  withChatButton={false}
                   buttonText='Elutasítás'
                   isLoading={loading}
                   onClickEvent={deleteFriendMutate}
