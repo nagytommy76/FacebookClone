@@ -56,21 +56,14 @@ export const getAcceptedFriendsModel = async (userId: Types.ObjectId) => {
          $match: { _id: userId },
       },
       {
-         $project: { friends: 1 },
-      },
-      {
-         $lookup: {
-            from: 'friends',
-            localField: 'friends.friendsId',
-            foreignField: '_id',
-            as: 'foundFriend',
-            pipeline: [
-               {
-                  $match: {
-                     status: 'friends',
-                  },
+         $project: {
+            friends: {
+               $filter: {
+                  input: '$friends',
+                  as: 'friend',
+                  cond: { $eq: ['$$friend.status', 'friends'] },
                },
-            ],
+            },
          },
       },
       {
@@ -98,6 +91,7 @@ export const getAcceptedFriendsModel = async (userId: Types.ObjectId) => {
       },
    ])
 }
+// Átalakítani mert nem kell lookup -> nincs már Friends model a DB-ben
 
 export const getAcceptedUsers = async (request: IJWTUserType, response: Response) => {
    const userId = new Types.ObjectId(request.user?.userId)
