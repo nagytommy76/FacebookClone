@@ -28,9 +28,18 @@ const TabLabel: React.FC<{
                <Typography variant='body1'>
                   {participant.firstName} {participant.sureName}
                </Typography>
-               <Typography variant='caption' sx={{ textOverflow: 'ellipsis' }}>
-                  {captionText}
-               </Typography>
+               <div
+                  style={{
+                     width: '100%',
+                     overflow: 'hidden',
+                     textOverflow: 'ellipsis',
+                     whiteSpace: 'nowrap',
+                  }}
+               >
+                  <Typography variant='caption' sx={{}}>
+                     {captionText}
+                  </Typography>
+               </div>
             </StyledTabText>
          </Badge>
       </>
