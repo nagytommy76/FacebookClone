@@ -13,14 +13,14 @@ export interface IPopulatedUserData {
    selectedProfilePicture: IProfilePicture[]
 }
 
-export interface IChat {
+export interface IChat<MessageType = IMessages[]> {
    _id: string
    participants: IParticipants[]
    chatWithParticipant: IPopulatedUserData
    populatedParticipants: IPopulatedUserData[]
    createdAt: string
    updatedAt: string
-   messages: IMessages[]
+   messages: MessageType
    totalUnreadMsgCount: number
 }
 
