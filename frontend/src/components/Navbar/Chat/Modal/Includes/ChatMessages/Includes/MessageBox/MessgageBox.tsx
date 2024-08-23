@@ -1,23 +1,18 @@
 import dynamic from 'next/dynamic'
-import { useAppSelector } from '@/reduxStore/store'
-import { selectMessagesByChatId } from '@/reduxStore/slices/ChatSlice'
 
 import useSendMsgMutation from './Hooks/useSendMsgMutation'
 import useMessage from './Hooks/useMessage'
 import useUploadChatImg from './Hooks/useUploadChatImg'
 import useSetScroll from './Hooks/useSetScroll'
 
-import { StyledMessageBoxContainer, StyledMessageBox } from './Styles'
+import { StyledMessageBoxContainer } from './Styles'
 
-import TypingIndicator from './TypingIndicator/TypingIndicator'
+const MessageItems = dynamic(() => import('./MessageItems/MessageItems'))
 const AddTextBase = dynamic(() => import('@/Base/AddTextBase/AddTextBase'))
-const MessageItem = dynamic(() => import('../MessageItem/MessageItem'))
 
 const MessgageBox: React.FC<{
    ProfileSection: React.ReactNode
 }> = ({ ProfileSection }) => {
-   const loggedInUserId = useAppSelector((state) => state.auth.userId)
-   const allMessages = useAppSelector(selectMessagesByChatId)
    const {
       chatRef,
       messageBoxRef,
@@ -35,24 +30,7 @@ const MessgageBox: React.FC<{
    return (
       <StyledMessageBoxContainer>
          {ProfileSection}
-         <StyledMessageBox ref={messageBoxRef}>
-            <>
-               {allMessages ? (
-                  allMessages.map((message) => (
-                     <MessageItem
-                        key={message._id}
-                        isRightContent={loggedInUserId != message.receiverUserId}
-                        message={message}
-                     />
-                  ))
-               ) : (
-                  <>
-                     <p>Nincs chat</p>
-                  </>
-               )}
-               <TypingIndicator typingStatus={typingStatus} />
-            </>
-         </StyledMessageBox>
+         <MessageItems messageBoxRef={messageBoxRef} typingStatus={typingStatus} />
          <AddTextBase
             reference={chatRef}
             multiline={false}
