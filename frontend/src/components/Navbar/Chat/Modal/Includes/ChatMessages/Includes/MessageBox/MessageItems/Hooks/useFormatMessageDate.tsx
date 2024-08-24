@@ -25,7 +25,8 @@ function formatDateByInterval(dateStr: string, interval: 'minute' | 'hour' | 'da
 
 const useFormatMessageDate = () => {
    // Function to group messages by the desired interval
-   function groupMessagesByInterval(messages: IMessages[], interval: 'minute' | 'hour' | 'day') {
+   function groupMessagesByInterval(messages: IMessages[] | null, interval: 'minute' | 'hour' | 'day') {
+      if (!messages) return null
       const groupedMessages: { [key: string]: IMessages[] } = {}
 
       messages.map((singleMessage) => {
