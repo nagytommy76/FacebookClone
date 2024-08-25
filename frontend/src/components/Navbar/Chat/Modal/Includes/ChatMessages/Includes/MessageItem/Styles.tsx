@@ -31,6 +31,7 @@ export const StyledTextBox = styled(Paper, {
    padding: '.85rem',
    textAlign: 'justify',
    marginLeft: isRightContent ? 0 : 5,
+   backgroundColor: isRightContent ? theme.palette.info.main : '',
 
    borderRadius: '25px',
    borderTopRightRadius: isRightContent ? 0 : '25px',

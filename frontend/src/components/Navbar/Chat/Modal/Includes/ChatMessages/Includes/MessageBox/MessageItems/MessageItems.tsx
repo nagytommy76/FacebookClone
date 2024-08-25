@@ -22,31 +22,29 @@ const MessageItems = ({
 
    return (
       <StyledMessageBox ref={messageBoxRef}>
-         <>
-            {allMessages ? (
-               <>
-                  {Object.entries(allMessages).map(([key, messages]) => (
-                     <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant='body1' align='center' mb={3}>
-                           {moment(key).format('YYYY MMMM Do h:mm')}
-                        </Typography>
-                        {messages.map((message) => (
-                           <MessageItem
-                              key={message._id}
-                              isRightContent={loggedInUserId != message.receiverUserId}
-                              message={message}
-                           />
-                        ))}
-                     </div>
-                  ))}
-               </>
-            ) : (
-               <>
-                  <p>Nincs chat</p>
-               </>
-            )}
-            <TypingIndicator typingStatus={typingStatus} />
-         </>
+         {allMessages ? (
+            <>
+               {Object.entries(allMessages).map(([key, messages]) => (
+                  <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
+                     <Typography variant='caption' align='center' mb={3}>
+                        {moment(key).format('YYYY MMMM Do HH:mm')}
+                     </Typography>
+                     {messages.map((message) => (
+                        <MessageItem
+                           key={message._id}
+                           isRightContent={loggedInUserId != message.receiverUserId}
+                           message={message}
+                        />
+                     ))}
+                  </div>
+               ))}
+            </>
+         ) : (
+            <>
+               <p>Nincs chat</p>
+            </>
+         )}
+         <TypingIndicator typingStatus={typingStatus} />
       </StyledMessageBox>
    )
 }
