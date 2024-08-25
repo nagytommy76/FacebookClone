@@ -22,39 +22,37 @@ const MessageItem: React.FC<{
    const [isReactionOpen, setIsReactionOpen] = useState<boolean>(false)
 
    return (
-      <>
-         <StyledTextContainer isRightContent={isRightContent}>
-            {message.image.length > 1 && (
-               <ImageDisplay imagePath={message.image} isRightContent={isRightContent} />
-            )}
-            {message.message.length !== 0 && (
-               <Tooltip
-                  placement={isRightContent ? 'left' : 'right'}
-                  title={moment(message.createdAt).format('YYYY MMMM D k:mm:ss')}
+      <StyledTextContainer isRightContent={isRightContent}>
+         {message.image.length > 1 && (
+            <ImageDisplay imagePath={message.image} isRightContent={isRightContent} />
+         )}
+         {message.message.length !== 0 && (
+            <Tooltip
+               placement={isRightContent ? 'left' : 'right'}
+               title={moment(message.createdAt).format('YYYY MMMM D k:mm:ss')}
+            >
+               <StyledTextBoxContainer
+                  isRightContent={isRightContent}
+                  onMouseEnter={() => setIsReactionOpen(true)}
+                  onMouseLeave={() => setIsReactionOpen(false)}
                >
-                  <StyledTextBoxContainer
-                     isRightContent={isRightContent}
-                     onMouseEnter={() => setIsReactionOpen(true)}
-                     onMouseLeave={() => setIsReactionOpen(false)}
-                  >
-                     <Fade timeout={5} in={isReactionOpen}>
-                        <div style={{ display: 'flex' }}>
-                           <Reaction reactions={message.reaction} messageId={message._id} />
-                           {isRightContent && (
-                              <RemoveButton messageImage={message.image} messageId={message._id} />
-                           )}
-                        </div>
-                     </Fade>
-                     <StyledTextBox isRightContent={isRightContent}>
-                        <StyledTypography variant='caption'>{message.message}</StyledTypography>
-                     </StyledTextBox>
-                     {!isRightContent && <MessageItemHead isRightContent={isRightContent} />}
-                  </StyledTextBoxContainer>
-               </Tooltip>
-            )}
-            {message.reaction && <MsgReactionModal messageId={message._id} reactions={message.reaction} />}
-         </StyledTextContainer>
-      </>
+                  <Fade timeout={5} in={isReactionOpen}>
+                     <div style={{ display: 'flex' }}>
+                        <Reaction reactions={message.reaction} messageId={message._id} />
+                        {isRightContent && (
+                           <RemoveButton messageImage={message.image} messageId={message._id} />
+                        )}
+                     </div>
+                  </Fade>
+                  <StyledTextBox isRightContent={isRightContent}>
+                     <StyledTypography variant='caption'>{message.message}</StyledTypography>
+                  </StyledTextBox>
+                  {!isRightContent && <MessageItemHead isRightContent={isRightContent} />}
+               </StyledTextBoxContainer>
+            </Tooltip>
+         )}
+         {message.reaction && <MsgReactionModal messageId={message._id} reactions={message.reaction} />}
+      </StyledTextContainer>
    )
 }
 
