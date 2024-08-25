@@ -1,4 +1,4 @@
-import type { IMessages } from '../../../../../../../Types'
+import type { IMessages } from '@/Chat/Types'
 
 // Helper function to format date by the desired interval (minute, hour, day)
 function formatDateByInterval(dateStr: string, interval: 'minute' | 'hour' | 'day') {
@@ -7,13 +7,17 @@ function formatDateByInterval(dateStr: string, interval: 'minute' | 'hour' | 'da
       case 'minute':
          return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(
             date.getUTCDate()
-         ).padStart(2, '0')}T${String(date.getUTCHours()).padStart(2, '0')}:${String(
-            date.getUTCMinutes()
-         ).padStart(2, '0')}`
+         ).padStart(2, '0')}T${String(date.getUTCHours() - date.getTimezoneOffset() / 60).padStart(
+            2,
+            '0'
+         )}:${String(date.getUTCMinutes()).padStart(2, '0')}`
       case 'hour':
          return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(
             date.getUTCDate()
-         ).padStart(2, '0')}T${String(date.getUTCHours()).padStart(2, '0')}:00`
+         ).padStart(2, '0')}T${String(date.getUTCHours() - date.getTimezoneOffset() / 60).padStart(
+            2,
+            '0'
+         )}:00`
       case 'day':
          return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(
             date.getUTCDate()
@@ -31,7 +35,6 @@ const useFormatMessageDate = () => {
 
       messages.map((singleMessage) => {
          const formattedDate: any = formatDateByInterval(singleMessage.createdAt as string, interval)
-
          if (!groupedMessages[formattedDate]) {
             groupedMessages[formattedDate] = []
          }
