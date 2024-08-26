@@ -87,6 +87,7 @@ export default class LikePost extends BasePostController {
          // SAVE TO DB --------------------------------
 
          const toSaveNotification = await UserModel.getSaveNotification(
+            foundPostToModifyLike._id,
             foundPostToModifyLike.userId,
             foundPostToModifyLike.description,
             likedUser[0].firstName,

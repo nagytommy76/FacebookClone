@@ -70,6 +70,7 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
       const likedUser = await UserModel.getUserByUserIdAndSelect(userId)
 
       const toSaveUsersNotification = await UserModel.getSaveNotification(
+         foundPost._id,
          foundPost.userId,
          foundPost.description,
          likedUser[0].firstName,
