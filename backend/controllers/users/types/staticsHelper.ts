@@ -16,6 +16,7 @@ export interface UserModel extends Model<IUserTypes, UserQueryHelpers> {
          >
    >
    getSaveNotification: (
+      foundPostId: string | ObjectId,
       foundPostUserId: string | ObjectId,
       foundPostDescription: string,
       firstName: string,

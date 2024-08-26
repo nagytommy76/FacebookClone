@@ -105,9 +105,10 @@ UserSchema.add({
          notificationType: String,
          isRead: Boolean,
          createdAt: Date,
-         postData: {
-            description: String,
-            postId: String,
+         data: {
+            id: { type: String, required: false, default: null },
+            description: { type: String, required: false, default: '' },
+            urlEndpoint: { type: String, required: false, default: '' },
          },
          userDetails: {
             userId: String,

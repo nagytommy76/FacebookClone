@@ -58,6 +58,7 @@ export function UserStatics(
       ])
    }
    UserSchema.statics.getSaveNotification = async function (
+      foundPostId: string,
       foundPostUserId: string,
       foundPostDescription: string,
       firstName: string,
@@ -74,7 +75,7 @@ export function UserStatics(
             notificationType,
             createdAt: new Date(),
             data: {
-               postId: foundPostUserId,
+               id: foundPostId,
                description: foundPostDescription,
             },
             userDetails: {
