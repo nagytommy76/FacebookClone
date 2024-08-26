@@ -1,12 +1,13 @@
 import { styled } from '@mui/material'
 
 export const CommentFooterStyle = styled('footer')({
-   width: 160,
+   maxWidth: 220,
    marginTop: 5,
 
    display: 'flex',
    flexDirection: 'row',
-   justifyContent: 'space-between',
+   justifyContent: 'flex-start',
+   gap: '8px',
 })
 
 export const StyledCommentAnswerButton = styled('span')({
