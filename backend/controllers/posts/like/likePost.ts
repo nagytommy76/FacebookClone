@@ -2,6 +2,7 @@ import { Response } from 'express'
 import { Posts as PostModel } from '../../../models/posts/posts'
 import { User as UserModel } from '../../../models/user/user'
 import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
+import type { IOnlineFriends } from '../../../config/socketIo'
 
 import BasePostController from '../Base/basePost'
 
@@ -84,23 +85,26 @@ export default class LikePost extends BasePostController {
 
          // Who liked your post
          const likedUser = await UserModel.getUserByUserIdAndSelect(userId)
-         // SAVE TO DB --------------------------------
 
-         const toSaveNotification = await UserModel.getSaveNotification(
-            foundPostToModifyLike._id,
-            foundPostToModifyLike.userId,
-            foundPostToModifyLike.description,
-            likedUser[0].firstName,
-            likedUser[0].sureName,
-            likedUser[0]._id,
-            likedUser[0].selectedProfilePicturePath[0].path,
-            'isPostLike'
-         )
+         // SAVE TO DB --------------------------------
+         let toSaveNotification
+         if (foundPostToModifyLike.userId.toString() != userId) {
+            toSaveNotification = await UserModel.getSaveNotification(
+               foundPostToModifyLike._id,
+               foundPostToModifyLike.userId,
+               foundPostToModifyLike.description,
+               likedUser[0].firstName,
+               likedUser[0].sureName,
+               likedUser[0]._id,
+               likedUser[0].selectedProfilePicturePath[0].path,
+               'isPostLike'
+            )
+         }
 
          // SOCKET ---------------------------
          if (request.getUser !== undefined) {
-            const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as any
-            if (toSendUser !== undefined) {
+            const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as IOnlineFriends
+            if (toSendUser !== undefined && toSendUser.userId != userId) {
                request.ioSocket?.to(toSendUser.socketId).emit('likedPost', {
                   notifications: toSaveNotification?.notifications,
                   likeType: foundPostToModifyLike.likes,
