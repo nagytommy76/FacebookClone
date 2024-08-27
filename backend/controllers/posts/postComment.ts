@@ -72,17 +72,17 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
       const toSaveUsersNotification = await UserModel.getSaveNotification(
          foundPost._id,
          foundPost.userId,
-         foundPost.description,
+         comment,
          likedUser[0].firstName,
          likedUser[0].sureName,
          likedUser[0]._id,
          likedUser[0].selectedProfilePicturePath[0].path,
-         'isCommentLike'
+         'isComment'
       )
 
       if (request.getUser !== undefined) {
          const toSendUser = request.getUser(foundPost.userId.toString() as any) as IOnlineFriends
-         if (toSendUser !== undefined) {
+         if (toSendUser !== undefined && toSendUser.userId != userId) {
             request.ioSocket?.to(toSendUser.socketId).emit('addComment', {
                notifications: toSaveUsersNotification?.notifications,
                newComments: foundPost.comments,
