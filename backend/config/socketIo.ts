@@ -2,6 +2,8 @@ import type { Application } from 'express'
 import { createServer } from 'https'
 import { Server, Socket } from 'socket.io'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+import { initRedisCahce } from './redis.config'
+import { createAdapter } from '@socket.io/redis-adapter'
 
 import type { IMessage } from '../models/chat/Types'
 
@@ -10,9 +12,14 @@ export interface IOnlineFriends {
    socketId: string
 }
 
-export const initSocketIO = (app: Application) => {
+// Ezzel megvannak az online userek -> tudok válogatni köztük ki kapjon üzit (AKIT ÉRINT -> POST LIKE)
+let onlineFriends: IOnlineFriends[] = []
+
+export const initSocketIO = async (app: Application) => {
+   const { pubClient, subClient } = await initRedisCahce()
    const httpsServer = createServer(app)
    const socketIo = new Server(httpsServer, {
+      adapter: createAdapter(pubClient, subClient),
       cors: {
          origin: ['http://localhost:3000'],
          methods: ['GET', 'POST'],
@@ -21,14 +28,24 @@ export const initSocketIO = (app: Application) => {
    })
 
    socketIo.listen(3001)
-   // Ezzel megvannak az online userek -> tudok válogatni köztük ki kapjon üzit (AKIT ÉRINT -> POST LIKE)
-   let onlineFriends: IOnlineFriends[] = []
 
-   const addNewUser = (userId: string, socketId: string) => {
-      if (userId !== '' && !onlineFriends.some((user) => user.userId === userId)) {
-         onlineFriends.push({ userId, socketId })
-      }
+   const addOnlineFriend = async (userId: string, socketId: string) => {
+      const userIsInRedis = await pubClient.hGet('activeUsers', userId)
+      console.log(userIsInRedis)
+      if (userIsInRedis != null || userIsInRedis != undefined) return null
+      return await pubClient.hSet(`activeUsers:${userId}`, {
+         userId: userId,
+         socketId: socketId,
+         isActive: 1,
+         lastSeen: Date.now(),
+      })
    }
+
+   // const addNewUser = (userId: string, socketId: string) => {
+   //    if (userId !== '' && !onlineFriends.some((user) => user.userId === userId)) {
+   //       onlineFriends.push({ userId, socketId })
+   //    }
+   // }
    const removeUser = (
       socketId: string,
       socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
@@ -51,8 +68,11 @@ export const initSocketIO = (app: Application) => {
    // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
    socketIo.on('connection', (socket) => {
       socket.on('newUser', async (userId) => {
-         addNewUser(userId, socket.id)
+         // addNewUser(userId, socket.id)
+         console.log(await addOnlineFriend(userId, socket.id))
          socket.broadcast.emit('online:friends', { userId, socketId: socket.id })
+         // console.log(onlineFriends)
+         // console.count()
       })
 
       socket.on('join_room', (args: { chatRoomId: string[] }) => {
