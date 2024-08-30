@@ -12,6 +12,12 @@ export async function initRedisCahce() {
 
    const subClient = pubClient.duplicate()
 
-   await Promise.all([pubClient.connect(), subClient.connect()])
+   if (!pubClient.isOpen) {
+      await pubClient.connect()
+   }
+   if (!subClient.isOpen) {
+      await subClient.connect()
+   }
+
    return { pubClient, subClient }
 }
