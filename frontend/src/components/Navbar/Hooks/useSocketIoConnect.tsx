@@ -23,19 +23,23 @@ const useSocketIoConnect = () => {
             dispatch(setOnlineStatus({ friendId: args.userId, status: true }))
          })
 
-         if (messageLabels) {
-            const labels = Object.keys(messageLabels)
-            socket.emit('join_room', { chatRoomId: labels })
-         }
          socket.on('offline:friends', (args: { userId: string }) => {
             dispatch(setOnlineStatus({ friendId: args.userId, status: false }))
          })
       }
       return () => {
-         socket.disconnect()
-         socket.on('disconnect', (reason) => {})
+         socket.on('disconnect', (reason, details) => {
+            socket.emit('disconnect:user', userId)
+         })
       }
-   }, [userId, messageLabels, isLoggedIn, dispatch])
+   }, [userId, isLoggedIn, dispatch])
+
+   useEffect(() => {
+      if (messageLabels) {
+         const labels = Object.keys(messageLabels)
+         socket.emit('join_room', { chatRoomId: labels })
+      }
+   }, [messageLabels])
 
    return null
 }
