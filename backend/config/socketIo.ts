@@ -29,23 +29,30 @@ export const initSocketIO = async (app: Application) => {
 
    socketIo.listen(3001)
 
-   const addOnlineFriend = async (userId: string, socketId: string) => {
-      const userIsInRedis = await pubClient.hGet('activeUsers', userId)
-      console.log(userIsInRedis)
-      if (userIsInRedis != null || userIsInRedis != undefined) return null
+   async function setActiveUserById(userId: string, newSocketId: string, isActive: boolean = false) {
+      // console.log('SET ACTIVE', userId)
       return await pubClient.hSet(`activeUsers:${userId}`, {
-         userId: userId,
-         socketId: socketId,
-         isActive: 1,
-         lastSeen: Date.now(),
+         isActive: isActive ? 1 : 0,
+         socketId: newSocketId,
       })
    }
 
-   // const addNewUser = (userId: string, socketId: string) => {
-   //    if (userId !== '' && !onlineFriends.some((user) => user.userId === userId)) {
-   //       onlineFriends.push({ userId, socketId })
-   //    }
-   // }
+   const addOnlineFriend = async (userId: string, socketId: string) => {
+      // Check to see user is already in redis
+      const userIsInRedis = await pubClient.hExists(`activeUsers:${userId}`, 'userId')
+      // if true we don't need to add them again
+      if (userIsInRedis) {
+         return await setActiveUserById(userId, socketId, true)
+      } else {
+         return await pubClient.hSet(`activeUsers:${userId}`, {
+            userId: userId,
+            socketId: socketId,
+            isActive: 1,
+            lastSeen: Date.now(),
+         })
+      }
+   }
+
    const removeUser = (
       socketId: string,
       socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
@@ -67,12 +74,9 @@ export const initSocketIO = async (app: Application) => {
 
    // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
    socketIo.on('connection', (socket) => {
-      socket.on('newUser', async (userId) => {
-         // addNewUser(userId, socket.id)
-         console.log(await addOnlineFriend(userId, socket.id))
+      socket.on('newUser', async (userId: string) => {
+         await addOnlineFriend(userId, socket.id)
          socket.broadcast.emit('online:friends', { userId, socketId: socket.id })
-         // console.log(onlineFriends)
-         // console.count()
       })
 
       socket.on('join_room', (args: { chatRoomId: string[] }) => {
@@ -128,6 +132,11 @@ export const initSocketIO = async (app: Application) => {
 
       socket.on('disconnect', () => {
          removeUser(socket.id, socket)
+      })
+
+      socket.on('disconnect:user', async (userId: string) => {
+         // console.log('DISCONNECT USER', userId)
+         await setActiveUserById(userId, socket.id)
       })
    })
    return { io: socketIo, onlineFriends, getUser }
