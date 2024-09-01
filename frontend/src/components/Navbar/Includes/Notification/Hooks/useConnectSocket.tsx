@@ -23,8 +23,6 @@ const useConnectSocket = () => {
    const { notificationsDispatch } = useContext(NotificationsContext)
 
    useEffect(() => {
-      socket.emit('newUser', userId)
-
       socket.on('likedPost', (args) => {
          setNotificationContext(args, notificationsDispatch)
          notificationsDispatch({ type: 'SET_AUDIO_PLAY', payload: null })
@@ -47,7 +45,6 @@ const useConnectSocket = () => {
          socket.off('addComment')
          socket.off('makeFriendship')
          socket.off('confirmFriendship')
-         socket.disconnect()
       }
    }, [userId, notificationsDispatch])
 
