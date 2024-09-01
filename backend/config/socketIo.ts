@@ -1,7 +1,6 @@
 import type { Application } from 'express'
 import { createServer } from 'https'
 import { Server, Socket } from 'socket.io'
-import { DefaultEventsMap } from 'socket.io/dist/typed-events'
 import { initRedisCahce } from './redis.config'
 import { createAdapter } from '@socket.io/redis-adapter'
 
@@ -10,6 +9,19 @@ import type { IMessage } from '../models/chat/Types'
 export interface IOnlineFriends {
    userId: string
    socketId: string
+}
+
+export interface IOnlineFriendsRedis {
+   [x: string]: {
+      userId: string
+      socketId: string
+      isActive: number
+      lastSeen: number
+   }
+}
+
+interface SocketWithUserId extends Socket {
+   userId?: string
 }
 
 // Ezzel megvannak az online userek -> tudok válogatni köztük ki kapjon üzit (AKIT ÉRINT -> POST LIKE)
@@ -29,7 +41,7 @@ export const initSocketIO = async (app: Application) => {
 
    socketIo.listen(3001)
 
-   async function setActiveUserById(userId: string, newSocketId: string, isActive: boolean = false) {
+   async function setActiveUserById(userId: string = '', newSocketId: string, isActive: boolean = false) {
       // console.log('SET ACTIVE', userId)
       return await pubClient.hSet(`activeUsers:${userId}`, {
          isActive: isActive ? 1 : 0,
@@ -53,28 +65,18 @@ export const initSocketIO = async (app: Application) => {
       }
    }
 
-   const removeUser = (
-      socketId: string,
-      socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
-   ) => {
-      let loggedInUserId: string | null = null
-      onlineFriends = onlineFriends.filter((user) => {
-         if (user.socketId !== socketId) {
-            return true
-         } else {
-            loggedInUserId = user.userId
-            return false
-         }
-      })
-      socket.broadcast.emit('offline:friends', { userId: loggedInUserId })
+   async function getUserById(userId: string = '') {
+      return (await pubClient.hGetAll(`activeUsers:${userId}`)) as unknown as Promise<IOnlineFriendsRedis>
    }
+
    const getUser = (userId: string) => {
       return onlineFriends.find((user) => user.userId === userId)
    }
 
    // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
-   socketIo.on('connection', (socket) => {
+   socketIo.on('connection', (socket: SocketWithUserId) => {
       socket.on('newUser', async (userId: string) => {
+         socket.userId = userId
          await addOnlineFriend(userId, socket.id)
          socket.broadcast.emit('online:friends', { userId, socketId: socket.id })
       })
@@ -130,14 +132,9 @@ export const initSocketIO = async (app: Application) => {
          socket.broadcast.to(args.roomId).emit('friend:rejectFriendResponse', args)
       })
 
-      socket.on('disconnect', () => {
-         removeUser(socket.id, socket)
-      })
-
-      socket.on('disconnect:user', async (userId: string) => {
-         // console.log('DISCONNECT USER', userId)
-         await setActiveUserById(userId, socket.id)
+      socket.on('disconnect', async () => {
+         await setActiveUserById(socket.userId, socket.id)
       })
    })
-   return { io: socketIo, onlineFriends, getUser }
+   return { io: socketIo, onlineFriends, getUserById, getUser }
 }
