@@ -28,9 +28,7 @@ const useSocketIoConnect = () => {
          })
       }
       return () => {
-         socket.on('disconnect', (reason, details) => {
-            socket.emit('disconnect:user', userId)
-         })
+         socket.on('disconnect', () => {})
       }
    }, [userId, isLoggedIn, dispatch])
 
