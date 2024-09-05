@@ -132,6 +132,13 @@ export const initSocketIO = async (app: Application) => {
          socket.broadcast.to(args.roomId).emit('friend:rejectFriendResponse', args)
       })
 
+      socket.on('friend:checkOnlineFriends', ({ friendIds }: { friendIds: string[] }) => {
+         console.log('CSÉÉÉÁÁÁ')
+         socket.broadcast.emit('friend:checkOnlineFriendsResponse', { friendIds })
+      })
+
+      // DISCONNECT ----------------------------------------------------------------
+
       socket.on('disconnect', async () => {
          await setActiveUserById(socket.userId, socket.id)
       })
