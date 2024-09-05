@@ -35,6 +35,21 @@ BUG: A likeolásnál az ikonok nem frissülnek, de az answerContext meg igen
 FONTOS!!!!!!: Ha törlök egy posztot a poszt kép törlődik, de a kommenteké nem!!! EZT MEGOLDANI!!!!!!!!!!!!!!!!
 
 
+Értesítések
+Navbar: 
+ - barátfelkérés
+ - barátfelkérés elfogadta
+ - barát: elutasít/törlés
+ - barátod post-ot tett közzé
+ - likeoltás a postod
+ - komment a postodra
+ - válasz a kommentedre
+
+InfoSnackbar:
+ - új chat üzenet, ha nincs nyitva a chat ablak
+ - Online van egy barátod
+
+
 CHAT:
 Lépések:
  - Amikor rákattintok egy ismerősre az oldalsávon (Friends) akkor küldjön egy requestet -> hozzáadni a chatDB-hez a résztvevőket

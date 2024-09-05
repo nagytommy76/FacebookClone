@@ -8,22 +8,24 @@ const useSocketIoConnect = () => {
    const userId = useAppSelector((state) => state.auth.userId)
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
    const messageLabels = useAppSelector((state) => state.chat.messageLabels)
+   const isOnlineFriends = useAppSelector((state) => state.chat.isOnlineFriends)
 
    useEffect(() => {
       // Ez azért kell mert ki van kapcsolva az automata connect: autoConnect
       if (isLoggedIn) {
          socket.connect()
-         socket.on('connect', () => {
-            if (userId !== null || userId !== '') {
-               socket.emit('newUser', userId)
-            }
-         })
+         socket.on('connect', () => {})
+         if (userId !== null || userId !== '') {
+            socket.emit('newUser', userId)
+         }
 
          socket.on('online:friends', (args: { userId: string; socketId: string }) => {
+            // console.log('OnLINE FRIENDS', args)
             dispatch(setOnlineStatus({ friendId: args.userId, status: true }))
          })
 
          socket.on('offline:friends', (args: { userId: string }) => {
+            // console.log('OFFLINE FRIENDS', args)
             dispatch(setOnlineStatus({ friendId: args.userId, status: false }))
          })
       }
@@ -31,6 +33,22 @@ const useSocketIoConnect = () => {
          socket.on('disconnect', () => {})
       }
    }, [userId, isLoggedIn, dispatch])
+
+   // Check online friends on login
+   useEffect(() => {
+      if (isOnlineFriends) {
+         socket.emit('friend:checkOnlineFriends', { friendIds: Object.keys(isOnlineFriends) })
+      }
+      // console.log('USEFFEKT')
+      // console.count('effekt: ')
+   }, [isOnlineFriends])
+
+   useEffect(() => {
+      socket.on('friend:checkOnlineFriendsResponse', (data) => {
+         console.log(data)
+         console.log('ONLINE FRIENDS')
+      })
+   }, [])
 
    useEffect(() => {
       if (messageLabels) {
