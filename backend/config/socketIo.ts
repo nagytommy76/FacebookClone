@@ -69,6 +69,20 @@ export const initSocketIO = async (app: Application) => {
       return (await pubClient.hGetAll(`activeUsers:${userId}`)) as unknown as Promise<IOnlineFriendsRedis>
    }
 
+   async function getAllUsers(friendIds: string[]) {
+      const allOnlineFriends: {
+         [key: string]: IOnlineFriendsRedis
+      } = {}
+      for (let index = 0; index < friendIds.length; index++) {
+         const friend = await getUserById(friendIds[index])
+         if (Object.keys(friend).length !== 0) {
+            allOnlineFriends[friendIds[index]] = friend
+            // Object.assign(friendIds[index], allOnlineFriends)
+         }
+      }
+      return allOnlineFriends
+   }
+
    const getUser = (userId: string) => {
       return onlineFriends.find((user) => user.userId === userId)
    }
@@ -132,9 +146,10 @@ export const initSocketIO = async (app: Application) => {
          socket.broadcast.to(args.roomId).emit('friend:rejectFriendResponse', args)
       })
 
-      socket.on('friend:checkOnlineFriends', ({ friendIds }: { friendIds: string[] }) => {
-         console.log('CSÉÉÉÁÁÁ')
-         socket.broadcast.emit('friend:checkOnlineFriendsResponse', { friendIds })
+      socket.on('friend:checkOnlineFriends', async (args: { friendIds: string[] }) => {
+         const allOnlineFriends = await getAllUsers(args.friendIds)
+         console.log(allOnlineFriends)
+         socket.emit('friend:checkOnlineFriendsResponse', allOnlineFriends)
       })
 
       // DISCONNECT ----------------------------------------------------------------
