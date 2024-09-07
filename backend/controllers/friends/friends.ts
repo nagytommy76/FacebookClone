@@ -39,10 +39,10 @@ export const makeFriendshipController = async (request: IMakeFriends, response: 
       await receiverUser.save()
       await senderUser.save()
 
-      if (request.getUser !== undefined) {
-         const toSendUser = request.getUser(friendId) as any
+      if (request.getUserById !== undefined) {
+         const toSendUser = await request.getUserById(friendId)
          if (toSendUser !== undefined) {
-            request.ioSocket?.to(toSendUser.socketId).emit('makeFriendship', {
+            request.ioSocket?.to(toSendUser[friendId].socketId).emit('makeFriendship', {
                notifications: receiverUser.notifications,
                userFriends: {
                   _id: senderUser._id,
