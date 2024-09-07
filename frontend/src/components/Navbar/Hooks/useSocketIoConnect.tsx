@@ -3,6 +3,15 @@ import { useAppSelector, useAppDispatch } from '@/reduxStore/store'
 import { setOnlineStatus } from '@/reduxStore/slices/ChatSlice'
 import { socket } from '@/src/utils/socketIo'
 
+export interface IOnlineFriendsRedis {
+   [x: string]: {
+      userId: string
+      socketId: string
+      isActive: number
+      lastSeen: number
+   }
+}
+
 const useSocketIoConnect = () => {
    const dispatch = useAppDispatch()
    const userId = useAppSelector((state) => state.auth.userId)
@@ -15,9 +24,6 @@ const useSocketIoConnect = () => {
       if (isLoggedIn) {
          socket.connect()
          socket.on('connect', () => {})
-         if (userId !== null || userId !== '') {
-            socket.emit('newUser', userId)
-         }
 
          socket.on('online:friends', (args: { userId: string; socketId: string }) => {
             // console.log('OnLINE FRIENDS', args)
@@ -34,20 +40,25 @@ const useSocketIoConnect = () => {
       }
    }, [userId, isLoggedIn, dispatch])
 
+   useEffect(() => {
+      if (userId !== null || userId !== '') {
+         socket.emit('newUser', userId)
+      }
+   }, [userId])
+
    // Check online friends on login
    useEffect(() => {
-      if (isOnlineFriends) {
+      if (isOnlineFriends)
          socket.emit('friend:checkOnlineFriends', { friendIds: Object.keys(isOnlineFriends) })
-      }
-      // console.log('USEFFEKT')
-      // console.count('effekt: ')
-   }, [isOnlineFriends])
+   }, [userId, isOnlineFriends])
 
    useEffect(() => {
-      socket.on('friend:checkOnlineFriendsResponse', (data) => {
-         console.log(data)
-         console.log('ONLINE FRIENDS')
-      })
+      socket.on(
+         'friend:checkOnlineFriendsResponse',
+         (onlineFriends: { [key: string]: IOnlineFriendsRedis }) => {
+            console.log('friend:checkOnlineFriendsResponse: ', onlineFriends)
+         }
+      )
    }, [])
 
    useEffect(() => {
