@@ -41,8 +41,12 @@ export const initSocketIO = async (app: Application) => {
 
    socketIo.listen(3001)
 
-   async function setActiveUserById(userId: string = '', newSocketId: string, isActive: boolean = false) {
-      // console.log('SET ACTIVE', userId)
+   async function setActiveUserById(
+      userId: string | undefined,
+      newSocketId: string,
+      isActive: boolean = false
+   ) {
+      if (!userId) return
       return await pubClient.hSet(`activeUsers:${userId}`, {
          isActive: isActive ? 1 : 0,
          socketId: newSocketId,
@@ -77,7 +81,6 @@ export const initSocketIO = async (app: Application) => {
          const friend = await getUserById(friendIds[index])
          if (Object.keys(friend).length !== 0) {
             allOnlineFriends[friendIds[index]] = friend
-            // Object.assign(friendIds[index], allOnlineFriends)
          }
       }
       return allOnlineFriends
@@ -148,7 +151,6 @@ export const initSocketIO = async (app: Application) => {
 
       socket.on('friend:checkOnlineFriends', async (args: { friendIds: string[] }) => {
          const allOnlineFriends = await getAllUsers(args.friendIds)
-         console.log(allOnlineFriends)
          socket.emit('friend:checkOnlineFriendsResponse', allOnlineFriends)
       })
 
