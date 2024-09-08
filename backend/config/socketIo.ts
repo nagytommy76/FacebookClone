@@ -93,9 +93,13 @@ export const initSocketIO = async (app: Application) => {
    // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
    socketIo.on('connection', (socket: SocketWithUserId) => {
       socket.on('newUser', async (userId: string) => {
+         // The userId loses its value after the server is restarted (saved)... SOLUTION!!!
          socket.userId = userId
          await addOnlineFriend(userId, socket.id)
-         socket.broadcast.emit('online:friends', { userId, socketId: socket.id })
+         if (userId) {
+            const onlineUserData = await getUserById(userId)
+            socket.broadcast.emit('online:friend', onlineUserData)
+         }
       })
 
       socket.on('join_room', (args: { chatRoomId: string[] }) => {
@@ -157,6 +161,9 @@ export const initSocketIO = async (app: Application) => {
       // DISCONNECT ----------------------------------------------------------------
 
       socket.on('disconnect', async () => {
+         console.log('USER DISCONNECTED: ', socket.userId)
+         if (socket.userId)
+            socket.broadcast.emit('offline:friend', { userId: socket.userId, socketId: socket.id })
          await setActiveUserById(socket.userId, socket.id)
       })
    })
