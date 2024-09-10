@@ -92,13 +92,14 @@ export const initSocketIO = async (app: Application) => {
 
    // https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
    socketIo.on('connection', (socket: SocketWithUserId) => {
-      socket.on('newUser', async (userId: string) => {
+      socket.on('newUser', async (args: { userId: string; userName: string }) => {
+         const { userId, userName } = args
          // The userId loses its value after the server is restarted (saved)... SOLUTION!!!
          socket.userId = userId
          await addOnlineFriend(userId, socket.id)
          if (userId) {
             const onlineUserData = await getUserById(userId)
-            socket.broadcast.emit('online:friend', onlineUserData)
+            socket.broadcast.emit('online:friend', { onlineUserData, userName })
          }
       })
 
