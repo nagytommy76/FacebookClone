@@ -3,14 +3,14 @@ import { useAppSelector } from '@/reduxStore/store'
 import { socket } from '@/src/utils/socketIo'
 
 const useSocketIoConnect = () => {
-   const userId = useAppSelector((state) => state.auth.userId)
+   const { userId, userName } = useAppSelector((state) => state.auth)
    const messageLabels = useAppSelector((state) => state.chat.messageLabels)
 
    useEffect(() => {
       if (userId !== null || userId !== '') {
-         socket.emit('newUser', userId)
+         socket.emit('newUser', { userName, userId })
       }
-   }, [userId])
+   }, [userId, userName])
 
    useEffect(() => {
       if (messageLabels) {
