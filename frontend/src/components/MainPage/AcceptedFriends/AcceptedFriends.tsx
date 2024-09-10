@@ -30,7 +30,11 @@ const AcceptedFriends = () => {
                <ChatAvatar
                   fullName={`${friend.firstName} ${friend.sureName}`}
                   selectedProfilePicturePath={friend.selectedProfilePicture[0].path}
-                  isRead={isOnlineFriends && isOnlineFriends[friend._id] ? false : true}
+                  isRead={
+                     isOnlineFriends !== null && isOnlineFriends[friend._id] !== undefined
+                        ? !isOnlineFriends[friend._id].isActive
+                        : true
+                  }
                />
                <FriendNameStyle variant='body1'>{`${friend.firstName} ${friend.sureName}`}</FriendNameStyle>
             </FriendMenuItemStyle>
