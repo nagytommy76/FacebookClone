@@ -2,7 +2,8 @@ import { createSlice, createSelector } from '@reduxjs/toolkit'
 import type { IChat, IMessages } from '@/Chat/Types'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
-import type { ILike } from '@/src/types/LikeTypes'
+import type { ILike } from '@/types/LikeTypes'
+import type { IOnlineFriendsRedis, IIndexedOnlineFriendsRedis } from '@/types/FriendTypes'
 
 interface IndexedMessageLabel {
    [key: string]: IChat
@@ -13,7 +14,7 @@ type ChatType = {
    selectedChatWithUserId: string | null
    isChatModalOpen: boolean
    messageLabels: IndexedMessageLabel | null
-   isOnlineFriends: { [friendId: string]: boolean } | null
+   isOnlineFriends: IIndexedOnlineFriendsRedis | null
 }
 
 const initialState: ChatType = {
@@ -66,23 +67,25 @@ export const ChatSlice = createSlice({
             console.log('NULL a messageLabels vagy chatId')
          }
       },
-      setOnlineFriends: (state, action: PayloadAction<{ friendId: string }>) => {
-         const friendId = action.payload.friendId
-         const onlineFriends: {
-            [key: string]: boolean
-         } = {}
+      setOnlineFriends: (state, action: PayloadAction<IOnlineFriendsRedis>) => {
+         const { isActive, lastSeen, userId, socketId } = action.payload
+         const onlineFriends: IIndexedOnlineFriendsRedis = {}
 
-         onlineFriends[friendId] = false
+         onlineFriends[userId] = {
+            isActive,
+            lastSeen,
+            userId,
+            socketId,
+         }
          if (state.isOnlineFriends) {
             state.isOnlineFriends = Object.assign(state.isOnlineFriends, onlineFriends)
          } else {
             state.isOnlineFriends = onlineFriends
          }
       },
-      setOnlineStatus: (state, action: PayloadAction<{ friendId: string; status: boolean }>) => {
-         if (state.isOnlineFriends) {
-            state.isOnlineFriends[action.payload.friendId] = action.payload.status
-         }
+      setOnlineStatus: (state, action: PayloadAction<{ userId: string; isActive: boolean }>) => {
+         if (state.isOnlineFriends)
+            state.isOnlineFriends[action.payload.userId].isActive = action.payload.isActive
       },
       incrementTotalUnreadMsgCount: (
          state,
