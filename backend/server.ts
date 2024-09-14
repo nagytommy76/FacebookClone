@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Response } from 'express'
+import express, { Application, NextFunction, Request, Response } from 'express'
 import { config } from 'dotenv'
 import connectDB from './config/connectDB'
 import cors from 'cors'
@@ -6,7 +6,6 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { initSocketIO } from './config/socketIo'
-import type { ISocketRequest } from './types'
 
 import morgan from 'morgan'
 import path, { resolve } from 'path'
@@ -35,12 +34,13 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(morgan('combined', { stream: accessLogStream }))
 
-initSocketIO(app).then(({ getUserById, getUser, io, onlineFriends }) => {
-   app.use((request: ISocketRequest, response: Response, next: NextFunction) => {
+initSocketIO(app).then(({ getUserById, getUser, io, onlineFriends, pubClient }) => {
+   app.use('/', (request: Request, response: Response, next: NextFunction) => {
       request.ioSocket = io
       request.onlineFriends = onlineFriends
       request.getUser = getUser
       request.getUserById = getUserById
+      request.redisClient = pubClient
       next()
    })
 })
