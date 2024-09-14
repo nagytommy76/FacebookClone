@@ -1,7 +1,7 @@
 {
    "compilerOptions": {
       /* Visit https://aka.ms/tsconfig.json to read more about this file */
-      "typeRoots": ["./node_modules/@types"],
+      "typeRoots": ["./node_modules/@types", "./src/@types"],
       "target": "ESNext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ES2021', or 'ESNEXT'. */,
       "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
       "lib": ["ESNext"] /* Specify library files to be included in the compilation. */,
@@ -32,7 +32,8 @@
       "allowJs": true,
       "paths": {
          "@/postModel/*": ["./models/posts/*"],
-         "@/controllers/*": ["./controllers/*"]
+         "@/controllers/*": ["./controllers/*"],
+         "@/types/*": ["./src/@types/*"]
       } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
       // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */                           /* List of folders to include type definitions from. */
       // "types": [],                                 /* Type declaration files to be included in compilation. */
@@ -55,6 +56,7 @@
       "skipLibCheck": true /* Skip type checking of declaration files. */,
       "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
    },
-   "include": ["./server.ts"],
+   "files": ["src/@types/index.d.ts"],
+   "include": ["./server.ts", "src/@types/index.d.ts", "src/**/*"],
    "exclude": ["node_modules"]
 }
