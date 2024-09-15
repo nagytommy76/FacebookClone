@@ -2,6 +2,10 @@
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { useAppSelector } from '../../utils/redux/store'
+
+import useSocket from './Hooks/Socket/useSocket'
+import useOnlineFriend from './Hooks/Socket/useOnlineFriend'
+import useCheckFriends from './Hooks/Socket/useCheckFriends'
 import useSocketIoConnect from './Hooks/useSocketIoConnect'
 import useSetMobileView from './Hooks/useSetMobileView'
 
@@ -20,6 +24,9 @@ import Button from '@mui/material/Button'
 
 const Navbar = () => {
    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+   useSocket()
+   useOnlineFriend()
+   useCheckFriends()
    useSocketIoConnect()
    useSetMobileView()
    return (
