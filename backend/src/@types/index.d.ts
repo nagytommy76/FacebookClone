@@ -6,11 +6,11 @@ import type { RedisClientType } from 'redis'
 declare global {
    namespace Express {
       interface Request {
-         ioSocket: Server<any, any, any, any>
+         ioSocket: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
          onlineFriends: IOnlineFriends[]
          getUser: (userId: string) => IOnlineFriends | undefined
          getUserById: (userId: string) => Promise<IOnlineFriendsRedis>
-         redisClient: any
+         redisClient: RedisClientType
          user: {
             userId: string
             email: string
