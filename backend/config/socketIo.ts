@@ -27,7 +27,7 @@ interface SocketWithUserId extends Socket {
 // Ezzel megvannak az online userek -> tudok válogatni köztük ki kapjon üzit (AKIT ÉRINT -> POST LIKE)
 let onlineFriends: IOnlineFriends[] = []
 
-export const initSocketIO = async (app: Application) => {
+const initSocketIO = async (app: Application) => {
    const { pubClient, subClient } = await initRedisCahce()
    const httpsServer = createServer(app)
    const socketIo = new Server(httpsServer, {
@@ -172,5 +172,7 @@ export const initSocketIO = async (app: Application) => {
          await setActiveUserById(socket.userId, socket.id)
       })
    })
-   return { io: socketIo, onlineFriends, getUserById, getUser }
+   return { io: socketIo, onlineFriends, getUserById, getUser, pubClient }
 }
+
+export default initSocketIO
