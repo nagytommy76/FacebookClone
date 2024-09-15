@@ -1,8 +1,8 @@
-import { NextFunction, Response } from 'express'
-import type { IJWTUserType } from './accessTokenRefresh'
+/// <reference path="../src/@types/index.d.ts" />
+import { NextFunction, Response, Request } from 'express'
 
-export const authenticateUserCredentials = (req: IJWTUserType, res: Response, next: NextFunction) => {
-   const loggedInUserID = req.user?.userId
+export const authenticateUserCredentials = (req: Request, res: Response, next: NextFunction) => {
+   const loggedInUserID = req.user.userId
    const userToModify = req.query.userToModify as string | undefined
 
    if (!userToModify) return res.status(404).json({ msg: 'Required userToModify param field' })
