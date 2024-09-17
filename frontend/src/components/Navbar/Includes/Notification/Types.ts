@@ -1,6 +1,6 @@
 export type NotificationTypes = 'isComment' | 'isPostLike' | 'isCommentLike' | 'isFriend' | 'isFriendConfirm'
 
-export type NotificationType<T = { postId: string; description: string }> = {
+export type NotificationType<T = { id: string | null; description: string; urlEndpoint?: string }> = {
    _id: string
    notificationType: NotificationTypes
    isRead: boolean
