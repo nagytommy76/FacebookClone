@@ -1,9 +1,8 @@
-import { Response } from 'express'
+import { Response, Request } from 'express'
 import { validationResult } from 'express-validator'
 import { User as UserModel } from '../../../models/user/user'
-import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
 
-export const addNewWorkplaceController = async (request: IJWTUserType, response: Response) => {
+export const addNewWorkplaceController = async (request: Request, response: Response) => {
    const result = validationResult(request)
    if (!result.isEmpty()) {
       return response.status(404).json({ errors: result.array() })
@@ -38,7 +37,7 @@ export const addNewWorkplaceController = async (request: IJWTUserType, response:
    }
 }
 
-interface IRemoveWork extends IJWTUserType {
+interface IRemoveWork extends Request {
    body: {
       workId: string
    }

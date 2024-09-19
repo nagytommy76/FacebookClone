@@ -1,6 +1,6 @@
-import { Response } from 'express'
+/// <reference path="../../../src/@types/index.d.ts" />
+import { Response, Request } from 'express'
 import { User as UserModel } from '../../../models/user/user'
-import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
 import type { IGetUserDetailsRequest } from '../types/requestTypes'
 
 export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest, response: Response) => {
@@ -15,7 +15,7 @@ export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest
    }
 }
 
-export const getCurrentProfilePictures = async (request: IJWTUserType, response: Response) => {
+export const getCurrentProfilePictures = async (request: Request, response: Response) => {
    const userId = request.user?.userId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
@@ -28,7 +28,7 @@ export const getCurrentProfilePictures = async (request: IJWTUserType, response:
 }
 
 export const saveUserProfilePicture = async (request: IProfilePictureRequest, response: Response) => {
-   const userId = request.user?.userId
+   const userId = request.user.userId
    const profilePicturePath = request.body.profilePicturePath
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
@@ -47,7 +47,7 @@ export const saveUserProfilePicture = async (request: IProfilePictureRequest, re
 
 export const editSelectedProfilePicture = async (request: ISelectedProfilePicRequest, response: Response) => {
    // Ezeket majd egyszerürsíteni kéne
-   const userId = request.user?.userId
+   const userId = request.user.userId
    const modifyId = request.body.modifyId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
@@ -64,9 +64,9 @@ export const editSelectedProfilePicture = async (request: ISelectedProfilePicReq
    }
 }
 
-export const getCurrentSelectedProfileImage = async (request: IJWTUserType, response: Response) => {
+export const getCurrentSelectedProfileImage = async (request: Request, response: Response) => {
    // Ezeket majd egyszerürsíteni kéne
-   const userId = request.user?.userId
+   const userId = request.user.userId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
       const foundUser = await UserModel.findById(userId).select('userDetails.profilePicturePath')
@@ -80,13 +80,13 @@ export const getCurrentSelectedProfileImage = async (request: IJWTUserType, resp
    }
 }
 
-interface ISelectedProfilePicRequest extends IJWTUserType {
+interface ISelectedProfilePicRequest extends Request {
    body: {
       modifyId: string
    }
 }
 
-interface IProfilePictureRequest extends IJWTUserType {
+interface IProfilePictureRequest extends Request {
    body: {
       profilePicturePath: string
    }
