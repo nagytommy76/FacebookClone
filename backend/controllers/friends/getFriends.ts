@@ -1,7 +1,11 @@
+/// <reference path="../../src/@types/index.d.ts" />
 import { Response, Request } from 'express'
 import { Types } from 'mongoose'
 import { User as UserModel } from '../../models/user/user'
-import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import redisConfig from '../../config/redis.config'
+
+import type { IFriends } from '../users/types/ModelTypes'
+import type SocketService from 'config/socketIo.config'
 
 // https://www.mongodb.com/docs/manual/reference/operator/aggregation/filter/
 // https://www.mongodb.com/docs/manual/reference/operator/aggregation/match/
@@ -50,7 +54,8 @@ export const getUsers = async (request: Request, response: Response) => {
 
 export const getAcceptedFriendsModel = async (userId: Types.ObjectId) => {
    return await UserModel.aggregate<{
-      myFoundFriendsData: { firstName: string; surname: string; _id: string }
+      myFoundFriendsData: { firstName: string; surname: string; _id: string }[]
+      friends: IFriends[]
    }>([
       {
          $match: { _id: userId },
@@ -93,15 +98,18 @@ export const getAcceptedFriendsModel = async (userId: Types.ObjectId) => {
 }
 // Átalakítani mert nem kell lookup -> nincs már Friends model a DB-ben
 
-export const getAcceptedUsers = async (request: IJWTUserType, response: Response) => {
-   const userId = new Types.ObjectId(request.user?.userId)
+export const getAcceptedUsers = async (request: Request, response: Response, io: SocketService) => {
+   const userId = new Types.ObjectId(request.user.userId)
    try {
-      /**
-       *  Meg kéne találnom azokat a barátokat akiknek a status --> friends
-       */
       const acceptedFriends = await getAcceptedFriendsModel(userId)
 
-      return response.status(200).json(acceptedFriends[0])
+      const allFriendIds = acceptedFriends[0].myFoundFriendsData.map((friend) => friend._id)
+
+      const allOnlineFriends = await redisConfig.getAllUsers(allFriendIds)
+
+      return response
+         .status(200)
+         .json({ myFoundFriendsData: acceptedFriends[0].myFoundFriendsData, allOnlineFriends })
    } catch (error) {
       console.log(error)
       return response.status(500).json(error)
