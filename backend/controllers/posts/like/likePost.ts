@@ -2,7 +2,6 @@ import { Response } from 'express'
 import { Posts as PostModel } from '../../../models/posts/posts'
 import { User as UserModel } from '../../../models/user/user'
 import type { IPostLikeRequest, IGetLikesRequest, IGetAnswerLikesRequest } from '../types/PostTypes'
-import type { IOnlineFriends } from '../../../config/socketIo'
 
 import BasePostController from '../Base/basePost'
 
@@ -103,7 +102,10 @@ export default class LikePost extends BasePostController {
 
          // SOCKET ---------------------------
          if (request.getUser !== undefined) {
-            const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as IOnlineFriends
+            const toSendUser = request.getUser(foundPostToModifyLike.userId.toString()) as {
+               userId: string
+               socketId: string
+            }
             if (toSendUser !== undefined && toSendUser.userId != userId) {
                request.ioSocket?.to(toSendUser.socketId).emit('likedPost', {
                   notifications: toSaveNotification?.notifications,
