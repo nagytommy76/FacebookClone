@@ -1,10 +1,9 @@
-import { Response } from 'express'
+import { Response, Request } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
 import { User as UserModel } from '../../models/user/user'
 import BasePostController from './Base/basePost'
-
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
-import type { IOnlineFriends } from '../../config/socketIo'
+import redisConfig from '../../config/redis.config'
+import type SocketService from '../../config/socketIo.config'
 
 export default class PostCommentController extends BasePostController {
    answerToCommentController = async (request: ISavePostCommentAnswerRequest, response: Response) => {
@@ -45,7 +44,7 @@ export default class PostCommentController extends BasePostController {
    }
 }
 
-export const savePostComment = async (request: ISavePostRequest, response: Response) => {
+export const savePostComment = async (request: ISavePostRequest, response: Response, io: SocketService) => {
    const userId = request.user?.userId
    const { comment, commentImage, postId, answeredAt } = request.body
    if (!userId) return response.status(404).json({ msg: 'User not found' })
@@ -80,15 +79,11 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
          'isComment'
       )
 
-      if (request.getUser !== undefined) {
-         const toSendUser = request.getUser(foundPost.userId.toString() as any) as IOnlineFriends
-         if (toSendUser !== undefined && toSendUser.userId != userId) {
-            request.ioSocket?.to(toSendUser.socketId).emit('addComment', {
-               notifications: toSaveUsersNotification?.notifications,
-               newComments: foundPost.comments,
-            })
-         }
-      }
+      const toSendUser = await redisConfig.getUserById(foundPost.userId.toString())
+      io.io.to(toSendUser.socketId).emit('addComment', {
+         notifications: toSaveUsersNotification?.notifications,
+         newComments: foundPost.comments,
+      })
 
       response.status(200).json({ comments: foundPost.comments })
    } catch (error) {
@@ -97,7 +92,7 @@ export const savePostComment = async (request: ISavePostRequest, response: Respo
    }
 }
 
-interface ISavePostRequest extends IJWTUserType {
+interface ISavePostRequest extends Request {
    body: {
       postId: string
       comment: string
@@ -106,7 +101,7 @@ interface ISavePostRequest extends IJWTUserType {
    }
 }
 
-interface ISavePostCommentAnswerRequest extends IJWTUserType {
+interface ISavePostCommentAnswerRequest extends Request {
    body: {
       postId: string
       commentId: string

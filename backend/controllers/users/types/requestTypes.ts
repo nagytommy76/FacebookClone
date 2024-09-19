@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongoose'
 import type { Request } from 'express'
-import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
 import type { IProfilePicturePath } from './ModelTypes'
 
 export interface IRegisterRequest extends Request {
@@ -21,7 +20,7 @@ export interface ILoginRequest extends Request {
    }
 }
 
-export interface IGetUserDetailsRequest extends IJWTUserType {
+export interface IGetUserDetailsRequest extends Request {
    query: {
       userId: string | undefined
    }

@@ -1,8 +1,8 @@
-import { Response } from 'express'
+/// <reference path="../../src/@types/index.d.ts" />
+import { Response, Request } from 'express'
 import { User as UserModel } from '../../models/user/user'
-import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
-export const getNotifications = async (request: IJWTUserType, response: Response) => {
+export const getNotifications = async (request: Request, response: Response) => {
    try {
       const userId = request.user?.userId
       const user = await UserModel.findById(userId).select('notifications')
@@ -16,9 +16,9 @@ export const getNotifications = async (request: IJWTUserType, response: Response
    }
 }
 
-export const setActiveNotifications = async (request: IJWTUserType, response: Response) => {
+export const setActiveNotifications = async (request: Request, response: Response) => {
    try {
-      const userId = request.user?.userId
+      const userId = request.user.userId
       const notificationId = request.body.notificationId as string
 
       const foundUsersNotification = await UserModel.updateOne(
@@ -40,7 +40,7 @@ export const setActiveNotifications = async (request: IJWTUserType, response: Re
 }
 
 export const removeUsersNotification = async (request: IRemoveNotidication, response: Response) => {
-   const userId = request.user?.userId
+   const userId = request.user.userId
    const notificationId = request.body.notificationId
    try {
       const foundUser = await UserModel.findById(userId).select('notifications')
@@ -57,7 +57,7 @@ export const removeUsersNotification = async (request: IRemoveNotidication, resp
    }
 }
 
-interface IRemoveNotidication extends IJWTUserType {
+interface IRemoveNotidication extends Request {
    body: {
       notificationId: string
    }

@@ -4,18 +4,17 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
-import { createAdapter } from '@socket.io/redis-adapter'
-
-import redisService from './config/redis.config'
-import SocketService from './config/socketIo.config'
-
-import { createServer } from 'https'
-import { Server } from 'socket.io'
-
 import morgan from 'morgan'
 import path from 'path'
 import fs from 'fs'
 
+import redisService from './config/redis.config'
+import SocketService from './config/socketIo.config'
+// REDIS SOCKET.IO
+import { createAdapter } from '@socket.io/redis-adapter'
+import { createServer } from 'https'
+import { Server } from 'socket.io'
+// API ROUTES
 import ChatApi from './api/chat/chat'
 import FriendsApi from './api/friends/friends'
 import PostApi from './api/post/post'
