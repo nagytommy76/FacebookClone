@@ -7,68 +7,12 @@ interface SocketWithUserId extends Socket {
    userId?: string
 }
 
-interface IOnlineFriendsRedis {
-   [x: string]: {
-      userId: string
-      socketId: string
-      isActive: number
-      lastSeen: number
-   }
-}
-
 export default class SocketService {
    public io: Server
    public onlineFriends: { userId: string; socketId: string }[] = []
 
    constructor(io: Server) {
       this.io = io
-   }
-
-   public async getAllUsers(friendIds: string[]) {
-      const allOnlineFriends: {
-         [key: string]: IOnlineFriendsRedis
-      } = {}
-      for (let index = 0; index < friendIds.length; index++) {
-         const friend = await this.getUserById(friendIds[index])
-         if (Object.keys(friend).length !== 0) {
-            allOnlineFriends[friendIds[index]] = friend
-         }
-      }
-      return allOnlineFriends
-   }
-
-   public async setActiveUserById(
-      userId: string | undefined,
-      newSocketId: string,
-      isActive: boolean = false
-   ) {
-      if (!userId) return
-      return await redisService.client.hSet(`activeUsers:${userId}`, {
-         isActive: isActive ? 1 : 0,
-         socketId: newSocketId,
-      })
-   }
-
-   public async getUserById(userId: string = '') {
-      return (await redisService.client.hGetAll(
-         `activeUsers:${userId}`
-      )) as unknown as Promise<IOnlineFriendsRedis>
-   }
-
-   public async addOnlineFriend(userId: string, socketId: string) {
-      // Check to see user is already in redis
-      const userIsInRedis = await redisService.client.hExists(`activeUsers:${userId}`, 'userId')
-      // if true we don't need to add them again
-      if (userIsInRedis) {
-         return await this.setActiveUserById(userId, socketId, true)
-      } else {
-         return await redisService.client.hSet(`activeUsers:${userId}`, {
-            userId: userId,
-            socketId: socketId,
-            isActive: 1,
-            lastSeen: Date.now(),
-         })
-      }
    }
 
    public initializeSocketHandlers() {
@@ -78,9 +22,9 @@ export default class SocketService {
             const { userId, userName } = args
             // The userId loses its value after the server is restarted (saved)... SOLUTION!!!
             socket.userId = userId
-            await this.addOnlineFriend(userId, socket.id)
+            await redisService.addOnlineFriend(userId, socket.id)
             if (userId) {
-               const onlineUserData = await this.getUserById(userId)
+               const onlineUserData = await redisService.getUserById(userId)
                socket.broadcast.emit('online:friend', {
                   onlineUserData,
                   userName,
@@ -142,7 +86,7 @@ export default class SocketService {
          })
 
          socket.on('friend:checkOnlineFriends', async (args: { friendIds: string[] }) => {
-            const allOnlineFriends = await this.getAllUsers(args.friendIds)
+            const allOnlineFriends = await redisService.getAllUsers(args.friendIds)
             socket.emit('friend:checkOnlineFriendsResponse', allOnlineFriends)
          })
 
