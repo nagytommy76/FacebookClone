@@ -1,8 +1,7 @@
-import { Response } from 'express'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import { Posts as PostModel } from '../../models/posts/posts'
+import type { Response, Request } from 'express'
 
-interface IRemoveCommentRequest extends IJWTUserType {
+interface IRemoveCommentRequest extends Request {
    body: {
       postId: string
       commentId: string
@@ -11,7 +10,7 @@ interface IRemoveCommentRequest extends IJWTUserType {
    }
 }
 
-interface IRemoveCommentAnswerRequest extends IJWTUserType {
+interface IRemoveCommentAnswerRequest extends Request {
    body: {
       postId: string
       commentId: string

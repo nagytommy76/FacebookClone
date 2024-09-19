@@ -1,8 +1,7 @@
-import { Response } from 'express'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import { Posts as PostModel } from '../../models/posts/posts'
+import type { Response, Request } from 'express'
 
-interface IPostUpdateRequest extends IJWTUserType {
+interface IPostUpdateRequest extends Request {
    body: {
       postId: string
       postDescription: string
@@ -12,7 +11,7 @@ interface IPostUpdateRequest extends IJWTUserType {
 }
 
 export const updatePostController = async (request: IPostUpdateRequest, response: Response) => {
-   const userId = request.user?.userId
+   const userId = request.user.userId
    const { postId, modifiedImageLinks, newAddedImageLinks, postDescription } = request.body
    try {
       let mergedImages: string[] | null = []

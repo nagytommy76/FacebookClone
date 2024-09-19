@@ -3,15 +3,6 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { ACCESS_TOKEN_SECRET } from '../config/endpoints.config'
 
-export interface IJWTUserType extends Request {
-   user: {
-      userId: string
-      email: string
-      iat: number
-      exp: number
-   }
-}
-
 // Ez a middleware ellenőrzi,hogy van-e accessToken, ha nincs akkor lép működésbe az axios interceptor API route-ok esetében
 // Ha itt vagyunk tuti van REFRESH_TOKEN, mert a next.js middleware-ből ezt már ellenőrözm
 export const authenticateAccessTokenForApi = (req: Request, res: Response, next: NextFunction) => {
