@@ -1,9 +1,8 @@
-import type { Response } from 'express'
+import type { Response, Request } from 'express'
 import { Posts as PostModel } from '../../models/posts/posts'
 import BasePostController from './Base/basePost'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 
-interface IRemovePostRequest extends IJWTUserType {
+interface IRemovePostRequest extends Request {
    body: {
       postId: string
    }

@@ -1,8 +1,7 @@
-import { Response, Request } from 'express'
 import { Posts as PostModel } from '../../../models/posts/posts'
-import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
+import type { Response, Request } from 'express'
 
-interface ICommentRequest extends IJWTUserType {
+interface ICommentRequest extends Request {
    query: {
       postId: string
    }

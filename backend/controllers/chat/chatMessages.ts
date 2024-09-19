@@ -1,8 +1,7 @@
 import { ChatModel } from '../../models/chat/chatModel'
-import { Response } from 'express'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import type { Response, Request } from 'express'
 
-interface ISaveChatMsgType extends IJWTUserType {
+interface ISaveChatMsgType extends Request {
    body: {
       chatId: string
       chatMsg: string
@@ -39,7 +38,7 @@ export const saveChatMessageController = async (request: ISaveChatMsgType, respo
    }
 }
 
-interface IMessagesRead extends IJWTUserType {
+interface IMessagesRead extends Request {
    body: {
       currentChatId: string
    }

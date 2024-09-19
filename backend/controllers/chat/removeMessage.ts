@@ -1,8 +1,7 @@
 import { ChatModel } from '../../models/chat/chatModel'
-import { Response } from 'express'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import { Response, Request } from 'express'
 
-interface IDeleteMessageRequest extends IJWTUserType {
+interface IDeleteMessageRequest extends Request {
    body: {
       chatId: string
       messageId: string

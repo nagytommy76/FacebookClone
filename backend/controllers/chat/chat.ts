@@ -1,10 +1,9 @@
 import { ChatModel } from '../../models/chat/chatModel'
 import { Types } from 'mongoose'
-import { Response } from 'express'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import { aggregateMessageLabels } from './getChats'
+import type { Response, Request } from 'express'
 
-interface ICreateChatRequest extends IJWTUserType {
+interface ICreateChatRequest extends Request {
    body: {
       chatUserId: string
    }

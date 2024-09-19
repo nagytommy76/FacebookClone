@@ -1,8 +1,6 @@
-import { Response } from 'express'
 import { Types, PipelineStage } from 'mongoose'
-
 import { ChatModel } from '../../models/chat/chatModel'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import type { Response, Request } from 'express'
 
 const projectUserData = () => {
    return {
@@ -83,7 +81,7 @@ export const aggregateMessageLabels = async (loggedInUserId: Types.ObjectId, cha
    return foundChat
 }
 
-export const getChatMessageLabels = async (request: IJWTUserType, response: Response) => {
+export const getChatMessageLabels = async (request: Request, response: Response) => {
    const loggedInUserId = new Types.ObjectId(request.user?.userId)
    try {
       const foundChat = await aggregateMessageLabels(loggedInUserId)

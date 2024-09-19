@@ -1,8 +1,7 @@
 import { Response, Request } from 'express'
-import type { IJWTUserType } from '../../middlewares/accessTokenRefresh'
 import BasePostController from './Base/basePost'
 
-interface IGetUsersPosts extends IJWTUserType {
+interface IGetUsersPosts extends Request {
    query: {
       userId: string | undefined
    }

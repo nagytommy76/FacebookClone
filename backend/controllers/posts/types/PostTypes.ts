@@ -1,13 +1,13 @@
-import { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
+import { Request } from 'express'
 
 // Incoming request from Add post
-export interface IPostRequest extends IJWTUserType {
+export interface IPostRequest extends Request {
    body: {
       description: string
       createdAt: string
    }
 }
-export interface IPostImageRequest extends IJWTUserType {
+export interface IPostImageRequest extends Request {
    body: {
       postId: string
       postedPicturesPath?: string[]
@@ -18,19 +18,19 @@ export interface IPostImageRequest extends IJWTUserType {
 
 export type LikeTypes = 'isLike' | 'isLove' | 'isCare' | 'isHaha' | 'isWow' | 'isSad' | 'isAngry'
 
-export interface IPostLikeRequest extends IJWTUserType {
+export interface IPostLikeRequest extends Request {
    body: {
       reactionType: LikeTypes
       postId: string
    }
 }
-export interface IGetLikesRequest extends IJWTUserType {
+export interface IGetLikesRequest extends Request {
    body: {
       postId: string
       commentId: string
    }
 }
-export interface IGetAnswerLikesRequest extends IJWTUserType {
+export interface IGetAnswerLikesRequest extends Request {
    body: {
       postId: string
       commentId: string
@@ -38,14 +38,14 @@ export interface IGetAnswerLikesRequest extends IJWTUserType {
    }
 }
 
-export interface ICommentLikeRequest extends IJWTUserType {
+export interface ICommentLikeRequest extends Request {
    body: {
       reactionType: LikeTypes
       postId: string
       commentId: string
    }
 }
-export interface ICommentAnswerLikeRequest extends IJWTUserType {
+export interface ICommentAnswerLikeRequest extends Request {
    body: {
       postId: string
       commentId: string
@@ -56,14 +56,14 @@ export interface ICommentAnswerLikeRequest extends IJWTUserType {
 
 // TÖRLÉS
 
-export interface ICommentRemoveLikeRequest extends IJWTUserType {
+export interface ICommentRemoveLikeRequest extends Request {
    body: {
       likeIdToDelete: string
       postId: string
       commentId: string
    }
 }
-export interface IAnswerRemoveLikeRequest extends IJWTUserType {
+export interface IAnswerRemoveLikeRequest extends Request {
    body: {
       answerId: string
       postId: string
@@ -72,7 +72,7 @@ export interface IAnswerRemoveLikeRequest extends IJWTUserType {
    }
 }
 
-export interface IPostRemoveLikeRequest extends IJWTUserType {
+export interface IPostRemoveLikeRequest extends Request {
    body: {
       postId: string
    }

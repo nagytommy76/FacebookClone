@@ -1,12 +1,12 @@
-import { IJWTUserType } from '../../middlewares/accessTokenRefresh'
+import { Request } from 'express'
 
-export interface IMakeFriends extends IJWTUserType {
+export interface IMakeFriends extends Request {
    body: {
       friendId: string
       connectedFriendId: string
    }
 }
-export interface IRemoveFriend extends IJWTUserType {
+export interface IRemoveFriend extends Request {
    body: {
       friendId: string
    }

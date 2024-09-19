@@ -1,7 +1,7 @@
-import type { IJWTUserType } from '../../../middlewares/accessTokenRefresh'
 import type { LikeTypes } from '../../posts/types/PostTypes'
+import type { Request } from 'express'
 
-export interface ILikeChatMsgRequest extends IJWTUserType {
+export interface ILikeChatMsgRequest extends Request {
    body: {
       messageId: string
       chatId: string
@@ -9,14 +9,14 @@ export interface ILikeChatMsgRequest extends IJWTUserType {
    }
 }
 
-export interface IMessageLikeCountRequest extends IJWTUserType {
+export interface IMessageLikeCountRequest extends Request {
    query: {
       messageId: string
       chatId: string
    }
 }
 
-export interface ILikeDeleteRequest extends IJWTUserType {
+export interface ILikeDeleteRequest extends Request {
    body: {
       messageId: string
       chatId: string
@@ -24,7 +24,7 @@ export interface ILikeDeleteRequest extends IJWTUserType {
    }
 }
 
-export interface IDeletChatRequest extends IJWTUserType {
+export interface IDeletChatRequest extends Request {
    body: {
       chatId: string
    }
