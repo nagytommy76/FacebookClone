@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useAppDispatch } from '@/reduxStore/store'
-import { setOnlineStatus, setOnlineFriends } from '@/reduxStore/slices/ChatSlice'
+import { setOnlineFriends } from '@/reduxStore/slices/ChatSlice'
 import { setHeadText, setImageSrc, setIsInfoSnackOpen } from '@/reduxStore/slices/InfoSnack'
 import { socket } from '@/src/utils/socketIo'
 import type { IRawOnlineFriends } from '@/types/FriendTypes'
@@ -28,12 +28,8 @@ const useOnlineFriend = () => {
          }
       )
 
-      socket.on('offline:friend', (args: { userId: string }) => {
-         dispatch(setOnlineStatus({ userId: args.userId, isActive: false }))
-      })
       return () => {
          socket.off('online:friends')
-         socket.off('offline:friends')
       }
    }, [dispatch])
    return null
