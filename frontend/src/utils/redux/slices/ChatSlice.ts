@@ -83,9 +83,14 @@ export const ChatSlice = createSlice({
             state.isOnlineFriends = onlineFriends
          }
       },
-      setOnlineStatus: (state, action: PayloadAction<{ userId: string; isActive: boolean }>) => {
-         if (state.isOnlineFriends)
+      setOnlineStatus: (
+         state,
+         action: PayloadAction<{ userId: string; isActive: boolean; lastSeen: number }>
+      ) => {
+         if (state.isOnlineFriends) {
+            state.isOnlineFriends[action.payload.userId].lastSeen = action.payload.lastSeen
             state.isOnlineFriends[action.payload.userId].isActive = action.payload.isActive
+         }
       },
       incrementTotalUnreadMsgCount: (
          state,
