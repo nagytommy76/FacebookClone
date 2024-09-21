@@ -11,25 +11,36 @@ import DeleteLikeChatController from '../../controllers/chat/deleteLike'
 const LikeController = new LikeChatController()
 const DeleteController = new DeleteLikeChatController()
 
-const router = Router()
+export default class ChatApi {
+   public router
 
-router.get('/get-all-chats', authenticateAccessTokenForApi, getChatMessageLabels)
-router.get(
-   '/get-message-like-count',
-   authenticateAccessTokenForApi,
-   LikeController.getMsgReactionByTypeAndCountController
-)
+   constructor() {
+      this.router = Router()
+      this.configureRoutes()
+   }
 
-router.post('/add-chat-msg', authenticateAccessTokenForApi, saveChatMessageController)
-router.post('/create-chat', authenticateAccessTokenForApi, createNewChatController)
-// Like
-router.post('/like-message', authenticateAccessTokenForApi, LikeController.likeMessageController)
+   public configureRoutes() {
+      this.router.get('/get-all-chats', authenticateAccessTokenForApi, getChatMessageLabels)
+      this.router.get(
+         '/get-message-like-count',
+         authenticateAccessTokenForApi,
+         LikeController.getMsgReactionByTypeAndCountController
+      )
 
-router.put('/set-read-messages', authenticateAccessTokenForApi, setMessagesRead)
+      this.router.post('/add-chat-msg', authenticateAccessTokenForApi, saveChatMessageController)
+      this.router.post('/create-chat', authenticateAccessTokenForApi, createNewChatController)
+      // Like
+      this.router.post('/like-message', authenticateAccessTokenForApi, LikeController.likeMessageController)
 
-router.patch('/delete-message', authenticateAccessTokenForApi, deleteMessageController)
+      this.router.put('/set-read-messages', authenticateAccessTokenForApi, setMessagesRead)
 
-router.delete('/delete-message-like', authenticateAccessTokenForApi, DeleteController.deleteLikeController)
-router.delete('/delete-chat', authenticateAccessTokenForApi, deleteChatController)
+      this.router.patch('/delete-message', authenticateAccessTokenForApi, deleteMessageController)
 
-module.exports = router
+      this.router.delete(
+         '/delete-message-like',
+         authenticateAccessTokenForApi,
+         DeleteController.deleteLikeController
+      )
+      this.router.delete('/delete-chat', authenticateAccessTokenForApi, deleteChatController)
+   }
+}

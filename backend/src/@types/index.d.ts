@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import type { IOnlineFriends, IOnlineFriendsRedis } from '../../config/socketIo'
+import type { IOnlineFriends, IOnlineFriendsRedis } from '../../config/socketIo.config'
 import type { Server } from 'socket.io'
 import type { RedisClientType } from 'redis'
 
