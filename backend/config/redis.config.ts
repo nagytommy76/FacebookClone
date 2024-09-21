@@ -44,6 +44,7 @@ class RedisService {
       return await this.client.hSet(`activeUsers:${userId}`, {
          isActive: isActive ? 1 : 0,
          socketId: newSocketId,
+         lastSeen: Date.now(),
       })
    }
 

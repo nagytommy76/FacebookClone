@@ -90,13 +90,11 @@ export default class SocketService {
             socket.emit('friend:checkOnlineFriendsResponse', allOnlineFriends)
          })
 
-         socket.on('disconnect', () => {
-            console.log('User disconnected:', socket.id)
+         socket.on('disconnect', async () => {
+            await redisService.setActiveUserById(socket.userId, socket.id, false)
+            const userData = await redisService.getUserById(socket.userId)
+            socket.broadcast.emit('offline:friend', { userData, userId: socket.userId })
          })
       })
-   }
-
-   public async publishToRedis(channel: string, message: string) {
-      await redisService.client.publish(channel, message)
    }
 }
