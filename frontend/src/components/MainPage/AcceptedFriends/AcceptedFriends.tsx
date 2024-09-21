@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic'
+import { useAppSelector } from '@/reduxStore/store'
+
 import useGetAccepted from './Hooks/useGetAccepted'
 import useChatModal from '../../../hooks/useChatModal'
-import { useAppSelector } from '@/reduxStore/store'
-import moment from 'moment'
 
 import { AcceptedFriendsStyles, FriendMenuItemStyle, FriendNameStyle } from './styles'
 import Typography from '@mui/material/Typography'
-import Tooltip from '@mui/material/Tooltip'
 
+import TooltipWrapper from './TooltipWrapper'
 const ChatAvatar = dynamic(() => import('@/Base/ChatAvatar/ChatAvatar'))
 
 const AcceptedFriends = () => {
@@ -21,9 +21,8 @@ const AcceptedFriends = () => {
             Ismerősök
          </Typography>
          {myFriends.map((friend) => (
-            <Tooltip
-               placement='left'
-               title={isOnlineFriends && moment(isOnlineFriends[friend._id]?.lastSeen).fromNow()}
+            <TooltipWrapper
+               lastSeen={(isOnlineFriends && isOnlineFriends[friend._id]?.lastSeen) || 0}
                key={friend._id}
             >
                <FriendMenuItemStyle
@@ -32,7 +31,6 @@ const AcceptedFriends = () => {
                         userId: friend._id,
                      })
                   }
-                  key={friend._id}
                >
                   <ChatAvatar
                      fullName={`${friend.firstName} ${friend.sureName}`}
@@ -45,7 +43,7 @@ const AcceptedFriends = () => {
                   />
                   <FriendNameStyle variant='body1'>{`${friend.firstName} ${friend.sureName}`}</FriendNameStyle>
                </FriendMenuItemStyle>
-            </Tooltip>
+            </TooltipWrapper>
          ))}
       </AcceptedFriendsStyles>
    )
