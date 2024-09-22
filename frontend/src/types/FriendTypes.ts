@@ -14,3 +14,7 @@ export interface IOnlineFriendsRedis {
 export interface IIndexedOnlineFriendsRedis {
    [x: string]: IOnlineFriendsRedis
 }
+
+export interface IIndexedRawOnlineFriendsRedis {
+   [x: string]: IRawOnlineFriends
+}

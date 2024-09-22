@@ -45,7 +45,7 @@ const NotificationsMenu: React.FC<{
                                  height={65}
                                  width={65}
                               />
-                              <Link href={`#${notification.data?.postId}`}>
+                              <Link href={`#${notification.data?.id}`}>
                                  <StyledTextArea
                                     onClick={() =>
                                        handleSetInactiveAndClose(notification._id, notification.isRead)
