@@ -42,7 +42,7 @@ moment.updateLocale('hu', {
 //    },
 // })
 
-const useMoment = (answeredAt: string) => {
+const useMoment = (answeredAt: string | number) => {
    const [tinmeFromNow, setTimeFromNow] = useState(moment(answeredAt).fromNow(true))
 
    useEffect(() => {
