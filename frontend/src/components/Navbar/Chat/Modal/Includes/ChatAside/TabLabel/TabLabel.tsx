@@ -19,7 +19,11 @@ const TabLabel: React.FC<{
          <ChatAvatar
             fullName={`${participant.sureName} ${participant.firstName}`}
             selectedProfilePicturePath={participant.selectedProfilePicture[0].path}
-            isRead={isOnlineFriends && isOnlineFriends[participant._id] ? false : true}
+            isRead={
+               isOnlineFriends !== null && isOnlineFriends[participant._id] !== undefined
+                  ? !isOnlineFriends[participant._id].isActive
+                  : true
+            }
             width={window.innerWidth >= 500 ? 60 : 40}
             height={window.innerWidth >= 500 ? 60 : 40}
          />
