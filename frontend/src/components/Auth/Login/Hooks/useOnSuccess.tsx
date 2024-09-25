@@ -2,6 +2,7 @@ import { useAppDispatch } from '@/reduxStore/store'
 import { setAccessToken } from '@/reduxStore/slices/TokenSlice'
 import { useRouter } from 'next/navigation'
 import { setUserName, setIsLoggedIn, setUserId } from '@/reduxStore/slices/AuthSlice'
+import { socket } from '@/utils/socketIo'
 
 import type { AxiosResponse } from 'axios'
 import type { ILoginData } from '../../Register/Includes/Types'
@@ -19,6 +20,7 @@ const useOnSuccess = () => {
       dispatch(setUserName(data.data.userName))
       dispatch(setUserId(data.data.userId))
       dispatch(setIsLoggedIn(true))
+      socket.emit('login', { userId: data.data.userId })
       router.push('/')
    }
    return onSuccessFn
