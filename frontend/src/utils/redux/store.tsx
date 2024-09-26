@@ -8,7 +8,6 @@ import { storage } from './storage'
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
 import AuthSlice from './slices/AuthSlice'
-import TokenSlice from './slices/TokenSlice'
 import ThemeSlice from './slices/ThemeSlice'
 import ChatSlice from './slices/ChatSlice'
 import InfoSnack from './slices/InfoSnack'
@@ -16,7 +15,6 @@ import InfoSnack from './slices/InfoSnack'
 export const makeStore = () =>
    configureStore({
       reducer: {
-         token: TokenSlice,
          chat: ChatSlice,
          infoSnack: InfoSnack,
          auth: persistReducer({ key: 'Auth', storage }, AuthSlice),
