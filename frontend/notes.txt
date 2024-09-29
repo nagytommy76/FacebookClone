@@ -50,6 +50,14 @@ InfoSnackbar:
  - Online van egy barátod
 
 
+A fő oldalon ha elmegyek egy másik url-re pl friends és visszatérek, nem jelennek meg az elérhető baRÁTOK
+illetve mindig újra töltöm a postokat is. Ezt meg kéne oldani server oldalon (next.js) FETCH-el.
+
+VAGY átdolgozni, hogy a Next.js serveren lekérni MongoDB-ből azadatokat (SSR)
+
+
+
+
 CHAT:
 Lépések:
  - Amikor rákattintok egy ismerősre az oldalsávon (Friends) akkor küldjön egy requestet -> hozzáadni a chatDB-hez a résztvevőket
