@@ -36,3 +36,5 @@ yarn-error.log*
 next-env.d.ts
 
 *.mp3
+.env
+.gitignore
