@@ -1,23 +1,7 @@
-Az accessToken-t majd az axios interceptornál viszgálom, azzal az api route-ot védem
-
-Megoldani, ha a felhasználónak a refreshTokenje lejárt és átkerül a login page-re, akkor a reduxból is logoutolni kell!!!
-
-Képfeltöltést megondani
-https://www.youtube.com/watch?v=YOAeBSCkArA&ab_channel=PedroTech
-
-
 Megoldani a post hozzáadásánál, hogy amíg töltődnek a képek ne lehessen újra rányomni a küld gombra, ill:
 Amikor alküldtem a postot, törlődjön az addPost felület, vagyis ne az előző "session" lgyen ott
 
-
 a WorkSchoolnál Dialogba tenni a formot, iskolák
-
-
-Kell most már az axios interceptor, hogy ellenőrizzem az accessToken meglétét/validálását
-
-
-
-A NAVBAR-nál redux-ot? használni,h ogy a kép változzon mikor a profilképet megváltoztatom
 
 Egy BUG: A meglévő comment-nél ha hozzáadok egy comment answert- az nem jelenik meg, még refresh-nél sem. MEGOLDANI!!!!!!
 
@@ -54,8 +38,6 @@ A fő oldalon ha elmegyek egy másik url-re pl friends és visszatérek, nem jel
 illetve mindig újra töltöm a postokat is. Ezt meg kéne oldani server oldalon (next.js) FETCH-el.
 
 VAGY átdolgozni, hogy a Next.js serveren lekérni MongoDB-ből azadatokat (SSR)
-
-
 
 
 CHAT:

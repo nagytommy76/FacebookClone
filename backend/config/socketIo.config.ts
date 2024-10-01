@@ -44,7 +44,6 @@ export default class SocketService {
 
          socket.on('chat:createChat', (args) => {
             let foundUserSocketId = this.onlineFriends.find((user) => user.userId === args.toUserId)?.socketId
-            // socket.broadcast.to(args.createdChatId).emit('chat:createChatResponse', args)
             if (foundUserSocketId)
                socket.broadcast.to(foundUserSocketId).emit('chat:createChatResponse', args)
          })
