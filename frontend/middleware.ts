@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
       redirectResponse.cookies.delete('refreshToken')
       return redirectResponse
    }
-   NextResponse.next()
+   return NextResponse.next()
 }
 
 // Itt tudom a route-okat hozzáadni -> mire legyen érvényes
