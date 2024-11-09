@@ -11,7 +11,7 @@ export const authenticateAccessTokenForApi = (req: Request, res: Response, next:
 
    if (!accessToken) return res.status(404).json({ errorMessage: 'accessToken not found' })
    jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err: any, decoded: any) => {
-      if (err) return res.status(403).json({ errorMessage: 'accessToken token expired' })
+      if (err) return res.status(403).json({ errorMessage: 'accessToken expired' })
       if (!decoded) return res.status(404).json({ errorMessage: 'user not found' })
       req.user = decoded
       next()
