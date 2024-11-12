@@ -1,8 +1,5 @@
 'use client'
 import dynamic from 'next/dynamic'
-import useGetAllPosts from './Hooks/useGetAllPosts'
-import useHandlePosts from './Hooks/useHandlePosts'
-
 import PostContextProvider from '../../MainPage/Context/PostContextProvider'
 import type { IPost } from '@/types/PostTypes'
 
@@ -18,15 +15,18 @@ const PostHeader = dynamic(() => import('../../Posts/SinglePost/Includes/PostHea
 })
 const EmptyPost = dynamic(() => import('./Includes/EmptyPost'))
 
-const PostsBase: React.FC<{ isGetUsersPosts?: boolean }> = ({ isGetUsersPosts = false }) => {
-   const { allPosts, setAllPosts, addNewPost, removeSinglePostById } = useHandlePosts()
-   const { isLoading } = useGetAllPosts(setAllPosts, isGetUsersPosts)
+const PostsBase: React.FC<{
+   posts?: IPost[]
+   isLoading: boolean
+   addNewPost: (newPost: IPost) => void
+   removeSinglePostById: (toDeletePostId: string) => void
+}> = ({ posts, isLoading = true, addNewPost, removeSinglePostById }) => {
    return (
       <>
          <AddPost addNewPost={addNewPost} />
          {!isLoading ? (
-            allPosts.length !== 0 ? (
-               allPosts.map((post: IPost) => (
+            posts !== undefined ? (
+               posts.map((post: IPost) => (
                   <PostContextProvider
                      removeSinglePostById={removeSinglePostById}
                      key={post._id}
