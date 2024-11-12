@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic'
-
-const AllPostsComponent = dynamic(() => import('@/Base/PostsBase/PostsBase'))
+import MainPage from '@/components/MainPage/MainPage'
 const AcceptedFriends = dynamic(() => import('@/components/MainPage/AcceptedFriends/AcceptedFriends'))
 
 const HomePage = async () => {
@@ -19,7 +18,7 @@ const HomePage = async () => {
          }}
       >
          <div style={{ maxWidth: '800px' }}>
-            <AllPostsComponent />
+            <MainPage />
          </div>
          <AcceptedFriends />
       </section>
