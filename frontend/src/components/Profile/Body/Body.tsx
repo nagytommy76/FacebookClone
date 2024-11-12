@@ -2,19 +2,17 @@ import { useContext } from 'react'
 import { ProfileContext } from '../Context/ProfileContextProvider'
 import dynamic from 'next/dynamic'
 
-import SinglePost from '@/Skeletons/SinglePost/SinglePost'
 import TabPanel from './Includes/TabPanel'
+import UserPosts from './Posts/UserPosts'
+
 const AboutMeComponent = dynamic(() => import('./AboutMe/AboutMe'), { loading: () => <h2>Töltés...</h2> })
-const PostsBase = dynamic(() => import('@/Base/PostsBase/PostsBase'), {
-   loading: () => <SinglePost />,
-})
 
 const Body = () => {
    const tabValue = useContext(ProfileContext).tabValue
    return (
       <>
          <TabPanel value={tabValue} index={0}>
-            <PostsBase isGetUsersPosts={true} />
+            <UserPosts />
          </TabPanel>
          <TabPanel value={tabValue} index={1}>
             <AboutMeComponent />
