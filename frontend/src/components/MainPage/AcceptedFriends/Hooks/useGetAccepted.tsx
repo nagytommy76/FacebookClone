@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
 import { useAppDispatch } from '@/reduxStore/store'
@@ -27,7 +27,10 @@ const useGetAccepted = () => {
    const { data } = useQuery({
       queryKey: ['getAcceptedFriends'],
       queryFn,
-      onSuccess(data) {
+   })
+
+   useEffect(() => {
+      if (data) {
          Object.entries(data.data.allOnlineFriends).map(([key, value]) => {
             dispatch(
                setOnlineFriends({
@@ -39,8 +42,8 @@ const useGetAccepted = () => {
             )
          })
          setMyFriends(data.data.myFoundFriendsData)
-      },
-   })
+      }
+   }, [data, dispatch])
 
    return myFriends
 }
