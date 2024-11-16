@@ -1,10 +1,10 @@
-import { cookies, headers } from 'next/headers'
+import { cookies } from 'next/headers'
 
 const DEVELOPMENT_API_URL = 'http://localhost:5050/api'
 
 export default async function fetchSetup(
    endpoint: string,
-   method: string = 'GET',
+   method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
    options?: RequestInit
 ): Promise<Response> {
    const cookie = cookies()
@@ -31,20 +31,34 @@ export default async function fetchSetup(
 
    try {
       const response = await fetch(`${DEVELOPMENT_API_URL}${endpoint}`, fetchOptions)
-      const contentType = response.headers.get('Content-Type') || ''
-      //   console.log(response)
-      console.log(`${DEVELOPMENT_API_URL}${endpoint}`)
-      console.log(contentType)
-      if (response.ok) return response
+      const responseData = await response.json()
 
-      if (contentType.includes('application/json') && response.status === 404) {
-         console.log('404 error: ', response.url)
-         const responseJson = await response.json()
-         //  console.log(responseJson)
+      // if (response.ok) return response
+      console.log('RESPONSE STATUS: ', responseData)
+      if (response.status === 403 && responseData.errorMessage === 'accessToken expired') {
+         const response = await fetch('http://localhost:5050/api/auth/generate-access-token', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+               Cookie: `accessToken=${cookie.get('accessToken')?.value};refreshToken=${
+                  cookie.get('refreshToken')?.value
+               }`,
+            },
+            credentials: 'include',
+         })
+
+         console.log(response.status)
       }
-      return response
-      //   throw new Error(response.statusText)
+
+      // if (response.status === 404 && response.errorMessage === 'refreshToken not found') {
+      //    // console.log('FDSFDSDSFSD')
+      //    return await Promise.reject('refreshToken not found')
+      // }
+      if (response.ok) return await response.json()
+
+      // return await response.json()
    } catch (error) {
+      console.log('ERROR MIKOR LESZ?')
       throw error
    }
 }
