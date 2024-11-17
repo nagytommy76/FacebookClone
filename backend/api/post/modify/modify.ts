@@ -6,13 +6,24 @@ import {
 } from '../../../controllers/posts/updateComment'
 import { updatePostController } from '../../../controllers/posts/updatePost'
 
-const router = Router()
+export default class ModifyPostApi {
+   public router
 
-// POSZT
-router.put('/update-post', authenticateAccessTokenForApi, updatePostController)
+   constructor() {
+      this.router = Router()
+      this.configureRoutes()
+   }
 
-// Módosítás - KOMMENT
-router.put('/update-post-comment', authenticateAccessTokenForApi, updateCommentController)
-router.put('/update-post-comment-answer', authenticateAccessTokenForApi, updateCommentAnswerController)
+   configureRoutes() {
+      // POSZT
+      this.router.put('/update-post', authenticateAccessTokenForApi, updatePostController)
 
-module.exports = router
+      // Módosítás - KOMMENT
+      this.router.put('/update-post-comment', authenticateAccessTokenForApi, updateCommentController)
+      this.router.put(
+         '/update-post-comment-answer',
+         authenticateAccessTokenForApi,
+         updateCommentAnswerController
+      )
+   }
+}

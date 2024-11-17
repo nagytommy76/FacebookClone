@@ -20,28 +20,39 @@ import {
    removeSingleWorkplace,
 } from '../../controllers/users/userDetails/userProfile'
 
-const router = Router()
+export default class UserDataApi {
+   public router
+   constructor() {
+      this.router = Router()
+      this.configureRoutes()
+   }
 
-router.get('/notifications', authenticateAccessTokenForApi, getNotifications)
-router.patch('/set-active', authenticateAccessTokenForApi, setActiveNotifications)
-router.delete('/notification', authenticateAccessTokenForApi, removeUsersNotification)
+   public configureRoutes() {
+      this.router.get('/notifications', authenticateAccessTokenForApi, getNotifications)
+      this.router.patch('/set-active', authenticateAccessTokenForApi, setActiveNotifications)
+      this.router.delete('/notification', authenticateAccessTokenForApi, removeUsersNotification)
 
-router.get('/get-details', authenticateAccessTokenForApi, getUserDetailsWithOwnPosts)
-router.get('/get-profile-pictures', authenticateAccessTokenForApi, getCurrentProfilePictures)
-router.get('/get-current-picture', authenticateAccessTokenForApi, getCurrentSelectedProfileImage)
+      this.router.get('/get-details', authenticateAccessTokenForApi, getUserDetailsWithOwnPosts)
+      this.router.get('/get-profile-pictures', authenticateAccessTokenForApi, getCurrentProfilePictures)
+      this.router.get('/get-current-picture', authenticateAccessTokenForApi, getCurrentSelectedProfileImage)
 
-router.post('/save-profile-picture', authenticateAccessTokenForApi, saveUserProfilePicture)
-router.put('/edit-profile-picture', authenticateAccessTokenForApi, editSelectedProfilePicture)
+      this.router.post('/save-profile-picture', authenticateAccessTokenForApi, saveUserProfilePicture)
+      this.router.put('/edit-profile-picture', authenticateAccessTokenForApi, editSelectedProfilePicture)
 
-// Profile Work/studies etc..
-router.post(
-   '/save-workplace',
-   ValidateAddWorkplace,
-   authenticateAccessTokenForApi,
-   authenticateUserCredentials,
-   addNewWorkplaceController
-)
+      // Profile Work/studies etc..
+      this.router.post(
+         '/save-workplace',
+         ValidateAddWorkplace,
+         authenticateAccessTokenForApi,
+         authenticateUserCredentials,
+         addNewWorkplaceController
+      )
 
-router.put('/remove-work', authenticateAccessTokenForApi, authenticateUserCredentials, removeSingleWorkplace)
-
-module.exports = router
+      this.router.put(
+         '/remove-work',
+         authenticateAccessTokenForApi,
+         authenticateUserCredentials,
+         removeSingleWorkplace
+      )
+   }
+}
