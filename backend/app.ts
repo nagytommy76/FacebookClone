@@ -18,6 +18,9 @@ import { Server } from 'socket.io'
 import ChatApi from './api/chat/chat'
 import FriendsApi from './api/friends/friends'
 import PostApi from './api/post/post'
+import ModifyPostApi from './api/post/modify/modify'
+import UserDataApi from './api/user/userData'
+import UserApi from './api/user/user'
 
 class App {
    public app: Application
@@ -71,19 +74,19 @@ class App {
    }
 
    private configureAPIroutes(): void {
-      this.app.use('/api/user', require('./api/user/userData'))
-      this.app.use('/api/auth', require('./api/user/user'))
+      this.app.use('/api/user', new UserDataApi().router)
+      this.app.use('/api/auth', new UserApi().router)
       this.app.use('/api/friends', new FriendsApi(this.socketController).router)
       this.app.use('/api/chat', new ChatApi().router)
       this.app.use('/api/post', new PostApi(this.socketController).router)
-      this.app.use('/api/post/edit', require('./api/post/modify/modify'))
+      this.app.use('/api/post/edit', new ModifyPostApi().router)
    }
 
    private configureSockets(): void {
       this.socketController.initializeSocketHandlers()
    }
 
-   public async start(port: number = 5050): Promise<void> {
+   public async start(port: string | number): Promise<void> {
       await redisService.connect() // Connect to Redis before starting the server
       await this.connectDB()
       this.app.listen(port, () => {
