@@ -15,8 +15,8 @@ class RedisService {
       this.client = createClient({
          password: REDIS_PASSWORD,
          socket: {
-            host: 'redis-13848.c250.eu-central-1-1.ec2.redns.redis-cloud.com',
-            port: 13848,
+            host: 'redis-11597.c265.us-east-1-2.ec2.redns.redis-cloud.com',
+            port: 11597,
          },
       }).on('error', (err) => console.log('Redis Client Error', err))
       this.subClient = this.client.duplicate()
