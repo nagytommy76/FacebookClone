@@ -20,7 +20,6 @@ const useLogout = () => {
       try {
          socket.disconnect()
          const response = await axios.post('/auth/logout')
-         console.log(response.status)
          if (response.status === 200) {
             logoutLogic()
          }
