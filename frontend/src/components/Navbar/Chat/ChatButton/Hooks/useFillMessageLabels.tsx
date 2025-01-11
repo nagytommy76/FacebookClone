@@ -13,10 +13,10 @@ const useFillMessageLabels = () => {
    const queryFunction = async () => {
       return (await axios.get('/chat/get-all-chats')) as AxiosResponse<{ foundChat: IChat[] }>
    }
-
-   const {} = useQuery({
-      queryKey: ['getMessageLabels', isLoggedIn, userId],
+   useQuery({
+      queryKey: ['getMessageLabels', userId],
       queryFn: queryFunction,
+      enabled: isLoggedIn,
       onSuccess(data) {
          const foundChat = data.data.foundChat
          if (foundChat.length === 0) return null
