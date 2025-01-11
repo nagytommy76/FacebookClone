@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/reduxStore/store'
 import { useRouter } from 'next/navigation'
-import { setUserName, setIsLoggedIn, setUserId } from '@/reduxStore/slices/AuthSlice'
+import { setUserName, setIsLoggedIn, setUserId, setCurrentImage } from '@/reduxStore/slices/AuthSlice'
 import { socket } from '@/utils/socketIo'
 
 import type { AxiosResponse } from 'axios'
@@ -17,6 +17,7 @@ const useOnSuccess = () => {
       // 2. majd átirányítom a usert a feeds oldalra
       dispatch(setUserName(data.data.userName))
       dispatch(setUserId(data.data.userId))
+      dispatch(setCurrentImage(data.data.currentImage))
       dispatch(setIsLoggedIn(true))
       socket.emit('login', { userId: data.data.userId })
       router.push('/')

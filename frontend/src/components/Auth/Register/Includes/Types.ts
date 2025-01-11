@@ -1,3 +1,5 @@
+import { IProfilePicture } from '@/src/types/PostTypes'
+
 export interface IDateOfBirth {
    year: string
    month: string
@@ -27,4 +29,5 @@ export interface ILoginData {
    isPasswordCorrect: boolean
    userId: string
    userName: string
+   currentImage: IProfilePicture
 }
