@@ -13,7 +13,10 @@ export function UserStatics(
       return await hash(nativePass, 10)
    }
    UserSchema.statics.comparePassword = async function (email: string, plainPass: string) {
-      const foundUser = await this.findOne({ email })
+      const foundUser = await this.findOne({
+         email,
+         'userDetails.profilePicturePath': { $elemMatch: { isSelected: { $eq: true } } },
+      }).select(['_id', 'firstName', 'sureName', 'email', 'password', 'userDetails.profilePicturePath.$'])
       if (!foundUser) throw new Error('Nincs regisztrálva felhasználó ilyen email címmel!')
       const isPasswordCorrect = await compare(plainPass, foundUser.password)
       return { isPasswordCorrect, foundUser }

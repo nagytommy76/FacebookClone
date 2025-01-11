@@ -33,6 +33,7 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
             accessToken,
             userId: foundUser._id,
             userName: `${foundUser.firstName} ${foundUser.sureName}`,
+            currentImage: foundUser.userDetails.profilePicturePath[0],
          })
    } catch (error) {
       res.status(500).json(error)
