@@ -64,7 +64,7 @@ const AxiosSetupProvider: React.FC<{ children: React.ReactElement }> = ({ childr
             return await Promise.reject(error)
          }
       )
-   }, [])
+   }, [logout])
 
    return children
 }
