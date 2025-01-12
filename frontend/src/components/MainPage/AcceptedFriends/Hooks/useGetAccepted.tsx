@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosResponse, axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
-import { useAppDispatch } from '@/reduxStore/store'
+import { useAppDispatch, useAppSelector } from '@/reduxStore/store'
 import { setOnlineFriends } from '@/reduxStore/slices/ChatSlice'
 
 import type { IProfilePicture } from '@/src/types/PostTypes'
@@ -16,6 +16,7 @@ interface IFriendResponse {
 
 const useGetAccepted = () => {
    const dispatch = useAppDispatch()
+   const { userId, isLoggedIn } = useAppSelector((state) => state.auth)
    const [myFriends, setMyFriends] = useState<IFriendResponse[]>([])
    const queryFn = async () => {
       return (await axios.get('/friends/get-accepted-friends')) as AxiosResponse<{
@@ -25,7 +26,8 @@ const useGetAccepted = () => {
    }
 
    const { data } = useQuery({
-      queryKey: ['getAcceptedFriends'],
+      queryKey: ['getAcceptedFriends', userId],
+      enabled: isLoggedIn,
       queryFn,
    })
 
