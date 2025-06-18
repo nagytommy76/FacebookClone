@@ -55,6 +55,7 @@ class App {
          const connection = await mongoose.connect(DB_CONNECTION)
          console.log(`MongoDB connected: ${connection.connection.host}`)
       } catch (error) {
+         console.log(error)
          process.exit(1)
       }
    }
