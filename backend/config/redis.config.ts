@@ -1,5 +1,5 @@
 import { createClient } from 'redis'
-import { REDIS_PASSWORD } from './endpoints.config'
+import { REDIS_PASSWORD, REDIS_HOST, REDIS_PORT } from './endpoints.config'
 
 interface IOnlineFriendsRedis {
    userId: string
@@ -7,7 +7,6 @@ interface IOnlineFriendsRedis {
    isActive: number
    lastSeen: number
 }
-
 class RedisService {
    public client
    public subClient
@@ -15,8 +14,8 @@ class RedisService {
       this.client = createClient({
          password: REDIS_PASSWORD,
          socket: {
-            host: 'redis-11597.c265.us-east-1-2.ec2.redns.redis-cloud.com',
-            port: 11597,
+            host: REDIS_HOST,
+            port: Number(REDIS_PORT),
          },
       }).on('error', (err) => console.log('Redis Client Error', err))
       this.subClient = this.client.duplicate()
