@@ -6,7 +6,7 @@
    "scripts": {
       "production": "node server.ts",
       "start": "nodemon server.ts",
-      "dev": "nodemon server.ts -r tsconfig-paths/register server.ts",
+      "dev": "nodemon -r tsconfig-paths/register server.ts",
       "build": "tsc -p ."
    },
    "dependencies": {
@@ -35,7 +35,9 @@
       "@types/morgan": "^1.9.4",
       "@types/ms": "^0.7.31",
       "@types/node": "^18.11.18",
+      "nodemon": "^3.1.10",
+      "ts-node": "^10.9.2",
       "tsconfig-paths": "^4.2.0",
-      "typescript": "^5.6.2"
+      "typescript": "^5.8.3"
    }
 }
