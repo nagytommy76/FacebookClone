@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { authenticateAccessTokenForApi } from '../../middlewares/accessTokenRefresh'
 
-import { getUsers, getAcceptedUsers } from '../../controllers/friends/getFriends'
+import { getUsers, getAcceptedUsers, getUsersFriends } from '../../controllers/friends/getFriends'
 import { makeFriendshipController } from '../../controllers/friends/friends'
 import { confirmFriendshipController } from '../../controllers/friends/confirmFriend'
 import { removeFriendController } from '../../controllers/friends/removeFriend'
@@ -19,6 +19,7 @@ export default class FriendsApi {
 
    public configureRoutes() {
       this.router.get('/get-friends', getUsers)
+      this.router.get('/get-users-friends', authenticateAccessTokenForApi, getUsersFriends)
 
       this.router.get('/get-accepted-friends', authenticateAccessTokenForApi, (request, response) =>
          getAcceptedUsers(request, response, this.io)
