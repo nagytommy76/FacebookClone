@@ -7,7 +7,13 @@ export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest
    const userId = request.query.userId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
-      const foundUserWithPosts = await UserModel.findById(userId)
+      const foundUserWithPosts = await UserModel.findById(userId).select([
+         'userDetails',
+         'sureName',
+         'firstName',
+         'email',
+         'posts',
+      ])
       return response.status(200).json(foundUserWithPosts)
    } catch (error) {
       console.log(error)
