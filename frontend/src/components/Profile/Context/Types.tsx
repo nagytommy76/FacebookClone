@@ -1,7 +1,16 @@
-import type { IUserTypes } from '@/types/AuthTypes'
+import type { IUserDetails } from '@/types/AuthTypes'
 import type { IPost } from '@/types/PostTypes'
 
 type UserDataActions = 'SET_INITIAL_USER_DATA' | 'SET_SELECTED_IMG' | 'ADD_WORKPLACE' | 'REMOVE_SINGLEWORK'
+
+interface IUserContextType {
+   _id: string
+   userDetails: IUserDetails
+   email: string
+   firstName: string
+   sureName: string
+   posts: string[]
+}
 
 export interface IBaseListAction {
    type: UserDataActions
@@ -9,21 +18,16 @@ export interface IBaseListAction {
 }
 
 export interface InitialState {
-   initialUserDataState: IUserTypes
+   initialUserDataState: IUserContextType
    usersPosts: IPost[]
 }
 
-export const initialUserDataState: IUserTypes = {
+export const initialUserDataState: IUserContextType = {
    _id: '',
-   createdAt: 0,
    email: '',
    firstName: '',
-   friends: [{ userId: '' }],
-   isEmailConfirmed: false,
-   password: '',
    posts: [],
    sureName: '',
-   updatedAt: 0,
    userDetails: {
       birthTown: '',
       dateOfBirth: { day: 0, month: 0, year: 0 },
