@@ -14,10 +14,11 @@ const NavTabs = () => {
          variant='scrollable'
          scrollButtons
          allowScrollButtonsMobile
-         aria-label='navigation tabs'>
+         aria-label='navigation tabs'
+      >
          <StyledTab label='Bejegyzések' {...a11yProps(0)} />
          <StyledTab label='Névjegy' {...a11yProps(1)} />
-         <StyledTab label='Ismerős' {...a11yProps(2)} />
+         <StyledTab label='Ismerőseim' {...a11yProps(2)} />
          <StyledTab label='Fényképek' {...a11yProps(3)} />
       </StyledTabs>
    )
