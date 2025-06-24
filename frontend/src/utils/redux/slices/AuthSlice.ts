@@ -37,6 +37,7 @@ export const AuthSlice = createSlice({
          state.userId = ''
          state.userName = ''
          state.isLoggedIn = false
+         state.currentImage = { _id: '', isSelected: false, path: AltProfileImg.src }
       },
    },
 })
