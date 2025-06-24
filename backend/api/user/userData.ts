@@ -18,6 +18,7 @@ import {
 import {
    addNewWorkplaceController,
    removeSingleWorkplace,
+   getUserPostImages,
 } from '../../controllers/users/userDetails/userProfile'
 
 export default class UserDataApi {
@@ -32,6 +33,7 @@ export default class UserDataApi {
       this.router.patch('/set-active', authenticateAccessTokenForApi, setActiveNotifications)
       this.router.delete('/notification', authenticateAccessTokenForApi, removeUsersNotification)
 
+      this.router.get('/get-post-images', authenticateAccessTokenForApi, getUserPostImages)
       this.router.get('/get-details', authenticateAccessTokenForApi, getUserDetailsWithOwnPosts)
       this.router.get('/get-profile-pictures', authenticateAccessTokenForApi, getCurrentProfilePictures)
       this.router.get('/get-current-picture', authenticateAccessTokenForApi, getCurrentSelectedProfileImage)
