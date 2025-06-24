@@ -1,6 +1,23 @@
 import { Response, Request } from 'express'
 import { validationResult } from 'express-validator'
 import { User as UserModel } from '../../../models/user/user'
+import { Posts } from '@/postModel/posts'
+
+export const getUserPostImages = async (request: Request, response: Response) => {
+   const userId = request.user?.userId
+   if (!userId) return response.status(404).json({ msg: 'user not found' })
+   try {
+      const foundPosts = await Posts.find({ user: userId }).select([
+         'postedPicturesPath',
+         'createdAt',
+         'description',
+      ])
+      response.status(200).json({ posts: foundPosts })
+   } catch (error) {
+      console.log(error)
+      response.status(500).json({ error, msg: 'internal server error' })
+   }
+}
 
 export const addNewWorkplaceController = async (request: Request, response: Response) => {
    const result = validationResult(request)
