@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper'
 export const ProfileHeader = styled(Paper)({
    marginTop: 16,
    padding: '20px 20px 0px 20px',
-   width: '100%',
+   maxWidth: '800px',
    minHeight: '200px',
 })
 

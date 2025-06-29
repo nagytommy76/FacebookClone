@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 
 export const StyledMeContainer = styled('section')(({ theme }) => ({
-   width: '50%',
+   maxWidth: '800px',
    minHeight: '95%',
    margin: 'auto',
 
