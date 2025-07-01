@@ -29,6 +29,7 @@ const commentAnswers = {
          answeredAt: { type: Date, required: false, default: new Date() },
          commentImage: { type: String, required: false, default: null },
          likes: likesSchemaObject,
+         isDeleted: { type: Boolean, default: false },
       },
    ],
    required: false,
