@@ -1,3 +1,4 @@
+import { Types } from 'mongoose'
 import { Posts as PostModel } from '../../models/posts/posts'
 import { ICommentAnswer } from './types/commentTypes'
 import type { Response, Request } from 'express'
@@ -39,50 +40,43 @@ export const removeCommentAnswerController = async (request: IRemoveAnswerReques
    const { postId, answerId } = request.body
 
    try {
-      const foundPostsComment = await PostModel.find({
+      const foundPostsComment = await PostModel.findOne({
          _id: postId,
+         // Hard coded comment._id
+         comments: { $elemMatch: { _id: '6506f9520b58c0c9c786a575' } },
          'comments.commentAnswers': { $elemMatch: { _id: answerId } },
       }).select(['comments.commentAnswers.$'])
 
-      const foundAnswerToDelete = foundPostsComment[0].comments[0].commentAnswers?.find(
-         (answer) => answer._id == answerId
-      ) as ICommentAnswer
+      // const matchedAnswer = await PostModel.aggregate([
+      //    { $match: { _id: new Types.ObjectId(postId) } },
+      //    { $unwind: '$comments' },
+      //    { $unwind: '$comments.commentAnswers' },
+      //    { $match: { 'comments.commentAnswers._id': new Types.ObjectId(answerId) } },
+      //    { $project: { answer: '$comments.commentAnswers' } },
+      // ])
 
-      // Azokat kell kitörölni amelyeknek a parentCommentId-je megegyezik
-      // fel kell építeni egy comment fát, megviszgálni hogy van-e utána "CHILD" comment még és azoknak id-jét kigyüjteni
-      let foundChilds = []
-      const test = foundPostsComment[0].comments[0].commentAnswers.map((answer) => {
-         let firstParentId = foundAnswerToDelete._id
-         // Ezzel megkeresem az összes 1-gyel lejjebb lévő commentet -> most kéne lejjebb menni.
-         if (
-            answer.parentCommentId == firstParentId &&
-            foundAnswerToDelete.commentDepth < answer.commentDepth
-         ) {
-            firstParentId = answer._id
-            console.log(firstParentId)
-            console.log('')
-            console.log(answer.parentCommentId)
+      if (foundPostsComment == null) return response.status(404).json({ msg: 'foundPostsComment not found' })
+
+      foundPostsComment.comments[0].commentAnswers = foundPostsComment.comments[0].commentAnswers.map(
+         (answer) => {
+            if (answer._id == answerId) {
+               return {
+                  ...answer,
+                  isDeleted: true,
+               }
+            }
+            return answer
          }
-      })
-
-      foundPostsComment[0].comments[0].commentAnswers =
-         foundPostsComment[0].comments[0].commentAnswers?.filter((answer) => {
-            return (
-               answer.commentDepth <= foundAnswerToDelete?.commentDepth &&
-               answer._id != answerId &&
-               answer.parentCommentId != answerId
-            )
-         })
-
-      // A commentDepth + 1 et vizsgálnom kell, hogy a parentComentId-je az megegyezik-e a törlendővel,
-      // Ha igen azt is törölnöm kell
+      )
 
       response.status(200).json({
          msg: 'helló VÁLASZ TÖRLÉS',
-         newCommentAnswers: foundPostsComment[0].comments[0].commentAnswers,
-         foundAnswerToDelete,
+         foundAnswerToDelete: foundPostsComment.comments[0].commentAnswers,
+         foundPostsComment,
+         // matchedAnswer,
       })
    } catch (error) {
+      console.log(error)
       response.status(500).json({ error, msg: 'internal server error' })
    }
 }
