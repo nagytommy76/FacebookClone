@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import { Posts as PostModel } from '../../models/posts/posts'
-import { ICommentAnswer } from './types/commentTypes'
+// import { ICommentAnswer } from './types/commentTypes'
 import type { Response, Request } from 'express'
 
 interface IRemoveCommentRequest extends Request {
@@ -12,6 +12,7 @@ interface IRemoveCommentRequest extends Request {
 interface IRemoveAnswerRequest extends Request {
    body: {
       postId: string
+      commentId: string
       answerId: string
    }
 }
@@ -37,43 +38,27 @@ export const removeCommentController = async (request: IRemoveCommentRequest, re
 }
 
 export const removeCommentAnswerController = async (request: IRemoveAnswerRequest, response: Response) => {
-   const { postId, answerId } = request.body
+   const { answerId, commentId, postId } = request.body
 
    try {
-      const foundPostsComment = await PostModel.findOne({
-         _id: postId,
-         // Hard coded comment._id
-         comments: { $elemMatch: { _id: '6506f9520b58c0c9c786a575' } },
-         'comments.commentAnswers': { $elemMatch: { _id: answerId } },
-      }).select(['comments.commentAnswers.$'])
-
-      // const matchedAnswer = await PostModel.aggregate([
-      //    { $match: { _id: new Types.ObjectId(postId) } },
-      //    { $unwind: '$comments' },
-      //    { $unwind: '$comments.commentAnswers' },
-      //    { $match: { 'comments.commentAnswers._id': new Types.ObjectId(answerId) } },
-      //    { $project: { answer: '$comments.commentAnswers' } },
-      // ])
-
-      if (foundPostsComment == null) return response.status(404).json({ msg: 'foundPostsComment not found' })
-
-      foundPostsComment.comments[0].commentAnswers = foundPostsComment.comments[0].commentAnswers.map(
-         (answer) => {
-            if (answer._id == answerId) {
-               return {
-                  ...answer,
-                  isDeleted: true,
-               }
-            }
-            return answer
+      await PostModel.findOneAndUpdate(
+         {
+            _id: postId,
+            'comments.commentAnswer._id': new Types.ObjectId(answerId),
+         },
+         {
+            $set: {
+               'comments.$[outer].commentAnswers.$[inner].isDeleted': true,
+            },
+         },
+         {
+            arrayFilters: [{ 'outer._id': commentId }, { 'inner._id': answerId }],
          }
       )
 
       response.status(200).json({
-         msg: 'helló VÁLASZ TÖRLÉS',
-         foundAnswerToDelete: foundPostsComment.comments[0].commentAnswers,
-         foundPostsComment,
-         // matchedAnswer,
+         status: 200,
+         msg: 'success',
       })
    } catch (error) {
       console.log(error)
