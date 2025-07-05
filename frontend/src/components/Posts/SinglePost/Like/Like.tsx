@@ -5,7 +5,7 @@ import useRemoveLikeSocket from './Hooks/Sockets/useRemoveLikeSocket'
 import type { ILike } from '@/types/LikeTypes'
 
 import Button from '@mui/material/Button'
-import { StyledCommentLikeButton } from './Styles'
+import { StyledCommentLikeButton } from '@/styles/CommentAnswerButton'
 
 import LikeTooltip from '@/Base/LikeTooltip/LikeTooltip'
 

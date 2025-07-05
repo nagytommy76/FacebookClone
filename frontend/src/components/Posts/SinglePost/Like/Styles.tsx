@@ -16,9 +16,3 @@ export const StyledImage = styled(Image)(({ theme }) => ({
       transform: 'scale(1.5)',
    },
 }))
-
-// Comment like variant -------------------------------
-export const StyledCommentLikeButton = styled('span')({
-   cursor: 'pointer',
-   '&:hover': { textDecoration: 'underline' },
-})

@@ -5,7 +5,8 @@ import useMoment from '@/src/hooks/useMoment'
 
 import Tooltip from '@mui/material/Tooltip'
 import type { ILike } from '@/src/types/LikeTypes'
-import { CommentFooterStyle, StyledCommentAnswerButton } from './Styles'
+import { CommentFooterStyle } from './Styles'
+import { StyledCommentLikeButton } from '@/styles/CommentAnswerButton'
 
 const Likes = dynamic(() => import('../../../../../Like/Like'))
 
@@ -28,7 +29,7 @@ const CommentFooter: React.FC<{
             postId={postId}
             postLikes={likes}
          >
-            <StyledCommentAnswerButton onClick={handleSetAnswerOpen}>Válasz</StyledCommentAnswerButton>
+            <StyledCommentLikeButton onClick={handleSetAnswerOpen}>Válasz</StyledCommentLikeButton>
          </Likes>
          <Tooltip arrow title={moment(answeredAt).format('YYYY MMMM D dddd, kk:mm')}>
             <span>{currentTime}</span>

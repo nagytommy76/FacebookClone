@@ -9,8 +9,3 @@ export const CommentFooterStyle = styled('footer')({
    justifyContent: 'flex-start',
    gap: '8px',
 })
-
-export const StyledCommentAnswerButton = styled('span')({
-   cursor: 'pointer',
-   '&:hover': { textDecoration: 'underline' },
-})
