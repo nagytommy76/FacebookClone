@@ -8,10 +8,11 @@ import ConfirmDelete from '@/Base/ConfirmDelete/ConfirmDelete'
 
 const ConfirmDeleteDialog: React.FC<{
    isOpen: boolean
+   answerId: string
    commentId: string
    isChildComment: boolean
    setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ isOpen, commentId, isChildComment, setIsDialogOpen }) => {
+}> = ({ isOpen, answerId, commentId, isChildComment, setIsDialogOpen }) => {
    const mutateRemoveComment = useRemoveComment()
    const mutateRemoveCommentAnswer = useRemoveAnswer()
    const {
@@ -23,7 +24,7 @@ const ConfirmDeleteDialog: React.FC<{
 
    const handleCloseAndDelete = () => {
       if (!isChildComment) mutateRemoveComment({ commentId, postId })
-      else mutateRemoveCommentAnswer({ answerId: commentId, postId })
+      else mutateRemoveCommentAnswer({ answerId, commentId, postId })
       setIsDialogOpen(false)
    }
 

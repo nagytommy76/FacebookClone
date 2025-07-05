@@ -76,7 +76,8 @@ const BaseAnswerAndComment: React.FC<{
                         handleSetAnswerOpenForUpdate={() => handleSetOpenForUpdate(answer.comment)}
                         isChildComment={isChildComment}
                         answeredUserId={answer.userId?._id}
-                        commentId={answer._id}
+                        answerId={answer._id}
+                        commentId={commentId}
                      />
                   </StyledRightContainer>
                   <CommentFooter

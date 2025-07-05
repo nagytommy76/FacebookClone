@@ -1,11 +1,17 @@
-import { useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { axiosInstance as axios } from '@/src/utils/axiosSetup/AxiosInstance'
-import { AnswerContext } from '@/AnswersContext/AnswersContext'
 
-const mutationFunction = async ({ answerId, postId }: { answerId: string; postId: string }) => {
+const mutationFunction = async ({
+   answerId,
+   commentId,
+   postId,
+}: {
+   answerId: string
+   commentId: string
+   postId: string
+}) => {
    const response = await axios.delete('/post/post-comment-answer-delete', {
-      data: { answerId, postId },
+      data: { answerId, postId, commentId },
    })
    return response.data
 }

@@ -14,10 +14,11 @@ const ConfirmDeleteDialog = dynamic(() => import('./Includes/ConfirmDeleteDialog
 
 const Options: React.FC<{
    answeredUserId: string
-   commentId: string
+   answerId: string
+   commentId?: string
    isChildComment: boolean
    handleSetAnswerOpenForUpdate: () => void
-}> = ({ answeredUserId, commentId, isChildComment = false, handleSetAnswerOpenForUpdate }) => {
+}> = ({ answeredUserId, answerId, commentId, isChildComment = false, handleSetAnswerOpenForUpdate }) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
@@ -53,7 +54,8 @@ const Options: React.FC<{
             <></>
          )}
          <ConfirmDeleteDialog
-            commentId={commentId}
+            commentId={commentId || ''}
+            answerId={answerId}
             isChildComment={isChildComment}
             isOpen={isDialogOpen}
             setIsDialogOpen={setIsDialogOpen}
