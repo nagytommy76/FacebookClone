@@ -71,6 +71,7 @@ const BaseAnswerAndComment: React.FC<{
                         likes={answer.likes}
                         postId={postId}
                         isChildComment={isChildComment}
+                        isDeleted={answer.isDeleted}
                      />
                      <Options
                         handleSetAnswerOpenForUpdate={() => handleSetOpenForUpdate(answer.comment)}
@@ -78,6 +79,7 @@ const BaseAnswerAndComment: React.FC<{
                         answeredUserId={answer.userId?._id}
                         answerId={answer._id}
                         commentId={commentId}
+                        answerIsDeleted={answer.isDeleted}
                      />
                   </StyledRightContainer>
                   <CommentFooter
