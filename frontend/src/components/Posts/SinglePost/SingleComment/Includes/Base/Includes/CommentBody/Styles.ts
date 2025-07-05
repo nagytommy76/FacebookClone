@@ -1,5 +1,6 @@
 import { styled } from '@mui/material'
 import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 
 export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
    width: 'max-content',
@@ -11,4 +12,4 @@ export const StyledCommentPaper = styled(Paper)(({ theme }) => ({
    position: 'relative',
 }))
 
-export const StyledCommentParagraph = styled('p')({ lineHeight: '1.25rem', fontSize: '1rem' })
+export const StyledCommentParagraph = styled(Typography)({ lineHeight: '1.25rem', fontSize: '1rem' })
