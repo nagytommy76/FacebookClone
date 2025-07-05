@@ -14,19 +14,24 @@ const Reactions = dynamic(() => import('@/Base/LikeReactions/Reactions'), {
 const LikeModal = dynamic(() => import('@/Base/LikeReactions/LikeModal/LikeModal'))
 
 const CommentBody: React.FC<{
+   isDeleted?: boolean
    answerId: string
    commentId: string | undefined
    postId: string
    likes: ILike[]
    comment: string
    isChildComment?: boolean
-}> = ({ answerId, postId, likes, comment, isChildComment = false, commentId }) => {
+}> = ({ answerId, postId, likes, comment, isChildComment = false, commentId, isDeleted = false }) => {
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
    const { commentLikeCount } = useGetComment(answerId, commentId, postId, isModalOpen, isChildComment)
 
    return (
       <StyledCommentPaper>
-         <StyledCommentParagraph>{comment}</StyledCommentParagraph>
+         {isDeleted ? (
+            <StyledCommentParagraph color={'#b2babb'}>[ Törölt komment ]</StyledCommentParagraph>
+         ) : (
+            <StyledCommentParagraph>{comment}</StyledCommentParagraph>
+         )}
          {likes.length !== 0 && (
             <Reactions likes={likes} setIsModalOpen={setIsModalOpen}>
                <LikeModal
