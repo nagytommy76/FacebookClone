@@ -17,8 +17,16 @@ const Options: React.FC<{
    answerId: string
    commentId?: string
    isChildComment: boolean
+   answerIsDeleted?: boolean
    handleSetAnswerOpenForUpdate: () => void
-}> = ({ answeredUserId, answerId, commentId, isChildComment = false, handleSetAnswerOpenForUpdate }) => {
+}> = ({
+   answeredUserId,
+   answerId,
+   commentId,
+   isChildComment = false,
+   handleSetAnswerOpenForUpdate,
+   answerIsDeleted = false,
+}) => {
    const userId = useAppSelector((state) => state.auth.userId)
    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
@@ -38,7 +46,7 @@ const Options: React.FC<{
 
    return (
       <>
-         {answeredUserId == userId ? (
+         {answeredUserId == userId && !answerIsDeleted ? (
             <>
                <StyledOptions>
                   <IconButton size='small' onClick={handleClick}>
