@@ -5,7 +5,6 @@ import useRemoveLikeSocket from './Hooks/Sockets/useRemoveLikeSocket'
 import type { ILike } from '@/types/LikeTypes'
 
 import Button from '@mui/material/Button'
-import { StyledCommentLikeButton } from '@/styles/CommentAnswerButton'
 
 import LikeTooltip from '@/Base/LikeTooltip/LikeTooltip'
 
@@ -16,7 +15,16 @@ const Like: React.FC<{
    commentId: string
    children?: React.ReactNode
    isChildComment?: boolean
-}> = ({ postId, postLikes, isPostLike = true, children, commentId, isChildComment = false }) => {
+   isDeleted?: boolean
+}> = ({
+   postId,
+   postLikes,
+   isPostLike = true,
+   children,
+   commentId,
+   isChildComment = false,
+   isDeleted = false,
+}) => {
    const { likeBtnIcon, likeButtonColor, likeBtnText, setButtonColor } = useButtonColor()
    useLikePostSocket()
    useRemoveLikeSocket()
@@ -47,12 +55,14 @@ const Like: React.FC<{
                      {likeBtnText}
                   </Button>
                ) : (
-                  <StyledCommentLikeButton
+                  <Button
+                     variant='text'
+                     disabled={isDeleted}
                      onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
                      style={{ color: likeButtonColor }}
                   >
                      {likeBtnText}
-                  </StyledCommentLikeButton>
+                  </Button>
                )
             }
          ></LikeTooltip>
