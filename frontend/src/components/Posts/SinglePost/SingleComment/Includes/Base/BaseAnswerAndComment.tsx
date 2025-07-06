@@ -89,6 +89,7 @@ const BaseAnswerAndComment: React.FC<{
                      likes={answer.likes}
                      postId={postId}
                      isChildComment={isChildComment}
+                     isDeleted={answer.isDeleted}
                   />
                   <CommentImage
                      answerId={answer._id}
