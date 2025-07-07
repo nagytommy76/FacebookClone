@@ -55,14 +55,16 @@ const Like: React.FC<{
                      {likeBtnText}
                   </Button>
                ) : (
-                  <Button
-                     variant='text'
-                     disabled={isDeleted}
-                     onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
-                     style={{ color: likeButtonColor }}
-                  >
-                     {likeBtnText}
-                  </Button>
+                  <span>
+                     <Button
+                        variant='text'
+                        disabled={isDeleted}
+                        onClick={isChildComment ? handleCommentAnswerLikeClick : handleCommentLikeBtnClick}
+                        style={{ color: likeButtonColor }}
+                     >
+                        {likeBtnText}
+                     </Button>
+                  </span>
                )
             }
          ></LikeTooltip>
