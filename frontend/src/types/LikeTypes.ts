@@ -18,6 +18,7 @@ export interface ICommentAnswers {
    answeredAt: string
    commentImage: string | null
    likes: ILike[]
+   isDeleted: boolean
 }
 
 export interface IPostComment {
