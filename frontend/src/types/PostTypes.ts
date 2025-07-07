@@ -1,4 +1,4 @@
-import type { IPostComment, IPostLike } from './LikeTypes'
+import type { IPostComment, ILike } from './LikeTypes'
 import { IUserDetails } from './AuthTypes'
 
 export interface IPopulatedUserId<T = IUserDetails> {
@@ -14,7 +14,7 @@ export interface IPost {
    userId: IPopulatedUserId
    comments: IPostComment[]
    description: string
-   likes: IPostLike[]
+   likes: ILike[]
    postedPicturesPath: string[] | null
    createdAt: string
    updatedAt: string
