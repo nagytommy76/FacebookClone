@@ -8,7 +8,7 @@ export const StyledCommentContainer = styled('div', {
    position: 'relative',
    maxWidth: `${isChildComment ? 'calc(100% - 54px)' : '100%'}`,
    minWidth: '50%',
-   marginTop: '1rem',
+   marginTop: '.3rem',
    marginBottom: `${!isChildComment ? '1.4rem' : '0'}`,
    marginRight: 0,
    display: 'flex',
