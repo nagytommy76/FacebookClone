@@ -1,6 +1,5 @@
 'use client'
-import { useStore } from 'react-redux'
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import { storage } from './storage'
@@ -12,28 +11,23 @@ import ThemeSlice from './slices/ThemeSlice'
 import ChatSlice from './slices/ChatSlice'
 import InfoSnack from './slices/InfoSnack'
 
-export const makeStore = () =>
-   configureStore({
-      reducer: {
-         chat: ChatSlice,
-         infoSnack: InfoSnack,
-         auth: persistReducer({ key: 'Auth', storage }, AuthSlice),
-         theme: persistReducer({ key: 'Theme', storage }, ThemeSlice),
-      },
-      middleware: (getDefaultMiddleware) =>
-         getDefaultMiddleware({
-            serializableCheck: {
-               ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
-         }),
-   })
+const rootReducer = combineReducers({
+   chat: ChatSlice,
+   infoSnack: InfoSnack,
+   auth: persistReducer({ key: 'Auth', storage }, AuthSlice),
+   theme: persistReducer({ key: 'Theme', storage }, ThemeSlice),
+})
 
-// Infer the type of makeStore
-export type AppStore = ReturnType<typeof makeStore>
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export const store = configureStore({
+   reducer: rootReducer,
+   middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+         serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] },
+      }),
+})
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
-export const useAppStore: () => AppStore = useStore
