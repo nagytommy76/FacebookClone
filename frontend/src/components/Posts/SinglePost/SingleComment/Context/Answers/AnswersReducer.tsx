@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import type { ICommentAnswers, IPostLike } from '@/src/types/LikeTypes'
+import type { ICommentAnswers, ILike } from '@/src/types/LikeTypes'
 
 type AnswerActions =
    | 'SET_ANSWERS'
@@ -57,7 +57,7 @@ export default function AnswersReducer(
       case 'ADD_ANSWER_LIKE':
          const { commentAnswersIndex, updatedCommentAnswerLikes } = payload as {
             commentAnswersIndex: number
-            updatedCommentAnswerLikes: IPostLike[]
+            updatedCommentAnswerLikes: ILike[]
          }
          const newAnswerLikes = produce(state, (draft) => {
             draft.commentAnswers[commentAnswersIndex].likes = updatedCommentAnswerLikes
