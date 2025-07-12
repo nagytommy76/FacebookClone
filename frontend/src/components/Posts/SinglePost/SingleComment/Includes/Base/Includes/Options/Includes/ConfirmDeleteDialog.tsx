@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { CommentContext } from '../../../../../Context/Comment/CommentContext'
+import { CommentContext } from '@/CommentContext/CommentContext'
 
 import useRemoveComment from '../Hooks/useRemoveComment'
 import useRemoveAnswer from '../Hooks/useRemoveAnswer'
@@ -13,18 +13,18 @@ const ConfirmDeleteDialog: React.FC<{
    isChildComment: boolean
    setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ isOpen, answerId, commentId, isChildComment, setIsDialogOpen }) => {
-   const mutateRemoveComment = useRemoveComment()
-   const mutateRemoveCommentAnswer = useRemoveAnswer()
    const {
       commentReducer: {
          postId,
          singleComment: { answeredAt },
       },
    } = useContext(CommentContext)
+   const mutateRemoveComment = useRemoveComment()
+   const mutateRemoveCommentAnswer = useRemoveAnswer(postId, commentId, answerId)
 
    const handleCloseAndDelete = () => {
       if (!isChildComment) mutateRemoveComment({ commentId, postId })
-      else mutateRemoveCommentAnswer({ answerId, commentId, postId })
+      else mutateRemoveCommentAnswer()
       setIsDialogOpen(false)
    }
 
