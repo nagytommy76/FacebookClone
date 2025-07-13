@@ -10,6 +10,7 @@ type AnswerActions =
    | 'ADD_SINGLE_COMMENT_ANSWER'
    | 'UPDATE_SINGLE_COMMENT_ANSWER'
    // | 'UPDATE_ANSWER_TEXT'
+   | 'SET_ANSWER_DELETED'
    | 'REMOVE_ANSWER_LIKE'
    | 'REMOVE_ANSWER_IMAGE'
 
@@ -87,6 +88,12 @@ export default function AnswersReducer(
             }
          })
          return UpdatedComments
+      case 'SET_ANSWER_DELETED':
+         const removedAnswer = produce(state, (draft) => {
+            const foundAnswerIndex = draft.commentAnswers.findIndex((answer) => answer._id == payload)
+            draft.commentAnswers[foundAnswerIndex].isDeleted = true
+         })
+         return removedAnswer
       case 'REMOVE_ANSWER_LIKE':
          const { answerId, likeIdToDelete } = payload
          const removedAnswerLikes = produce(state, (draft) => {
