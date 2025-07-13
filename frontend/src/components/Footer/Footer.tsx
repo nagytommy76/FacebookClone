@@ -1,4 +1,5 @@
 'use client'
+import moment from 'moment'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 
@@ -12,7 +13,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 const Footer = () => {
    return (
       <StyledFooter elevation={2}>
-         <Typography variant='h6'>Készítette: © Nagy Tamás 2023</Typography>
+         <Typography variant='h6'>Készítette: © Nagy Tamás {moment().format('YYYY')}</Typography>
          <Stack direction='row' spacing={1} pt={1}>
             <Link href='https://www.linkedin.com/in/tamasnagy93' target='_blank'>
                <LinkedInIcon sx={{ fontSize: 45, cursor: 'pointer', ':hover': { color: '#0a66c2' } }} />
