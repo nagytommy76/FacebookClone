@@ -56,24 +56,9 @@ export const removeCommentAnswerController = async (request: IRemoveAnswerReques
             new: true,
          }
       )
-      let modifiedCommentAnswer = null
-      if (updateResult.modifiedCount > 0) {
-         const modifiedAnswer = await PostModel.aggregate([
-            { $match: { 'comments.commentAnswers._id': new Types.ObjectId(answerId) } },
-            { $unwind: '$comments' },
-            { $unwind: '$comments.commentAnswers' },
-            { $match: { 'comments.commentAnswers._id': new Types.ObjectId(answerId) } },
-            // Replace the root to return only the answer object
-            { $replaceRoot: { newRoot: '$comments.commentAnswers' } },
-         ])
-         if (modifiedAnswer.length > 0) {
-            modifiedCommentAnswer = modifiedAnswer[0]
-         }
-      }
 
       response.status(200).json({
          status: 200,
-         modifiedCommentAnswer,
          msg: 'success',
       })
    } catch (error) {
