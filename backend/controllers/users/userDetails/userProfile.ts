@@ -7,7 +7,7 @@ export const getUserPostImages = async (request: Request, response: Response) =>
    const userId = request.user?.userId
    if (!userId) return response.status(404).json({ msg: 'user not found' })
    try {
-      const foundPosts = await Posts.find({ user: userId }).select(['postedPicturesPath', 'createdAt'])
+      const foundPosts = await Posts.find({ userId }).select(['postedPicturesPath', 'createdAt'])
       response.status(200).json({ posts: foundPosts })
    } catch (error) {
       console.log(error)
