@@ -12,6 +12,7 @@ class RedisService {
    public subClient
    constructor() {
       this.client = createClient({
+         username: 'default',
          password: REDIS_PASSWORD,
          socket: {
             host: REDIS_HOST,
