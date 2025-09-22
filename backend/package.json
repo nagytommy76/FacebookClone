@@ -4,7 +4,7 @@
    "private": true,
    "main": "server.ts",
    "scripts": {
-      "production": "node server.ts",
+      "production": "node build/server.js",
       "start": "nodemon server.ts",
       "dev": "nodemon -r tsconfig-paths/register server.ts",
       "build": "tsc -p ."
