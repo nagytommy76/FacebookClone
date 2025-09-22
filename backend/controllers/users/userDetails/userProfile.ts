@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
 import { validationResult } from 'express-validator'
 import { User as UserModel } from '../../../models/user/user'
-import { Posts } from '@/postModel/posts'
+import { Posts } from '../../../models/posts/posts'
 
 export const getUserPostImages = async (request: Request, response: Response) => {
    const userId = request.user?.userId
