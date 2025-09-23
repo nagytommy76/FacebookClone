@@ -9,17 +9,16 @@ import { StyledIconButton, StyledTab } from '../Style'
 
 const TabHeader: React.FC<{
    reactionTypes: ReactionType
-   tabValue: LikeTypes | 'all'
    setTabValue: React.Dispatch<React.SetStateAction<LikeTypes | 'all'>>
    handleCloseModal: () => void
-}> = ({ reactionTypes, setTabValue, tabValue, handleCloseModal }) => {
+}> = ({ reactionTypes, setTabValue, handleCloseModal }) => {
    const returnImage = useIcon()
    const handleChange = (event: React.SyntheticEvent, newValue: LikeTypes) => {
       setTabValue(newValue)
    }
 
    return (
-      <TabList indicatorColor='primary' value={tabValue} onChange={handleChange} aria-label='icon tabs '>
+      <TabList indicatorColor='primary' onChange={handleChange} aria-label='icon tabs '>
          <StyledIconButton onClick={handleCloseModal}>
             <CloseIcon />
          </StyledIconButton>

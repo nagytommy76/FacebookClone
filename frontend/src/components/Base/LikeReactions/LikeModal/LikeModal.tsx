@@ -39,7 +39,6 @@ const LikeModal: React.FC<{
                         handleCloseModal={handleCloseModal}
                         reactionTypes={likeCount.reactionTypes}
                         setTabValue={setTabValue}
-                        tabValue={tabValue}
                      />
                      <TabBody tabValue={tabValue} reactionTypes={likeCount.reactionTypes} />
                   </TabContext>
