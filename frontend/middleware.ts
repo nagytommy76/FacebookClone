@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
    if (!refreshToken) return NextResponse.redirect(new URL('/login', request.url))
 
    //  Ha van refresh token megnézem, hogy valid-e fetch-el, axios nem müxik
-   const response = await fetch('http://localhost:5050/api/auth/refresh-token', {
+   const response = await fetch(`${process.env.NEXT_PUBLIC_PROD_API_URL}/auth/check-refresh-token`, {
       method: 'POST',
       headers: {
          'Content-Type': 'application/json',

@@ -4,13 +4,14 @@ import axios from 'axios'
 import useLogout from '@/hooks/useLogout'
 
 const DEVELOPMENT_URL = 'http://localhost:3000'
-//const PRODUCTION_URL = ''
+const DEV_URL = process.env.NEXT_PUBLIC_DEV_API_URL
+const PRODUCTION_URL = process.env.NEXT_PUBLIC_PROD_API_URL
 
 const isAxiosError = axios.isAxiosError
 const axiosInstance = axios.create({
    // docker port
-   // baseURL: 'http://localhost:5040/api',
-   baseURL: 'http://localhost:5050/api',
+   // baseURL: DEV_URL,
+   baseURL: PRODUCTION_URL,
    withCredentials: true,
    headers: {
       'Content-Type': 'application/json',
