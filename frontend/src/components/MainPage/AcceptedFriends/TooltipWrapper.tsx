@@ -10,7 +10,7 @@ const TooltipWrapper: React.FC<{
    const timeFromNow = useMoment(lastSeen)
    return (
       <Tooltip placement='left' title={timeFromNow}>
-         {children}
+         <span>{children}</span>
       </Tooltip>
    )
 }
