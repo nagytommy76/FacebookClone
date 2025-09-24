@@ -16,7 +16,7 @@ export default class SocketService {
    }
 
    public initializeSocketHandlers() {
-      this.io.listen(3001)
+      // this.io.listen(3001)
       this.io.on('connection', (socket: SocketWithUserId) => {
          socket.on('login', (userId: string) => {
             socket.userId = userId

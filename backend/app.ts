@@ -12,7 +12,7 @@ import redisService from './config/redis.config'
 import SocketService from './config/socketIo.config'
 // REDIS SOCKET.IO
 import { createAdapter } from '@socket.io/redis-adapter'
-import { createServer } from 'https'
+// import { createServer } from 'https'
 import { Server } from 'socket.io'
 // API ROUTES
 import ChatApi from './api/chat/chat'
@@ -24,15 +24,15 @@ import UserApi from './api/user/user'
 
 class App {
    public app: Application
-   private server: ReturnType<typeof createServer>
+   // private server: ReturnType<typeof createServer>
    private io: Server
    private socketController: SocketService
    private accessLogStream: fs.WriteStream
 
    constructor() {
       this.app = express()
-      this.server = createServer(this.app)
-      this.io = new Server(this.server, {
+      // this.server = createServer(this.app)
+      this.io = new Server({
          adapter: createAdapter(redisService.client, redisService.subClient),
          cors: {
             origin: ['http://localhost:3000'],
