@@ -13,6 +13,7 @@ export const getUserDetailsWithOwnPosts = async (request: IGetUserDetailsRequest
          'firstName',
          'email',
          'posts',
+         'friends',
       ])
       return response.status(200).json(foundUserWithPosts)
    } catch (error) {
