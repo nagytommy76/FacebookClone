@@ -1,14 +1,13 @@
-import type { IUserTypes } from '@/types/AuthTypes'
 import type { IPost, IProfilePicture } from '@/types/PostTypes'
 import { produce } from 'immer'
-import type { IBaseListAction, InitialState } from './Types'
+import type { IBaseListAction, InitialState, IUserContextType } from './Types'
 
 export default function UserDetailsReducer(state: InitialState, action: IBaseListAction): InitialState {
    switch (action.type) {
       case 'SET_INITIAL_USER_DATA':
          return {
             ...state,
-            initialUserDataState: action.payload as IUserTypes,
+            initialUserDataState: action.payload as IUserContextType,
          }
       case 'SET_SELECTED_IMG':
          const selectedImg = produce(state, (draft) => {

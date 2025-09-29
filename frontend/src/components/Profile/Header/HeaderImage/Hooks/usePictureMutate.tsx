@@ -20,7 +20,7 @@ const usePictureMutate = () => {
          const selectedPic = data.data.profilePicturePath.find((image) => image.isSelected)
          if (selectedPic) dispatch(setCurrentImage(selectedPic))
          profileDispatch({
-            type: 'SET_USER_PROFILE_PICUTRES',
+            type: 'SET_SELECTED_IMG',
             payload: data.data.profilePicturePath,
          })
       },

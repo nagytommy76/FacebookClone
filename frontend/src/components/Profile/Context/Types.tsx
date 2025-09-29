@@ -2,12 +2,7 @@ import type { IUserDetails } from '@/types/AuthTypes'
 import type { IPost } from '@/types/PostTypes'
 import { IFriends } from '../../Friends/Types'
 
-type UserDataActions =
-   | 'SET_INITIAL_USER_DATA'
-   | 'SET_SELECTED_IMG'
-   | 'ADD_WORKPLACE'
-   | 'REMOVE_SINGLEWORK'
-   | 'SET_USER_PROFILE_PICUTRES'
+type UserDataActions = 'SET_INITIAL_USER_DATA' | 'SET_SELECTED_IMG' | 'ADD_WORKPLACE' | 'REMOVE_SINGLEWORK'
 
 export interface IUserContextType {
    _id: string
