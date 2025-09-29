@@ -30,7 +30,7 @@ const Notification = () => {
                </Badge>
             </IconButton>
          </Tooltip>
-         <audio style={{ display: 'hidden' }} src={winXpAudio.src} />
+         {winXpAudio && <audio style={{ display: 'hidden' }} src={winXpAudio.src} />}
          <NotificationsMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
       </>
    )
