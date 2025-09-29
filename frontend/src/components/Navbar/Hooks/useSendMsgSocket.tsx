@@ -18,10 +18,15 @@ interface IChatArgs {
 
 const useSendMsgSocket = (setTypingStatus?: Dispatch<SetStateAction<boolean>>) => {
    const dispatch = useAppDispatch()
-   const [chatAudio] = useState(new Audio('/sounds/facebook_messenger.mp3'))
+   const [chatAudio, setChatAudio] = useState<HTMLAudioElement | null>(null)
    const isChatModalOpen = useAppSelector((state) => state.chat.isChatModalOpen)
    const setInfoSnackbar = useSetInfoSnack()
    const notification = useNotification()
+
+   useEffect(() => {
+      const audio = new Audio('/sounds/facebook_messenger.mp3')
+      setChatAudio(audio)
+   }, [])
 
    useEffect(() => {
       const sendChatMsg = (args: IChatArgs) => {
@@ -36,7 +41,7 @@ const useSendMsgSocket = (setTypingStatus?: Dispatch<SetStateAction<boolean>>) =
                args.profileImage
             )
          }
-         chatAudio.play()
+         if (chatAudio) chatAudio.play()
       }
 
       socket.on('chat:sendMsgResponse', sendChatMsg)
