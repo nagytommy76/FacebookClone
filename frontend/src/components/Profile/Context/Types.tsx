@@ -1,11 +1,18 @@
 import type { IUserDetails } from '@/types/AuthTypes'
 import type { IPost } from '@/types/PostTypes'
+import { IFriends } from '../../Friends/Types'
 
-type UserDataActions = 'SET_INITIAL_USER_DATA' | 'SET_SELECTED_IMG' | 'ADD_WORKPLACE' | 'REMOVE_SINGLEWORK'
+type UserDataActions =
+   | 'SET_INITIAL_USER_DATA'
+   | 'SET_SELECTED_IMG'
+   | 'ADD_WORKPLACE'
+   | 'REMOVE_SINGLEWORK'
+   | 'SET_USER_PROFILE_PICUTRES'
 
-interface IUserContextType {
+export interface IUserContextType {
    _id: string
    userDetails: IUserDetails
+   friends: IFriends[]
    email: string
    firstName: string
    sureName: string
@@ -27,6 +34,7 @@ export const initialUserDataState: IUserContextType = {
    email: '',
    firstName: '',
    posts: [],
+   friends: [],
    sureName: '',
    userDetails: {
       birthTown: '',
