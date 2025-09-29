@@ -8,6 +8,7 @@ export type NotificationsAction =
    | 'UPDATE_ISREAD_BYID'
    | 'REMOVE_NOTIFICATION'
    | 'SET_AUDIO_PLAY'
+   | 'SET_AUDIO'
 
 export interface INotificationsAction {
    type: NotificationsAction
@@ -17,13 +18,13 @@ export interface INotificationsAction {
 export interface InitialNotificationState {
    notifications: NotificationType[] | null
    activeNotifications: number
-   winXpAudio: HTMLAudioElement
+   winXpAudio: HTMLAudioElement | null
 }
 
 export const initialNotificationsState: InitialNotificationState = {
    activeNotifications: 0,
    notifications: null,
-   winXpAudio: new Audio('/sounds/windows_xp_shutdown.mp3'),
+   winXpAudio: null,
 }
 
 export default function PostsReducer(
@@ -73,8 +74,13 @@ export default function PostsReducer(
          })
          return removed
       case 'SET_AUDIO_PLAY':
-         state.winXpAudio.play()
+         if (state.winXpAudio) state.winXpAudio.play()
          return state
+      case 'SET_AUDIO':
+         return {
+            ...state,
+            winXpAudio: action.payload as HTMLAudioElement,
+         }
       default:
          return state
    }
