@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useEffect } from 'react'
 import NotificationsReducer, {
    InitialNotificationState,
    INotificationsAction,
@@ -24,6 +24,12 @@ const NotificationContextProvider = () => {
       initialNotificationsState
    )
    useGetNotifications(notificationsDispatch)
+
+   useEffect(() => {
+      const audio = new Audio('/sounds/windows_xp_shutdown.mp3')
+      notificationsDispatch({ type: 'SET_AUDIO', payload: audio })
+   }, [])
+
    return (
       <NotificationsContext.Provider value={{ notificationsDispatch, notificationsReducer }}>
          <Notification />
