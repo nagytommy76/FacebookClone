@@ -11,7 +11,7 @@ const TextInputField: React.FC<{
       if (textAreaRef.current) {
          textAreaRef.current.focus()
       }
-   }, [])
+   }, [textAreaRef])
 
    return (
       <TextField
