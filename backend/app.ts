@@ -4,9 +4,6 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
-import morgan from 'morgan'
-import path from 'path'
-import fs from 'fs'
 
 import redisService from './config/redis.config'
 import SocketService from './config/socketIo.config'
@@ -24,28 +21,16 @@ import UserApi from './api/user/user'
 
 class App {
    public app: Application
-   // private server: ReturnType<typeof createServer>
    private io: Server
    private socketController: SocketService
-   private accessLogStream: fs.WriteStream
 
    constructor() {
       this.app = express()
-      // this.server = createServer(this.app)
-      this.io = new Server({
-         adapter: createAdapter(redisService.client, redisService.subClient),
-         cors: {
-            origin: ['http://localhost:3000'],
-            methods: ['GET', 'POST'],
-            credentials: true,
-         },
-      })
-      this.socketController = new SocketService(this.io)
-      this.accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+      this.socketController = {} as SocketService
+      this.io = {} as Server
 
       this.configureApp()
       this.configureAPIroutes()
-      this.configureSockets()
    }
 
    private async connectDB(): Promise<void> {
@@ -65,11 +50,16 @@ class App {
       this.app.use(helmet())
       this.app.use(cookieParser())
       this.app.use(bodyParser.json())
-      this.app.use(morgan('combined', { stream: this.accessLogStream }))
+      // this.app.use(morgan('combined', { stream: this.accessLogStream }))
       this.app.use(
          cors({
             credentials: true,
-            origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:6060'],
+            origin: [
+               'http://localhost:3000',
+               'http://localhost:3001',
+               'http://localhost:6060',
+               'https://facebookclonefrontendbuild-production.up.railway.app',
+            ],
          })
       )
    }
@@ -83,16 +73,26 @@ class App {
       this.app.use('/api/post/edit', new ModifyPostApi().router)
    }
 
-   private configureSockets(): void {
+   private configureSockets(expressServer: any): void {
+      this.io = new Server(expressServer, {
+         adapter: createAdapter(redisService.client, redisService.subClient),
+         cors: {
+            origin: ['http://localhost:3000', 'https://facebookclonefrontendbuild-production.up.railway.app'],
+            methods: ['GET', 'POST'],
+            credentials: true,
+         },
+      })
+      this.socketController = new SocketService(this.io)
       this.socketController.initializeSocketHandlers()
    }
 
    public async start(port: string | number): Promise<void> {
       await redisService.connect() // Connect to Redis before starting the server
       await this.connectDB()
-      this.app.listen(port, () => {
+      const expressServer = this.app.listen(port, () => {
          console.log(`The app started on port: ${port}`)
       })
+      this.configureSockets(expressServer)
    }
 }
 
