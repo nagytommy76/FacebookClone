@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import useLogout from '@/hooks/useLogout'
 
-const DEVELOPMENT_URL = 'http://localhost:3000'
 const DEV_URL = process.env.NEXT_PUBLIC_DEV_API_URL
 const PRODUCTION_URL = process.env.NEXT_PUBLIC_PROD_API_URL
 
@@ -15,8 +14,8 @@ const axiosInstance = axios.create({
    withCredentials: true,
    headers: {
       'Content-Type': 'application/json',
+      // 'Access-Control-Allow-Origin': DEV_URL,
       'Access-Control-Allow-Origin': PRODUCTION_URL,
-      //'Access-Control-Allow-Origin': PRODUCTION_URL,
       'Access-Control-Allow-Credentials': true,
    },
 })
