@@ -57,6 +57,7 @@ export default async function fetchSetup(
       if (response.ok) return await response.json()
 
       // return await response.json()
+      throw new Error('No response returned from fetchSetup')
    } catch (error) {
       console.log('ERROR MIKOR LESZ?')
       throw error

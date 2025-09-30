@@ -1,9 +1,9 @@
 import { io } from 'socket.io-client'
 
-// "undefined" means the URL will be computed from the `window.location` object
-// const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:6060'
+const PROD_URL = 'https://facebookclonebackendbuild-production.up.railway.app'
+const DEV_URL = process.env.NEXT_PUBLIC_DEV_SOCKET_URL || 'http://localhost:5050'
 
-export const socket = io('http://localhost:3001', {
+export const socket = io(PROD_URL, {
    withCredentials: true,
    autoConnect: false,
 })
