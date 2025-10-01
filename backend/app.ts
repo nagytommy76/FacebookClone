@@ -58,7 +58,7 @@ class App {
                'http://localhost:3000',
                'http://localhost:3001',
                'http://localhost:6060',
-               'https://facebookclonefrontendbuild-production.up.railway.app',
+               'https://facebook-clone-iz5srdqq5-nagytommy76s-projects.vercel.app',
             ],
          })
       )
@@ -77,7 +77,10 @@ class App {
       this.io = new Server(expressServer, {
          adapter: createAdapter(redisService.client, redisService.subClient),
          cors: {
-            origin: ['http://localhost:3000', 'https://facebookclonefrontendbuild-production.up.railway.app'],
+            origin: [
+               'http://localhost:3000',
+               'https://facebook-clone-iz5srdqq5-nagytommy76s-projects.vercel.app',
+            ],
             methods: ['GET', 'POST'],
             credentials: true,
          },
