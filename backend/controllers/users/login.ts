@@ -19,14 +19,14 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost',
+         // domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost',
          maxAge: REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
       })
       res.cookie('accessToken', accessToken, {
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost',
+         // domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost',
          maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
       })
          .status(200)
