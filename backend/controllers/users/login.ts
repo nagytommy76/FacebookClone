@@ -15,26 +15,30 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
 
       const { accessToken, refreshToken } = signAccessAndRefreshToken(foundUser._id, foundUser.email)
 
-      res.cookie('refreshToken', refreshToken, {
-         httpOnly: true,
-         secure: true,
-         sameSite: 'none',
-         maxAge: REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
+      // res.cookie('refreshToken', refreshToken, {
+      //    httpOnly: true,
+      //    secure: true,
+      //    sameSite: 'none',
+      //    domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost',
+      //    maxAge: REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
+      // })
+      // res.cookie('accessToken', accessToken, {
+      //    httpOnly: true,
+      //    secure: true,
+      //    sameSite: 'none',
+      //    domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost',
+      //    maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
+      // })
+      res.status(200).json({
+         isPasswordCorrect,
+         accessToken,
+         refreshToken,
+         REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
+         ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
+         userId: foundUser._id,
+         userName: `${foundUser.firstName} ${foundUser.sureName}`,
+         currentImage: foundUser.userDetails.profilePicturePath[0],
       })
-      res.cookie('accessToken', accessToken, {
-         httpOnly: true,
-         secure: true,
-         sameSite: 'none',
-         maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
-      })
-         .status(200)
-         .json({
-            isPasswordCorrect,
-            accessToken,
-            userId: foundUser._id,
-            userName: `${foundUser.firstName} ${foundUser.sureName}`,
-            currentImage: foundUser.userDetails.profilePicturePath[0],
-         })
    } catch (error) {
       res.status(500).json(error)
    }
