@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import AxiosSetupProvider from '@/axios/AxiosInstance'
 import ReduxProvider from '@/reduxStore/ReduxProvider'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
@@ -13,7 +14,7 @@ import { Metadata } from 'next'
 import { Work_Sans } from 'next/font/google'
 
 import Footer from '@/components/Footer/Footer'
-import Navbar from '@/components/Navbar/Navbar'
+const Navbar = dynamic(() => import('@/components/Navbar/Navbar'), { ssr: false })
 
 moment.updateLocale('hu', {
    relativeTime: {
@@ -45,7 +46,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
    return (
       <html className={work.className} lang='hu'>
-         {/* <head /> */}
          <body>
             <AppRouterCacheProvider>
                <ReduxProvider>
