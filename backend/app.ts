@@ -59,6 +59,7 @@ class App {
                'http://localhost:3001',
                'http://localhost:6060',
                'https://facebook-clone-iz5srdqq5-nagytommy76s-projects.vercel.app',
+               'https://facebook-clone-henna-one.vercel.app',
             ],
          })
       )
@@ -80,6 +81,7 @@ class App {
             origin: [
                'http://localhost:3000',
                'https://facebook-clone-iz5srdqq5-nagytommy76s-projects.vercel.app',
+               'https://facebook-clone-henna-one.vercel.app',
             ],
             methods: ['GET', 'POST'],
             credentials: true,
