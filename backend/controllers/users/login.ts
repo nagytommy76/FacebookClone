@@ -19,14 +19,14 @@ export const loginUserController = async (req: ILoginRequest, res: Response) => 
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         domain: 'up.railway.app',
+         domain: '.vercel.app',
          maxAge: REFRESH_TOKEN_EXPIRES_IN_MILLISEC,
       })
       res.cookie('accessToken', accessToken, {
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         domain: 'up.railway.app',
+         domain: '.vercel.app',
          maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
       })
          .status(200)
