@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
    const refreshToken = request.cookies.get('refreshToken')?.value
-
+   console.log('Middleware - refreshToken: ', refreshToken)
    if (!refreshToken) {
       return NextResponse.redirect(new URL('/login', request.url))
    }
@@ -17,6 +17,8 @@ export async function middleware(request: NextRequest) {
       body: JSON.stringify({ refreshToken }),
       credentials: 'include',
    })
+   console.log('Middleware - response status from fetch: ', response.status)
+   console.log('Middleware - COOKIES: ', response.headers.get('set-cookie'))
 
    if (response.status === 403) {
       let redirectResponse = NextResponse.redirect(new URL('/login', request.url))
