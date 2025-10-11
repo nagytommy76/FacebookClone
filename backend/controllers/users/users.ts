@@ -39,6 +39,7 @@ export const checkAccessTokenValidityController = (req: Request, res: Response) 
             httpOnly: true,
             secure: true,
             sameSite: 'none',
+            domain: '.up.railway.app',
             maxAge: ACCESS_TOKEN_EXPIRES_IN_MILLISEC,
          }).sendStatus(201)
       })
@@ -51,7 +52,17 @@ export const logoutUserController = async (req: Request, res: Response) => {
    // [0]: refreshToken [1]: accessToken
    const cookies = req.headers.cookie?.split(';')
    if (!cookies) return res.sendStatus(204)
-   res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'none', secure: true })
-   res.clearCookie('accessToken', { httpOnly: true, sameSite: 'none', secure: true })
+   res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      domain: '.up.railway.app',
+   })
+   res.clearCookie('accessToken', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      domain: '.up.railway.app',
+   })
    res.status(200).json({ message: 'Sikeres kijelentkezés' })
 }
