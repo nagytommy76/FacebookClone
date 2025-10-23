@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Facebook Clone
 
-## Getting Started
+![License](https://img.shields.io/badge/License-MIT-blue.svg)  
+🚀 **Live Demo:** [https://facebookclone-production-8185.up.railway.app](https://facebookclone-production-8185.up.railway.app)
 
-First, run the development server:
+A full-stack social media web app inspired by Facebook, built with **Next.js**, **React**, **Express.js**, **MongoDB** and **TypeScript**.  
+It features real-time chat, posts, reactions, comments, and notifications — all in a modern responsive UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧩 Features
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+-  🔐 **Login / Register** with JWT authentication (secure cookies)
+-  👥 Add / remove friends
+-  📝 Create posts with images
+-  👍 React to posts (like, funny, angry, dislike etc...)
+-  💬 Comment on posts and reply infinitely
+-  ❤️ Like / dislike comments
+-  ✏️ Edit or delete your posts and comments
+-  🔔 **Real-time Notifications** for post interactions and comments
+-  💬 **Real-time chat** between users using **WebSockets (Socket.io)**
+-  🟢 User presence tracking (last seen, online status) with **Redis cache**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Frontend
 
-## Learn More
+-  **Next.js** (React)
+-  **Typescript**
+-  **Material UI**
+-  **Firebase Storage** for images
+-  **Emoji Mart** for emojis
 
-To learn more about Next.js, take a look at the following resources:
+### Backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-  **Express.js** with **TypeScript**
+-  **MongoDB** + **Mongoose**
+-  **JWT** Authentication (HTTP-only cookies)
+-  **Redis** for user presence (last seen, is active)
+-  **Socket.IO** for real-time communication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🌐 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Hosted on **Railway**  
+🔗 [https://facebookclone-production-8185.up.railway.app](https://facebookclone-production-8185.up.railway.app)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 👤 Author
+
+**Tamás Nagy**  
+🌍 [Portfolio](https://www.nagytamas93.hu)  
+💻 [GitHub](https://github.com/nagytommy76)  
+💼 [LinkedIn](https://www.linkedin.com/in/tamasnagy93/)
